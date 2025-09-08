@@ -1,5 +1,5 @@
-#ifndef POINT_H
-#define POINT_H
+#ifndef OURPAINTDCM_HEADERS_FIGURES_POINT2D_H
+#define OURPAINTDCM_HEADERS_FIGURES_POINT2D_H
 /**
 * @brief 2D point structure.
 *
@@ -14,4 +14,4 @@ namespace OurPaintDCM {
         }
     }
 }
-#endif //POINT_H
+#endif //OURPAINTDCM_HEADERS_FIGURES_POINT2D_H
