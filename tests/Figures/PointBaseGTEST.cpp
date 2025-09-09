@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "figures/PointBase.h"
+#include "PointBase.h"
 
 using namespace OurPaintDCM::Figures;
 
