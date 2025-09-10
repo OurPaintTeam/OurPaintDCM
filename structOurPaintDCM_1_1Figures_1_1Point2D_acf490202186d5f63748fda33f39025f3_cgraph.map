@@ -1,0 +1,7 @@
+<map id="OurPaintDCM::Figures::Point2D::Point2D" name="OurPaintDCM::Figures::Point2D::Point2D">
+<area shape="rect" id="Node000001" title="Constructor with explicit coordinates." alt="" coords="5,37,168,77"/>
+<area shape="rect" id="Node000002" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a783b0f201624031dd0cd387bb6c52bf9" title="Get X coordinate." alt="" coords="216,5,379,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="168,42,202,37,203,42,169,48"/>
+<area shape="rect" id="Node000003" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a7c02a5b6825f0d56942b49b68a6fd33c" title="Get Y coordinate." alt="" coords="216,69,379,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="169,67,203,72,202,78,168,72"/>
+</map>
