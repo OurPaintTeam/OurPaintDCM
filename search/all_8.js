@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['y_0',['y',['../structOurPaintDCM_1_1Figures_1_1Point2D.html#a7c02a5b6825f0d56942b49b68a6fd33c',1,'OurPaintDCM::Figures::Point2D::y()'],['../structOurPaintDCM_1_1Figures_1_1Point2D.html#ab998aa1f93513913bb54defde6c7694c',1,'OurPaintDCM::Figures::Point2D::y() const']]]
+  ['radius_0',['radius',['../structOurPaintDCM_1_1Figures_1_1Circle.html#a257575c3decbe23a35ee725a7e3eb7f0',1,'OurPaintDCM::Figures::Circle']]],
+  ['requirementtype_1',['RequirementType',['../namespaceOurPaintDCM_1_1Requirements.html#a2eee4d2198019cdf4cf8656a0a6ec8e9',1,'OurPaintDCM::Requirements']]]
 ];
