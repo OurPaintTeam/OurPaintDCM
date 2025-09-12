@@ -7,9 +7,23 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 include_directories(${PROJECT_SOURCE_DIR}/headers)
 include_directories(${PROJECT_SOURCE_DIR}/headers/Figures)
-
+include_directories(${PROJECT_SOURCE_DIR}/headers/Requirements)
+include_directories(math/headers)
+include_directories(math/headers/optimizers)
+include_directories(math/headers/optimizers/MatrixOptimizers)
+include_directories(math/headers/optimizers/EigenOptimizers)
+include_directories(math/headers/optimizers)
+include_directories(math/headers/decomposition)
+include_directories(math/headers/graph)
+include_directories(math/headers/Tasks/Matrix)
+include_directories(math/headers/Tasks/Eigen)
+include_directories(math/headers/Tasks)
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
+add_subdirectory(math)
+
+# Основная библиотека OurPaintDCM
 add_library(OurPaintDCM STATIC ${SRC_FILES})
+target_link_libraries(OurPaintDCM PUBLIC Math)
 target_include_directories(OurPaintDCM PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
 enable_testing()
@@ -20,5 +34,4 @@ FetchContent_Declare(
 )
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
-
 add_subdirectory(tests)
