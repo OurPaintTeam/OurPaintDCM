@@ -2,7 +2,7 @@
 #define HEADERS_REQUIREMENTS_ENUM_H
 #include <cstdint>
 
-namespace OurPaintDCM::Requirements {
+namespace OurPaintDCM {
 /**
  * @brief Enum which illustrates every requirement type
  * Each value describes a geometric constraint that can be applied
@@ -12,10 +12,10 @@ namespace OurPaintDCM::Requirements {
  */
 enum class RequirementType: uint8_t {
     /// Fixed distance between point and section.
-    ET_POINTSECTIONDIST,
+    ET_POINTLINEDIST,
 
     /// Point must lie on a section (distance == 0).
-    ET_POINTONSECTION,
+    ET_POINTONLINE,
 
     /// Fixed distance between two points.
     ET_POINTPOINTDIST,
@@ -24,22 +24,22 @@ enum class RequirementType: uint8_t {
     ET_POINTONPOINT,
 
     /// Fixed distance between section and circle.
-    ET_SECTIONCIRCLEDIST,
+    ET_LINECIRCLEDIST,
 
     /// Section endpoints must be on a circle.
-    ET_SECTIONONCIRCLE,
+    ET_LINEONCIRCLE,
 
     /// Section lies entirely inside a circle.
-    ET_SECTIONINCIRCLE,
+    ET_LINEINCIRCLE,
 
     /// Two sections must be parallel.
-    ET_SECTIONSECTIONPARALLEL,
+    ET_LINELINEPARALLEL,
 
     /// Two sections must be perpendicular.
-    ET_SECTIONSECTIONPERPENDICULAR,
+    ET_LINELINEPERPENDICULAR,
 
     /// Fixed angle between two sections.
-    ET_SECTIONSECTIONANGLE,
+    ET_LINELINEANGLE,
 
     /// Section must be vertical (along Y-axis).
     ET_VERTICAL,
@@ -59,7 +59,7 @@ enum class FigureType : uint8_t {
     ET_POINT2D,
 
     /// Line or line segment.
-    ET_LINES,
+    ET_LINE,
 
     /// Circle object.
     ET_CIRCLE,
