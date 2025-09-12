@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['operator_5b_5d_0',['operator[]',['../structOurPaintDCM_1_1Figures_1_1PointBase.html#a5069908eb537376005fa62b2d0c013a1',1,'OurPaintDCM::Figures::PointBase::operator[](std::size_t index)'],['../structOurPaintDCM_1_1Figures_1_1PointBase.html#a95c55f63a84b529896320debf18ea292',1,'OurPaintDCM::Figures::PointBase::operator[](std::size_t index) const']]]
+  ['lenght_0',['lenght',['../structOurPaintDCM_1_1Figures_1_1Circle.html#aa169754e3f7d2f17fe0bd947ca981034',1,'OurPaintDCM::Figures::Circle']]],
+  ['length_1',['length',['../structOurPaintDCM_1_1Figures_1_1Line.html#ad43b624e67db7afbcb32edf5efd326f0',1,'OurPaintDCM::Figures::Line']]],
+  ['line_2',['Line',['../structOurPaintDCM_1_1Figures_1_1Line.html#a30c81c2e15387a8158bfba957183b00f',1,'OurPaintDCM::Figures::Line']]]
 ];

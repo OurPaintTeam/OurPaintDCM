@@ -6,6 +6,10 @@ var annotated_dup =
         [ "Line", "structOurPaintDCM_1_1Figures_1_1Line.html", "structOurPaintDCM_1_1Figures_1_1Line" ],
         [ "Point2D", "structOurPaintDCM_1_1Figures_1_1Point2D.html", "structOurPaintDCM_1_1Figures_1_1Point2D" ],
         [ "PointBase", "structOurPaintDCM_1_1Figures_1_1PointBase.html", "structOurPaintDCM_1_1Figures_1_1PointBase" ]
+      ] ],
+      [ "Requirements", "namespaceOurPaintDCM_1_1Requirements.html", [
+        [ "PointLineDist", "classOurPaintDCM_1_1Requirements_1_1PointLineDist.html", "classOurPaintDCM_1_1Requirements_1_1PointLineDist" ],
+        [ "Requirement", "classOurPaintDCM_1_1Requirements_1_1Requirement.html", "classOurPaintDCM_1_1Requirements_1_1Requirement" ]
       ] ]
     ] ]
 ];

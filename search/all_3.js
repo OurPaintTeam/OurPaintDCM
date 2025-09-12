@@ -1,21 +1,4 @@
 var searchData=
 [
-  ['enums_2eh_0',['Enums.h',['../Enums_8h.html',1,'']]],
-  ['et_5farc_1',['ET_ARC',['../namespaceOurPaintDCM_1_1Requirements.html#aea3726fb7db6f9adc0195680d3ead6e7aed036b4faa73f77c338c711c8f151ce0',1,'OurPaintDCM::Requirements']]],
-  ['et_5farccenteronperpendicular_2',['ET_ARCCENTERONPERPENDICULAR',['../namespaceOurPaintDCM_1_1Requirements.html#a2eee4d2198019cdf4cf8656a0a6ec8e9a93fabf744e124d0cd0c6c3212882300c',1,'OurPaintDCM::Requirements']]],
-  ['et_5fcircle_3',['ET_CIRCLE',['../namespaceOurPaintDCM_1_1Requirements.html#aea3726fb7db6f9adc0195680d3ead6e7a90594dabe3661828ebdd51b2c16fe590',1,'OurPaintDCM::Requirements']]],
-  ['et_5fhorizontal_4',['ET_HORIZONTAL',['../namespaceOurPaintDCM_1_1Requirements.html#a2eee4d2198019cdf4cf8656a0a6ec8e9a158b2265b2387e5fd9f484eec3691e1f',1,'OurPaintDCM::Requirements']]],
-  ['et_5flines_5',['ET_LINES',['../namespaceOurPaintDCM_1_1Requirements.html#aea3726fb7db6f9adc0195680d3ead6e7a154d4df9e64bcab85be27b774aeb39bf',1,'OurPaintDCM::Requirements']]],
-  ['et_5fpoint2d_6',['ET_POINT2D',['../namespaceOurPaintDCM_1_1Requirements.html#aea3726fb7db6f9adc0195680d3ead6e7a5c4c1a7ec89c97c9f50ebdd563c1e1f2',1,'OurPaintDCM::Requirements']]],
-  ['et_5fpointonpoint_7',['ET_POINTONPOINT',['../namespaceOurPaintDCM_1_1Requirements.html#a2eee4d2198019cdf4cf8656a0a6ec8e9ac24d7e6dc9f2b0f31c938ac2ecf6be10',1,'OurPaintDCM::Requirements']]],
-  ['et_5fpointonsection_8',['ET_POINTONSECTION',['../namespaceOurPaintDCM_1_1Requirements.html#a2eee4d2198019cdf4cf8656a0a6ec8e9ad95fedcdc347c033e7293ccc07a778fa',1,'OurPaintDCM::Requirements']]],
-  ['et_5fpointpointdist_9',['ET_POINTPOINTDIST',['../namespaceOurPaintDCM_1_1Requirements.html#a2eee4d2198019cdf4cf8656a0a6ec8e9a37d45fb45d229b35b6149787242d1fbc',1,'OurPaintDCM::Requirements']]],
-  ['et_5fpointsectiondist_10',['ET_POINTSECTIONDIST',['../namespaceOurPaintDCM_1_1Requirements.html#a2eee4d2198019cdf4cf8656a0a6ec8e9a169cf28f74bc1dccda15e0cbd1c3d232',1,'OurPaintDCM::Requirements']]],
-  ['et_5fsectioncircledist_11',['ET_SECTIONCIRCLEDIST',['../namespaceOurPaintDCM_1_1Requirements.html#a2eee4d2198019cdf4cf8656a0a6ec8e9a2cc9064d5d24d12b6e24f2186a7eeb32',1,'OurPaintDCM::Requirements']]],
-  ['et_5fsectionincircle_12',['ET_SECTIONINCIRCLE',['../namespaceOurPaintDCM_1_1Requirements.html#a2eee4d2198019cdf4cf8656a0a6ec8e9a726694c7469aaf35b003e3c96cbc8922',1,'OurPaintDCM::Requirements']]],
-  ['et_5fsectiononcircle_13',['ET_SECTIONONCIRCLE',['../namespaceOurPaintDCM_1_1Requirements.html#a2eee4d2198019cdf4cf8656a0a6ec8e9ae3d406d1f7b9d8d879e4936ba8306937',1,'OurPaintDCM::Requirements']]],
-  ['et_5fsectionsectionangle_14',['ET_SECTIONSECTIONANGLE',['../namespaceOurPaintDCM_1_1Requirements.html#a2eee4d2198019cdf4cf8656a0a6ec8e9ac52c65ab01c9b26daa0dc5f3029ea25c',1,'OurPaintDCM::Requirements']]],
-  ['et_5fsectionsectionparallel_15',['ET_SECTIONSECTIONPARALLEL',['../namespaceOurPaintDCM_1_1Requirements.html#a2eee4d2198019cdf4cf8656a0a6ec8e9aea289fbe3d1721f1bc427a7bab243f5c',1,'OurPaintDCM::Requirements']]],
-  ['et_5fsectionsectionperpendicular_16',['ET_SECTIONSECTIONPERPENDICULAR',['../namespaceOurPaintDCM_1_1Requirements.html#a2eee4d2198019cdf4cf8656a0a6ec8e9a17f7888a9579dbed2a8907cbcd72a4e1',1,'OurPaintDCM::Requirements']]],
-  ['et_5fvertical_17',['ET_VERTICAL',['../namespaceOurPaintDCM_1_1Requirements.html#a2eee4d2198019cdf4cf8656a0a6ec8e9a84967ad3b7986053dfc6cfd1a3cbdf16',1,'OurPaintDCM::Requirements']]]
+  ['dimension_0',['dimension',['../structOurPaintDCM_1_1Figures_1_1PointBase.html#aee9effa43c902ead55ccbf7a12707032',1,'OurPaintDCM::Figures::PointBase']]]
 ];

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['point2d_0',['point2d',['../structOurPaintDCM_1_1Figures_1_1Point2D.html#a7193a3b8455f1b36e71f50ee64529c16',1,'OurPaintDCM::Figures::Point2D::Point2D()=default'],['../structOurPaintDCM_1_1Figures_1_1Point2D.html#acf490202186d5f63748fda33f39025f3',1,'OurPaintDCM::Figures::Point2D::Point2D(double x, double y)']]],
-  ['pointbase_1',['pointbase',['../structOurPaintDCM_1_1Figures_1_1PointBase.html#a73fb5f03b0e553332676ad804f8a5f3f',1,'OurPaintDCM::Figures::PointBase::PointBase()=default'],['../structOurPaintDCM_1_1Figures_1_1PointBase.html#acbba67373d49a3207d6e8b450abfd7d7',1,'OurPaintDCM::Figures::PointBase::PointBase(const std::array&lt; double, N &gt; &amp;values)']]]
+  ['operator_5b_5d_0',['operator[]',['../structOurPaintDCM_1_1Figures_1_1PointBase.html#a5069908eb537376005fa62b2d0c013a1',1,'OurPaintDCM::Figures::PointBase::operator[](std::size_t index)'],['../structOurPaintDCM_1_1Figures_1_1PointBase.html#a95c55f63a84b529896320debf18ea292',1,'OurPaintDCM::Figures::PointBase::operator[](std::size_t index) const']]]
 ];

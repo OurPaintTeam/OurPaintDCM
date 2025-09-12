@@ -1,0 +1,12 @@
+<map id="OurPaintDCM::Requirements::PointLineDist" name="OurPaintDCM::Requirements::PointLineDist">
+<area shape="rect" id="Node000001" title="Requirement: fixed distance between point and sections." alt="" coords="720,64,927,104"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Requirements_1_1Requirement.html" title="Base class for all geometric requirements (constraints)." alt="" coords="449,5,656,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="659,46,731,61,730,67,658,51"/>
+<area shape="rect" id="Node000003" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html" title="2D point structure." alt="" coords="217,103,380,143"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="393,103,404,101,570,88,720,83,720,88,571,93,404,107,394,108"/>
+<area shape="rect" id="Node000005" href="$structOurPaintDCM_1_1Figures_1_1Line.html" title=" " alt="" coords="469,133,636,187"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="394,134,470,145,469,150,393,139"/>
+<area shape="rect" id="Node000004" href="$structOurPaintDCM_1_1Figures_1_1PointBase.html" title=" " alt="" coords="5,103,168,143"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="182,120,217,120,217,125,182,125"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="649,130,751,102,752,107,650,136"/>
+</map>
