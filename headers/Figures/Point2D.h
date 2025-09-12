@@ -36,6 +36,9 @@ namespace OurPaintDCM::Figures{
              */
         constexpr double& y() { return coords[1]; }
         constexpr const double& y() const { return coords[1]; }
+
+        double* ptrX() { return &coords[0]; }
+        double* ptrY() { return &coords[1]; }
     };
 
 }
