@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -241,20 +248,20 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Build the function for the point section distance constraint. </p>
 <p>The equation is derived from the general line equation through segment endpoints A(xA, yA), B(xB, yB):  </p><p class="formulaDsp">
-<picture><source srcset="form_0_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\[
+\[
 Ax + By + C = 0, \quad
 A = y_B - y_A, \quad B = x_A - x_B, \quad C = x_B y_A - x_A y_B
-\]" src="form_0.png"/></picture>
+\]
 </p>
 <p>For a point P(x, y), the signed distance to line AB is:  </p><p class="formulaDsp">
-<picture><source srcset="form_1_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\[
+\[
 F = \frac{A x_P + B y_P + C}{\sqrt{A^2 + B^2}}
-\]" src="form_1.png"/></picture>
+\]
 </p>
 <p>The requirement enforces:  </p><p class="formulaDsp">
-<picture><source srcset="form_2_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\[
+\[
 F - d = 0
-\]" src="form_2.png"/></picture>
+\]
 </p>
 <p> where d is the fixed distance value.</p>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to function object tree. </dd></dl>
