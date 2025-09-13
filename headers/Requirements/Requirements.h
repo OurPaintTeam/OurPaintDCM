@@ -65,28 +65,34 @@ public:
                      Figures::Line<Figures::Point2D>* l,
                      double                                                     dist);
     /**
-     * @brief Build the function for the point section distance constraint.
-     *
-     * The equation is derived from the general line equation through
-     * segment endpoints A(xA, yA), B(xB, yB):
-     * \f[
-     * Ax + By + C = 0, \quad
-     * A = y_B - y_A, \quad B = x_A - x_B, \quad C = x_B y_A - x_A y_B
-     * \f]
-     *
-     * For a point P(x, y), the signed distance to line AB is:
-     * \f[
-     * F = \frac{A x_P + B y_P + C}{\sqrt{A^2 + B^2}}
-     * \f]
-     *
-     * The requirement enforces:
-     * \f[
-     * F - d = 0
-     * \f]
-     * where d is the fixed distance value.
-     *
-     * @return Pointer to function object tree.
-     */
+  * @brief Build the function for the point section distance constraint.
+  *
+  * The equation is derived from the general line equation through
+  * segment endpoints A(xₐ, yₐ), B(xᵦ, yᵦ):
+  *
+  * \f[
+  * \begin{aligned}
+  * Ax + By + C &= 0 \\
+  * A &= y_B - y_A \\
+  * B &= x_A - x_B \\
+  * C &= x_B y_A - x_A y_B
+  * \end{aligned}
+  * \f]
+  *
+  * For a point P(x, y), the signed distance to line AB is:
+  *
+  * \f[
+  * F = \frac{A x_P + B y_P + C}{\sqrt{A^2 + B^2}}
+  * \f]
+  *
+  * The requirement enforces:
+  *
+  * \f[ F - d = 0 \f]
+  *
+  * where \f$ d \f$ is the fixed distance value.
+  *
+  * @return Pointer to function object tree.
+  */
     ErrorFunction* toFunction() override;
 };
 }
