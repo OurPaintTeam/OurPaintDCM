@@ -1,5 +1,11 @@
 <map id="OurPaintDCM::Figures::Point2D::ptrY" name="OurPaintDCM::Figures::Point2D::ptrY">
-<area shape="rect" id="Node000001" title=" " alt="" coords="260,5,423,45"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="260,101,423,141"/>
 <area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Requirements_1_1PointLineDist.html#abcad2463f7bdb1dcfd517a8cc1d9f790" title="Build the function for the point section distance constraint." alt="" coords="5,5,212,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="246,28,212,28,212,23,246,23"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="291,97,211,60,178,48,180,43,213,55,293,93"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Requirements_1_1PointOnLine.html#a8068c50ef9cc268400418ce7732c6788" title="Simular to PointLineDist." alt="" coords="5,69,212,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="246,111,212,106,213,101,246,106"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Requirements_1_1PointPointDist.html#abb09af54bcc6b659322a6b460a3234e1" title="Convert the constraint to a function for solving." alt="" coords="5,133,212,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="246,137,213,142,212,136,246,132"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Requirements_1_1PointOnPoint.html#afa47a7d2154ece2290a99c505eac5c19" title="Convert the constraint to a function for solving. This constraint use redefinition...." alt="" coords="5,197,212,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="293,150,213,188,180,200,178,195,211,183,291,145"/>
 </map>
