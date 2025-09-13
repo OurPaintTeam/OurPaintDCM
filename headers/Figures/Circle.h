@@ -3,7 +3,7 @@
 
 #include <type_traits>
 #include "PointBase.h"
-
+#include <numbers>
 namespace OurPaintDCM::Figures
 {
 
