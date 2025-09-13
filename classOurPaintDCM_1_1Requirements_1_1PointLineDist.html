@@ -247,23 +247,28 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Build the function for the point section distance constraint. </p>
-<p>The equation is derived from the general line equation through segment endpoints A(xA, yA), B(xB, yB):  </p><p class="formulaDsp">
+<p>The equation is derived from the general line equation through segment endpoints A(xₐ, yₐ), B(xᵦ, yᵦ):</p>
+<p class="formulaDsp">
 \[
-Ax + By + C = 0, \quad
-A = y_B - y_A, \quad B = x_A - x_B, \quad C = x_B y_A - x_A y_B
+\begin{aligned}
+Ax + By + C &amp;= 0 \\
+A &amp;= y_B - y_A \\
+B &amp;= x_A - x_B \\
+C &amp;= x_B y_A - x_A y_B
+\end{aligned}
 \]
 </p>
-<p>For a point P(x, y), the signed distance to line AB is:  </p><p class="formulaDsp">
+<p>For a point P(x, y), the signed distance to line AB is:</p>
+<p class="formulaDsp">
 \[
 F = \frac{A x_P + B y_P + C}{\sqrt{A^2 + B^2}}
 \]
 </p>
-<p>The requirement enforces:  </p><p class="formulaDsp">
-\[
-F - d = 0
-\]
+<p>The requirement enforces:</p>
+<p class="formulaDsp">
+\[ F - d = 0 \]
 </p>
-<p> where d is the fixed distance value.</p>
+<p>where \( d \) is the fixed distance value.</p>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to function object tree. </dd></dl>
 
 <p>Implements <a class="el" href="classOurPaintDCM_1_1Requirements_1_1Requirement.html#ad69d0f963274e99d33a2290d4d3a0b2f">OurPaintDCM::Requirements::Requirement</a>.</p>
