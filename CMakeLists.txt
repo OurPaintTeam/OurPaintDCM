@@ -8,21 +8,21 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 include_directories(${PROJECT_SOURCE_DIR}/headers)
 include_directories(${PROJECT_SOURCE_DIR}/headers/Figures)
 include_directories(${PROJECT_SOURCE_DIR}/headers/Requirements)
-include_directories(Math/headers
-                    Math/headers/optimizers
-                    Math/headers/optimizers/MatrixOptimizers
-                    Math/headers/optimizers/EigenOptimizers
-                    Math/headers/optimizers
-                    Math/headers/decomposition
-                    Math/headers/graph
-                    Math/headers/Tasks/Matrix
-                    Math/headers/Tasks/Eigen
-                    Math/headers/Tasks)
+include_directories(math/headers
+        math/headers/optimizers
+        math/headers/optimizers/MatrixOptimizers
+        math/headers/optimizers/EigenOptimizers
+        math/headers/optimizers
+        math/headers/decomposition
+        math/headers/graph
+        math/headers/Tasks/Matrix
+        math/headers/Tasks/Eigen
+        math/headers/Tasks)
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
 # Основная библиотека OurPaintDCM
 add_library(OurPaintDCM STATIC ${SRC_FILES})
 target_link_libraries(OurPaintDCM PUBLIC Math)
-add_subdirectory(Math)
+add_subdirectory(math)
 target_include_directories(OurPaintDCM PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
 enable_testing()
