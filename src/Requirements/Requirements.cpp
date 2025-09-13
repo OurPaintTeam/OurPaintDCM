@@ -90,4 +90,35 @@ ErrorFunction* PointOnPoint::toFunction() {
     x.push_back(p2_y);
     return new PointOnPointError(x);
 }
+
+// ----------------------------------------------------------------
+LineCircleDist::LineCircleDist(Figures::Line<Figures::Point2D>*   line,
+                               Figures::Circle<Figures::Point2D>* circle,
+                               double                             dist)
+    : Requirement(RequirementType::ET_LINECIRCLEDIST),
+      _l(line),
+      _c(circle),
+      _dist(dist) {
+}
+
+ErrorFunction* LineCircleDist::toFunction() {
+    std::vector<Variable*> x;
+    auto*                  l_startx = new Variable(_l->p1->ptrX());
+    auto*                  l_starty = new Variable(_l->p1->ptrY());
+    auto*                  l_endx   = new Variable(_l->p2->ptrX());
+    auto*                  l_endy   = new Variable(_l->p2->ptrY());
+    auto*                  centerx  = new Variable(_c->center->ptrX());
+    auto*                  centery  = new Variable(_c->center->ptrY());
+    auto*                  radius = new Variable(&_c->radius);
+    x.push_back(l_startx);
+    x.push_back(l_starty);
+    x.push_back(l_endx);
+    x.push_back(l_endy);
+    x.push_back(centerx);
+    x.push_back(centery);
+    x.push_back(radius);
+    return new SectionCircleDistanceError(x, _dist);
+}
+// ------------------------------------------------------------------
+
 }

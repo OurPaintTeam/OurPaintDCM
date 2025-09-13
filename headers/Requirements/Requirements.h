@@ -3,6 +3,7 @@
 #include "Enums.h"
 #include "Point2D.h"
 #include "Line.h"
+#include "Circle.h"
 #include "ErrorFunction.h"
 
 namespace OurPaintDCM::Requirements {
@@ -118,6 +119,7 @@ public:
      */
     ErrorFunction* toFunction() override;
 };
+
 /**
  * @brief Constraint: Fixed distance between two points.
  *
@@ -126,8 +128,8 @@ public:
  * of the points' positions.
  */
 class PointPointDist final : public Requirement {
-    Figures::Point2D* _p1; ///< pointer to first point.
-    Figures::Point2D* _p2; ///< pointer to second point.
+    Figures::Point2D* _p1;   ///< pointer to first point.
+    Figures::Point2D* _p2;   ///< pointer to second point.
     double            _dist; ///< distance between two points.
 
 public:
@@ -162,12 +164,13 @@ public:
 class PointOnPoint final : public Requirement {
     Figures::Point2D* _p1;
     Figures::Point2D* _p2;
-    public:
-/** @brief Construct a new PointOnPoint requirement
- *
- *  @param p1 First point
- *  @param p2 second point
- */
+
+public:
+    /** @brief Construct a new PointOnPoint requirement
+     *
+     *  @param p1 First point
+     *  @param p2 second point
+     */
     PointOnPoint(Figures::Point2D* p1, Figures::Point2D* p2);
     /**
      * @brief Convert the constraint to a function for solving.
@@ -177,6 +180,44 @@ class PointOnPoint final : public Requirement {
      * p_1 == p_2
      * \f]
      * @return ErrorFunction* Pointer to the constraint function
+     */
+    ErrorFunction* toFunction() override;
+};
+
+/**
+ * @brief Constraint: Distance between a line and a circle.
+ *
+ * This requirement enforces that the distance between a line
+ * and a circle equals a given fixed value. The distance is
+ * measured from the closest point on the line to the circle's
+ * center, minus the circle's radius.
+ */
+class LineCircleDist final : public Requirement {
+    Figures::Line<Figures::Point2D>*   _l;   ///< Pointer to the line.
+    Figures::Circle<Figures::Point2D>* _c; ///< Pointer to the circle.
+    double                             _dist;   ///< Desired distance between line and circle.
+public:
+    /**
+     * @brief Construct a new LineCircleDist requirement.
+     *
+     * @param line Pointer to the line.
+     * @param circle Pointer to the circle.
+     * @param dist Fixed distance value between the line and circle.
+     */
+    LineCircleDist(Figures::Line<Figures::Point2D>* line, Figures::Circle<Figures::Point2D>* circle, double dist);
+
+    /**
+     * @brief Convert the constraint to a function for solving.
+     *
+     * The distance between line L\f$(Ax + By + C = 0)\f$ and circle
+     * with center \f$(x_c, y_c)\f$and radius \f$r\f$ is:
+     * \f[
+     * F = \frac{|A x_c + B y_c + C|}{\sqrt{A^2 + B^2}} - r - d = 0
+     * \f]
+     *
+     * where \f$d\f$ is the desired fixed distance.
+     *
+     * @return ErrorFunction* Pointer to the constraint function.
      */
     ErrorFunction* toFunction() override;
 };
