@@ -8,6 +8,7 @@ var annotated_dup =
         [ "PointBase", "structOurPaintDCM_1_1Figures_1_1PointBase.html", "structOurPaintDCM_1_1Figures_1_1PointBase" ]
       ] ],
       [ "Requirements", "namespaceOurPaintDCM_1_1Requirements.html", [
+        [ "LineCircleDist", "classOurPaintDCM_1_1Requirements_1_1LineCircleDist.html", "classOurPaintDCM_1_1Requirements_1_1LineCircleDist" ],
         [ "PointLineDist", "classOurPaintDCM_1_1Requirements_1_1PointLineDist.html", "classOurPaintDCM_1_1Requirements_1_1PointLineDist" ],
         [ "PointOnLine", "classOurPaintDCM_1_1Requirements_1_1PointOnLine.html", "classOurPaintDCM_1_1Requirements_1_1PointOnLine" ],
         [ "PointOnPoint", "classOurPaintDCM_1_1Requirements_1_1PointOnPoint.html", "classOurPaintDCM_1_1Requirements_1_1PointOnPoint" ],

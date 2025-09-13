@@ -1,5 +1,6 @@
 var namespaceOurPaintDCM_1_1Requirements =
 [
+    [ "LineCircleDist", "classOurPaintDCM_1_1Requirements_1_1LineCircleDist.html", "classOurPaintDCM_1_1Requirements_1_1LineCircleDist" ],
     [ "PointLineDist", "classOurPaintDCM_1_1Requirements_1_1PointLineDist.html", "classOurPaintDCM_1_1Requirements_1_1PointLineDist" ],
     [ "PointOnLine", "classOurPaintDCM_1_1Requirements_1_1PointOnLine.html", "classOurPaintDCM_1_1Requirements_1_1PointOnLine" ],
     [ "PointOnPoint", "classOurPaintDCM_1_1Requirements_1_1PointOnPoint.html", "classOurPaintDCM_1_1Requirements_1_1PointOnPoint" ],
