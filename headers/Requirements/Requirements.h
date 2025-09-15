@@ -221,6 +221,231 @@ public:
      */
     ErrorFunction* toFunction() override;
 };
+/**
+ * @brief Constraint: Line lies on a circle.
+ *
+ * This requirement enforces that a line lies on a circle.
+ * The constraint ensures that the line intersects the circle
+ * in such a way that all points on the line satisfy the
+ * circle's equation.
+ */
+class LineOnCircle final : public Requirement {
+    Figures::Line<Figures::Point2D>* _l; ///< Pointer to the line.
+    Figures::Circle<Figures::Point2D>* _c; ///< Pointer to the circle.
+public:
+    /**
+     * @brief Construct a new LineOnCircle requirement.
+     *
+     * @param line Pointer to the line.
+     * @param circle Pointer to the circle.
+     */
+    LineOnCircle(Figures::Line<Figures::Point2D>* line, Figures::Circle<Figures::Point2D>* circle);
+
+    /**
+     * @brief Convert the constraint to a function for solving.
+     *
+     * The constraint ensures that the line satisfies the circle's equation:
+     * \f[
+     * F = (x - x_c)^2 + (y - y_c)^2 - r^2 = 0
+     * \f]
+     *
+     * where \f$(x_c, y_c)\f$ is the circle's center and \f$r\f$ is its radius.
+     *
+     * @return ErrorFunction* Pointer to the constraint function.
+     */
+    ErrorFunction* toFunction() override;
+};
+/**
+ * @brief Constraint: Line lies entirely inside a circle.
+ *
+ * This requirement enforces that a line lies completely within a circle.
+ * The constraint ensures that all points of the line are at a distance
+ * from the circle's center less than or equal to the circle's radius.
+ */
+class LineInCircle final : public Requirement {
+    Figures::Line<Figures::Point2D>* _l;   ///< Pointer to the line.
+    Figures::Circle<Figures::Point2D>* _c; ///< Pointer to the circle.
+public:
+    /**
+     * @brief Construct a new LineInCircle requirement.
+     *
+     * @param line Pointer to the line.
+     * @param circle Pointer to the circle.
+     */
+    LineInCircle(Figures::Line<Figures::Point2D>* line, Figures::Circle<Figures::Point2D>* circle);
+
+    /**
+     * @brief Convert the constraint to a function for solving.
+     *
+     * The constraint ensures that both endpoints of the line satisfy:
+     * \f[
+     * F = (x - x_c)^2 + (y - y_c)^2 - r^2 \le 0
+     * \f]
+     *
+     * where \f$(x_c, y_c)\f$ is the circle's center and \f$r\f$ is its radius.
+     *
+     * @return ErrorFunction* Pointer to the constraint function.
+     */
+    ErrorFunction* toFunction() override;
+};
+/**
+ * @brief Constraint: Two lines are parallel.
+ *
+ * This requirement enforces that two lines remain parallel.
+ * The constraint ensures that the slopes of the lines are equal,
+ * so they never intersect (unless they are coincident).
+ */
+class LineLineParallel final : public Requirement {
+    Figures::Line<Figures::Point2D>* _l1; ///< Pointer to the first line.
+    Figures::Line<Figures::Point2D>* _l2; ///< Pointer to the second line.
+public:
+    /**
+     * @brief Construct a new LineLineParallel requirement.
+     *
+     * @param l1 Pointer to the first line.
+     * @param l2 Pointer to the second line.
+     */
+    LineLineParallel(Figures::Line<Figures::Point2D>* l1, Figures::Line<Figures::Point2D>* l2);
+
+    /**
+     * @brief Convert the constraint to a function for solving.
+     *
+     * The constraint ensures that the lines have the same slope:
+     * \f[
+     * F = (y_2^{end} - y_2^{start}) / (x_2^{end} - x_2^{start})
+     *   - (y_1^{end} - y_1^{start}) / (x_1^{end} - x_1^{start}) = 0
+     * \f]
+     *
+     * @return ErrorFunction* Pointer to the constraint function.
+     */
+    ErrorFunction* toFunction() override;
+};
+/**
+ * @brief Constraint: Two lines are perpendicular.
+ *
+ * This requirement enforces that two lines intersect at a right angle.
+ * The constraint ensures that the dot product of their direction vectors is zero.
+ */
+class LineLinePerpendicular final : public Requirement {
+    Figures::Line<Figures::Point2D>* _l1; ///< Pointer to the first line.
+    Figures::Line<Figures::Point2D>* _l2; ///< Pointer to the second line.
+public:
+    /**
+     * @brief Construct a new LineLinePerpendicular requirement.
+     *
+     * @param l1 Pointer to the first line.
+     * @param l2 Pointer to the second line.
+     */
+    LineLinePerpendicular(Figures::Line<Figures::Point2D>* l1, Figures::Line<Figures::Point2D>* l2);
+
+    /**
+     * @brief Convert the constraint to a function for solving.
+     *
+     * The constraint ensures perpendicularity using the dot product:
+     * \f[
+     * F = (x_1^{end} - x_1^{start}) \cdot (x_2^{end} - x_2^{start})
+     *   + (y_1^{end} - y_1^{start}) \cdot (y_2^{end} - y_2^{start}) = 0
+     * \f]
+     *
+     * @return ErrorFunction* Pointer to the constraint function.
+     */
+    ErrorFunction* toFunction() override;
+};
+/**
+ * @brief Constraint: Angle between two lines.
+ *
+ * This requirement enforces a specific angle between two lines.
+ * The constraint ensures that the cosine of the angle between their
+ * direction vectors matches the desired value.
+ */
+class LineLineAngle final : public Requirement {
+    Figures::Line<Figures::Point2D>* _l1; ///< Pointer to the first line.
+    Figures::Line<Figures::Point2D>* _l2; ///< Pointer to the second line.
+public:
+    /**
+     * @brief Construct a new LineLineAngle requirement.
+     *
+     * @param l1 Pointer to the first line.
+     * @param l2 Pointer to the second line.
+     */
+    LineLineAngle(Figures::Line<Figures::Point2D>* l1, Figures::Line<Figures::Point2D>* l2);
+
+    /**
+     * @brief Convert the constraint to a function for solving.
+     *
+     * The constraint ensures the angle between the lines:
+     * \f[
+     * F = \frac{(x_1^{end} - x_1^{start})(x_2^{end} - x_2^{start})
+     *      + (y_1^{end} - y_1^{start})(y_2^{end} - y_2^{start})}
+     *      {\sqrt{(x_1^{end} - x_1^{start})^2 + (y_1^{end} - y_1^{start})^2} \,
+     *       \sqrt{(x_2^{end} - x_2^{start})^2 + (y_2^{end} - y_2^{start})^2}}} - \cos(\theta) = 0
+     * \f]
+     *
+     * where \f$\theta\f$ is the desired angle between the lines.
+     *
+     * @return ErrorFunction* Pointer to the constraint function.
+     */
+    ErrorFunction* toFunction() override;
+};
+
+/**
+ * @brief Constraint: Line is horizontal.
+ *
+ * This requirement enforces that a line is horizontal.
+ * The constraint ensures that the y-coordinates of both endpoints
+ * of the line are equal.
+ */
+class LineHorizontal final : public Requirement {
+    Figures::Line<Figures::Point2D>* _l; ///< Pointer to the line.
+public:
+    /**
+     * @brief Construct a new LineHorizontal requirement.
+     *
+     * @param l Pointer to the line.
+     */
+    LineHorizontal(Figures::Line<Figures::Point2D>* l);
+
+    /**
+     * @brief Convert the constraint to a function for solving.
+     *
+     * The constraint ensures horizontal orientation:
+     * \f[
+     * F = y^{end} - y^{start} = 0
+     * \f]
+     *
+     * @return ErrorFunction* Pointer to the constraint function.
+     */
+    ErrorFunction* toFunction() override;
+};
+/**
+ * @brief Constraint: Line is vertical.
+ *
+ * This requirement enforces that a line is vertical.
+ * The constraint ensures that the x-coordinates of both endpoints
+ * of the line are equal.
+ */
+class LineVertical final : public Requirement {
+    Figures::Line<Figures::Point2D>* _l; ///< Pointer to the line.
+public:
+    /**
+     * @brief Construct a new LineVertical requirement.
+     *
+     * @param l Pointer to the line.
+     */
+    LineVertical(Figures::Line<Figures::Point2D>* l);
+
+    /**
+     * @brief Convert the constraint to a function for solving.
+     *
+     * The constraint ensures vertical orientation:
+     * \f[
+     * F = x^{end} - x^{start} = 0
+     * \f]
+     *
+     * @return ErrorFunction* Pointer to the constraint function.
+     */
+    ErrorFunction* toFunction() override;
+};
 
 }
 #endif //OURPAINTDCM_HEADERS_REQUIREMENTS_REQUIREMENTS_H
