@@ -229,7 +229,7 @@ public:
  * in such a way that all points on the line satisfy the
  * circle's equation.
  */
-class LineOnCircle final : public Requirement {
+class LineOnCircle final : public Requirement { //!NOT TESTED
     Figures::Line<Figures::Point2D>* _l; ///< Pointer to the line.
     Figures::Circle<Figures::Point2D>* _c; ///< Pointer to the circle.
 public:
@@ -262,7 +262,7 @@ public:
  * The constraint ensures that all points of the line are at a distance
  * from the circle's center less than or equal to the circle's radius.
  */
-class LineInCircle final : public Requirement {
+class LineInCircle final : public Requirement {//!NOT TESTED
     Figures::Line<Figures::Point2D>* _l;   ///< Pointer to the line.
     Figures::Circle<Figures::Point2D>* _c; ///< Pointer to the circle.
 public:
