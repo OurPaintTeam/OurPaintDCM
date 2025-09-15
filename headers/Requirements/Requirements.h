@@ -361,6 +361,7 @@ public:
 class LineLineAngle final : public Requirement {
     Figures::Line<Figures::Point2D>* _l1; ///< Pointer to the first line.
     Figures::Line<Figures::Point2D>* _l2; ///< Pointer to the second line.
+    double _angle; ///< Angle between lines
 public:
     /**
      * @brief Construct a new LineLineAngle requirement.
@@ -368,7 +369,7 @@ public:
      * @param l1 Pointer to the first line.
      * @param l2 Pointer to the second line.
      */
-    LineLineAngle(Figures::Line<Figures::Point2D>* l1, Figures::Line<Figures::Point2D>* l2);
+    LineLineAngle(Figures::Line<Figures::Point2D>* l1, Figures::Line<Figures::Point2D>* l2, double angle);
 
     /**
      * @brief Convert the constraint to a function for solving.
