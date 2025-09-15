@@ -274,7 +274,6 @@ ErrorFunction* LineHorizontal::toFunction() {
     return new HorizontalError(x);
 }
 // ---------------------------------------------------------------------
-// ---------------------------------------------------------------------
 LineVertical::LineVertical(Figures::Line<Figures::Point2D>* l) : Requirement(RequirementType::ET_VERTICAL),
 _l(l){}
 ErrorFunction* LineVertical::toFunction() {
