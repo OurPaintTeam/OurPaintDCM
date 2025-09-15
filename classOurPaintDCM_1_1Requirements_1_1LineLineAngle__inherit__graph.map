@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Requirements::LineLineAngle" name="OurPaintDCM::Requirements::LineLineAngle">
+<area shape="rect" id="Node000001" title="Constraint: Angle between two lines." alt="" coords="5,93,212,133"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Requirements_1_1Requirement.html" title="Base class for all geometric requirements (constraints)." alt="" coords="5,5,212,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,59,111,93,106,93,106,59"/>
+</map>

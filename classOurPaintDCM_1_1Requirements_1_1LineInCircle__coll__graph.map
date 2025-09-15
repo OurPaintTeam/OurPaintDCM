@@ -1,0 +1,14 @@
+<map id="OurPaintDCM::Requirements::LineInCircle" name="OurPaintDCM::Requirements::LineInCircle">
+<area shape="rect" id="Node000001" title="Constraint: Line lies entirely inside a circle." alt="" coords="747,77,953,117"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Requirements_1_1Requirement.html" title="Base class for all geometric requirements (constraints)." alt="" coords="473,5,680,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="667,46,774,75,773,80,666,51"/>
+<area shape="rect" id="Node000003" href="$structOurPaintDCM_1_1Figures_1_1Line.html" title=" " alt="" coords="493,70,660,125"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="674,95,747,95,747,100,674,100"/>
+<area shape="rect" id="Node000004" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html" title="2D point structure." alt="" coords="217,117,380,157"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="393,121,493,107,494,112,394,126"/>
+<area shape="rect" id="Node000006" href="$structOurPaintDCM_1_1Figures_1_1Circle.html" title=" " alt="" coords="493,149,661,203"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="394,148,493,162,492,167,393,153"/>
+<area shape="rect" id="Node000005" href="$structOurPaintDCM_1_1Figures_1_1PointBase.html" title=" " alt="" coords="5,117,168,157"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="182,135,217,135,217,140,182,140"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="673,146,779,115,780,120,675,151"/>
+</map>

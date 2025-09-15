@@ -1,5 +1,6 @@
 var namespaceOurPaintDCM_1_1Figures =
 [
+    [ "Arc", "structOurPaintDCM_1_1Figures_1_1Arc.html", "structOurPaintDCM_1_1Figures_1_1Arc" ],
     [ "Circle", "structOurPaintDCM_1_1Figures_1_1Circle.html", "structOurPaintDCM_1_1Figures_1_1Circle" ],
     [ "Line", "structOurPaintDCM_1_1Figures_1_1Line.html", "structOurPaintDCM_1_1Figures_1_1Line" ],
     [ "Point2D", "structOurPaintDCM_1_1Figures_1_1Point2D.html", "structOurPaintDCM_1_1Figures_1_1Point2D" ],
