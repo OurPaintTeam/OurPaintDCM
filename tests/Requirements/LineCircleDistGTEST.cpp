@@ -17,7 +17,7 @@ TEST(LineCircleDist, CircleTouchingLine) {
     Circle circle{&center, radius};
 
     double dist = -1.0;
-    LineCircleDistGTEST req(&line, &circle, dist);
+    LineCircleDist req(&line, &circle, dist);
     ErrorFunction* ef = req.toFunction();
 
     double error_val = ef->evaluate();
@@ -36,7 +36,7 @@ TEST(LineCircleDist, CircleAboveLine) {
     Circle circle{&center, radius};
 
     double dist = 0.0;
-    LineCircleDistGTEST req(&line, &circle, dist);
+    LineCircleDist req(&line, &circle, dist);
     ErrorFunction* ef = req.toFunction();
 
     double error_val = ef->evaluate();
@@ -55,7 +55,7 @@ TEST(LineCircleDist, IncorrectDistance) {
     Circle circle{&center, radius};
 
     double dist = 3.0;
-    LineCircleDistGTEST req(&line, &circle, dist);
+    LineCircleDist req(&line, &circle, dist);
     ErrorFunction* ef = req.toFunction();
 
     double error_val = ef->evaluate();
