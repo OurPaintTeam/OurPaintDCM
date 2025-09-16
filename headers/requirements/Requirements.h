@@ -1,6 +1,6 @@
 #ifndef OURPAINTDCM_HEADERS_REQUIREMENTS_REQUIREMENTS_H
 #define OURPAINTDCM_HEADERS_REQUIREMENTS_REQUIREMENTS_H
-#include "Enums.h"
+#include "../Utils/Enums.h"
 #include "Point2D.h"
 #include "Line.h"
 #include "Circle.h"
@@ -17,13 +17,13 @@ namespace OurPaintDCM::Requirements {
 */
 class Requirement {
 protected:
-    RequirementType type; ///< Type of the requirement (distance, angle, coincidence, etc.)
+    Utils::RequirementType type; ///< Type of the requirement (distance, angle, coincidence, etc.)
 public:
     /**
     * @brief Construct a new Requirement.
     * @param t The type of this requirement.
     */
-    explicit Requirement(RequirementType t)
+    explicit Requirement(Utils::RequirementType t)
         : type(t) {
     }
 
@@ -33,7 +33,7 @@ public:
      * @brief Get the type of this requirement.
      * @return The requirement type.
      */
-    RequirementType getType() const noexcept { return type; }
+    Utils::RequirementType getType() const noexcept { return type; }
     /**
      * @brief Convert this requirement into a mathematical function.
      *
