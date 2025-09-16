@@ -1,8 +1,8 @@
-#ifndef HEADERS_REQUIREMENTS_ENUM_H
-#define HEADERS_REQUIREMENTS_ENUM_H
+#ifndef HEADERS_UTILS_ENUM_H
+#define HEADERS_UTILS_ENUM_H
 #include <cstdint>
 
-namespace OurPaintDCM {
+namespace OurPaintDCM::Utils {
 /**
  * @brief Enum which illustrates every requirement type
  * Each value describes a geometric constraint that can be applied
@@ -69,4 +69,4 @@ enum class FigureType : uint8_t {
 };
 
 }
-#endif //HEADERS_REQUIREMENTS_ENUM_H
+#endif //HEADERS_UTILS_ENUM_H
