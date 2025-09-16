@@ -67,6 +67,13 @@ enum class FigureType : uint8_t {
     /// Circular arc object.
     ET_ARC
 };
-
+/**
+ * @brief Different modes of constraint solving.
+ */
+enum class SolveMode {
+    GLOBAL, ///< Solve the entire system
+    LOCAL,  ///< Solve only affected subgraphs/subsystems
+    DRAG    ///< Interactive drag mode (tracking free DoF)
+};
 }
 #endif //HEADERS_UTILS_ENUM_H
