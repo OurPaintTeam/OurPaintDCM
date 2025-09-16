@@ -3,7 +3,7 @@
 namespace OurPaintDCM::Requirements {
 // ----------------------------------------------------------------
 PointLineDist::PointLineDist(Figures::Point2D* p, Figures::Line<Figures::Point2D>* l, double dist)
-    : Requirement(RequirementType::ET_POINTLINEDIST),
+    : Requirement(Utils::RequirementType::ET_POINTLINEDIST),
       _p(p),
       _l(l),
       _dist(dist) {
@@ -28,7 +28,7 @@ ErrorFunction* PointLineDist::toFunction() {
 
 //-----------------------------------------------------------------
 PointOnLine::PointOnLine(Figures::Point2D* p, Figures::Line<Figures::Point2D>* l)
-    : Requirement(RequirementType::ET_POINTONLINE),
+    : Requirement(Utils::RequirementType::ET_POINTONLINE),
       _p(p),
       _l(l) {
 }
@@ -52,7 +52,7 @@ ErrorFunction* PointOnLine::toFunction() {
 
 //-----------------------------------------------------------------
 PointPointDist::PointPointDist(Figures::Point2D* p1, Figures::Point2D* p2, double dist)
-    : Requirement(RequirementType::ET_POINTPOINTDIST),
+    : Requirement(Utils::RequirementType::ET_POINTPOINTDIST),
       _p1(p1),
       _p2(p2),
       _dist(dist) {
@@ -73,7 +73,7 @@ ErrorFunction* PointPointDist::toFunction() {
 
 // -----------------------------------------------------------------
 PointOnPoint::PointOnPoint(Figures::Point2D* p1, Figures::Point2D* p2)
-    : Requirement(RequirementType::ET_POINTONPOINT),
+    : Requirement(Utils::RequirementType::ET_POINTONPOINT),
       _p1(p1),
       _p2(p2) {
 }
@@ -95,7 +95,7 @@ ErrorFunction* PointOnPoint::toFunction() {
 LineCircleDist::LineCircleDist(Figures::Line<Figures::Point2D>*   line,
                                Figures::Circle<Figures::Point2D>* circle,
                                double                             dist)
-    : Requirement(RequirementType::ET_LINECIRCLEDIST),
+    : Requirement(Utils::RequirementType::ET_LINECIRCLEDIST),
       _l(line),
       _c(circle),
       _dist(dist) {
@@ -122,7 +122,7 @@ ErrorFunction* LineCircleDist::toFunction() {
 
 // ------------------------------------------------------------------
 LineOnCircle::LineOnCircle(Figures::Line<Figures::Point2D>* line, Figures::Circle<Figures::Point2D>* circle)
-    : Requirement(RequirementType::ET_LINEONCIRCLE),
+    : Requirement(Utils::RequirementType::ET_LINEONCIRCLE),
       _l(line),
       _c(circle) {
 }
@@ -148,7 +148,7 @@ ErrorFunction* LineOnCircle::toFunction() {
 
 // ----------------------------------------------------------------
 LineInCircle::LineInCircle(Figures::Line<Figures::Point2D>* line, Figures::Circle<Figures::Point2D>* circle)
-    : Requirement(RequirementType::ET_LINEINCIRCLE),
+    : Requirement(Utils::RequirementType::ET_LINEINCIRCLE),
       _l(line),
       _c(circle) {
 }
@@ -175,7 +175,7 @@ ErrorFunction* LineInCircle::toFunction() {
 // -----------------------------------------------------------------
 
 LineLineParallel::LineLineParallel(Figures::Line<Figures::Point2D>* l1, Figures::Line<Figures::Point2D>* l2)
-    : Requirement(RequirementType::ET_LINELINEPARALLEL),
+    : Requirement(Utils::RequirementType::ET_LINELINEPARALLEL),
       _l1(l1),
       _l2(l2) {
 }
@@ -203,7 +203,7 @@ ErrorFunction* LineLineParallel::toFunction() {
 
 // -------------------------------------------------------------------
 LineLinePerpendicular::LineLinePerpendicular(Figures::Line<Figures::Point2D>* l1, Figures::Line<Figures::Point2D>* l2)
-    : Requirement(RequirementType::ET_LINELINEPERPENDICULAR),
+    : Requirement(Utils::RequirementType::ET_LINELINEPERPENDICULAR),
       _l1(l1),
       _l2(l2) {
 }
@@ -231,7 +231,7 @@ ErrorFunction* LineLinePerpendicular::toFunction() {
 
 // -----------------------------------------------------------------------
 LineLineAngle::LineLineAngle(Figures::Line<Figures::Point2D>* l1, Figures::Line<Figures::Point2D>* l2, double angle)
-    : Requirement(RequirementType::ET_LINELINEANGLE),
+    : Requirement(Utils::RequirementType::ET_LINELINEANGLE),
       _l1(l1),
       _l2(l2),
       _angle(angle) {
@@ -259,7 +259,7 @@ ErrorFunction* LineLineAngle::toFunction() {
 }
 
 // ---------------------------------------------------------------------
-LineHorizontal::LineHorizontal(Figures::Line<Figures::Point2D>* l) : Requirement(RequirementType::ET_HORIZONTAL),
+LineHorizontal::LineHorizontal(Figures::Line<Figures::Point2D>* l) : Requirement(Utils::RequirementType::ET_HORIZONTAL),
 _l(l){}
 ErrorFunction* LineHorizontal::toFunction() {
     std::vector<Variable*> x;
@@ -274,7 +274,7 @@ ErrorFunction* LineHorizontal::toFunction() {
     return new HorizontalError(x);
 }
 // ---------------------------------------------------------------------
-LineVertical::LineVertical(Figures::Line<Figures::Point2D>* l) : Requirement(RequirementType::ET_VERTICAL),
+LineVertical::LineVertical(Figures::Line<Figures::Point2D>* l) : Requirement(Utils::RequirementType::ET_VERTICAL),
 _l(l){}
 ErrorFunction* LineVertical::toFunction() {
     std::vector<Variable*> x;
