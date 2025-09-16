@@ -1,6 +1,6 @@
 #ifndef OURPAINTDCM_HEADERS_REQUIREMENTS_REQUIREMENTS_H
 #define OURPAINTDCM_HEADERS_REQUIREMENTS_REQUIREMENTS_H
-#include "../Utils/Enums.h"
+#include "Enums.h"
 #include "Point2D.h"
 #include "Line.h"
 #include "Circle.h"

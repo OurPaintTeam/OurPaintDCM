@@ -5,9 +5,10 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-include_directories(${PROJECT_SOURCE_DIR}/headers)
-include_directories(${PROJECT_SOURCE_DIR}/headers/figures)
-include_directories(${PROJECT_SOURCE_DIR}/headers/requirements)
+include_directories(${PROJECT_SOURCE_DIR}/headers
+        ${PROJECT_SOURCE_DIR}/headers/figures
+        ${PROJECT_SOURCE_DIR}/headers/requirements
+        ${PROJECT_SOURCE_DIR}/headers/utils)
 include_directories(math/headers
         math/headers/optimizers
         math/headers/optimizers/MatrixOptimizers

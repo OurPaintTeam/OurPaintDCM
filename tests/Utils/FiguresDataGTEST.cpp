@@ -1,4 +1,4 @@
-#include "utils/FigureData.h"
+#include "FigureData.h"
 #include <gtest/gtest.h>
 
 using namespace OurPaintDCM::Utils;

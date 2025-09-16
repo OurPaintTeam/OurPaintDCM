@@ -1,7 +1,7 @@
 #ifndef HEADERS_GLOBALREQUIREMENTMANAGER_H
 #define HEADERS_GLOBALREQUIREMENTMANAGER_H
-#include "utils/FigureData.h"
-#include "utils/RequirementData.h"
+#include "FigureData.h"
+#include "RequirementData.h"
 #include "Graph.h"
 #include "Requirements.h"
 #include "utils/ID.h"

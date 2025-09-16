@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "utils/RequirementData.h"
+#include "RequirementData.h"
 
 using namespace OurPaintDCM::Utils;
 
