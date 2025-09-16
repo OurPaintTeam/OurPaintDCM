@@ -3,6 +3,9 @@ var hierarchy =
     [ "OurPaintDCM::Figures::Arc< PointT >", "structOurPaintDCM_1_1Figures_1_1Arc.html", null ],
     [ "OurPaintDCM::Figures::Circle< PointT >", "structOurPaintDCM_1_1Figures_1_1Circle.html", null ],
     [ "OurPaintDCM::Figures::Circle< OurPaintDCM::Figures::Point2D >", "structOurPaintDCM_1_1Figures_1_1Circle.html", null ],
+    [ "OurPaintDCM::Utils::FigureData", "structOurPaintDCM_1_1Utils_1_1FigureData.html", null ],
+    [ "OurPaintDCM::GlobalRequirementManager", "classOurPaintDCM_1_1GlobalRequirementManager.html", null ],
+    [ "OurPaintDCM::Utils::ID", "structOurPaintDCM_1_1Utils_1_1ID.html", null ],
     [ "OurPaintDCM::Figures::Line< PointT >", "structOurPaintDCM_1_1Figures_1_1Line.html", null ],
     [ "OurPaintDCM::Figures::Line< OurPaintDCM::Figures::Point2D >", "structOurPaintDCM_1_1Figures_1_1Line.html", null ],
     [ "OurPaintDCM::Figures::PointBase< N >", "structOurPaintDCM_1_1Figures_1_1PointBase.html", null ],
@@ -22,5 +25,6 @@ var hierarchy =
       [ "OurPaintDCM::Requirements::PointOnLine", "classOurPaintDCM_1_1Requirements_1_1PointOnLine.html", null ],
       [ "OurPaintDCM::Requirements::PointOnPoint", "classOurPaintDCM_1_1Requirements_1_1PointOnPoint.html", null ],
       [ "OurPaintDCM::Requirements::PointPointDist", "classOurPaintDCM_1_1Requirements_1_1PointPointDist.html", null ]
-    ] ]
+    ] ],
+    [ "OurPaintDCM::Utils::RequirementData", "structOurPaintDCM_1_1Utils_1_1RequirementData.html", null ]
 ];

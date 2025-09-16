@@ -1,5 +1,5 @@
-<map id="headers/Figures/Circle.h" name="headers/Figures/Circle.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="82,5,261,31"/>
+<map id="headers/figures/Circle.h" name="headers/figures/Circle.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="84,5,259,31"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,79,97,104"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="153,33,84,74,82,69,151,28"/>
 <area shape="rect" id="Node000003" href="$PointBase_8h.html" title=" " alt="" coords="122,79,221,104"/>

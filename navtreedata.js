@@ -51,7 +51,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Arc_8h.html",
-"structOurPaintDCM_1_1Figures_1_1Point2D.html#a783b0f201624031dd0cd387bb6c52bf9"
+"namespaceOurPaintDCM_1_1Utils.html#a04b4a3b6dcee5e30db2920a0034287c1aed036b4faa73f77c338c711c8f151ce0"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

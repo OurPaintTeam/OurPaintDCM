@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Utils::RequirementData" name="OurPaintDCM::Utils::RequirementData">
+<area shape="rect" id="Node000001" title="Diagnostic description of a geometric requirement. This structure is generated on demand and returned..." alt="" coords="16,93,163,133"/>
+<area shape="rect" id="Node000002" href="$structOurPaintDCM_1_1Utils_1_1ID.html" title="Strongly typed wrapper for an unsigned long long identifier." alt="" coords="5,5,173,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,44,92,93,87,93,87,44"/>
+</map>

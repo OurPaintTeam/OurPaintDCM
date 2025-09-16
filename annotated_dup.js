@@ -22,6 +22,12 @@ var annotated_dup =
         [ "PointOnPoint", "classOurPaintDCM_1_1Requirements_1_1PointOnPoint.html", "classOurPaintDCM_1_1Requirements_1_1PointOnPoint" ],
         [ "PointPointDist", "classOurPaintDCM_1_1Requirements_1_1PointPointDist.html", "classOurPaintDCM_1_1Requirements_1_1PointPointDist" ],
         [ "Requirement", "classOurPaintDCM_1_1Requirements_1_1Requirement.html", "classOurPaintDCM_1_1Requirements_1_1Requirement" ]
-      ] ]
+      ] ],
+      [ "Utils", "namespaceOurPaintDCM_1_1Utils.html", [
+        [ "FigureData", "structOurPaintDCM_1_1Utils_1_1FigureData.html", "structOurPaintDCM_1_1Utils_1_1FigureData" ],
+        [ "ID", "structOurPaintDCM_1_1Utils_1_1ID.html", "structOurPaintDCM_1_1Utils_1_1ID" ],
+        [ "RequirementData", "structOurPaintDCM_1_1Utils_1_1RequirementData.html", "structOurPaintDCM_1_1Utils_1_1RequirementData" ]
+      ] ],
+      [ "GlobalRequirementManager", "classOurPaintDCM_1_1GlobalRequirementManager.html", "classOurPaintDCM_1_1GlobalRequirementManager" ]
     ] ]
 ];
