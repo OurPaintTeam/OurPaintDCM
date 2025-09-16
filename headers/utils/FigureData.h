@@ -6,6 +6,7 @@
 #define HEADERS_UTILS_FIGUREDATA_H
 
 #include "ID.h"
+#include "Enums.h"
 #include <string>
 #include <vector>
 
@@ -22,7 +23,7 @@ namespace OurPaintDCM::Utils {
  */
 struct FigureData {
     /// Type of the figure (e.g., Line, Circle, Arc).
-    std::string type;
+    FigureType type;
 
     /// Unique identifier of the figure.
     ID id;
@@ -43,8 +44,8 @@ struct FigureData {
      * @param figId Unique identifier of the figure.
      * @param params List of params that define the figure.
      */
-    FigureData(std::string t, ID figId, std::vector<double> params, std::vector<ID> subObjects)
-        : type(std::move(t)),
+    FigureData(FigureType t, ID figId, std::vector<double> params, std::vector<ID> subObjects)
+        : type(t),
           id(figId),
           params(std::move(params)),
           subObjects(std::move(subObjects)) {
