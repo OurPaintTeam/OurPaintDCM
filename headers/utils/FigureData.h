@@ -9,7 +9,8 @@
 #include "Enums.h"
 #include <string>
 #include <vector>
-
+#include <numeric>
+#include <cstddef>
 namespace OurPaintDCM::Utils {
 
 /**
@@ -50,8 +51,43 @@ struct FigureData {
           params(std::move(params)),
           subObjects(std::move(subObjects)) {
     }
+    bool operator==(const FigureData& other) const noexcept {
+        return type == other.type &&
+               id == other.id &&
+               params == other.params &&
+               subObjects == other.subObjects;
+    }
 };
-
 }
+namespace std {
+template<>
+struct hash<OurPaintDCM::Utils::FigureData> {
+    size_t operator()(const OurPaintDCM::Utils::FigureData& fig) const noexcept {
+        using namespace OurPaintDCM::Utils;
 
+        size_t seed = 0;
+        auto hash_combine = [&](size_t value) {
+            seed ^= value + 0x9e3779b97f4a7c15ULL + (seed << 6) + (seed >> 2);
+        };
+
+        // type
+        hash_combine(std::hash<int>{}(static_cast<int>(fig.type)));
+
+        // id
+        hash_combine(std::hash<ID>{}(fig.id));
+
+        // params
+        for (double p : fig.params) {
+            hash_combine(std::hash<double>{}(p));
+        }
+
+        // subObjects
+        for (const auto& sub : fig.subObjects) {
+            hash_combine(std::hash<ID>{}(sub));
+        }
+
+        return seed;
+    }
+};
+}
 #endif //HEADERS_UTILS_FIGUREDATA_H
