@@ -1,5 +1,7 @@
 #ifndef HEADERS_UTILS_ID_H
 #define HEADERS_UTILS_ID_H
+#include <cstddef>
+#include <functional>
 namespace OurPaintDCM::Utils {
 /**
  * @brief Strongly typed wrapper for an unsigned long long identifier.
@@ -87,4 +89,13 @@ struct ID {
     }
 };
 }
+namespace std {
+template<>
+struct hash<OurPaintDCM::Utils::ID> {
+    std::size_t operator()(const OurPaintDCM::Utils::ID& key) const noexcept { // <- const&
+        return std::hash<unsigned long long>{}(key.id);
+    }
+};
+}
+
 #endif //HEADERS_UTILS_ID_H
