@@ -22,27 +22,27 @@ namespace OurPaintDCM::Utils {
  * Utils::ID b = gen.nextID(); // ID(2)
  * @endcode
  */
-class IDGeneratorGTEST {
+class IDGenerator {
     ID _id; ///< Current state of the generator (last issued ID + 1)
 
 public:
     /// @brief Construct a new IDGenerator starting from 1.
-    constexpr IDGeneratorGTEST() noexcept : _id(1) {}
+    constexpr IDGenerator() noexcept : _id(1) {}
 
     /// @brief Deleted copy constructor (non-copyable).
-    IDGeneratorGTEST(const IDGeneratorGTEST&) = delete;
+    IDGenerator(const IDGenerator&) = delete;
 
     /// @brief Deleted copy assignment (non-copyable).
-    IDGeneratorGTEST& operator=(const IDGeneratorGTEST&) = delete;
+    IDGenerator& operator=(const IDGenerator&) = delete;
 
     /// @brief Deleted move constructor (non-movable).
-    IDGeneratorGTEST(IDGeneratorGTEST&&) = delete;
+    IDGenerator(IDGenerator&&) = delete;
 
     /// @brief Deleted move assignment (non-movable).
-    IDGeneratorGTEST& operator=(IDGeneratorGTEST&&) = delete;
+    IDGenerator& operator=(IDGenerator&&) = delete;
 
     /// @brief Default destructor.
-    ~IDGeneratorGTEST() = default;
+    ~IDGenerator() = default;
 
     /**
      * @brief Get current ID without increment.
