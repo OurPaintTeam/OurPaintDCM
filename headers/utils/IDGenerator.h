@@ -57,7 +57,7 @@ public:
      * @return A new unique ID.
      */
     [[nodiscard]] ID nextID() noexcept {
-        return ID(_id.id++);
+        return ID(_id++);
     }
 
     /**
