@@ -10,22 +10,22 @@ TEST(RequirementDataTest, DefaultConstructor) {
 }
 
 TEST(RequirementDataTest, ParameterizedConstructor) {
-    std::vector<ID> objs = {ID(1), ID(2)};
-    RequirementData req(RequirementType::ET_LINEINCIRCLE, ID(10), objs);
+    std::vector<FigureData> objs = {FigureData(FigureType::ET_POINT2D, ID(1), std::vector<double>(), std::vector<ID>()), FigureData(FigureType::ET_POINT2D, ID(2), std::vector<double>(), std::vector<ID>())};
+    RequirementData req(RequirementType::ET_LINEINCIRCLE, nullptr, objs);
 
     EXPECT_EQ(req.type, RequirementType::ET_LINEINCIRCLE);
-    EXPECT_EQ(req.id.id, 10);
+    EXPECT_EQ(req.id, -11);
     ASSERT_EQ(req.objects.size(), 2);
     EXPECT_EQ(req.objects[0].id, 1);
     EXPECT_EQ(req.objects[1].id, 2);
 }
 
 TEST(RequirementDataTest, MoveConstructorObjects) {
-    std::vector<ID> objs = {ID(5), ID(6)};
-    RequirementData req(RequirementType::ET_LINELINEPARALLEL, ID(20), std::move(objs));
+    std::vector<FigureData> objs = {FigureData(FigureType::ET_POINT2D, ID(5), std::vector<double>(), std::vector<ID>()), FigureData(FigureType::ET_POINT2D, ID(6), std::vector<double>(), std::vector<ID>())};
+    RequirementData req(RequirementType::ET_LINELINEPARALLEL, nullptr, std::move(objs));
 
     EXPECT_EQ(req.type, RequirementType::ET_LINELINEPARALLEL);
-    EXPECT_EQ(req.id.id, 20);
+    EXPECT_EQ(req.id.id, -11);
     ASSERT_EQ(req.objects.size(), 2);
     EXPECT_EQ(req.objects[0].id, 5);
     EXPECT_EQ(req.objects[1].id, 6);
