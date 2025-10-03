@@ -2,6 +2,9 @@
 #define HEADERS_UTILS_ID_H
 #include <cstddef>
 #include <functional>
+#include <concepts>
+template<typename T>
+concept Arithmetic = std::integral<T> || std::floating_point<T>;
 namespace OurPaintDCM::Utils {
 /**
  * @brief Strongly typed wrapper for an unsigned long long identifier.
@@ -64,6 +67,47 @@ struct ID {
     bool operator>(const ID& other) const noexcept {
         return id > other.id;
     }
+
+    /**
+     * @brief operator == between ID and standart arithmetic classes.
+     * @tparam T all arithmetic classes(int,float,double)
+     * @param other compare with ID
+     * @return true if equal, false if not
+     */
+    template<Arithmetic T>
+    bool operator==(const T& other) const noexcept {
+        return id == other;
+    }
+    /**
+     * @brief operator != between ID and standart arithmetic classes.
+     * @tparam T all arithmetic classes(int,float,double)
+     * @param other compare with ID
+     * @return true if not equal, false otherwise
+     */
+    template<Arithmetic T>
+    bool operator!=(const T& other) const noexcept {
+        return id != other;
+    }
+    /**
+     * @brief operator > between ID and standart arithmetic classes.
+     * @tparam T all arithmetic classes(int,float,double)
+     * @param other compare with ID
+     * @return true if less, false if not
+     */
+    template<Arithmetic T>
+    bool operator<(const T& other) const noexcept {
+        return id < other;
+    }
+    /**
+     * @brief operator > between ID and standart arithmetic classes.
+     * @tparam T all arithmetic classes(int,float,double)
+     * @param other compare with ID
+     * @return true if greater, false if not
+     */
+    template<Arithmetic T>
+    bool operator>(const T& other) const noexcept {
+        return id > other;
+    }
     /**
      * @brief Prefix increment operator.
      *
@@ -87,6 +131,7 @@ struct ID {
         id++;
         return temp;
     }
+
 };
 }
 namespace std {
@@ -96,6 +141,7 @@ struct hash<OurPaintDCM::Utils::ID> {
         return std::hash<unsigned long long>{}(key.id);
     }
 };
+
 }
 
 #endif //HEADERS_UTILS_ID_H
