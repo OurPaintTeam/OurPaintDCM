@@ -34,6 +34,9 @@ public:
      * @return The requirement type.
      */
     Utils::RequirementType getType() const noexcept { return type; }
+    virtual double getParam() const noexcept {
+        return 0.0;
+    }
     /**
      * @brief Convert this requirement into a mathematical function.
      *
@@ -95,6 +98,9 @@ public:
       * @return Pointer to function object tree.
       */
     ErrorFunction* toFunction() override;
+    double getParam() const noexcept override {
+        return _dist;
+    }
 };
 
 /**
@@ -153,6 +159,9 @@ public:
      * @return ErrorFunction* Pointer to the constraint function
      */
     ErrorFunction* toFunction() override;
+    double getParam() const noexcept override {
+        return _dist;
+    }
 };
 
 /**
@@ -220,6 +229,9 @@ public:
      * @return ErrorFunction* Pointer to the constraint function.
      */
     ErrorFunction* toFunction() override;
+    double getParam() const noexcept override {
+        return _dist;
+    }
 };
 /**
  * @brief Constraint: Line lies on a circle.
@@ -387,6 +399,9 @@ public:
      * @return ErrorFunction* Pointer to the constraint function.
      */
     ErrorFunction* toFunction() override;
+    double getParam() const noexcept override {
+        return _angle;
+    }
 };
 
 /**
