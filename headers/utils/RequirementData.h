@@ -2,7 +2,13 @@
 #define HEADERS_UTILS_REQUIREMENTDATA_H
 #include "Enums.h"
 #include "ID.h"
+#include "FigureData.h"
+#include "Requirements.h"
+
+#include <utility>
 #include <vector>
+
+
 
 namespace OurPaintDCM::Utils {
 /**
@@ -12,25 +18,23 @@ namespace OurPaintDCM::Utils {
  * It contains information about the requirement type and the
  * geometric objects it references. */
 struct RequirementData {
-    /// Type of the requirement (e.g., Coincidence, Parallel, Perpendicular).
-    RequirementType type;
-    /// Unique identifier of the requirement.
-    ID id;
-    /// IDs of the geometric objects affected by this requirement.
-    std::vector<ID> objects;
+    Requirements::Requirement* requirement;
+    RequirementType            type;
+    ID                         id;
+    std::vector<FigureData>    objects;
     /**
      * @brief Default constructor. */
     RequirementData() = default;
     /**
      * @brief Construct RequirementData from fields.
      * @param t Requirement type.
-     * @param reqId Unique identifier of the requirement.
+     * @param req Unique identifier of the requirement.
      * @param objs List of affected geometric objects. */
-    RequirementData(RequirementType t, ID reqId, std::vector<ID> objs)
-        : type(t),
-          id(reqId),
-          objects(std::move(objs)) {
-    }
+    RequirementData(RequirementType t, Requirements::Requirement* req, std::vector<FigureData> objs)
+        : requirement(req),
+          type(t),
+          objects(std::move(objs)),
+          id(-11) {}
 };
 }
 #endif //HEADERS_UTILS_REQUIREMENTDATA_H
