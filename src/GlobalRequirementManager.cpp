@@ -47,7 +47,8 @@ void OurPaintDCM::GlobalRequirementManager::removeRequirement(Utils::ID id) {
     if (!_reqs.contains(id) || id < 0) {
         throw std::invalid_argument("Requirement with id " + std::to_string(id.id) + " does not exist.");
     }
-    for (auto& req: _reqsData) {
+    for (auto it = _reqsData.begin(); it != _reqsData.end(); ++it) {
+        const Utils::RequirementData& req = *it;
         if (req.id == id) {
             if (req.objects.size() == 1) {
                 _graph.removeEdge(req.objects[0].id, req.objects[1].id);
@@ -58,7 +59,7 @@ void OurPaintDCM::GlobalRequirementManager::removeRequirement(Utils::ID id) {
                 }
             }
             _reqs.erase(id);
-            _reqsData.erase(req);
+            _reqsData.erase(it);
             _components.deleteElement(id);
             break;
         }
