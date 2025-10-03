@@ -3,6 +3,8 @@ var hierarchy =
     [ "OurPaintDCM::Figures::Arc< PointT >", "structOurPaintDCM_1_1Figures_1_1Arc.html", null ],
     [ "OurPaintDCM::Figures::Circle< PointT >", "structOurPaintDCM_1_1Figures_1_1Circle.html", null ],
     [ "OurPaintDCM::Figures::Circle< OurPaintDCM::Figures::Point2D >", "structOurPaintDCM_1_1Figures_1_1Circle.html", null ],
+    [ "OurPaintDCM::Requirements::ComponentElement", "structOurPaintDCM_1_1Requirements_1_1ComponentElement.html", null ],
+    [ "OurPaintDCM::Requirements::Components", "classOurPaintDCM_1_1Requirements_1_1Components.html", null ],
     [ "OurPaintDCM::Utils::FigureData", "structOurPaintDCM_1_1Utils_1_1FigureData.html", null ],
     [ "OurPaintDCM::GlobalRequirementManager", "classOurPaintDCM_1_1GlobalRequirementManager.html", null ],
     [ "std::hash< OurPaintDCM::Utils::FigureData >", "structstd_1_1hash_3_01OurPaintDCM_1_1Utils_1_1FigureData_01_4.html", null ],

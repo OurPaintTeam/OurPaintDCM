@@ -1,7 +1,9 @@
 <map id="OurPaintDCM::GlobalRequirementManager" name="OurPaintDCM::GlobalRequirementManager">
-<area shape="rect" id="Node000001" title="Central manager for global geometric constraints in 2D sketches." alt="" coords="5,196,248,236"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html" title="Monotonic unique ID generator." alt="" coords="53,93,200,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="129,147,129,196,124,196,124,147"/>
-<area shape="rect" id="Node000003" href="$structOurPaintDCM_1_1Utils_1_1ID.html" title="Strongly typed wrapper for an unsigned long long identifier." alt="" coords="43,5,211,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="129,44,129,93,124,93,124,44"/>
+<area shape="rect" id="Node000001" title="Central manager for global geometric constraints in 2D sketches." alt="" coords="69,196,312,236"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html" title="Monotonic unique ID generator." alt="" coords="16,93,163,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="116,142,142,170,169,194,165,198,138,174,112,146"/>
+<area shape="rect" id="Node000003" href="$structOurPaintDCM_1_1Utils_1_1ID.html" title="Strongly typed wrapper for an unsigned long long identifier." alt="" coords="5,5,173,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="92,44,92,93,87,93,87,44"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Requirements_1_1Components.html" title="class which describe all components" alt="" coords="187,93,394,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="264,145,211,198,208,194,261,141"/>
 </map>
