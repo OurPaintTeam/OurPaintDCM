@@ -7,8 +7,7 @@
 
 #include <utility>
 #include <vector>
-
-
+#include <cstddef>
 
 namespace OurPaintDCM::Utils {
 /**
@@ -22,6 +21,7 @@ struct RequirementData {
     RequirementType            type;
     ID                         id;
     std::vector<FigureData>    objects;
+    double                     param;
     /**
      * @brief Default constructor. */
     RequirementData() = default;
@@ -34,7 +34,33 @@ struct RequirementData {
         : requirement(req),
           type(t),
           objects(std::move(objs)),
-          id(-11) {}
+          id(-11), param(req->getParam()) {}
+};
+}
+namespace std {
+template<>
+struct hash<OurPaintDCM::Utils::RequirementData> {
+    size_t operator()(const OurPaintDCM::Utils::RequirementData& req) const noexcept {
+        using namespace OurPaintDCM::Utils;
+
+        size_t seed = 0;
+        auto hash_combine = [&](size_t value) {
+            seed ^= value + 0x9e3779b97f4a7c15ULL + (seed << 6) + (seed >> 2);
+        };
+
+        // type
+        hash_combine(std::hash<int>{}(static_cast<int>(req.type)));
+
+        // id
+        hash_combine(std::hash<ID>{}(req.id));
+
+        // objects
+        for (const FigureData& fig : req.objects) {
+            hash_combine(std::hash<unsigned long long>{}(fig.id.id));
+        }
+        hash_combine(std::hash<double>{}(req.requirement->getParam()));
+        return seed;
+    }
 };
 }
 #endif //HEADERS_UTILS_REQUIREMENTDATA_H
