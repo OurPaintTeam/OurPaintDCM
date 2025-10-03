@@ -34,17 +34,24 @@ struct RequirementData {
         : requirement(req),
           type(t),
           objects(std::move(objs)),
-          id(-11), param(req->getParam()) {}
+          id(-11) {
+        if (!req) {
+            param = 0;
+        } else {
+            param = req->getParam();
+        }
+    }
 };
 }
+
 namespace std {
-template<>
+template <>
 struct hash<OurPaintDCM::Utils::RequirementData> {
     size_t operator()(const OurPaintDCM::Utils::RequirementData& req) const noexcept {
         using namespace OurPaintDCM::Utils;
 
-        size_t seed = 0;
-        auto hash_combine = [&](size_t value) {
+        size_t seed         = 0;
+        auto   hash_combine = [&](size_t value) {
             seed ^= value + 0x9e3779b97f4a7c15ULL + (seed << 6) + (seed >> 2);
         };
 
