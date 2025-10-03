@@ -26,8 +26,14 @@ var annotated_dup =
       [ "Utils", "namespaceOurPaintDCM_1_1Utils.html", [
         [ "FigureData", "structOurPaintDCM_1_1Utils_1_1FigureData.html", "structOurPaintDCM_1_1Utils_1_1FigureData" ],
         [ "ID", "structOurPaintDCM_1_1Utils_1_1ID.html", "structOurPaintDCM_1_1Utils_1_1ID" ],
+        [ "IDGenerator", "classOurPaintDCM_1_1Utils_1_1IDGenerator.html", "classOurPaintDCM_1_1Utils_1_1IDGenerator" ],
         [ "RequirementData", "structOurPaintDCM_1_1Utils_1_1RequirementData.html", "structOurPaintDCM_1_1Utils_1_1RequirementData" ]
       ] ],
       [ "GlobalRequirementManager", "classOurPaintDCM_1_1GlobalRequirementManager.html", "classOurPaintDCM_1_1GlobalRequirementManager" ]
+    ] ],
+    [ "std", "namespacestd.html", [
+      [ "hash< OurPaintDCM::Utils::FigureData >", "structstd_1_1hash_3_01OurPaintDCM_1_1Utils_1_1FigureData_01_4.html", "structstd_1_1hash_3_01OurPaintDCM_1_1Utils_1_1FigureData_01_4" ],
+      [ "hash< OurPaintDCM::Utils::ID >", "structstd_1_1hash_3_01OurPaintDCM_1_1Utils_1_1ID_01_4.html", "structstd_1_1hash_3_01OurPaintDCM_1_1Utils_1_1ID_01_4" ],
+      [ "hash< OurPaintDCM::Utils::RequirementData >", "structstd_1_1hash_3_01OurPaintDCM_1_1Utils_1_1RequirementData_01_4.html", "structstd_1_1hash_3_01OurPaintDCM_1_1Utils_1_1RequirementData_01_4" ]
     ] ]
 ];

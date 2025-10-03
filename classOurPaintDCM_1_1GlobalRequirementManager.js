@@ -2,7 +2,7 @@ var classOurPaintDCM_1_1GlobalRequirementManager =
 [
     [ "GlobalRequirementManager", "classOurPaintDCM_1_1GlobalRequirementManager.html#a5fde08525b43452236becdf855a66b85", null ],
     [ "~GlobalRequirementManager", "classOurPaintDCM_1_1GlobalRequirementManager.html#aa270b51cfcac4d8f7363e371374874b7", null ],
-    [ "addRequirement", "classOurPaintDCM_1_1GlobalRequirementManager.html#aea7edf407aec255d69f5b4a10e5e4c13", null ],
+    [ "addRequirement", "classOurPaintDCM_1_1GlobalRequirementManager.html#a57aacb6ba7dfb7c4ed40540b7580a6aa", null ],
     [ "computeJacobianRank", "classOurPaintDCM_1_1GlobalRequirementManager.html#a247a2fe6dc0f051cf75925990a439fb8", null ],
     [ "countVariablesDoF", "classOurPaintDCM_1_1GlobalRequirementManager.html#a227274f226858526a4de028ed20887ca", null ],
     [ "getMode", "classOurPaintDCM_1_1GlobalRequirementManager.html#a352842ed6e7e86154ae84ae379531108", null ],
@@ -17,9 +17,10 @@ var classOurPaintDCM_1_1GlobalRequirementManager =
     [ "solveDrag", "classOurPaintDCM_1_1GlobalRequirementManager.html#aa13a4058bcbc21cbe9e3948952aa1bcf", null ],
     [ "solveGlobal", "classOurPaintDCM_1_1GlobalRequirementManager.html#aaaa9a518ed67590b31eaccecb1e73479", null ],
     [ "solveLocal", "classOurPaintDCM_1_1GlobalRequirementManager.html#a8e21918642d7d376efeca2727f5113b3", null ],
-    [ "_errors", "classOurPaintDCM_1_1GlobalRequirementManager.html#a6d83bfd3491cdbb6e223e6dcdf0d297a", null ],
-    [ "_graph", "classOurPaintDCM_1_1GlobalRequirementManager.html#aab161c26384e50b27d97e807bcdce289", null ],
+    [ "_components", "classOurPaintDCM_1_1GlobalRequirementManager.html#a91104ceed3d8f835f078f685d43a805f", null ],
+    [ "_graph", "classOurPaintDCM_1_1GlobalRequirementManager.html#ac4fe83677a904ea4ffb6e78ab3c1b1ee", null ],
+    [ "_idGenerator", "classOurPaintDCM_1_1GlobalRequirementManager.html#a2d91552de201b621df26036023b64649", null ],
     [ "_mode", "classOurPaintDCM_1_1GlobalRequirementManager.html#aefe256ccce6051801c889a3bf400ae86", null ],
     [ "_reqs", "classOurPaintDCM_1_1GlobalRequirementManager.html#ad3e850a93ea7efab8aef1a88239b181a", null ],
-    [ "_vars", "classOurPaintDCM_1_1GlobalRequirementManager.html#a01e3d20168089612740eefe7b1d6ae17", null ]
+    [ "_reqsData", "classOurPaintDCM_1_1GlobalRequirementManager.html#a273e16e8f33266de9c4989a84856a7f5", null ]
 ];

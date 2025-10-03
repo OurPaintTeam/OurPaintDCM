@@ -1,10 +1,19 @@
 var searchData=
 [
-  ['setmode_0',['setMode',['../classOurPaintDCM_1_1GlobalRequirementManager.html#a5e538d72db962272436a583ca14f55e7',1,'OurPaintDCM::GlobalRequirementManager']]],
-  ['solve_1',['solve',['../classOurPaintDCM_1_1GlobalRequirementManager.html#a3a0bbfa5404688992146c082d026250d',1,'OurPaintDCM::GlobalRequirementManager']]],
-  ['solvedrag_2',['solveDrag',['../classOurPaintDCM_1_1GlobalRequirementManager.html#aa13a4058bcbc21cbe9e3948952aa1bcf',1,'OurPaintDCM::GlobalRequirementManager']]],
-  ['solveglobal_3',['solveGlobal',['../classOurPaintDCM_1_1GlobalRequirementManager.html#aaaa9a518ed67590b31eaccecb1e73479',1,'OurPaintDCM::GlobalRequirementManager']]],
-  ['solvelocal_4',['solveLocal',['../classOurPaintDCM_1_1GlobalRequirementManager.html#a8e21918642d7d376efeca2727f5113b3',1,'OurPaintDCM::GlobalRequirementManager']]],
-  ['solvemode_5',['SolveMode',['../namespaceOurPaintDCM_1_1Utils.html#a6f2b4a61c8ed5b8b772f8424adf5af15',1,'OurPaintDCM::Utils']]],
-  ['subobjects_6',['subObjects',['../structOurPaintDCM_1_1Utils_1_1FigureData.html#a9d47771ea3457ef776cb1fb428c3ec0b',1,'OurPaintDCM::Utils::FigureData']]]
+  ['p1_0',['p1',['../structOurPaintDCM_1_1Figures_1_1Arc.html#a46e9154ff18acada9614628b1305c4c9',1,'OurPaintDCM::Figures::Arc::p1'],['../structOurPaintDCM_1_1Figures_1_1Line.html#a4df26ad263d5bc782e5071e7831a17c6',1,'OurPaintDCM::Figures::Line::p1']]],
+  ['p2_1',['p2',['../structOurPaintDCM_1_1Figures_1_1Arc.html#a9d0b96be165d84a142df17023f9dbc89',1,'OurPaintDCM::Figures::Arc::p2'],['../structOurPaintDCM_1_1Figures_1_1Line.html#ac6368dc71cc1f16eb8edac11be11c985',1,'OurPaintDCM::Figures::Line::p2']]],
+  ['p_5fcenter_2',['p_center',['../structOurPaintDCM_1_1Figures_1_1Arc.html#a5a813729dd7fceef4386ef829a11fafb',1,'OurPaintDCM::Figures::Arc']]],
+  ['param_3',['param',['../structOurPaintDCM_1_1Utils_1_1RequirementData.html#a4189aabe99f6508951916dde98108421',1,'OurPaintDCM::Utils::RequirementData']]],
+  ['params_4',['params',['../structOurPaintDCM_1_1Utils_1_1FigureData.html#a6b59851b4cba133cfddcbf08f60944cb',1,'OurPaintDCM::Utils::FigureData']]],
+  ['point2d_5',['point2d',['../structOurPaintDCM_1_1Figures_1_1Point2D.html',1,'OurPaintDCM::Figures::Point2D'],['../structOurPaintDCM_1_1Figures_1_1Point2D.html#acf490202186d5f63748fda33f39025f3',1,'OurPaintDCM::Figures::Point2D::Point2D(double x, double y)'],['../structOurPaintDCM_1_1Figures_1_1Point2D.html#a7193a3b8455f1b36e71f50ee64529c16',1,'OurPaintDCM::Figures::Point2D::Point2D()=default']]],
+  ['point2d_2eh_6',['Point2D.h',['../Point2D_8h.html',1,'']]],
+  ['pointbase_7',['pointbase',['../structOurPaintDCM_1_1Figures_1_1PointBase.html',1,'OurPaintDCM::Figures::PointBase&lt; N &gt;'],['../structOurPaintDCM_1_1Figures_1_1PointBase.html#acbba67373d49a3207d6e8b450abfd7d7',1,'OurPaintDCM::Figures::PointBase::PointBase(const std::array&lt; double, N &gt; &amp;values)'],['../structOurPaintDCM_1_1Figures_1_1PointBase.html#a73fb5f03b0e553332676ad804f8a5f3f',1,'OurPaintDCM::Figures::PointBase::PointBase()=default']]],
+  ['pointbase_2eh_8',['PointBase.h',['../PointBase_8h.html',1,'']]],
+  ['pointbase_3c_202_20_3e_9',['PointBase&lt; 2 &gt;',['../structOurPaintDCM_1_1Figures_1_1PointBase.html',1,'OurPaintDCM::Figures']]],
+  ['pointlinedist_10',['pointlinedist',['../classOurPaintDCM_1_1Requirements_1_1PointLineDist.html',1,'OurPaintDCM::Requirements::PointLineDist'],['../classOurPaintDCM_1_1Requirements_1_1PointLineDist.html#aced40e884be5770643a0125e25c4ac4d',1,'OurPaintDCM::Requirements::PointLineDist::PointLineDist()']]],
+  ['pointonline_11',['pointonline',['../classOurPaintDCM_1_1Requirements_1_1PointOnLine.html',1,'OurPaintDCM::Requirements::PointOnLine'],['../classOurPaintDCM_1_1Requirements_1_1PointOnLine.html#a26866ce1aa7493b430c6e5e3892de40f',1,'OurPaintDCM::Requirements::PointOnLine::PointOnLine()']]],
+  ['pointonpoint_12',['pointonpoint',['../classOurPaintDCM_1_1Requirements_1_1PointOnPoint.html',1,'OurPaintDCM::Requirements::PointOnPoint'],['../classOurPaintDCM_1_1Requirements_1_1PointOnPoint.html#af56ae73759964d232673c657cc6de724',1,'OurPaintDCM::Requirements::PointOnPoint::PointOnPoint()']]],
+  ['pointpointdist_13',['pointpointdist',['../classOurPaintDCM_1_1Requirements_1_1PointPointDist.html',1,'OurPaintDCM::Requirements::PointPointDist'],['../classOurPaintDCM_1_1Requirements_1_1PointPointDist.html#ad912e01698ca8d95edf80cbeccadfc3a',1,'OurPaintDCM::Requirements::PointPointDist::PointPointDist()']]],
+  ['ptrx_14',['ptrX',['../structOurPaintDCM_1_1Figures_1_1Point2D.html#ad4e6e2bae59f79ba39b367ca1bc6580f',1,'OurPaintDCM::Figures::Point2D']]],
+  ['ptry_15',['ptrY',['../structOurPaintDCM_1_1Figures_1_1Point2D.html#ae10b911d2116732ed615f9fc5d291e0d',1,'OurPaintDCM::Figures::Point2D']]]
 ];
