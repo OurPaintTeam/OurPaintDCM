@@ -132,6 +132,8 @@ struct ID {
         return temp;
     }
 
+    auto operator<=>(const ID& id) const = default;
+
 };
 }
 namespace std {
