@@ -4,12 +4,12 @@
 using namespace OurPaintDCM::Utils;
 
 TEST(IDGeneratorTest, DefaultConstructor) {
-    IDGeneratorGTEST gen;
+    IDGenerator gen;
     EXPECT_EQ(gen.current().id, 1);
 }
 
 TEST(IDGeneratorTest, NextIDIncrements) {
-    IDGeneratorGTEST gen;
+    IDGenerator gen;
     ID id1 = gen.nextID();
     ID id2 = gen.nextID();
     EXPECT_EQ(id1.id, 1);
@@ -18,7 +18,7 @@ TEST(IDGeneratorTest, NextIDIncrements) {
 }
 
 TEST(IDGeneratorTest, Reset) {
-    IDGeneratorGTEST gen;
+    IDGenerator gen;
     gen.nextID();
     gen.nextID();
     EXPECT_EQ(gen.current().id, 3);
@@ -28,7 +28,7 @@ TEST(IDGeneratorTest, Reset) {
 }
 
 TEST(IDGeneratorTest, SetCustomID) {
-    IDGeneratorGTEST gen;
+    IDGenerator gen;
     gen.set(ID(100));
     EXPECT_EQ(gen.current().id, 100);
     EXPECT_EQ(gen.nextID().id, 100);
@@ -36,7 +36,7 @@ TEST(IDGeneratorTest, SetCustomID) {
 }
 
 TEST(IDGeneratorTest, SequentialIDs) {
-    IDGeneratorGTEST gen;
+    IDGenerator gen;
     std::vector<int> values;
     for (int i = 0; i < 5; ++i) {
         values.push_back(gen.nextID().id);
