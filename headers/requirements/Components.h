@@ -64,6 +64,13 @@ class Components {
             }
         }
     }
+    size_t varsSize() const {
+        return _vars.size();
+    }
+    size_t elemsSize() const {
+        return _elems.size();
+    }
+
     void clear() {
         _vars.clear();
         _elems.clear();
