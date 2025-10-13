@@ -9,6 +9,7 @@ OurPaintDCM::GlobalRequirementManager::GlobalRequirementManager()
 }
 
 OurPaintDCM::GlobalRequirementManager::~GlobalRequirementManager() {
+    _reqs.clear();
     for (auto& [id, req] : _reqs) {
         delete req;
     }
@@ -41,6 +42,7 @@ void OurPaintDCM::GlobalRequirementManager::addRequirement(Utils::RequirementDat
             _graph.addEdge(req.objects[i-1].id, req.objects[i].id, id);
         }
     }
+    _reqsData.insert(req);
 }
 
 void OurPaintDCM::GlobalRequirementManager::removeRequirement(Utils::ID id) {
@@ -67,7 +69,7 @@ void OurPaintDCM::GlobalRequirementManager::removeRequirement(Utils::ID id) {
 }
 
 void OurPaintDCM::GlobalRequirementManager::removeAllRequirements() {
-    _graph = Graph<Utils::ID, Utils::ID>();
+    _graph = Graph<Utils::ID, Utils::ID, UndirectedPolicy, WeightedPolicy>();
     _reqs.clear();
     _reqsData.clear();
     _components.clear();
@@ -79,4 +81,5 @@ OurPaintDCM::Utils::RequirementData OurPaintDCM::GlobalRequirementManager::getRe
             return req;
         }
     }
+    throw std::out_of_range("No Requirement found");
 }
