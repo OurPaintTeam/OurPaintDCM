@@ -106,3 +106,19 @@ void OurPaintDCM::GlobalRequirementManager::solve() {
     }
 }
 
+bool OurPaintDCM::GlobalRequirementManager::isOverConstrained() const {
+    const size_t equationCount = _components.varsSize();
+    const size_t variableCount = _components.varsSize();
+    return equationCount < variableCount;
+}
+bool OurPaintDCM::GlobalRequirementManager::isUnderConstrained() const {
+    const size_t equationCount = _components.varsSize();
+    const size_t variableCount = _components.varsSize();
+    return variableCount > equationCount;
+}
+bool OurPaintDCM::GlobalRequirementManager::isWellConstrained() const {
+    const size_t equationCount = _components.varsSize();
+    const size_t variableCount = _components.varsSize();
+    return equationCount == variableCount;
+}
+
