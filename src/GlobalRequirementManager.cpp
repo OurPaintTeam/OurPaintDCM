@@ -64,5 +64,11 @@ void OurPaintDCM::GlobalRequirementManager::removeRequirement(Utils::ID id) {
             break;
         }
     }
+}
 
+void OurPaintDCM::GlobalRequirementManager::removeAllRequirements() {
+    _graph = Graph<Utils::ID, Utils::ID>();
+    _reqs.clear();
+    _reqsData.clear();
+    _components.clear();
 }
