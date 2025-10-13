@@ -75,19 +75,45 @@ public:
      *       and it will be deleted in the destructor.
      */
     void addRequirement(Utils::RequirementData req);
+
+    /**
+     * brief Remove an existing requirement by its ID.
+     * Using linear search to find the requirement in _reqsData and delete it
+     * @param id id of requirement to remove
+     * @throws std::invalid_argument if the requirement with the given ID does not exist.
+     */
     void removeRequirement(Utils::ID id);
+    /**
+     * @brief Remove all requirements from the manager.
+     *
+     * Clears all internal data structures, including:
+     * - the requirements map (_reqs),
+     * - the requirements data set (_reqsData),
+     * - the dependency graph (_graph),
+     * - the components and error functions (_components).
+     *
+     * After calling this method, the manager will be in an empty state,
+     * ready to accept new requirements.
+     */
     void removeAllRequirements();
+    /**
+     * @brief Retrieve a requirement by its ID.
+     *
+     * @param id The unique identifier of the requirement to retrieve.
+     * @return The corresponding RequirementData object.
+     * @throws std::invalid_argument if the requirement with the given ID does not exist.
+     */
     Utils::RequirementData getRequirement(Utils::ID id) const;
 
     // ---------------- Solve modes ----------------
     void             setMode(Utils::SolveMode mode);
-    Utils::SolveMode getMode() const;
+    inline Utils::SolveMode getMode() const;
     void             solve();
 
     // ---------------- Diagnostics ----------------
-    bool isOverConstrained() const;
-    bool isUnderConstrained() const;
-    bool isWellConstrained() const;
+    inline bool isOverConstrained() const;
+    inline bool isUnderConstrained() const;
+    inline bool isWellConstrained() const;
 
 private:
     void solveGlobal();

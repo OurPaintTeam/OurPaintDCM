@@ -83,3 +83,26 @@ OurPaintDCM::Utils::RequirementData OurPaintDCM::GlobalRequirementManager::getRe
     }
     throw std::out_of_range("No Requirement found");
 }
+
+void OurPaintDCM::GlobalRequirementManager::setMode(Utils::SolveMode mode) {
+    _mode = mode;
+}
+
+OurPaintDCM::Utils::SolveMode OurPaintDCM::GlobalRequirementManager::getMode() const {
+    return _mode;
+}
+
+void OurPaintDCM::GlobalRequirementManager::solve() {
+    switch (_mode) {
+        case Utils::SolveMode::GLOBAL:
+            solveGlobal();
+            break;
+        case Utils::SolveMode::LOCAL:
+            solveLocal();
+            break;
+        case Utils::SolveMode::DRAG:
+            solveDrag();
+            break;
+    }
+}
+
