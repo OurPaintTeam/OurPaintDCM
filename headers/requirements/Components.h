@@ -64,6 +64,10 @@ class Components {
             }
         }
     }
+    void clear() {
+        _vars.clear();
+        _elems.clear();
+    }
 };
 }
 #endif //HEADERS_REQUIREMENTS_COMPONENTS_H
