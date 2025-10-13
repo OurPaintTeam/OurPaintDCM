@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['set_0',['set',['../classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a18b2be9c90bf302faaff026cb4fad937',1,'OurPaintDCM::Utils::IDGenerator']]],
-  ['setmode_1',['setMode',['../classOurPaintDCM_1_1GlobalRequirementManager.html#a5e538d72db962272436a583ca14f55e7',1,'OurPaintDCM::GlobalRequirementManager']]],
-  ['solve_2',['solve',['../classOurPaintDCM_1_1GlobalRequirementManager.html#a3a0bbfa5404688992146c082d026250d',1,'OurPaintDCM::GlobalRequirementManager']]],
-  ['solvedrag_3',['solveDrag',['../classOurPaintDCM_1_1GlobalRequirementManager.html#aa13a4058bcbc21cbe9e3948952aa1bcf',1,'OurPaintDCM::GlobalRequirementManager']]],
-  ['solveglobal_4',['solveGlobal',['../classOurPaintDCM_1_1GlobalRequirementManager.html#aaaa9a518ed67590b31eaccecb1e73479',1,'OurPaintDCM::GlobalRequirementManager']]],
-  ['solvelocal_5',['solveLocal',['../classOurPaintDCM_1_1GlobalRequirementManager.html#a8e21918642d7d376efeca2727f5113b3',1,'OurPaintDCM::GlobalRequirementManager']]]
+  ['removeallrequirements_0',['removeAllRequirements',['../classOurPaintDCM_1_1GlobalRequirementManager.html#a854e9d6621325d08ec6a645691091d4b',1,'OurPaintDCM::GlobalRequirementManager']]],
+  ['removerequirement_1',['removeRequirement',['../classOurPaintDCM_1_1GlobalRequirementManager.html#aa7cd66c6f2f854eb4fd6df21c6da57ee',1,'OurPaintDCM::GlobalRequirementManager']]],
+  ['requirement_2',['Requirement',['../classOurPaintDCM_1_1Requirements_1_1Requirement.html#ac152453c39ad670acd4fa57daaf2a82c',1,'OurPaintDCM::Requirements::Requirement']]],
+  ['requirementdata_3',['requirementdata',['../structOurPaintDCM_1_1Utils_1_1RequirementData.html#a9776a166be9fafd0c105fc6002131415',1,'OurPaintDCM::Utils::RequirementData::RequirementData()=default'],['../structOurPaintDCM_1_1Utils_1_1RequirementData.html#a7198ae28ee86cbe406d0d41aa341700c',1,'OurPaintDCM::Utils::RequirementData::RequirementData(RequirementType t, Requirements::Requirement *req, std::vector&lt; FigureData &gt; objs)'],['../structOurPaintDCM_1_1Utils_1_1RequirementData.html#af23cfbc103fc1599188d96ecb45cd741',1,'OurPaintDCM::Utils::RequirementData::RequirementData(const RequirementData &amp;other)=default'],['../structOurPaintDCM_1_1Utils_1_1RequirementData.html#a9722e7580a723764984c0324b492475c',1,'OurPaintDCM::Utils::RequirementData::RequirementData(RequirementData &amp;&amp;other)=default']]],
+  ['reset_4',['reset',['../classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a70025ff26074369425935e60dcec77bc',1,'OurPaintDCM::Utils::IDGenerator']]]
 ];
