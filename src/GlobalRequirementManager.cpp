@@ -72,3 +72,11 @@ void OurPaintDCM::GlobalRequirementManager::removeAllRequirements() {
     _reqsData.clear();
     _components.clear();
 }
+
+OurPaintDCM::Utils::RequirementData OurPaintDCM::GlobalRequirementManager::getRequirement(Utils::ID id) const {
+    for (const auto & req : _reqsData) {
+        if (req.id == id) {
+            return req;
+        }
+    }
+}
