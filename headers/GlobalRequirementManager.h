@@ -27,12 +27,12 @@ namespace OurPaintDCM {
  * diagnostics for under/over/well-constrained systems.
  */
 class GlobalRequirementManager {
-    Utils::IDGenerator                                        _idGenerator; ///< Generates unique IDs
-    std::unordered_map<Utils::ID, Requirements::Requirement*> _reqs;   ///< ID -> Requirement
-    std::unordered_set<Utils::RequirementData>                _reqsData;  ///< Constraints data
-    Graph<Utils::ID, Utils::ID>                               _graph;  ///< Dependency graph<ID of figure, ID of requirement>.
-    Requirements::Components                                  _components; ///< Include ErrorFunction by ID inside
-    Utils::SolveMode                                          _mode;   ///< Current solving mode
+    Utils::IDGenerator                                              _idGenerator; ///< Generates unique IDs
+    std::unordered_map<Utils::ID, Requirements::Requirement*>       _reqs;   ///< ID -> Requirement
+    std::unordered_set<Utils::RequirementData>                      _reqsData;  ///< Constraints data
+    Graph<Utils::ID, Utils::ID, UndirectedPolicy, WeightedPolicy>   _graph;  ///< Dependency graph<ID of figure, ID of requirement>.
+    Requirements::Components                                        _components; ///< Include ErrorFunction by ID inside
+    Utils::SolveMode                                                _mode;   ///< Current solving mode
 
 public:
     /**
