@@ -56,9 +56,6 @@ class Components {
     void deleteElement(const Utils::ID& id) {
         for (auto it = _elems.begin(); it != _elems.end(); ++it) {
             if (it->id == id) {
-                for (auto& var : it->func->getVariables()) {
-                    _vars.erase(var);
-                }
                 _elems.erase(it);
                 break;
             }
@@ -74,6 +71,14 @@ class Components {
     void clear() {
         _vars.clear();
         _elems.clear();
+    }
+
+    const std::vector<ComponentElement>& getElements() const {
+        return _elems;
+    }
+
+    const std::set<Variable*>& getVariables() const {
+        return _vars;
     }
 };
 }
