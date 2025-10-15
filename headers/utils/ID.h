@@ -3,9 +3,10 @@
 #include <cstddef>
 #include <functional>
 #include <concepts>
-template<typename T>
-concept Arithmetic = std::integral<T> || std::floating_point<T>;
+
 namespace OurPaintDCM::Utils {
+template<typename T>
+concept IDArithmetic = std::integral<T> || std::floating_point<T>;
 /**
  * @brief Strongly typed wrapper for an unsigned long long identifier.
  *
@@ -74,7 +75,7 @@ struct ID {
      * @param other compare with ID
      * @return true if equal, false if not
      */
-    template<Arithmetic T>
+    template<IDArithmetic T>
     bool operator==(const T& other) const noexcept {
         return id == other;
     }
@@ -84,7 +85,7 @@ struct ID {
      * @param other compare with ID
      * @return true if not equal, false otherwise
      */
-    template<Arithmetic T>
+    template<IDArithmetic T>
     bool operator!=(const T& other) const noexcept {
         return id != other;
     }
@@ -94,7 +95,7 @@ struct ID {
      * @param other compare with ID
      * @return true if less, false if not
      */
-    template<Arithmetic T>
+    template<IDArithmetic T>
     bool operator<(const T& other) const noexcept {
         return id < other;
     }
@@ -104,7 +105,7 @@ struct ID {
      * @param other compare with ID
      * @return true if greater, false if not
      */
-    template<Arithmetic T>
+    template<IDArithmetic T>
     bool operator>(const T& other) const noexcept {
         return id > other;
     }
