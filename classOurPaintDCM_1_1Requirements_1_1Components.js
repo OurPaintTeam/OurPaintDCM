@@ -5,6 +5,8 @@ var classOurPaintDCM_1_1Requirements_1_1Components =
     [ "clear", "classOurPaintDCM_1_1Requirements_1_1Components.html#aa9d0f4b3d27cfe595eba4f2904e67a46", null ],
     [ "deleteElement", "classOurPaintDCM_1_1Requirements_1_1Components.html#a2ef7cf4a32a3b67d1ba2d6096b19ce08", null ],
     [ "elemsSize", "classOurPaintDCM_1_1Requirements_1_1Components.html#a49e4eadf1a9361b6e221de7bd0578901", null ],
+    [ "getElements", "classOurPaintDCM_1_1Requirements_1_1Components.html#af2acbed84eff7a182d106518edc702e9", null ],
+    [ "getVariables", "classOurPaintDCM_1_1Requirements_1_1Components.html#a12dc18c89ae78e0f34580c71f9fd4863", null ],
     [ "varsSize", "classOurPaintDCM_1_1Requirements_1_1Components.html#a18d2a6fa11b9e6fdb86dbe052d7a733d", null ],
     [ "_elems", "classOurPaintDCM_1_1Requirements_1_1Components.html#a74c02638b9477c692897b847ad3a472e", null ],
     [ "_vars", "classOurPaintDCM_1_1Requirements_1_1Components.html#a95d998067a653e3c30f30fb9b3187afb", null ]

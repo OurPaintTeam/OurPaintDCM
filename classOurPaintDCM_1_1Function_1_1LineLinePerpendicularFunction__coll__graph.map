@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Function::LineLinePerpendicularFunction" name="OurPaintDCM::Function::LineLinePerpendicularFunction">
+<area shape="rect" id="Node000001" title="Two line segments must be perpendicular." alt="" coords="5,93,233,133"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Function_1_1RequirementFunction.html" title="Abstract base class for all geometric constraint functions." alt="" coords="34,5,205,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="122,59,122,93,117,93,117,59"/>
+</map>

@@ -32,5 +32,19 @@ var hierarchy =
       [ "OurPaintDCM::Requirements::PointOnPoint", "classOurPaintDCM_1_1Requirements_1_1PointOnPoint.html", null ],
       [ "OurPaintDCM::Requirements::PointPointDist", "classOurPaintDCM_1_1Requirements_1_1PointPointDist.html", null ]
     ] ],
-    [ "OurPaintDCM::Utils::RequirementData", "structOurPaintDCM_1_1Utils_1_1RequirementData.html", null ]
+    [ "OurPaintDCM::Utils::RequirementData", "structOurPaintDCM_1_1Utils_1_1RequirementData.html", null ],
+    [ "OurPaintDCM::Function::RequirementFunction", "classOurPaintDCM_1_1Function_1_1RequirementFunction.html", [
+      [ "OurPaintDCM::Function::ArcCenterOnPerpendicularFunction", "classOurPaintDCM_1_1Function_1_1ArcCenterOnPerpendicularFunction.html", null ],
+      [ "OurPaintDCM::Function::HorizontalFunction", "classOurPaintDCM_1_1Function_1_1HorizontalFunction.html", null ],
+      [ "OurPaintDCM::Function::LineCircleDistanceFunction", "classOurPaintDCM_1_1Function_1_1LineCircleDistanceFunction.html", null ],
+      [ "OurPaintDCM::Function::LineLineAngleFunction", "classOurPaintDCM_1_1Function_1_1LineLineAngleFunction.html", null ],
+      [ "OurPaintDCM::Function::LineLineParallelFunction", "classOurPaintDCM_1_1Function_1_1LineLineParallelFunction.html", null ],
+      [ "OurPaintDCM::Function::LineLinePerpendicularFunction", "classOurPaintDCM_1_1Function_1_1LineLinePerpendicularFunction.html", null ],
+      [ "OurPaintDCM::Function::LineOnCircleFunction", "classOurPaintDCM_1_1Function_1_1LineOnCircleFunction.html", null ],
+      [ "OurPaintDCM::Function::PointLineDistanceFunction", "classOurPaintDCM_1_1Function_1_1PointLineDistanceFunction.html", null ],
+      [ "OurPaintDCM::Function::PointOnLineFunction", "classOurPaintDCM_1_1Function_1_1PointOnLineFunction.html", null ],
+      [ "OurPaintDCM::Function::PointOnPointFunction", "classOurPaintDCM_1_1Function_1_1PointOnPointFunction.html", null ],
+      [ "OurPaintDCM::Function::PointPointDistanceFunction", "classOurPaintDCM_1_1Function_1_1PointPointDistanceFunction.html", null ],
+      [ "OurPaintDCM::Function::VerticalFunction", "classOurPaintDCM_1_1Function_1_1VerticalFunction.html", null ]
+    ] ]
 ];

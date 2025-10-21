@@ -4,6 +4,7 @@ var namespaceOurPaintDCM_1_1Utils =
     [ "ID", "structOurPaintDCM_1_1Utils_1_1ID.html", "structOurPaintDCM_1_1Utils_1_1ID" ],
     [ "IDGenerator", "classOurPaintDCM_1_1Utils_1_1IDGenerator.html", "classOurPaintDCM_1_1Utils_1_1IDGenerator" ],
     [ "RequirementData", "structOurPaintDCM_1_1Utils_1_1RequirementData.html", "structOurPaintDCM_1_1Utils_1_1RequirementData" ],
+    [ "IDArithmetic", "conceptOurPaintDCM_1_1Utils_1_1IDArithmetic.html", null ],
     [ "FigureType", "namespaceOurPaintDCM_1_1Utils.html#a04b4a3b6dcee5e30db2920a0034287c1", [
       [ "ET_POINT2D", "namespaceOurPaintDCM_1_1Utils.html#a04b4a3b6dcee5e30db2920a0034287c1a5c4c1a7ec89c97c9f50ebdd563c1e1f2", null ],
       [ "ET_LINE", "namespaceOurPaintDCM_1_1Utils.html#a04b4a3b6dcee5e30db2920a0034287c1a95d6faf610ee5aadcbc3b9bac87edf06", null ],

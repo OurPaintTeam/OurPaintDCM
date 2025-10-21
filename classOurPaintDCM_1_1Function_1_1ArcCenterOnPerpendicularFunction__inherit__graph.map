@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Function::ArcCenterOnPerpendicularFunction" name="OurPaintDCM::Function::ArcCenterOnPerpendicularFunction">
+<area shape="rect" id="Node000001" title="Default constraint used for arcs: the arc center lies on a perpendicular bisector." alt="" coords="5,93,261,133"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Function_1_1RequirementFunction.html" title="Abstract base class for all geometric constraint functions." alt="" coords="48,5,219,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="136,59,136,93,131,93,131,59"/>
+</map>
