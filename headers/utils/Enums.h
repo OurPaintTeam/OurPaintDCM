@@ -75,5 +75,13 @@ enum class SolveMode {
     LOCAL,  ///< Solve only affected subgraphs/subsystems
     DRAG    ///< Interactive drag mode (tracking free DoF)
 };
+enum class SystemStatus {
+    WELL_CONSTRAINED,
+    UNDER_CONSTRAINED,
+    OVER_CONSTRAINED,
+    SINGULAR_SYSTEM,
+    EMPTY,
+    UNKNOWN
+};
 }
 #endif //HEADERS_UTILS_ENUM_H
