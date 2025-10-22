@@ -30,5 +30,13 @@ var namespaceOurPaintDCM_1_1Utils =
       [ "GLOBAL", "namespaceOurPaintDCM_1_1Utils.html#a6f2b4a61c8ed5b8b772f8424adf5af15a6eecfba72d12922ee1dead07a0ef3334", null ],
       [ "LOCAL", "namespaceOurPaintDCM_1_1Utils.html#a6f2b4a61c8ed5b8b772f8424adf5af15a54b4c4075463b2e02cd69f5cd139b5b2", null ],
       [ "DRAG", "namespaceOurPaintDCM_1_1Utils.html#a6f2b4a61c8ed5b8b772f8424adf5af15aff3480bb59f4249a9453a0caaa1b2236", null ]
+    ] ],
+    [ "SystemStatus", "namespaceOurPaintDCM_1_1Utils.html#ae51395db4b382114f464d061563658ca", [
+      [ "WELL_CONSTRAINED", "namespaceOurPaintDCM_1_1Utils.html#ae51395db4b382114f464d061563658caaa6fe173e0f8c78314af47a9713c5e85e", null ],
+      [ "UNDER_CONSTRAINED", "namespaceOurPaintDCM_1_1Utils.html#ae51395db4b382114f464d061563658caa59c70733d9896122f7355fa460a0f2cc", null ],
+      [ "OVER_CONSTRAINED", "namespaceOurPaintDCM_1_1Utils.html#ae51395db4b382114f464d061563658caa532fd16f2b8c05d88045d98ae5e32699", null ],
+      [ "SINGULAR_SYSTEM", "namespaceOurPaintDCM_1_1Utils.html#ae51395db4b382114f464d061563658caa718dd381fba412c630106d7a86168c91", null ],
+      [ "EMPTY", "namespaceOurPaintDCM_1_1Utils.html#ae51395db4b382114f464d061563658caaba2b45bdc11e2a4a6e86aab2ac693cbb", null ],
+      [ "UNKNOWN", "namespaceOurPaintDCM_1_1Utils.html#ae51395db4b382114f464d061563658caa696b031073e74bf2cb98e5ef201d4aa3", null ]
     ] ]
 ];
