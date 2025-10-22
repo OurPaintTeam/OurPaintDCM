@@ -18,8 +18,14 @@ double OurPaintDCM::Function::PointLineDistanceFunction::evaluate() const {
     if (lineLen < 1e-12) {
         return 0.0;
     }
-    double num = (*_vars[0] - *_vars[2]) * dy - (*_vars[1] - *_vars[3]);
-    return num / lineLen - _distance;
+
+    double px = *_vars[0] - *_vars[2];
+    double py = *_vars[1] - *_vars[3];
+
+    double cross = px * dy - py * dx;
+    double dist = cross / lineLen;
+
+    return dist - _distance;
 }
 
 std::unordered_map<VAR, double> OurPaintDCM::Function::PointLineDistanceFunction::gradient() const {
@@ -29,38 +35,30 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::PointLineDistanceFunction
     double dy = *_vars[5] - *_vars[3];
     double lineLen = std::sqrt(dx * dx + dy * dy);
 
-    if (lineLen < 1e-10) {
-        grad[_vars[0]] = 0.0;
-        grad[_vars[1]] = 0.0;
-        grad[_vars[2]] = 0.0;
-        grad[_vars[3]] = 0.0;
-        grad[_vars[4]] = 0.0;
-        grad[_vars[5]] = 0.0;
+    if (lineLen < 1e-12) {
+        for (auto v : _vars) grad[v] = 0.0;
         return grad;
     }
 
     double px = *_vars[0] - *_vars[2];
     double py = *_vars[1] - *_vars[3];
     double cross = px * dy - py * dx;
-    double sign = (cross >= 0.0) ? 1.0 : -1.0;
-
     double lineLen2 = lineLen * lineLen;
 
     // df/dPx, df/dPy
-    grad[_vars[0]] = sign * dy / lineLen;
-    grad[_vars[1]] = -sign * dx / lineLen;
+    grad[_vars[0]] = dy / lineLen;
+    grad[_vars[1]] = -dx / lineLen;
 
     // df/dX1, df/dY1
-    grad[_vars[2]] = sign * (-dy + (cross * dx) / lineLen2) / lineLen;
-    grad[_vars[3]] = sign * (dx + (cross * dy) / lineLen2) / lineLen;
+    grad[_vars[2]] = (-dy - cross * dx / lineLen2) / lineLen;
+    grad[_vars[3]] = (dx - cross * dy / lineLen2) / lineLen;
 
     // df/dX2, df/dY2
-    grad[_vars[4]] = -sign * ((-cross * dx) / lineLen2) / lineLen;
-    grad[_vars[5]] = -sign * ((-cross * dy) / lineLen2) / lineLen;
+    grad[_vars[4]] = (cross * dx / lineLen2) / lineLen;
+    grad[_vars[5]] = (cross * dy / lineLen2) / lineLen;
 
     return grad;
 }
-
 
 size_t OurPaintDCM::Function::PointLineDistanceFunction::getVarCount() const {
     return 6;
@@ -183,7 +181,9 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::PointPointDistanceFunctio
 
     return grad;
 }
-
+size_t OurPaintDCM::Function::PointPointDistanceFunction::getVarCount() const {
+    return 4;
+}
 //PointOnPointFunction Requirement
 OurPaintDCM::Function::PointOnPointFunction::PointOnPointFunction(const std::vector<VAR> &vars) : RequirementFunction(
     Utils::RequirementType::ET_POINTONPOINT, vars) {
@@ -350,6 +350,7 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::LineCircleDistanceFunctio
 
     return grad;
 }
+
 size_t OurPaintDCM::Function::LineCircleDistanceFunction::getVarCount() const {
     return 7;
 }
@@ -418,17 +419,20 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::LineOnCircleFunction::gra
 
     return grad;
 }
+
 size_t OurPaintDCM::Function::LineOnCircleFunction::getVarCount() const {
     return 7;
 }
 
 //LineLineParallelFunction Requirement
-OurPaintDCM::Function::LineLineParallelFunction::LineLineParallelFunction(const std::vector<VAR>& vars) : RequirementFunction(
+OurPaintDCM::Function::LineLineParallelFunction::LineLineParallelFunction(
+    const std::vector<VAR> &vars) : RequirementFunction(
     Utils::RequirementType::ET_LINELINEPARALLEL, vars) {
     if (vars.size() != 8) {
         throw std::invalid_argument("This function must have 8 variables");
     }
 }
+
 double OurPaintDCM::Function::LineLineParallelFunction::evaluate() const {
     double x1 = *_vars[0];
     double y1 = *_vars[1];
@@ -478,16 +482,20 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::LineLineParallelFunction:
 
     return grad;
 }
+
 size_t OurPaintDCM::Function::LineLineParallelFunction::getVarCount() const {
     return 8;
 }
+
 // LineLinePerpendicularFunction Requirement
-OurPaintDCM::Function::LineLinePerpendicularFunction::LineLinePerpendicularFunction(const std::vector<VAR>& vars) : RequirementFunction(
+OurPaintDCM::Function::LineLinePerpendicularFunction::LineLinePerpendicularFunction(
+    const std::vector<VAR> &vars) : RequirementFunction(
     Utils::RequirementType::ET_LINELINEPERPENDICULAR, vars) {
     if (vars.size() != 8) {
         throw std::invalid_argument("This function must have 8 variables");
     }
 }
+
 double OurPaintDCM::Function::LineLinePerpendicularFunction::evaluate() const {
     double x1 = *_vars[0];
     double y1 = *_vars[1];
@@ -503,8 +511,9 @@ double OurPaintDCM::Function::LineLinePerpendicularFunction::evaluate() const {
     double dx2 = x4 - x3;
     double dy2 = y4 - y3;
 
-    return dx1*dx2 + dy1*dy2;
+    return dx1 * dx2 + dy1 * dy2;
 }
+
 std::unordered_map<VAR, double> OurPaintDCM::Function::LineLinePerpendicularFunction::gradient() const {
     std::unordered_map<VAR, double> grad;
 
@@ -524,13 +533,13 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::LineLinePerpendicularFunc
 
     grad[_vars[0]] = -dx2; // A1x
     grad[_vars[1]] = -dy2; // A1y
-    grad[_vars[2]] =  dx2; // A2x
-    grad[_vars[3]] =  dy2; // A2y
+    grad[_vars[2]] = dx2; // A2x
+    grad[_vars[3]] = dy2; // A2y
 
     grad[_vars[4]] = -dx1; // B1x
     grad[_vars[5]] = -dy1; // B1y
-    grad[_vars[6]] =  dx1; // B2x
-    grad[_vars[7]] =  dy1; // B2y
+    grad[_vars[6]] = dx1; // B2x
+    grad[_vars[7]] = dy1; // B2y
 
     return grad;
 }
@@ -538,12 +547,16 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::LineLinePerpendicularFunc
 size_t OurPaintDCM::Function::LineLinePerpendicularFunction::getVarCount() const {
     return 8;
 }
+
 // LineLineAngleFunction Requirement
-OurPaintDCM::Function::LineLineAngleFunction::LineLineAngleFunction(const std::vector<VAR>& vars, double angle) : RequirementFunction(ET_LINELINEANGLE, vars) {
+OurPaintDCM::Function::LineLineAngleFunction::LineLineAngleFunction(const std::vector<VAR> &vars,
+                                                                    double angle) : RequirementFunction(
+    Utils::RequirementType::ET_LINELINEANGLE, vars), _angle(angle) {
     if (vars.size() != 8) {
         throw std::invalid_argument("This function must have 8 variables");
     }
 }
+
 double OurPaintDCM::Function::LineLineAngleFunction::evaluate() const {
     double x1 = *_vars[0];
     double y1 = *_vars[1];
@@ -559,15 +572,16 @@ double OurPaintDCM::Function::LineLineAngleFunction::evaluate() const {
     double dx2 = x4 - x3;
     double dy2 = y4 - y3;
 
-    double dot = dx1*dx2 + dy1*dy2;
-    double len1 = std::sqrt(dx1*dx1 + dy1*dy1);
-    double len2 = std::sqrt(dx2*dx2 + dy2*dy2);
+    double dot = dx1 * dx2 + dy1 * dy2;
+    double len1 = std::sqrt(dx1 * dx1 + dy1 * dy1);
+    double len2 = std::sqrt(dx2 * dx2 + dy2 * dy2);
 
     if (len1 < 1e-10 || len2 < 1e-10) return 0.0;
 
     double cos_theta = dot / (len1 * len2);
     return cos_theta - std::cos(_angle);
 }
+
 std::unordered_map<VAR, double> OurPaintDCM::Function::LineLineAngleFunction::gradient() const {
     std::unordered_map<VAR, double> grad;
 
@@ -585,39 +599,43 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::LineLineAngleFunction::gr
     double dx2 = x4 - x3;
     double dy2 = y4 - y3;
 
-    double len1 = std::sqrt(dx1*dx1 + dy1*dy1);
-    double len2 = std::sqrt(dx2*dx2 + dy2*dy2);
+    double len1 = std::sqrt(dx1 * dx1 + dy1 * dy1);
+    double len2 = std::sqrt(dx2 * dx2 + dy2 * dy2);
 
     if (len1 < 1e-10 || len2 < 1e-10) {
-        for (VAR v : _vars) grad[v] = 0.0;
+        for (VAR v: _vars) grad[v] = 0.0;
         return grad;
     }
 
-    double dot = dx1*dx2 + dy1*dy2;
-    double len1_3 = len1*len1*len1;
-    double len2_3 = len2*len2*len2;
+    double dot = dx1 * dx2 + dy1 * dy2;
+    double len1_3 = len1 * len1 * len1;
+    double len2_3 = len2 * len2 * len2;
 
     // Gradient w.r.t v1 = (dx1, dy1)
-    grad[_vars[0]] = dx2 / (len1*len2) - dx1 * dot / (len1_3 * len2); // A1x
-    grad[_vars[1]] = dy2 / (len1*len2) - dy1 * dot / (len1_3 * len2); // A1y
+    grad[_vars[0]] = dx2 / (len1 * len2) - dx1 * dot / (len1_3 * len2); // A1x
+    grad[_vars[1]] = dy2 / (len1 * len2) - dy1 * dot / (len1_3 * len2); // A1y
     grad[_vars[2]] = -grad[_vars[0]]; // A2x
     grad[_vars[3]] = -grad[_vars[1]]; // A2y
 
     // Gradient w.r.t v2 = (dx2, dy2)
-    grad[_vars[4]] = - (dx1 / (len1*len2) - dx2 * dot / (len1 * len2_3)); // B1x
-    grad[_vars[5]] = - (dy1 / (len1*len2) - dy2 * dot / (len1 * len2_3)); // B1y
+    grad[_vars[4]] = -(dx1 / (len1 * len2) - dx2 * dot / (len1 * len2_3)); // B1x
+    grad[_vars[5]] = -(dy1 / (len1 * len2) - dy2 * dot / (len1 * len2_3)); // B1y
     grad[_vars[6]] = -grad[_vars[4]]; // B2x
     grad[_vars[7]] = -grad[_vars[5]]; // B2y
 
     return grad;
 }
+size_t OurPaintDCM::Function::LineLineAngleFunction::getVarCount() const {
+    return 8;
+}
 // VerticalFunction Requirement
-OurPaintDCM::Function::VerticalFunction::VerticalFunction(const std::vector<VAR>& vars) : RequirementFunction(
+OurPaintDCM::Function::VerticalFunction::VerticalFunction(const std::vector<VAR> &vars) : RequirementFunction(
     Utils::RequirementType::ET_VERTICAL, vars) {
     if (vars.size() != 4) {
         throw std::invalid_argument("This function must have 4 variables");
     }
 }
+
 double OurPaintDCM::Function::VerticalFunction::evaluate() const {
     double x1 = *_vars[0];
     double y1 = *_vars[1];
@@ -626,7 +644,7 @@ double OurPaintDCM::Function::VerticalFunction::evaluate() const {
 
     double dx = x2 - x1;
     double dy = y2 - y1;
-    double len = std::sqrt(dx*dx + dy*dy); // normalize
+    double len = std::sqrt(dx * dx + dy * dy); // normalize
 
     if (len < 1e-10)
         return 0.0;
@@ -644,20 +662,20 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::VerticalFunction::gradien
 
     double dx = x2 - x1;
     double dy = y2 - y1;
-    double len2 = dx*dx + dy*dy;
+    double len2 = dx * dx + dy * dy;
     double len = std::sqrt(len2);
 
     if (len < 1e-10) {
-        for (auto v : _vars) grad[v] = 0.0;
+        for (auto v: _vars) grad[v] = 0.0;
         return grad;
     }
 
     double len3 = len2 * len;
 
-    grad[_vars[0]] = -1.0/len + dx*dx/len3;       // df/dx1
-    grad[_vars[1]] =  dx*dy/len3;                 // df/dy1
-    grad[_vars[2]] =  1.0/len - dx*dx/len3;       // df/dx2
-    grad[_vars[3]] = -dx*dy/len3;                 // df/dy2
+    grad[_vars[0]] = -1.0 / len + dx * dx / len3; // df/dx1
+    grad[_vars[1]] = dx * dy / len3; // df/dy1
+    grad[_vars[2]] = 1.0 / len - dx * dx / len3; // df/dx2
+    grad[_vars[3]] = -dx * dy / len3; // df/dy2
 
     return grad;
 }
@@ -665,13 +683,15 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::VerticalFunction::gradien
 size_t OurPaintDCM::Function::VerticalFunction::getVarCount() const {
     return 4;
 }
+
 // HorizontalFunction Requirement
-OurPaintDCM::Function::HorizontalFunction::HorizontalFunction(const std::vector<VAR>& vars) : RequirementFunction(
+OurPaintDCM::Function::HorizontalFunction::HorizontalFunction(const std::vector<VAR> &vars) : RequirementFunction(
     Utils::RequirementType::ET_HORIZONTAL, vars) {
     if (vars.size() != 4) {
         throw std::invalid_argument("This function must have 4 variables");
     }
 }
+
 double OurPaintDCM::Function::HorizontalFunction::evaluate() const {
     double x1 = *_vars[0];
     double y1 = *_vars[1];
@@ -680,13 +700,14 @@ double OurPaintDCM::Function::HorizontalFunction::evaluate() const {
 
     double dx = x2 - x1;
     double dy = y2 - y1;
-    double len = std::sqrt(dx*dx + dy*dy); // normalize
+    double len = std::sqrt(dx * dx + dy * dy); // normalize
 
     if (len < 1e-10)
         return 0.0;
 
     return dy / len;
 }
+
 std::unordered_map<VAR, double> OurPaintDCM::Function::HorizontalFunction::gradient() const {
     std::unordered_map<VAR, double> grad;
 
@@ -701,17 +722,17 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::HorizontalFunction::gradi
     double len = std::sqrt(len2);
 
     if (len < 1e-10) {
-        for (auto v : _vars) grad[v] = 0.0;
+        for (auto v: _vars) grad[v] = 0.0;
         return grad;
     }
 
     double len3 = len2 * len;
 
     // f = dy / len
-    grad[_vars[0]] =  dx * dy / len3;              // df/dx1
-    grad[_vars[1]] = -1.0 / len + dy * dy / len3;  // df/dy1
-    grad[_vars[2]] = -dx * dy / len3;              // df/dx2
-    grad[_vars[3]] =  1.0 / len - dy * dy / len3;  // df/dy2
+    grad[_vars[0]] = dx * dy / len3; // df/dx1
+    grad[_vars[1]] = -1.0 / len + dy * dy / len3; // df/dy1
+    grad[_vars[2]] = -dx * dy / len3; // df/dx2
+    grad[_vars[3]] = 1.0 / len - dy * dy / len3; // df/dy2
 
     return grad;
 }
@@ -720,13 +741,16 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::HorizontalFunction::gradi
 size_t OurPaintDCM::Function::HorizontalFunction::getVarCount() const {
     return 4;
 }
+
 // ArcCenterOnPerpendicularFunction Requirement
-OurPaintDCM::Function::ArcCenterOnPerpendicularFunction::ArcCenterOnPerpendicularFunction(const std::vector<VAR>& vars) : RequirementFunction(
+OurPaintDCM::Function::ArcCenterOnPerpendicularFunction::ArcCenterOnPerpendicularFunction(
+    const std::vector<VAR> &vars) : RequirementFunction(
     Utils::RequirementType::ET_ARCCENTERONPERPENDICULAR, vars) {
     if (vars.size() != 6) {
         throw std::invalid_argument("This function must have 6 variables");
     }
 }
+
 double OurPaintDCM::Function::ArcCenterOnPerpendicularFunction::evaluate() const {
     double Ax = *_vars[0];
     double Ay = *_vars[1];
@@ -752,6 +776,7 @@ double OurPaintDCM::Function::ArcCenterOnPerpendicularFunction::evaluate() const
 
     return dot;
 }
+
 std::unordered_map<VAR, double> OurPaintDCM::Function::ArcCenterOnPerpendicularFunction::gradient() const {
     std::unordered_map<VAR, double> grad;
 
@@ -767,15 +792,16 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::ArcCenterOnPerpendicularF
     double mx = Cx - 0.5 * (Ax + Bx);
     double my = Cy - 0.5 * (Ay + By);
 
-    grad[_vars[0]] = -mx - 0.5 * dx;  // df/dAx
-    grad[_vars[1]] = -my - 0.5 * dy;  // df/dAy
-    grad[_vars[2]] =  mx - 0.5 * dx;  // df/dBx
-    grad[_vars[3]] =  my - 0.5 * dy;  // df/dBy
-    grad[_vars[4]] =  dx;             // df/dCx
-    grad[_vars[5]] =  dy;             // df/dCy
+    grad[_vars[0]] = -mx - 0.5 * dx; // df/dAx
+    grad[_vars[1]] = -my - 0.5 * dy; // df/dAy
+    grad[_vars[2]] = mx - 0.5 * dx; // df/dBx
+    grad[_vars[3]] = my - 0.5 * dy; // df/dBy
+    grad[_vars[4]] = dx; // df/dCx
+    grad[_vars[5]] = dy; // df/dCy
 
     return grad;
 }
+
 size_t OurPaintDCM::Function::ArcCenterOnPerpendicularFunction::getVarCount() const {
     return 6;
 }

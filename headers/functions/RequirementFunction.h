@@ -166,9 +166,7 @@ namespace OurPaintDCM::Function {
         LineLinePerpendicularFunction(const std::vector<VAR>& vars);
         double evaluate() const override;
         std::unordered_map<VAR, double> gradient() const override;
-        std::vector<VAR> getVars() const override;
         size_t getVarCount() const override;
-        Utils::RequirementType getType() const override;
     };
 
     /**
@@ -182,9 +180,7 @@ namespace OurPaintDCM::Function {
         LineLineAngleFunction(const std::vector<VAR>& vars, double angle);
         double evaluate() const override;
         std::unordered_map<VAR, double> gradient() const override;
-        std::vector<VAR> getVars() const override;
         size_t getVarCount() const override;
-        Utils::RequirementType getType() const override;
     };
 
     /**
@@ -223,9 +219,7 @@ namespace OurPaintDCM::Function {
         ArcCenterOnPerpendicularFunction(const std::vector<VAR>& vars);
         double evaluate() const override;
         std::unordered_map<VAR, double> gradient() const override;
-        std::vector<VAR> getVars() const override;
         size_t getVarCount() const override;
-        Utils::RequirementType getType() const override;
     };
 }
 
