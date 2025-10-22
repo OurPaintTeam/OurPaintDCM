@@ -8,6 +8,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 include_directories(${PROJECT_SOURCE_DIR}/headers
         ${PROJECT_SOURCE_DIR}/headers/figures
         ${PROJECT_SOURCE_DIR}/headers/functions
+        ${PROJECT_SOURCE_DIR}/headers/system
         ${PROJECT_SOURCE_DIR}/headers/requirements
         ${PROJECT_SOURCE_DIR}/headers/utils)
 include_directories(math/headers
