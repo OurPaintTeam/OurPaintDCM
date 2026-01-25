@@ -1,6 +1,7 @@
 #ifndef HEADERS_UTILS_ENUM_H
 #define HEADERS_UTILS_ENUM_H
 #include <cstdint>
+#include <string_view>
 
 namespace OurPaintDCM::Utils {
 /**
@@ -83,5 +84,6 @@ enum class SystemStatus {
     EMPTY,
     UNKNOWN
 };
+
 }
 #endif //HEADERS_UTILS_ENUM_H
