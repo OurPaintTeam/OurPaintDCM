@@ -1,0 +1,9 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::getDependencies" name="OurPaintDCM::Figures::GeometryStorage::getDependencies">
+<area shape="rect" id="Node000001" title="Find all points that object depends on." alt="" coords="5,69,272,109"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6926e48ad2b405395193869662e513b7" title="Find point ID by pointer." alt="" coords="325,5,549,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="232,67,329,46,330,51,233,72"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6c3bc268eea533b9d9d92302b5669cce" title="Get full figure entry." alt="" coords="333,69,541,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="272,87,319,87,319,92,272,92"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Convert type T to corresponding FigureType." alt="" coords="320,133,553,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="233,107,330,128,329,133,232,112"/>
+</map>

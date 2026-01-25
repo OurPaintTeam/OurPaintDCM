@@ -1,0 +1,18 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::createFigure" name="OurPaintDCM::Figures::GeometryStorage::createFigure">
+<area shape="rect" id="Node000001" title="Create figure without exposing concrete types." alt="" coords="5,133,240,173"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a47552c379eb63400b08a0658d155366a" title="Create arc." alt="" coords="297,5,512,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="152,131,212,93,287,55,307,47,309,52,289,60,215,97,154,135"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abb4303854d92f17fb5f93a2ae8d1d520" title="Create circle." alt="" coords="289,69,520,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="211,131,302,110,304,115,212,136"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ad3847541d313d2aa8c2764eec26d1aa5" title="Create line between two points." alt="" coords="294,133,515,173"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="240,151,281,151,281,156,240,156"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a77165102d9ed651bce40f71b9bd434c1" title="Create point with given coordinates." alt="" coords="291,197,518,237"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="212,171,304,192,302,197,211,176"/>
+<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Convert type T to corresponding FigureType." alt="" coords="288,261,521,301"/>
+<area shape="poly" id="edge9_Node000001_Node000007" title=" " alt="" coords="154,171,215,209,289,247,309,254,307,259,287,252,212,214,152,176"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a10d4994ee732333e277d12a1fa2d16cc" title="Generate and return the next unique ID." alt="" coords="569,101,729,141"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="487,43,522,55,602,92,599,97,520,60,485,48"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="521,102,556,106,555,112,520,107"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="515,136,555,131,556,136,516,141"/>
+<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="485,195,520,183,599,146,602,151,522,188,487,200"/>
+</map>

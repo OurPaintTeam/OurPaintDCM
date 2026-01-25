@@ -97,7 +97,9 @@ $(document).ready(function(){initNavTree('namespaceOurPaintDCM_1_1Figures.html',
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#concepts">Concepts</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle"><div class="title">OurPaintDCM::Figures Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -110,6 +112,15 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOurPaintDCM_1_1Figures_1_1Circle.html">Circle</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic circle structure for 2D/3D points.  <a href="structOurPaintDCM_1_1Figures_1_1Circle.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOurPaintDCM_1_1Figures_1_1FigureData.html">FigureData</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input data for figure creation without exposing internal types.  <a href="structOurPaintDCM_1_1Figures_1_1FigureData.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOurPaintDCM_1_1Figures_1_1FigureEntry.html">FigureEntry</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to store metadata about a geometric object.  <a href="structOurPaintDCM_1_1Figures_1_1FigureEntry.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html">GeometryStorage</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storage for geometric objects with unified identification system.  <a href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOurPaintDCM_1_1Figures_1_1Line.html">Line</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standart segment class.  <a href="structOurPaintDCM_1_1Figures_1_1Line.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -119,7 +130,65 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOurPaintDCM_1_1Figures_1_1PointBase.html">PointBase</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic base class for N-dimensional points.  <a href="structOurPaintDCM_1_1Figures_1_1PointBase.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="concepts" name="concepts"></a>
+Concepts</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conceptOurPaintDCM_1_1Figures_1_1SupportedFigure.html">SupportedFigure</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concept to check if a type is a supported geometric figure. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ae08636f07ccdc0c93d8c8bea2ca6de84" id="r_ae08636f07ccdc0c93d8c8bea2ca6de84"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Figures.html#ae08636f07ccdc0c93d8c8bea2ca6de84">Line2D</a> = <a class="el" href="structOurPaintDCM_1_1Figures_1_1Line.html">Line</a>&lt; <a class="el" href="structOurPaintDCM_1_1Figures_1_1Point2D.html">Point2D</a> &gt;</td></tr>
+<tr class="separator:ae08636f07ccdc0c93d8c8bea2ca6de84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17b1e169219e225ed0e0f5496649618a" id="r_a17b1e169219e225ed0e0f5496649618a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Figures.html#a17b1e169219e225ed0e0f5496649618a">Circle2D</a> = <a class="el" href="structOurPaintDCM_1_1Figures_1_1Circle.html">Circle</a>&lt; <a class="el" href="structOurPaintDCM_1_1Figures_1_1Point2D.html">Point2D</a> &gt;</td></tr>
+<tr class="separator:a17b1e169219e225ed0e0f5496649618a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab70c8ae61e35e15fd055991066dbc410" id="r_ab70c8ae61e35e15fd055991066dbc410"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Figures.html#ab70c8ae61e35e15fd055991066dbc410">Arc2D</a> = <a class="el" href="structOurPaintDCM_1_1Figures_1_1Arc.html">Arc</a>&lt; <a class="el" href="structOurPaintDCM_1_1Figures_1_1Point2D.html">Point2D</a> &gt;</td></tr>
+<tr class="separator:ab70c8ae61e35e15fd055991066dbc410"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="ab70c8ae61e35e15fd055991066dbc410" name="ab70c8ae61e35e15fd055991066dbc410"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab70c8ae61e35e15fd055991066dbc410">&#9670;&#160;</a></span>Arc2D</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespaceOurPaintDCM_1_1Figures.html#ab70c8ae61e35e15fd055991066dbc410">OurPaintDCM::Figures::Arc2D</a> = typedef <a class="el" href="structOurPaintDCM_1_1Figures_1_1Arc.html">Arc</a>&lt;<a class="el" href="structOurPaintDCM_1_1Figures_1_1Point2D.html">Point2D</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a17b1e169219e225ed0e0f5496649618a" name="a17b1e169219e225ed0e0f5496649618a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17b1e169219e225ed0e0f5496649618a">&#9670;&#160;</a></span>Circle2D</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespaceOurPaintDCM_1_1Figures.html#a17b1e169219e225ed0e0f5496649618a">OurPaintDCM::Figures::Circle2D</a> = typedef <a class="el" href="structOurPaintDCM_1_1Figures_1_1Circle.html">Circle</a>&lt;<a class="el" href="structOurPaintDCM_1_1Figures_1_1Point2D.html">Point2D</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae08636f07ccdc0c93d8c8bea2ca6de84" name="ae08636f07ccdc0c93d8c8bea2ca6de84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae08636f07ccdc0c93d8c8bea2ca6de84">&#9670;&#160;</a></span>Line2D</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespaceOurPaintDCM_1_1Figures.html#ae08636f07ccdc0c93d8c8bea2ca6de84">OurPaintDCM::Figures::Line2D</a> = typedef <a class="el" href="structOurPaintDCM_1_1Figures_1_1Line.html">Line</a>&lt;<a class="el" href="structOurPaintDCM_1_1Figures_1_1Point2D.html">Point2D</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

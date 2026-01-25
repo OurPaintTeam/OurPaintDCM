@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Utils::IDGenerator::reset" name="OurPaintDCM::Utils::IDGenerator::reset">
+<area shape="rect" id="Node000001" title="Reset generator back to initial state (ID = 1)." alt="" coords="239,5,389,45"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a332b104c3627015ca1b46506684072ed" title="Clear entire storage." alt="" coords="5,5,191,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="225,28,191,28,191,23,225,23"/>
+</map>

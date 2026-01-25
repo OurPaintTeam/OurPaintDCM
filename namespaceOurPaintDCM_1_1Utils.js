@@ -1,6 +1,5 @@
 var namespaceOurPaintDCM_1_1Utils =
 [
-    [ "FigureData", "structOurPaintDCM_1_1Utils_1_1FigureData.html", "structOurPaintDCM_1_1Utils_1_1FigureData" ],
     [ "ID", "structOurPaintDCM_1_1Utils_1_1ID.html", "structOurPaintDCM_1_1Utils_1_1ID" ],
     [ "IDGenerator", "classOurPaintDCM_1_1Utils_1_1IDGenerator.html", "classOurPaintDCM_1_1Utils_1_1IDGenerator" ],
     [ "RequirementData", "structOurPaintDCM_1_1Utils_1_1RequirementData.html", "structOurPaintDCM_1_1Utils_1_1RequirementData" ],

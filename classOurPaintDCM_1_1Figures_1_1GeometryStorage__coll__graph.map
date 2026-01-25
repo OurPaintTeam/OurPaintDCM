@@ -1,0 +1,7 @@
+<map id="OurPaintDCM::Figures::GeometryStorage" name="OurPaintDCM::Figures::GeometryStorage">
+<area shape="rect" id="Node000001" title="Storage for geometric objects with unified identification system." alt="" coords="8,196,171,236"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html" title="Monotonic unique ID generator." alt="" coords="16,93,163,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,147,92,196,87,196,87,147"/>
+<area shape="rect" id="Node000003" href="$structOurPaintDCM_1_1Utils_1_1ID.html" title="Strongly typed wrapper for an unsigned long long identifier." alt="" coords="5,5,173,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="92,44,92,93,87,93,87,44"/>
+</map>

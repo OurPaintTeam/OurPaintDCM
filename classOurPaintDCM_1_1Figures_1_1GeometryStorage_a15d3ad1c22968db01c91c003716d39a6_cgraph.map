@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::currentID" name="OurPaintDCM::Figures::GeometryStorage::currentID">
+<area shape="rect" id="Node000001" title="Get current ID generator value." alt="" coords="5,5,219,45"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a27dc8a968cc1fc86744675b55bee62c8" title="Get current ID without increment." alt="" coords="267,5,429,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="219,23,253,23,253,28,219,28"/>
+</map>

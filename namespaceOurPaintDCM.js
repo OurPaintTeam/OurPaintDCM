@@ -4,6 +4,5 @@ var namespaceOurPaintDCM =
     [ "Function", "namespaceOurPaintDCM_1_1Function.html", "namespaceOurPaintDCM_1_1Function" ],
     [ "Requirements", "namespaceOurPaintDCM_1_1Requirements.html", "namespaceOurPaintDCM_1_1Requirements" ],
     [ "System", "namespaceOurPaintDCM_1_1System.html", "namespaceOurPaintDCM_1_1System" ],
-    [ "Utils", "namespaceOurPaintDCM_1_1Utils.html", "namespaceOurPaintDCM_1_1Utils" ],
-    [ "GlobalRequirementManager", "classOurPaintDCM_1_1GlobalRequirementManager.html", "classOurPaintDCM_1_1GlobalRequirementManager" ]
+    [ "Utils", "namespaceOurPaintDCM_1_1Utils.html", "namespaceOurPaintDCM_1_1Utils" ]
 ];

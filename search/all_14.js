@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['x_0',['x',['../structOurPaintDCM_1_1Figures_1_1Point2D.html#a783b0f201624031dd0cd387bb6c52bf9',1,'OurPaintDCM::Figures::Point2D::x()'],['../structOurPaintDCM_1_1Figures_1_1Point2D.html#a48cb7e724824e64555ab07cc4c23cb19',1,'OurPaintDCM::Figures::Point2D::x() const']]]
+  ['well_5fconstrained_0',['WELL_CONSTRAINED',['../namespaceOurPaintDCM_1_1Utils.html#ae51395db4b382114f464d061563658caaa6fe173e0f8c78314af47a9713c5e85e',1,'OurPaintDCM::Utils']]],
+  ['why_20lazy_20deletion_1',['Why lazy deletion?',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#autotoc_md2',1,'']]]
 ];

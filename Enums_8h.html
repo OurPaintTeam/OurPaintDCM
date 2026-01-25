@@ -103,14 +103,17 @@ $(document).ready(function(){initNavTree('Enums_8h.html',''); initResizable(); }
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;cstdint&gt;</code><br />
+<code>#include &lt;string_view&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for Enums.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="Enums_8h__incl.png" border="0" usemap="#aheaders_2utils_2Enums_8h" alt=""/></div>
 <map name="aheaders_2utils_2Enums_8h" id="aheaders_2utils_2Enums_8h">
-<area shape="rect" title=" " alt="" coords="5,5,172,31"/>
-<area shape="rect" title=" " alt="" coords="55,79,122,104"/>
-<area shape="poly" title=" " alt="" coords="91,31,91,65,86,65,86,31"/>
+<area shape="rect" title=" " alt="" coords="9,5,175,31"/>
+<area shape="rect" title=" " alt="" coords="5,79,72,104"/>
+<area shape="poly" title=" " alt="" coords="85,33,58,69,53,66,81,29"/>
+<area shape="rect" title=" " alt="" coords="97,79,194,104"/>
+<area shape="poly" title=" " alt="" coords="103,29,131,66,126,69,99,33"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -118,32 +121,27 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="Enums_8h__dep__incl.png" border="0" usemap="#aheaders_2utils_2Enums_8hdep" alt=""/></div>
 <map name="aheaders_2utils_2Enums_8hdep" id="aheaders_2utils_2Enums_8hdep">
-<area shape="rect" title=" " alt="" coords="565,5,732,31"/>
-<area shape="rect" href="RequirementFunction_8h.html" title=" " alt="" coords="238,79,465,119"/>
-<area shape="poly" title=" " alt="" coords="593,37,423,81,422,76,592,31"/>
-<area shape="rect" href="RequirementFunctionSystem_8h.html" title=" " alt="" coords="16,167,231,207"/>
-<area shape="poly" title=" " alt="" coords="552,28,370,47,286,62,227,81,199,100,174,123,137,168,133,165,170,119,196,96,225,76,285,57,369,42,551,23"/>
-<area shape="rect" href="Requirements_8h.html" title=" " alt="" coords="566,79,731,119"/>
-<area shape="poly" title=" " alt="" coords="651,44,651,79,646,79,646,44"/>
-<area shape="rect" href="RequirementData_8h.html" title=" " alt="" coords="803,167,998,207"/>
-<area shape="poly" title=" " alt="" coords="681,35,745,76,796,116,870,164,867,169,792,121,742,81,678,40"/>
-<area shape="rect" href="FigureData_8h.html" title=" " alt="" coords="807,86,1000,111"/>
-<area shape="poly" title=" " alt="" coords="700,32,867,83,865,89,698,37"/>
-<area shape="poly" title=" " alt="" coords="289,126,174,169,172,164,287,121"/>
-<area shape="rect" href="RequirementFunction_8cpp.html" title=" " alt="" coords="255,167,448,207"/>
-<area shape="poly" title=" " alt="" coords="354,133,354,166,349,166,349,133"/>
-<area shape="rect" href="RequirementFunctionSystem_8cpp.html" title=" " alt="" coords="5,255,241,295"/>
-<area shape="poly" title=" " alt="" coords="126,221,126,254,121,254,121,221"/>
-<area shape="rect" href="GlobalRequirementManager_8h.html" title=" " alt="" coords="799,255,1003,295"/>
-<area shape="poly" title=" " alt="" coords="579,126,545,142,518,162,510,172,506,183,507,193,513,205,531,219,558,231,630,250,716,261,799,268,798,273,715,267,629,255,556,236,528,224,509,208,502,195,501,182,505,169,515,158,543,138,577,121"/>
-<area shape="poly" title=" " alt="" coords="718,121,846,164,845,169,716,126"/>
-<area shape="rect" href="Requirements_8cpp.html" title=" " alt="" coords="524,174,779,199"/>
-<area shape="poly" title=" " alt="" coords="652,132,654,173,648,174,647,133"/>
-<area shape="rect" href="GlobalRequirementManager_8cpp.html" title=" " alt="" coords="773,343,1028,368"/>
-<area shape="poly" title=" " alt="" coords="903,308,903,342,898,342,898,308"/>
-<area shape="poly" title=" " alt="" coords="903,221,903,254,898,254,898,221"/>
-<area shape="poly" title=" " alt="" coords="953,115,986,135,1001,149,1012,165,1019,187,1012,208,987,237,955,257,953,252,984,233,1008,205,1014,187,1008,168,997,153,983,139,950,119"/>
-<area shape="poly" title=" " alt="" coords="905,125,904,166,899,166,900,125"/>
+<area shape="rect" title=" " alt="" coords="446,5,613,31"/>
+<area shape="rect" href="GeometryStorage_8h.html" title=" " alt="" coords="89,79,279,119"/>
+<area shape="poly" title=" " alt="" coords="466,36,267,81,266,76,465,31"/>
+<area shape="rect" href="RequirementFunction_8h.html" title=" " alt="" coords="416,79,643,119"/>
+<area shape="poly" title=" " alt="" coords="532,44,532,79,527,79,527,44"/>
+<area shape="rect" href="RequirementFunctionSystem_8h.html" title=" " alt="" coords="265,167,479,207"/>
+<area shape="poly" title=" " alt="" coords="472,38,436,55,406,80,393,101,384,124,376,167,370,166,379,123,388,99,402,77,434,51,470,33"/>
+<area shape="rect" href="Requirements_8h.html" title=" " alt="" coords="736,79,901,119"/>
+<area shape="poly" title=" " alt="" coords="585,32,750,76,748,81,584,37"/>
+<area shape="rect" href="RequirementData_8h.html" title=" " alt="" coords="721,167,916,207"/>
+<area shape="poly" title=" " alt="" coords="570,34,656,76,732,122,794,164,791,169,729,127,653,81,567,39"/>
+<area shape="rect" href="GeometryStorage_8cpp.html" title=" " alt="" coords="5,174,240,199"/>
+<area shape="poly" title=" " alt="" coords="165,131,133,175,129,172,160,128"/>
+<area shape="poly" title=" " alt="" coords="484,128,408,169,405,164,482,123"/>
+<area shape="rect" href="RequirementFunction_8cpp.html" title=" " alt="" coords="503,167,697,207"/>
+<area shape="poly" title=" " alt="" coords="556,128,586,165,582,168,551,131"/>
+<area shape="rect" href="RequirementFunctionSystem_8cpp.html" title=" " alt="" coords="254,255,490,295"/>
+<area shape="poly" title=" " alt="" coords="375,221,375,254,369,254,369,221"/>
+<area shape="poly" title=" " alt="" coords="821,133,821,166,816,166,816,133"/>
+<area shape="rect" href="Requirements_8cpp.html" title=" " alt="" coords="941,174,1195,199"/>
+<area shape="poly" title=" " alt="" coords="887,121,1036,171,1034,176,886,126"/>
 </map>
 </div>
 </div>

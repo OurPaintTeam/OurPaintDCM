@@ -1,5 +1,7 @@
 <map id="headers/utils/Enums.h" name="headers/utils/Enums.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,172,31"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="55,79,122,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,31,91,65,86,65,86,31"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="9,5,175,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,72,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="85,33,58,69,53,66,81,29"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="97,79,194,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="103,29,131,66,126,69,99,33"/>
 </map>

@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::createArc" name="OurPaintDCM::Figures::GeometryStorage::createArc">
+<area shape="rect" id="Node000001" title="Create arc." alt="" coords="5,5,220,45"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a10d4994ee732333e277d12a1fa2d16cc" title="Generate and return the next unique ID." alt="" coords="268,5,428,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="220,23,254,23,254,28,220,28"/>
+</map>
