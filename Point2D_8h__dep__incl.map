@@ -1,13 +1,11 @@
 <map id="headers/figures/Point2D.h" name="headers/figures/Point2D.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="148,5,337,31"/>
-<area shape="rect" id="Node000002" href="$GeometryStorage_8h.html" title=" " alt="" coords="46,79,237,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="219,41,167,81,164,76,216,37"/>
-<area shape="rect" id="Node000004" href="$Requirements_8h.html" title=" " alt="" coords="279,79,444,119"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="273,36,334,76,331,81,270,41"/>
-<area shape="rect" id="Node000003" href="$GeometryStorage_8cpp.html" title=" " alt="" coords="5,174,240,199"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="137,133,128,174,123,173,132,132"/>
-<area shape="rect" id="Node000005" href="$RequirementData_8h.html" title=" " alt="" coords="264,167,459,207"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="364,133,364,166,359,166,359,133"/>
-<area shape="rect" id="Node000006" href="$Requirements_8cpp.html" title=" " alt="" coords="483,174,738,199"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="430,121,578,171,577,176,428,126"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="163,5,352,31"/>
+<area shape="rect" id="Node000002" href="$GeometryStorage_8h.html" title=" " alt="" coords="61,79,251,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="233,41,182,81,179,76,230,37"/>
+<area shape="rect" id="Node000004" href="$Requirements_8h.html" title=" " alt="" coords="292,79,457,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="287,36,348,76,345,81,284,40"/>
+<area shape="rect" id="Node000003" href="$GeometryStorage_8cpp.html" title=" " alt="" coords="5,167,240,192"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="145,132,130,167,125,165,140,130"/>
+<area shape="rect" id="Node000005" href="$Requirements_8cpp.html" title=" " alt="" coords="265,167,519,192"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="384,131,392,166,387,167,379,133"/>
 </map>

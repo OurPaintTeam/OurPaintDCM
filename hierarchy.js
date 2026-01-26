@@ -9,7 +9,6 @@ var hierarchy =
     [ "OurPaintDCM::Figures::FigureEntry", "structOurPaintDCM_1_1Figures_1_1FigureEntry.html", null ],
     [ "OurPaintDCM::Figures::GeometryStorage", "classOurPaintDCM_1_1Figures_1_1GeometryStorage.html", null ],
     [ "std::hash< OurPaintDCM::Utils::ID >", "structstd_1_1hash_3_01OurPaintDCM_1_1Utils_1_1ID_01_4.html", null ],
-    [ "std::hash< OurPaintDCM::Utils::RequirementData >", "structstd_1_1hash_3_01OurPaintDCM_1_1Utils_1_1RequirementData_01_4.html", null ],
     [ "OurPaintDCM::Utils::ID", "structOurPaintDCM_1_1Utils_1_1ID.html", null ],
     [ "OurPaintDCM::Utils::IDGenerator", "classOurPaintDCM_1_1Utils_1_1IDGenerator.html", null ],
     [ "OurPaintDCM::Figures::Line< PointT >", "structOurPaintDCM_1_1Figures_1_1Line.html", null ],
@@ -33,7 +32,6 @@ var hierarchy =
       [ "OurPaintDCM::Requirements::PointOnPoint", "classOurPaintDCM_1_1Requirements_1_1PointOnPoint.html", null ],
       [ "OurPaintDCM::Requirements::PointPointDist", "classOurPaintDCM_1_1Requirements_1_1PointPointDist.html", null ]
     ] ],
-    [ "OurPaintDCM::Utils::RequirementData", "structOurPaintDCM_1_1Utils_1_1RequirementData.html", null ],
     [ "OurPaintDCM::Function::RequirementFunction", "classOurPaintDCM_1_1Function_1_1RequirementFunction.html", [
       [ "OurPaintDCM::Function::ArcCenterOnPerpendicularFunction", "classOurPaintDCM_1_1Function_1_1ArcCenterOnPerpendicularFunction.html", null ],
       [ "OurPaintDCM::Function::HorizontalFunction", "classOurPaintDCM_1_1Function_1_1HorizontalFunction.html", null ],

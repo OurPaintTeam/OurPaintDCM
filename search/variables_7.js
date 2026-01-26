@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['radius_0',['radius',['../structOurPaintDCM_1_1Figures_1_1Circle.html#a257575c3decbe23a35ee725a7e3eb7f0',1,'OurPaintDCM::Figures::Circle::radius'],['../structOurPaintDCM_1_1Figures_1_1FigureData.html#a10412fdb5a7ebbaa6b85d7e984f59aca',1,'OurPaintDCM::Figures::FigureData::radius']]],
-  ['requirement_1',['requirement',['../structOurPaintDCM_1_1Utils_1_1RequirementData.html#aaf87ad3a4de897a87c981a94a6e0c61d',1,'OurPaintDCM::Utils::RequirementData']]]
+  ['type_0',['type',['../structOurPaintDCM_1_1Figures_1_1FigureEntry.html#ad1fc2feaa67825a2bad895c7bd0ab1ee',1,'OurPaintDCM::Figures::FigureEntry::type'],['../classOurPaintDCM_1_1Requirements_1_1Requirement.html#a0c20a4e761218b7aa9ad2270f15195b1',1,'OurPaintDCM::Requirements::Requirement::type']]]
 ];
