@@ -1,6 +1,8 @@
 <map id="OurPaintDCM::Figures::GeometryStorage::getDependents" name="OurPaintDCM::Figures::GeometryStorage::getDependents">
-<area shape="rect" id="Node000001" title="Find all objects depending on given point." alt="" coords="256,29,508,69"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6224cdfa4cbfe3c5016a004cd9517e3e" title="Remove object by ID." alt="" coords="5,29,208,69"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="242,52,208,52,208,47,242,47"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="154,18,137,11,107,8,80,10,64,15,58,21,61,28,56,30,53,20,61,10,79,5,107,3,138,5,156,13"/>
+<area shape="rect" id="Node000001" title="Find all objects depending on given point." alt="" coords="280,61,532,101"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a908d67e49081630224501b60f399b459" title="Build shallow subgraph for a given object ID (one&#45;level neighborhood)." alt="" coords="5,5,232,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="272,61,232,54,233,49,273,56"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6224cdfa4cbfe3c5016a004cd9517e3e" title="Remove object by ID." alt="" coords="17,109,220,149"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="273,106,221,114,220,109,272,100"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="168,97,150,90,119,87,91,89,74,94,68,100,71,107,66,109,63,99,71,90,90,84,119,82,152,85,170,92"/>
 </map>

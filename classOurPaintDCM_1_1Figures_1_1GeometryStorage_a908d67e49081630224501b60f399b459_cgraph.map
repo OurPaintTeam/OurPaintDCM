@@ -1,0 +1,18 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::buildObjectSubgraph" name="OurPaintDCM::Figures::GeometryStorage::buildObjectSubgraph">
+<area shape="rect" id="Node000001" title="Build shallow subgraph for a given object ID (one&#45;level neighborhood)." alt="" coords="5,126,232,181"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac83fd7836f932567f54878c58ff58784" title="Find all points that object depends on." alt="" coords="280,40,547,80"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,123,279,89,309,81,310,86,281,95,187,128"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Convert type T to corresponding FigureType." alt="" coords="595,133,828,173"/>
+<area shape="poly" id="edge9_Node000001_Node000005" title=" " alt="" coords="232,153,280,153,547,153,581,153,581,158,547,159,280,159,232,158"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a73045b332c8507d45542e23cfdfb3436" title="Find all objects depending on given point." alt="" coords="287,104,539,144"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="232,139,273,135,274,141,232,145"/>
+<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#aac18a1071e923751a1ef2b8ea057a627" title="Get object type by ID." alt="" coords="311,219,515,259"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="214,178,331,212,330,217,213,183"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6926e48ad2b405395193869662e513b7" title="Find point ID by pointer." alt="" coords="599,5,823,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="546,42,586,37,586,43,547,47"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6c3bc268eea533b9d9d92302b5669cce" title="Get full figure entry." alt="" coords="607,69,815,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="547,70,594,75,594,80,547,76"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="513,78,548,90,572,104,596,119,615,126,613,131,593,124,569,109,546,94,511,83"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="539,107,593,100,594,106,540,112"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="540,134,581,138,581,143,539,139"/>
+</map>

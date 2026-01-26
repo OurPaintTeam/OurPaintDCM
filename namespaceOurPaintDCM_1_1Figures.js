@@ -11,5 +11,6 @@ var namespaceOurPaintDCM_1_1Figures =
     [ "SupportedFigure", "conceptOurPaintDCM_1_1Figures_1_1SupportedFigure.html", null ],
     [ "Arc2D", "namespaceOurPaintDCM_1_1Figures.html#ab70c8ae61e35e15fd055991066dbc410", null ],
     [ "Circle2D", "namespaceOurPaintDCM_1_1Figures.html#a17b1e169219e225ed0e0f5496649618a", null ],
-    [ "Line2D", "namespaceOurPaintDCM_1_1Figures.html#ae08636f07ccdc0c93d8c8bea2ca6de84", null ]
+    [ "Line2D", "namespaceOurPaintDCM_1_1Figures.html#ae08636f07ccdc0c93d8c8bea2ca6de84", null ],
+    [ "ObjectGraph", "namespaceOurPaintDCM_1_1Figures.html#a18ddc7c48f2b59032f62d9840953a66f", null ]
 ];

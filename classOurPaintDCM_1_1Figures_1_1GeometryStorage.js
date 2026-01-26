@@ -14,6 +14,8 @@ var classOurPaintDCM_1_1Figures_1_1GeometryStorage =
     [ "allPoints", "classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ae3a9a7c073a7e714c83843c80cf5d91c", null ],
     [ "allPoints", "classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#aa519e7ceef81f8ec26cecd5d04022bfb", null ],
     [ "arcCount", "classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac63c592f3d84c0e516f058277e8d2951", null ],
+    [ "buildObjectGraph", "classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1d5491ee08660e8d9ee895d9e251464e", null ],
+    [ "buildObjectSubgraph", "classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a908d67e49081630224501b60f399b459", null ],
     [ "circleCount", "classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a0ad747894a11a0265b9ca37c665dab94", null ],
     [ "clear", "classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a332b104c3627015ca1b46506684072ed", null ],
     [ "contains", "classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#aeb74338ab2cf7a1651295af9349a55aa", null ],

@@ -228,6 +228,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac83fd7836f932567f54878c58ff58784" id="r_ac83fd7836f932567f54878c58ff58784"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structOurPaintDCM_1_1Utils_1_1ID.html">ID</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac83fd7836f932567f54878c58ff58784">getDependencies</a> (<a class="el" href="structOurPaintDCM_1_1Utils_1_1ID.html">ID</a> id) <a class="el" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15">const</a></td></tr>
 <tr class="memdesc:ac83fd7836f932567f54878c58ff58784"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find all points that object depends on.  <br /></td></tr>
 <tr class="separator:ac83fd7836f932567f54878c58ff58784"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d5491ee08660e8d9ee895d9e251464e" id="r_a1d5491ee08660e8d9ee895d9e251464e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceOurPaintDCM_1_1Figures.html#a18ddc7c48f2b59032f62d9840953a66f">ObjectGraph</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1d5491ee08660e8d9ee895d9e251464e">buildObjectGraph</a> () <a class="el" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15">const</a></td></tr>
+<tr class="memdesc:a1d5491ee08660e8d9ee895d9e251464e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build graph of objects where vertices are IDs and edges connect related objects.  <br /></td></tr>
+<tr class="separator:a1d5491ee08660e8d9ee895d9e251464e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a908d67e49081630224501b60f399b459" id="r_a908d67e49081630224501b60f399b459"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceOurPaintDCM_1_1Figures.html#a18ddc7c48f2b59032f62d9840953a66f">ObjectGraph</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a908d67e49081630224501b60f399b459">buildObjectSubgraph</a> (<a class="el" href="structOurPaintDCM_1_1Utils_1_1ID.html">ID</a> id) <a class="el" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15">const</a></td></tr>
+<tr class="memdesc:a908d67e49081630224501b60f399b459"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build shallow subgraph for a given object ID (one-level neighborhood).  <br /></td></tr>
+<tr class="separator:a908d67e49081630224501b60f399b459"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -284,9 +290,9 @@ Usage Example</h2>
 <div class="line"><span class="keywordflow">if</span> (<a class="code hl_function" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15">result</a>) {</div>
 <div class="line">    <a class="code hl_struct" href="structOurPaintDCM_1_1Figures_1_1Line.html">Line2D</a>* <a class="code hl_function" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15">myLine</a> = <a class="code hl_function" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15">result</a>.value();</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_html"><div class="ttname"><a href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html">OurPaintDCM::Figures::GeometryStorage</a></div><div class="ttdoc">Storage for geometric objects with unified identification system.</div><div class="ttdef"><b>Definition</b> GeometryStorage.h:102</div></div>
+<div class="ttc" id="aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_html"><div class="ttname"><a href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html">OurPaintDCM::Figures::GeometryStorage</a></div><div class="ttdoc">Storage for geometric objects with unified identification system.</div><div class="ttdef"><b>Definition</b> GeometryStorage.h:104</div></div>
 <div class="ttc" id="aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_html_a77165102d9ed651bce40f71b9bd434c1"><div class="ttname"><a href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a77165102d9ed651bce40f71b9bd434c1">OurPaintDCM::Figures::GeometryStorage::createPoint</a></div><div class="ttdeci">std::pair&lt; ID, Point2D * &gt; createPoint(double x, double y)</div><div class="ttdoc">Create point with given coordinates.</div><div class="ttdef"><b>Definition</b> GeometryStorage.cpp:8</div></div>
-<div class="ttc" id="aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_html_abba15b83d0e995b133cef7f2dac33b15"><div class="ttname"><a href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15">OurPaintDCM::Figures::GeometryStorage::typeToEnum</a></div><div class="ttdeci">static constexpr FigureType typeToEnum() noexcept</div><div class="ttdoc">Convert type T to corresponding FigureType.</div><div class="ttdef"><b>Definition</b> GeometryStorage.h:399</div></div>
+<div class="ttc" id="aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_html_abba15b83d0e995b133cef7f2dac33b15"><div class="ttname"><a href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15">OurPaintDCM::Figures::GeometryStorage::typeToEnum</a></div><div class="ttdeci">static constexpr FigureType typeToEnum() noexcept</div><div class="ttdoc">Convert type T to corresponding FigureType.</div><div class="ttdef"><b>Definition</b> GeometryStorage.h:416</div></div>
 <div class="ttc" id="astructOurPaintDCM_1_1Figures_1_1Line_html"><div class="ttname"><a href="structOurPaintDCM_1_1Figures_1_1Line.html">OurPaintDCM::Figures::Line</a></div><div class="ttdoc">Standart segment class.</div><div class="ttdef"><b>Definition</b> Line.h:16</div></div>
 <div class="ttc" id="astructOurPaintDCM_1_1Figures_1_1Point2D_html"><div class="ttname"><a href="structOurPaintDCM_1_1Figures_1_1Point2D.html">OurPaintDCM::Figures::Point2D</a></div><div class="ttdoc">2D point structure.</div><div class="ttdef"><b>Definition</b> Point2D.h:11</div></div>
 </div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -670,6 +676,87 @@ Here is the call graph for this function:</div>
 <area shape="rect" title="Number of arcs." alt="" coords="5,5,216,45"/>
 <area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Convert type T to corresponding FigureType." alt="" coords="264,5,497,45"/>
 <area shape="poly" title=" " alt="" coords="216,23,250,23,250,28,216,28"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a1d5491ee08660e8d9ee895d9e251464e" name="a1d5491ee08660e8d9ee895d9e251464e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d5491ee08660e8d9ee895d9e251464e">&#9670;&#160;</a></span>buildObjectGraph()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceOurPaintDCM_1_1Figures.html#a18ddc7c48f2b59032f62d9840953a66f">ObjectGraph</a> OurPaintDCM::Figures::GeometryStorage::buildObjectGraph </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Build graph of objects where vertices are IDs and edges connect related objects. </p>
+<p>Edge weight is ID(-1) as helper value for connected objects </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classOurPaintDCM_1_1Figures_1_1GeometryStorage_a1d5491ee08660e8d9ee895d9e251464e_cgraph.png" border="0" usemap="#aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_a1d5491ee08660e8d9ee895d9e251464e_cgraph" alt=""/></div>
+<map name="aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_a1d5491ee08660e8d9ee895d9e251464e_cgraph" id="aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_a1d5491ee08660e8d9ee895d9e251464e_cgraph">
+<area shape="rect" title="Build graph of objects where vertices are IDs and edges connect related objects." alt="" coords="5,30,232,85"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6926e48ad2b405395193869662e513b7" title="Find point ID by pointer." alt="" coords="285,5,509,45"/>
+<area shape="poly" title=" " alt="" coords="232,42,271,37,272,42,233,47"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Convert type T to corresponding FigureType." alt="" coords="280,69,513,109"/>
+<area shape="poly" title=" " alt="" coords="233,68,267,72,266,77,232,73"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a908d67e49081630224501b60f399b459" name="a908d67e49081630224501b60f399b459"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a908d67e49081630224501b60f399b459">&#9670;&#160;</a></span>buildObjectSubgraph()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceOurPaintDCM_1_1Figures.html#a18ddc7c48f2b59032f62d9840953a66f">ObjectGraph</a> OurPaintDCM::Figures::GeometryStorage::buildObjectSubgraph </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structOurPaintDCM_1_1Utils_1_1ID.html">ID</a>&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Build shallow subgraph for a given object ID (one-level neighborhood). </p>
+<p>Includes the object and its direct dependencies/dependents only. </p><dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if ID not found </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classOurPaintDCM_1_1Figures_1_1GeometryStorage_a908d67e49081630224501b60f399b459_cgraph.png" border="0" usemap="#aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_a908d67e49081630224501b60f399b459_cgraph" alt=""/></div>
+<map name="aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_a908d67e49081630224501b60f399b459_cgraph" id="aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_a908d67e49081630224501b60f399b459_cgraph">
+<area shape="rect" title="Build shallow subgraph for a given object ID (one&#45;level neighborhood)." alt="" coords="5,126,232,181"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac83fd7836f932567f54878c58ff58784" title="Find all points that object depends on." alt="" coords="280,40,547,80"/>
+<area shape="poly" title=" " alt="" coords="185,123,279,89,309,81,310,86,281,95,187,128"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Convert type T to corresponding FigureType." alt="" coords="595,133,828,173"/>
+<area shape="poly" title=" " alt="" coords="232,153,280,153,547,153,581,153,581,158,547,159,280,159,232,158"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a73045b332c8507d45542e23cfdfb3436" title="Find all objects depending on given point." alt="" coords="287,104,539,144"/>
+<area shape="poly" title=" " alt="" coords="232,139,273,135,274,141,232,145"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#aac18a1071e923751a1ef2b8ea057a627" title="Get object type by ID." alt="" coords="311,219,515,259"/>
+<area shape="poly" title=" " alt="" coords="214,178,331,212,330,217,213,183"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6926e48ad2b405395193869662e513b7" title="Find point ID by pointer." alt="" coords="599,5,823,45"/>
+<area shape="poly" title=" " alt="" coords="546,42,586,37,586,43,547,47"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6c3bc268eea533b9d9d92302b5669cce" title="Get full figure entry." alt="" coords="607,69,815,109"/>
+<area shape="poly" title=" " alt="" coords="547,70,594,75,594,80,547,76"/>
+<area shape="poly" title=" " alt="" coords="513,78,548,90,572,104,596,119,615,126,613,131,593,124,569,109,546,94,511,83"/>
+<area shape="poly" title=" " alt="" coords="539,107,593,100,594,106,540,112"/>
+<area shape="poly" title=" " alt="" coords="540,134,581,138,581,143,539,139"/>
 </map>
 </div>
 
@@ -1188,9 +1275,13 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classOurPaintDCM_1_1Figures_1_1GeometryStorage_a6926e48ad2b405395193869662e513b7_icgraph.png" border="0" usemap="#aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_a6926e48ad2b405395193869662e513b7_icgraph" alt=""/></div>
 <map name="aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_a6926e48ad2b405395193869662e513b7_icgraph" id="aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_a6926e48ad2b405395193869662e513b7_icgraph">
-<area shape="rect" title="Find point ID by pointer." alt="" coords="320,5,544,45"/>
-<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac83fd7836f932567f54878c58ff58784" title="Find all points that object depends on." alt="" coords="5,5,272,45"/>
-<area shape="poly" title=" " alt="" coords="306,28,272,28,272,23,306,23"/>
+<area shape="rect" title="Find point ID by pointer." alt="" coords="595,49,819,89"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1d5491ee08660e8d9ee895d9e251464e" title="Build graph of objects where vertices are IDs and edges connect related objects." alt="" coords="300,5,527,60"/>
+<area shape="poly" title=" " alt="" coords="581,56,527,49,527,44,581,51"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac83fd7836f932567f54878c58ff58784" title="Find all points that object depends on." alt="" coords="280,85,547,125"/>
+<area shape="poly" title=" " alt="" coords="582,87,547,91,547,86,581,81"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a908d67e49081630224501b60f399b459" title="Build shallow subgraph for a given object ID (one&#45;level neighborhood)." alt="" coords="5,77,232,132"/>
+<area shape="poly" title=" " alt="" coords="266,107,232,107,232,102,266,102"/>
 </map>
 </div>
 
@@ -1286,6 +1377,16 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="233,107,330,128,329,133,232,112"/>
 </map>
 </div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classOurPaintDCM_1_1Figures_1_1GeometryStorage_ac83fd7836f932567f54878c58ff58784_icgraph.png" border="0" usemap="#aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_ac83fd7836f932567f54878c58ff58784_icgraph" alt=""/></div>
+<map name="aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_ac83fd7836f932567f54878c58ff58784_icgraph" id="aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_ac83fd7836f932567f54878c58ff58784_icgraph">
+<area shape="rect" title="Find all points that object depends on." alt="" coords="280,13,547,53"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a908d67e49081630224501b60f399b459" title="Build shallow subgraph for a given object ID (one&#45;level neighborhood)." alt="" coords="5,5,232,60"/>
+<area shape="poly" title=" " alt="" coords="266,35,232,35,232,30,266,30"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -1331,10 +1432,12 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classOurPaintDCM_1_1Figures_1_1GeometryStorage_a73045b332c8507d45542e23cfdfb3436_icgraph.png" border="0" usemap="#aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_a73045b332c8507d45542e23cfdfb3436_icgraph" alt=""/></div>
 <map name="aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_a73045b332c8507d45542e23cfdfb3436_icgraph" id="aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_a73045b332c8507d45542e23cfdfb3436_icgraph">
-<area shape="rect" title="Find all objects depending on given point." alt="" coords="256,29,508,69"/>
-<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6224cdfa4cbfe3c5016a004cd9517e3e" title="Remove object by ID." alt="" coords="5,29,208,69"/>
-<area shape="poly" title=" " alt="" coords="242,52,208,52,208,47,242,47"/>
-<area shape="poly" title=" " alt="" coords="154,18,137,11,107,8,80,10,64,15,58,21,61,28,56,30,53,20,61,10,79,5,107,3,138,5,156,13"/>
+<area shape="rect" title="Find all objects depending on given point." alt="" coords="280,61,532,101"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a908d67e49081630224501b60f399b459" title="Build shallow subgraph for a given object ID (one&#45;level neighborhood)." alt="" coords="5,5,232,60"/>
+<area shape="poly" title=" " alt="" coords="272,61,232,54,233,49,273,56"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6224cdfa4cbfe3c5016a004cd9517e3e" title="Remove object by ID." alt="" coords="17,109,220,149"/>
+<area shape="poly" title=" " alt="" coords="273,106,221,114,220,109,272,100"/>
+<area shape="poly" title=" " alt="" coords="168,97,150,90,119,87,91,89,74,94,68,100,71,107,66,109,63,99,71,90,90,84,119,82,152,85,170,92"/>
 </map>
 </div>
 
@@ -1377,14 +1480,17 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classOurPaintDCM_1_1Figures_1_1GeometryStorage_a6c3bc268eea533b9d9d92302b5669cce_icgraph.png" border="0" usemap="#aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_a6c3bc268eea533b9d9d92302b5669cce_icgraph" alt=""/></div>
 <map name="aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_a6c3bc268eea533b9d9d92302b5669cce_icgraph" id="aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_a6c3bc268eea533b9d9d92302b5669cce_icgraph">
-<area shape="rect" title="Get full figure entry." alt="" coords="571,37,779,77"/>
-<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac83fd7836f932567f54878c58ff58784" title="Find all points that object depends on." alt="" coords="256,5,523,45"/>
-<area shape="poly" title=" " alt="" coords="557,47,523,43,523,38,557,42"/>
-<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a73045b332c8507d45542e23cfdfb3436" title="Find all objects depending on given point." alt="" coords="263,69,515,109"/>
-<area shape="poly" title=" " alt="" coords="557,73,516,78,515,73,557,68"/>
-<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6224cdfa4cbfe3c5016a004cd9517e3e" title="Remove object by ID." alt="" coords="5,69,208,109"/>
-<area shape="poly" title=" " alt="" coords="250,92,208,92,208,87,250,87"/>
-<area shape="poly" title=" " alt="" coords="155,58,138,51,107,48,79,50,63,55,56,61,59,68,54,70,51,60,60,50,78,45,107,43,139,45,157,53"/>
+<area shape="rect" title="Get full figure entry." alt="" coords="595,45,803,85"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac83fd7836f932567f54878c58ff58784" title="Find all points that object depends on." alt="" coords="280,13,547,53"/>
+<area shape="poly" title=" " alt="" coords="581,54,547,50,547,45,581,49"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a73045b332c8507d45542e23cfdfb3436" title="Find all objects depending on given point." alt="" coords="287,77,539,117"/>
+<area shape="poly" title=" " alt="" coords="581,80,540,85,539,80,581,75"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a908d67e49081630224501b60f399b459" title="Build shallow subgraph for a given object ID (one&#45;level neighborhood)." alt="" coords="5,5,232,60"/>
+<area shape="poly" title=" " alt="" coords="266,35,232,35,232,30,266,30"/>
+<area shape="poly" title=" " alt="" coords="307,76,232,60,233,55,308,71"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6224cdfa4cbfe3c5016a004cd9517e3e" title="Remove object by ID." alt="" coords="17,109,220,149"/>
+<area shape="poly" title=" " alt="" coords="274,114,220,120,220,115,273,109"/>
+<area shape="poly" title=" " alt="" coords="169,97,151,90,119,87,90,89,73,94,66,100,70,107,65,109,61,99,70,90,89,84,119,82,153,85,171,92"/>
 </map>
 </div>
 
@@ -1497,6 +1603,16 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::optional&lt;FigureType&gt; — type or nullopt if ID not found </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classOurPaintDCM_1_1Figures_1_1GeometryStorage_aac18a1071e923751a1ef2b8ea057a627_icgraph.png" border="0" usemap="#aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_aac18a1071e923751a1ef2b8ea057a627_icgraph" alt=""/></div>
+<map name="aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_aac18a1071e923751a1ef2b8ea057a627_icgraph" id="aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_aac18a1071e923751a1ef2b8ea057a627_icgraph">
+<area shape="rect" title="Get object type by ID." alt="" coords="280,13,484,53"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a908d67e49081630224501b60f399b459" title="Build shallow subgraph for a given object ID (one&#45;level neighborhood)." alt="" coords="5,5,232,60"/>
+<area shape="poly" title=" " alt="" coords="266,35,232,35,232,30,266,30"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -1764,29 +1880,35 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classOurPaintDCM_1_1Figures_1_1GeometryStorage_abba15b83d0e995b133cef7f2dac33b15_icgraph.png" border="0" usemap="#aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_abba15b83d0e995b133cef7f2dac33b15_icgraph" alt=""/></div>
 <map name="aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_abba15b83d0e995b133cef7f2dac33b15_icgraph" id="aclassOurPaintDCM_1_1Figures_1_1GeometryStorage_abba15b83d0e995b133cef7f2dac33b15_icgraph">
-<area shape="rect" title="Convert type T to corresponding FigureType." alt="" coords="571,293,804,333"/>
-<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac63c592f3d84c0e516f058277e8d2951" title="Number of arcs." alt="" coords="284,5,495,45"/>
-<area shape="poly" title=" " alt="" coords="672,282,651,232,619,171,575,110,550,83,521,60,494,45,496,40,524,55,553,79,579,107,623,168,656,229,677,280"/>
-<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a0ad747894a11a0265b9ca37c665dab94" title="Number of circles." alt="" coords="276,69,503,109"/>
-<area shape="poly" title=" " alt="" coords="665,283,641,245,608,202,568,159,521,124,497,112,500,107,524,119,571,155,612,198,645,242,670,280"/>
-<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Create figure without exposing concrete types." alt="" coords="272,133,507,173"/>
-<area shape="poly" title=" " alt="" coords="655,286,596,235,560,210,522,188,492,176,494,171,524,183,563,205,599,231,658,282"/>
-<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af9aa52e57a93fded2dfd79d2a0d04263" title="Get object by ID with type checking." alt="" coords="302,197,477,237"/>
-<area shape="poly" title=" " alt="" coords="626,291,522,252,476,239,477,234,523,247,628,286"/>
-<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac83fd7836f932567f54878c58ff58784" title="Find all points that object depends on." alt="" coords="256,261,523,301"/>
-<area shape="poly" title=" " alt="" coords="557,302,522,298,523,293,557,297"/>
-<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a73045b332c8507d45542e23cfdfb3436" title="Find all objects depending on given point." alt="" coords="263,325,515,365"/>
-<area shape="poly" title=" " alt="" coords="557,330,516,334,516,329,557,325"/>
-<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6224cdfa4cbfe3c5016a004cd9517e3e" title="Remove object by ID." alt="" coords="5,355,208,395"/>
-<area shape="poly" title=" " alt="" coords="636,342,582,363,523,380,441,391,357,394,278,393,208,389,208,383,278,388,357,389,441,385,522,375,581,358,634,337"/>
-<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a547d36cba359b045ab73697bbe827163" title="Get all IDs of specified type." alt="" coords="268,440,511,480"/>
-<area shape="poly" title=" " alt="" coords="651,344,593,385,524,424,474,442,472,437,522,419,590,380,648,340"/>
-<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a2a1fd787e611eab17615f80097678a23" title="Number of lines." alt="" coords="282,504,497,544"/>
-<area shape="poly" title=" " alt="" coords="668,347,643,382,610,422,569,461,524,494,498,507,496,502,521,490,566,457,606,418,639,378,664,344"/>
-<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af2df636c6c7dd47364a8f248c0407e0e" title="Number of points." alt="" coords="277,568,501,608"/>
-<area shape="poly" title=" " alt="" coords="676,347,654,395,621,452,578,510,552,536,524,558,503,570,500,566,521,554,549,532,574,506,617,449,649,392,671,345"/>
-<area shape="poly" title=" " alt="" coords="250,362,209,367,208,362,249,357"/>
-<area shape="poly" title=" " alt="" coords="155,343,138,336,107,333,79,335,63,340,56,346,59,353,54,355,51,345,60,336,78,330,107,328,139,331,157,338"/>
+<area shape="rect" title="Convert type T to corresponding FigureType." alt="" coords="595,360,828,400"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac63c592f3d84c0e516f058277e8d2951" title="Number of arcs." alt="" coords="308,5,519,45"/>
+<area shape="poly" title=" " alt="" coords="700,347,683,285,652,207,632,166,607,127,578,91,545,59,518,44,520,39,548,55,582,87,611,124,636,163,657,204,688,283,705,346"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1d5491ee08660e8d9ee895d9e251464e" title="Build graph of objects where vertices are IDs and edges connect related objects." alt="" coords="300,70,527,125"/>
+<area shape="poly" title=" " alt="" coords="693,349,670,303,637,249,595,194,545,146,513,127,515,122,548,142,599,190,642,246,675,301,698,346"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a908d67e49081630224501b60f399b459" title="Build shallow subgraph for a given object ID (one&#45;level neighborhood)." alt="" coords="5,385,232,439"/>
+<area shape="poly" title=" " alt="" coords="692,349,668,309,636,265,595,222,571,205,546,190,474,162,442,154,412,152,383,154,352,161,281,190,253,209,227,231,184,285,153,340,132,386,127,383,148,337,180,282,223,227,249,204,279,186,350,156,382,148,413,146,443,149,475,157,548,186,574,200,598,218,640,261,673,307,696,346"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a0ad747894a11a0265b9ca37c665dab94" title="Number of circles." alt="" coords="300,200,527,240"/>
+<area shape="poly" title=" " alt="" coords="679,353,620,302,584,276,546,254,516,243,518,238,548,250,587,272,623,298,682,349"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Create figure without exposing concrete types." alt="" coords="296,264,531,304"/>
+<area shape="poly" title=" " alt="" coords="650,357,546,319,504,307,505,301,547,313,652,352"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af9aa52e57a93fded2dfd79d2a0d04263" title="Get object by ID with type checking." alt="" coords="326,328,501,368"/>
+<area shape="poly" title=" " alt="" coords="581,369,500,360,501,355,582,363"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac83fd7836f932567f54878c58ff58784" title="Find all points that object depends on." alt="" coords="280,392,547,432"/>
+<area shape="poly" title=" " alt="" coords="581,397,547,400,546,395,581,391"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a73045b332c8507d45542e23cfdfb3436" title="Find all objects depending on given point." alt="" coords="287,456,539,496"/>
+<area shape="poly" title=" " alt="" coords="652,408,547,447,505,459,504,453,546,441,650,403"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6224cdfa4cbfe3c5016a004cd9517e3e" title="Remove object by ID." alt="" coords="17,500,220,540"/>
+<area shape="poly" title=" " alt="" coords="685,412,626,465,589,491,548,511,464,532,377,542,294,542,220,537,220,532,294,537,377,536,463,527,546,505,586,486,623,461,681,408"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a547d36cba359b045ab73697bbe827163" title="Get all IDs of specified type." alt="" coords="292,571,535,611"/>
+<area shape="poly" title=" " alt="" coords="690,413,632,484,592,522,548,554,508,573,505,568,545,550,589,518,628,480,686,410"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a2a1fd787e611eab17615f80097678a23" title="Number of lines." alt="" coords="306,635,521,675"/>
+<area shape="poly" title=" " alt="" coords="700,414,678,461,645,519,602,576,576,602,548,625,522,639,520,634,545,620,573,598,598,573,641,516,673,459,695,411"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af2df636c6c7dd47364a8f248c0407e0e" title="Number of points." alt="" coords="301,699,525,739"/>
+<area shape="poly" title=" " alt="" coords="705,414,686,474,655,548,634,587,610,624,581,659,548,689,527,702,524,697,545,685,577,655,605,621,630,584,650,546,681,472,699,412"/>
+<area shape="poly" title=" " alt="" coords="266,415,232,415,232,409,266,409"/>
+<area shape="poly" title=" " alt="" coords="307,456,232,439,233,434,308,450"/>
+<area shape="poly" title=" " alt="" coords="274,499,220,508,220,502,274,494"/>
+<area shape="poly" title=" " alt="" coords="169,488,151,481,119,479,90,481,73,486,66,491,70,499,65,501,61,490,70,481,89,475,119,473,153,476,171,483"/>
 </map>
 </div>
 

@@ -1,10 +1,19 @@
 var searchData=
 [
-  ['set_0',['set',['../classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a18b2be9c90bf302faaff026cb4fad937',1,'OurPaintDCM::Utils::IDGenerator']]],
-  ['setweight_1',['setWeight',['../classOurPaintDCM_1_1Function_1_1RequirementFunction.html#a57e8845fe03c0bb3e84a0eb9572e24d6',1,'OurPaintDCM::Function::RequirementFunction']]],
-  ['singular_5fsystem_2',['SINGULAR_SYSTEM',['../namespaceOurPaintDCM_1_1Utils.html#ae51395db4b382114f464d061563658caa718dd381fba412c630106d7a86168c91',1,'OurPaintDCM::Utils']]],
-  ['size_3',['size',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6f791a6fa3cdbf0c6f2c0c353484d795',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['solvemode_4',['SolveMode',['../namespaceOurPaintDCM_1_1Utils.html#a6f2b4a61c8ed5b8b772f8424adf5af15',1,'OurPaintDCM::Utils']]],
-  ['std_5',['std',['../namespacestd.html',1,'']]],
-  ['systemstatus_6',['SystemStatus',['../namespaceOurPaintDCM_1_1Utils.html#ae51395db4b382114f464d061563658ca',1,'OurPaintDCM::Utils']]]
+  ['radius_0',['radius',['../structOurPaintDCM_1_1Figures_1_1FigureData.html#a10412fdb5a7ebbaa6b85d7e984f59aca',1,'OurPaintDCM::Figures::FigureData::radius'],['../structOurPaintDCM_1_1Figures_1_1Circle.html#a257575c3decbe23a35ee725a7e3eb7f0',1,'OurPaintDCM::Figures::Circle::radius']]],
+  ['remove_1',['remove',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6224cdfa4cbfe3c5016a004cd9517e3e',1,'OurPaintDCM::Figures::GeometryStorage']]],
+  ['requirement_2',['requirement',['../classOurPaintDCM_1_1Requirements_1_1Requirement.html',1,'OurPaintDCM::Requirements::Requirement'],['../classOurPaintDCM_1_1Requirements_1_1Requirement.html#ac152453c39ad670acd4fa57daaf2a82c',1,'OurPaintDCM::Requirements::Requirement::Requirement()'],['../structOurPaintDCM_1_1Utils_1_1RequirementData.html#aaf87ad3a4de897a87c981a94a6e0c61d',1,'OurPaintDCM::Utils::RequirementData::requirement']]],
+  ['requirementdata_3',['requirementdata',['../structOurPaintDCM_1_1Utils_1_1RequirementData.html',1,'OurPaintDCM::Utils::RequirementData'],['../structOurPaintDCM_1_1Utils_1_1RequirementData.html#a9722e7580a723764984c0324b492475c',1,'OurPaintDCM::Utils::RequirementData::RequirementData(RequirementData &amp;&amp;other)=default'],['../structOurPaintDCM_1_1Utils_1_1RequirementData.html#af23cfbc103fc1599188d96ecb45cd741',1,'OurPaintDCM::Utils::RequirementData::RequirementData(const RequirementData &amp;other)=default'],['../structOurPaintDCM_1_1Utils_1_1RequirementData.html#a7198ae28ee86cbe406d0d41aa341700c',1,'OurPaintDCM::Utils::RequirementData::RequirementData(RequirementType t, Requirements::Requirement *req, std::vector&lt; FigureData &gt; objs)'],['../structOurPaintDCM_1_1Utils_1_1RequirementData.html#a9776a166be9fafd0c105fc6002131415',1,'OurPaintDCM::Utils::RequirementData::RequirementData()=default']]],
+  ['requirementdata_2eh_4',['RequirementData.h',['../RequirementData_8h.html',1,'']]],
+  ['requirementfunction_5',['requirementfunction',['../classOurPaintDCM_1_1Function_1_1RequirementFunction.html',1,'OurPaintDCM::Function::RequirementFunction'],['../classOurPaintDCM_1_1Function_1_1RequirementFunction.html#a79372474813b650e56267bdb19f4f88f',1,'OurPaintDCM::Function::RequirementFunction::RequirementFunction()']]],
+  ['requirementfunction_2ecpp_6',['RequirementFunction.cpp',['../RequirementFunction_8cpp.html',1,'']]],
+  ['requirementfunction_2eh_7',['RequirementFunction.h',['../RequirementFunction_8h.html',1,'']]],
+  ['requirementfunctionsystem_8',['requirementfunctionsystem',['../classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html',1,'OurPaintDCM::System::RequirementFunctionSystem'],['../classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a5ef7546022fa69dd199877d9dfd49c98',1,'OurPaintDCM::System::RequirementFunctionSystem::RequirementFunctionSystem()']]],
+  ['requirementfunctionsystem_2ecpp_9',['RequirementFunctionSystem.cpp',['../RequirementFunctionSystem_8cpp.html',1,'']]],
+  ['requirementfunctionsystem_2eh_10',['RequirementFunctionSystem.h',['../RequirementFunctionSystem_8h.html',1,'']]],
+  ['requirements_2ecpp_11',['Requirements.cpp',['../Requirements_8cpp.html',1,'']]],
+  ['requirements_2eh_12',['Requirements.h',['../Requirements_8h.html',1,'']]],
+  ['requirementtype_13',['RequirementType',['../namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9',1,'OurPaintDCM::Utils']]],
+  ['reset_14',['reset',['../classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a70025ff26074369425935e60dcec77bc',1,'OurPaintDCM::Utils::IDGenerator']]],
+  ['residuals_15',['residuals',['../classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a91946c6253c3303faef588cd7341c4be',1,'OurPaintDCM::System::RequirementFunctionSystem']]]
 ];

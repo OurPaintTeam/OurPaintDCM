@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::getType" name="OurPaintDCM::Figures::GeometryStorage::getType">
+<area shape="rect" id="Node000001" title="Get object type by ID." alt="" coords="280,13,484,53"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a908d67e49081630224501b60f399b459" title="Build shallow subgraph for a given object ID (one&#45;level neighborhood)." alt="" coords="5,5,232,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="266,35,232,35,232,30,266,30"/>
+</map>

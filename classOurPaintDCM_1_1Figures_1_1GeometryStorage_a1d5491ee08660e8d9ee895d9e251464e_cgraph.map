@@ -1,0 +1,7 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::buildObjectGraph" name="OurPaintDCM::Figures::GeometryStorage::buildObjectGraph">
+<area shape="rect" id="Node000001" title="Build graph of objects where vertices are IDs and edges connect related objects." alt="" coords="5,30,232,85"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6926e48ad2b405395193869662e513b7" title="Find point ID by pointer." alt="" coords="285,5,509,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="232,42,271,37,272,42,233,47"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Convert type T to corresponding FigureType." alt="" coords="280,69,513,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="233,68,267,72,266,77,232,73"/>
+</map>
