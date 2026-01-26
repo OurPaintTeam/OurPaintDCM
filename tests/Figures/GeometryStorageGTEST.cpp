@@ -180,6 +180,77 @@ TEST(GeometryStorageTest, SpansAndCounts) {
     EXPECT_EQ(storage.arcCount(), 1u);
 }
 
+TEST(GeometryStorageTest, BuildObjectGraph) {
+    GeometryStorage storage;
+
+    auto [p1Id, p1] = storage.createPoint(0.0, 0.0);
+    auto [p2Id, p2] = storage.createPoint(1.0, 0.0);
+    auto [cId, c] = storage.createPoint(2.0, 2.0);
+
+    auto [lineId, line] = storage.createLine(p1, p2);
+    auto [circleId, circle] = storage.createCircle(c, 3.0);
+    auto [arcId, arc] = storage.createArc(p1, p2, c);
+
+    auto graph = storage.buildObjectGraph();
+
+    EXPECT_EQ(graph.vertexCount(), 6u);
+    EXPECT_EQ(graph.edgeCount(), 6u);
+    EXPECT_TRUE(graph.hasEdge(lineId, p1Id));
+    EXPECT_TRUE(graph.hasEdge(lineId, p2Id));
+    EXPECT_TRUE(graph.hasEdge(circleId, cId));
+    EXPECT_TRUE(graph.hasEdge(arcId, p1Id));
+    EXPECT_TRUE(graph.hasEdge(arcId, p2Id));
+    EXPECT_TRUE(graph.hasEdge(arcId, cId));
+}
+
+TEST(GeometryStorageTest, BuildObjectSubgraph) {
+    GeometryStorage storage;
+
+    auto [p1Id, p1] = storage.createPoint(0.0, 0.0);
+    auto [p2Id, p2] = storage.createPoint(1.0, 0.0);
+    auto [lineId, line] = storage.createLine(p1, p2);
+    auto [p3Id, p3] = storage.createPoint(5.0, 5.0);
+
+    auto subgraph = storage.buildObjectSubgraph(lineId);
+    EXPECT_EQ(subgraph.vertexCount(), 3u);
+    EXPECT_TRUE(subgraph.hasEdge(lineId, p1Id));
+    EXPECT_TRUE(subgraph.hasEdge(lineId, p2Id));
+
+    auto pointGraph = storage.buildObjectSubgraph(p1Id);
+    EXPECT_EQ(pointGraph.vertexCount(), 3u);
+    EXPECT_TRUE(pointGraph.hasEdge(p1Id, lineId));
+    EXPECT_TRUE(pointGraph.hasEdge(lineId, p2Id));
+
+    auto isolated = storage.buildObjectSubgraph(p3Id);
+    EXPECT_EQ(isolated.vertexCount(), 1u);
+    EXPECT_FALSE(isolated.hasEdge(p3Id, p3Id));
+
+    EXPECT_THROW(storage.buildObjectSubgraph(ID(999)), std::runtime_error);
+}
+
+TEST(GeometryStorageTest, SharedPointBetweenLines) {
+    GeometryStorage storage;
+
+    auto [pSharedId, pShared] = storage.createPoint(0.0, 0.0);
+    auto [p1Id, p1] = storage.createPoint(1.0, 0.0);
+    auto [p2Id, p2] = storage.createPoint(2.0, 0.0);
+
+    auto [line1Id, line1] = storage.createLine(pShared, p1);
+    auto [line2Id, line2] = storage.createLine(pShared, p2);
+
+    auto dependents = storage.getDependents(pSharedId);
+    EXPECT_EQ(dependents.size(), 2u);
+    EXPECT_TRUE(std::find(dependents.begin(), dependents.end(), line1Id) != dependents.end());
+    EXPECT_TRUE(std::find(dependents.begin(), dependents.end(), line2Id) != dependents.end());
+
+    auto subgraph = storage.buildObjectSubgraph(pSharedId);
+    EXPECT_EQ(subgraph.vertexCount(), 5u);
+    EXPECT_TRUE(subgraph.hasEdge(pSharedId, line1Id));
+    EXPECT_TRUE(subgraph.hasEdge(pSharedId, line2Id));
+    EXPECT_TRUE(subgraph.hasEdge(line1Id, p1Id));
+    EXPECT_TRUE(subgraph.hasEdge(line2Id, p2Id));
+}
+
 TEST(GeometryStorageTest, GetTypeMismatch) {
     GeometryStorage storage;
     auto [id, p] = storage.createPoint(0.0, 0.0);

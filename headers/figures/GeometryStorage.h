@@ -21,6 +21,7 @@
 #include "ID.h"
 #include "IDGenerator.h"
 #include "Enums.h"
+#include "Graph.h"
 
 namespace OurPaintDCM::Figures {
 
@@ -30,6 +31,7 @@ using Utils::FigureType;
 using Line2D   = Line<Point2D>;
 using Circle2D = Circle<Point2D>;
 using Arc2D    = Arc<Point2D>;
+using ObjectGraph = Graph<ID, ID, UndirectedPolicy, WeightedPolicy>;
 
 /**
  * @brief Concept to check if a type is a supported geometric figure.
@@ -347,6 +349,21 @@ public:
      * @return Vector of IDs of points referenced by object
      */
     [[nodiscard]] std::vector<ID> getDependencies(ID id) const;
+
+    /**
+     * @brief Build graph of objects where vertices are IDs and edges connect related objects.
+     * 
+     * Edge weight is ID(-1) as helper value for connected objects
+     */
+    [[nodiscard]] ObjectGraph buildObjectGraph() const;
+    
+    /**
+     * @brief Build shallow subgraph for a given object ID (one-level neighborhood).
+     * 
+     * Includes the object and its direct dependencies/dependents only.
+     * @throws std::runtime_error if ID not found
+     */
+    [[nodiscard]] ObjectGraph buildObjectSubgraph(ID id) const;
 
 private:
     /**

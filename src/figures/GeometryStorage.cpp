@@ -345,5 +345,87 @@ std::optional<ID> GeometryStorage::findPointID(const Point2D* ptr) const noexcep
     return std::nullopt;
 }
 
+ObjectGraph GeometryStorage::buildObjectGraph() const {
+    ObjectGraph graph;
+    const ID helperWeight = ID(static_cast<unsigned long long>(-1));
+
+    for (const auto& [id, entry] : m_index) {
+        graph.addVertex(id);
+    }
+
+    for (const auto& [id, entry] : m_index) {
+        switch (entry.type) {
+            case FigureType::ET_LINE: {
+                const Line2D* line = static_cast<const Line2D*>(entry.ptr);
+                if (auto p1 = findPointID(line->p1)) {
+                    graph.addEdge(id, *p1, helperWeight);
+                }
+                if (auto p2 = findPointID(line->p2)) {
+                    graph.addEdge(id, *p2, helperWeight);
+                }
+                break;
+            }
+            case FigureType::ET_CIRCLE: {
+                const Circle2D* circle = static_cast<const Circle2D*>(entry.ptr);
+                if (auto c = findPointID(circle->center)) {
+                    graph.addEdge(id, *c, helperWeight);
+                }
+                break;
+            }
+            case FigureType::ET_ARC: {
+                const Arc2D* arc = static_cast<const Arc2D*>(entry.ptr);
+                if (auto p1 = findPointID(arc->p1)) {
+                    graph.addEdge(id, *p1, helperWeight);
+                }
+                if (auto p2 = findPointID(arc->p2)) {
+                    graph.addEdge(id, *p2, helperWeight);
+                }
+                if (auto c = findPointID(arc->p_center)) {
+                    graph.addEdge(id, *c, helperWeight);
+                }
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+    return graph;
+}
+
+ObjectGraph GeometryStorage::buildObjectSubgraph(ID id) const {
+    auto typeOpt = getType(id);
+    if (!typeOpt) {
+        throw std::runtime_error("ID not found");
+    }
+
+    ObjectGraph graph;
+    const ID helperWeight = ID(static_cast<unsigned long long>(-1));
+
+    graph.addVertex(id);
+
+    if (*typeOpt == FigureType::ET_POINT2D) {
+        auto dependents = getDependents(id);
+        for (const ID depId : dependents) {
+            graph.addVertex(depId);
+            graph.addEdge(id, depId, helperWeight);
+            auto depPoints = getDependencies(depId);
+            for (const ID pointId : depPoints) {
+                graph.addVertex(pointId);
+                graph.addEdge(depId, pointId, helperWeight);
+            }
+        }
+        return graph;
+    }
+
+    auto dependencies = getDependencies(id);
+    for (const ID depId : dependencies) {
+        graph.addVertex(depId);
+        graph.addEdge(id, depId, helperWeight);
+    }
+
+    return graph;
+}
+
 }
 
