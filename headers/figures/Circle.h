@@ -47,6 +47,8 @@ namespace OurPaintDCM::Figures
         double lenght() const{
             return 2 * std::numbers::pi * radius;
         }
+
+        double* ptrRadius() { return &radius; }
     };
 }
 #endif //OURPAINTDCM_HEADERS_FIGURES_CIRCLE_H
