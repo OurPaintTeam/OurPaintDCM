@@ -24,6 +24,7 @@ var annotated_dup =
         [ "PointOnPointFunction", "classOurPaintDCM_1_1Function_1_1PointOnPointFunction.html", "classOurPaintDCM_1_1Function_1_1PointOnPointFunction" ],
         [ "PointPointDistanceFunction", "classOurPaintDCM_1_1Function_1_1PointPointDistanceFunction.html", "classOurPaintDCM_1_1Function_1_1PointPointDistanceFunction" ],
         [ "RequirementFunction", "classOurPaintDCM_1_1Function_1_1RequirementFunction.html", "classOurPaintDCM_1_1Function_1_1RequirementFunction" ],
+        [ "RequirementFunctionFactory", "classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html", "classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory" ],
         [ "VerticalFunction", "classOurPaintDCM_1_1Function_1_1VerticalFunction.html", "classOurPaintDCM_1_1Function_1_1VerticalFunction" ]
       ] ],
       [ "Requirements", "namespaceOurPaintDCM_1_1Requirements.html", [

@@ -11,6 +11,7 @@ var searchData=
   ['pointonpointfunction_8',['PointOnPointFunction',['../classOurPaintDCM_1_1Function_1_1PointOnPointFunction.html#a176c65745049cf9bdd123bec540a3ad2',1,'OurPaintDCM::Function::PointOnPointFunction']]],
   ['pointpointdist_9',['PointPointDist',['../classOurPaintDCM_1_1Requirements_1_1PointPointDist.html#ad912e01698ca8d95edf80cbeccadfc3a',1,'OurPaintDCM::Requirements::PointPointDist']]],
   ['pointpointdistancefunction_10',['PointPointDistanceFunction',['../classOurPaintDCM_1_1Function_1_1PointPointDistanceFunction.html#ae7957ba494c5e39d0bcca0ab89845a43',1,'OurPaintDCM::Function::PointPointDistanceFunction']]],
-  ['ptrx_11',['ptrX',['../structOurPaintDCM_1_1Figures_1_1Point2D.html#ad4e6e2bae59f79ba39b367ca1bc6580f',1,'OurPaintDCM::Figures::Point2D']]],
-  ['ptry_12',['ptrY',['../structOurPaintDCM_1_1Figures_1_1Point2D.html#ae10b911d2116732ed615f9fc5d291e0d',1,'OurPaintDCM::Figures::Point2D']]]
+  ['ptrradius_11',['ptrRadius',['../structOurPaintDCM_1_1Figures_1_1Circle.html#afeaf4ede849ebf501c7b13247e66a70b',1,'OurPaintDCM::Figures::Circle']]],
+  ['ptrx_12',['ptrX',['../structOurPaintDCM_1_1Figures_1_1Point2D.html#ad4e6e2bae59f79ba39b367ca1bc6580f',1,'OurPaintDCM::Figures::Point2D']]],
+  ['ptry_13',['ptrY',['../structOurPaintDCM_1_1Figures_1_1Point2D.html#ae10b911d2116732ed615f9fc5d291e0d',1,'OurPaintDCM::Figures::Point2D']]]
 ];

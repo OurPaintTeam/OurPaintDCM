@@ -1,0 +1,7 @@
+<map id="OurPaintDCM::Figures::Circle::ptrRadius" name="OurPaintDCM::Figures::Circle::ptrRadius">
+<area shape="rect" id="Node000001" title=" " alt="" coords="269,53,432,93"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#af36e6332e5fea22565ca69d80c37dfa6" title="Create line&#45;circle distance function." alt="" coords="5,5,221,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="256,59,221,53,222,48,256,54"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#ac1b88b74e90355f3b66788a9fa8b2b2d" title="Create line&#45;on&#45;circle function." alt="" coords="5,84,221,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="256,91,222,96,221,91,256,85"/>
+</map>
