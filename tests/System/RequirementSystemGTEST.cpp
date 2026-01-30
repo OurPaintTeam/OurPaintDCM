@@ -203,3 +203,55 @@ TEST_F(RequirementSystemTest, InvalidIdThrows) {
     EXPECT_THROW(system.addPointPointDist(ID(999), p2Id, 5.0), std::runtime_error);
     EXPECT_THROW(system.addHorizontal(ID(999)), std::runtime_error);
 }
+
+TEST_F(RequirementSystemTest, BuildDependencyGraphEmpty) {
+    RequirementSystem system(&storage);
+    
+    auto graph = system.buildDependencyGraph();
+    
+    EXPECT_TRUE(graph.hasVertex(p1Id));
+    EXPECT_TRUE(graph.hasVertex(p2Id));
+    EXPECT_TRUE(graph.hasVertex(p3Id));
+    EXPECT_TRUE(graph.hasVertex(line1Id));
+    EXPECT_TRUE(graph.hasVertex(line2Id));
+    EXPECT_TRUE(graph.hasVertex(circleId));
+    EXPECT_TRUE(graph.hasVertex(arcId));
+}
+
+TEST_F(RequirementSystemTest, BuildDependencyGraphWithConstraints) {
+    RequirementSystem system(&storage);
+    
+    system.addPointPointDist(p1Id, p2Id, 5.0);
+    system.addHorizontal(line1Id);
+    system.addLineLineParallel(line1Id, line2Id);
+    
+    auto graph = system.buildDependencyGraph();
+    
+    EXPECT_TRUE(graph.hasEdge(p1Id, p2Id));
+    EXPECT_TRUE(graph.hasEdge(line1Id, line2Id));
+
+    EXPECT_GE(graph.edgeCount(), 2u);
+}
+
+TEST_F(RequirementSystemTest, BuildDependencyGraphEdgeWeightIsConstraintId) {
+    RequirementSystem system(&storage);
+    
+    system.addPointPointDist(p1Id, p2Id, 5.0);
+    
+    auto graph = system.buildDependencyGraph();
+    
+    EXPECT_TRUE(graph.hasEdge(p1Id, p2Id));
+
+    auto weight = graph.getEdgeWeight(p1Id, p2Id);
+    EXPECT_EQ(weight.id, 1u);
+}
+
+TEST_F(RequirementSystemTest, BuildDependencyGraphMultiObjectConstraint) {
+    RequirementSystem system(&storage);
+    
+    system.addPointOnLine(p3Id, line1Id);
+    
+    auto graph = system.buildDependencyGraph();
+    
+    EXPECT_TRUE(graph.hasEdge(p3Id, line1Id));
+}

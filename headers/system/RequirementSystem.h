@@ -5,9 +5,9 @@
 #include "RequirementFunctionFactory.h"
 #include "GeometryStorage.h"
 #include "Enums.h"
+#include "IDGenerator.h"
 
 namespace OurPaintDCM::System {
-
 /**
  * @brief High-level requirement system bound to GeometryStorage.
  *
@@ -16,6 +16,14 @@ namespace OurPaintDCM::System {
  */
 class RequirementSystem : public RequirementFunctionSystem {
     Figures::GeometryStorage* _storage;
+    Utils::IDGenerator _reqIdGen;
+
+    struct RequirementEntry {
+        Utils::ID id;
+        std::vector<Utils::ID> objectIds;
+    };
+
+    std::vector<RequirementEntry> _requirements;
 
 public:
     /**
@@ -59,6 +67,8 @@ public:
 
     /// @brief Add arc-center perpendicular-bisector constraint by ID.
     void addArcCenterOnPerpendicular(Utils::ID arcId);
+
+    Figures::ObjectGraph buildDependencyGraph() const;
 };
 
 }
