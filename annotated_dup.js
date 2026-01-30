@@ -45,7 +45,8 @@ var annotated_dup =
         [ "Requirement", "classOurPaintDCM_1_1Requirements_1_1Requirement.html", "classOurPaintDCM_1_1Requirements_1_1Requirement" ]
       ] ],
       [ "System", "namespaceOurPaintDCM_1_1System.html", [
-        [ "RequirementFunctionSystem", "classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html", "classOurPaintDCM_1_1System_1_1RequirementFunctionSystem" ]
+        [ "RequirementFunctionSystem", "classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html", "classOurPaintDCM_1_1System_1_1RequirementFunctionSystem" ],
+        [ "RequirementSystem", "classOurPaintDCM_1_1System_1_1RequirementSystem.html", "classOurPaintDCM_1_1System_1_1RequirementSystem" ]
       ] ],
       [ "Utils", "namespaceOurPaintDCM_1_1Utils.html", [
         [ "ID", "structOurPaintDCM_1_1Utils_1_1ID.html", "structOurPaintDCM_1_1Utils_1_1ID" ],

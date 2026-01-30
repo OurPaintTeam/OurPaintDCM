@@ -47,5 +47,7 @@ var hierarchy =
       [ "OurPaintDCM::Function::VerticalFunction", "classOurPaintDCM_1_1Function_1_1VerticalFunction.html", null ]
     ] ],
     [ "OurPaintDCM::Function::RequirementFunctionFactory", "classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html", null ],
-    [ "OurPaintDCM::System::RequirementFunctionSystem", "classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html", null ]
+    [ "OurPaintDCM::System::RequirementFunctionSystem", "classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html", [
+      [ "OurPaintDCM::System::RequirementSystem", "classOurPaintDCM_1_1System_1_1RequirementSystem.html", null ]
+    ] ]
 ];

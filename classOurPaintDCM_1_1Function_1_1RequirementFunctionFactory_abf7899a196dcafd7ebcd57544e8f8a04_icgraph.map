@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Function::RequirementFunctionFactory::createLineLineAngle" name="OurPaintDCM::Function::RequirementFunctionFactory::createLineLineAngle">
+<area shape="rect" id="Node000001" title="Create angle&#45;between&#45;lines function." alt="" coords="219,5,435,60"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a0e9a8ad04cc56cca3511a3c2faa33bbc" title="Add angle&#45;between&#45;lines constraint by IDs." alt="" coords="5,5,171,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,35,171,35,171,30,205,30"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="OurPaintDCM::System::RequirementSystem::addArcCenterOnPerpendicular" name="OurPaintDCM::System::RequirementSystem::addArcCenterOnPerpendicular">
+<area shape="rect" id="Node000001" title="Add arc&#45;center perpendicular&#45;bisector constraint by ID." alt="" coords="5,84,231,139"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#aecf2c9fa7cd06edf3b6c169cf75bb6f0" title="Add a new geometric constraint function to the system." alt="" coords="291,5,509,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="216,81,288,61,289,66,217,86"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#a23a5dbe13ab37755c6ee7d69d0ede13a" title="Create arc center perpendicular&#45;bisector function." alt="" coords="279,84,521,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="231,109,265,109,265,114,231,114"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af9aa52e57a93fded2dfd79d2a0d04263" title="Get object by ID with type checking." alt="" coords="313,163,487,203"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="226,136,308,157,307,162,225,141"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Convert type T to corresponding FigureType." alt="" coords="569,163,803,203"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="487,181,556,181,556,186,487,186"/>
+</map>
