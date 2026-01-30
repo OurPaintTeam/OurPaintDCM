@@ -1,0 +1,9 @@
+<map id="OurPaintDCM::System::RequirementSystem::buildDependencyGraph" name="OurPaintDCM::System::RequirementSystem::buildDependencyGraph">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,30,188,85"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1d5491ee08660e8d9ee895d9e251464e" title="Build graph of objects where vertices are IDs and edges connect related objects." alt="" coords="236,30,463,85"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="188,55,222,55,222,60,188,60"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6926e48ad2b405395193869662e513b7" title="Find point ID by pointer." alt="" coords="515,5,739,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="463,42,502,37,502,42,463,47"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Convert type T to corresponding FigureType." alt="" coords="511,69,744,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="463,68,497,72,497,77,463,73"/>
+</map>

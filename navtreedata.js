@@ -59,7 +59,7 @@ var NAVTREEINDEX =
 "Arc_8h.html",
 "classOurPaintDCM_1_1Function_1_1PointLineDistanceFunction.html#a98522366384adf1352d0e3e009952292",
 "classOurPaintDCM_1_1Requirements_1_1PointPointDist.html#ad912e01698ca8d95edf80cbeccadfc3a",
-"structOurPaintDCM_1_1Figures_1_1FigureData_1_1PointData.html#a977d710ad0ace5ee725e2c7d7b9b5e6b"
+"structOurPaintDCM_1_1Figures_1_1FigureData.html#a5f2e99515df7ce22ed4948a96bb484c2"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -1,11 +1,13 @@
 <map id="OurPaintDCM::System::RequirementSystem::addPointPointDist" name="OurPaintDCM::System::RequirementSystem::addPointPointDist">
-<area shape="rect" id="Node000001" title="Add point&#45;point distance constraint by IDs." alt="" coords="5,84,171,139"/>
+<area shape="rect" id="Node000001" title="Add point&#45;point distance constraint by IDs." alt="" coords="5,120,171,175"/>
 <area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#aecf2c9fa7cd06edf3b6c169cf75bb6f0" title="Add a new geometric constraint function to the system." alt="" coords="219,5,437,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="170,82,230,62,232,67,172,87"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,118,217,69,231,63,233,68,220,74,133,122"/>
 <area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#a155bd8cc1bad3b83dd13deab9ee791e6" title="Create point&#45;point distance function." alt="" coords="220,84,436,139"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="171,109,206,109,206,114,171,114"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="171,132,206,127,207,132,171,138"/>
 <area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af9aa52e57a93fded2dfd79d2a0d04263" title="Get object by ID with type checking." alt="" coords="241,163,415,203"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="171,134,219,149,246,157,245,162,218,154,170,139"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="171,157,227,166,227,171,171,162"/>
+<area shape="rect" id="Node000008" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a10d4994ee732333e277d12a1fa2d16cc" title="Generate and return the next unique ID." alt="" coords="248,227,408,267"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="137,172,220,213,239,220,238,225,218,218,135,177"/>
 <area shape="rect" id="Node000004" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#ad4e6e2bae59f79ba39b367ca1bc6580f" title=" " alt="" coords="521,31,683,71"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="436,85,507,69,508,75,437,90"/>
 <area shape="rect" id="Node000005" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#ae10b911d2116732ed615f9fc5d291e0d" title=" " alt="" coords="521,95,683,135"/>
