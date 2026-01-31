@@ -4,6 +4,7 @@
 #include "Enums.h"
 #include <vector>
 #include <memory>
+#include <unordered_set>
 #include <Eigen/Dense>
 #include <Eigen/Sparse>
 
@@ -20,6 +21,7 @@ namespace OurPaintDCM::System {
     class RequirementFunctionSystem {
         std::vector<std::shared_ptr<Function::RequirementFunction>> _functions; ///< All constraint functions
         std::vector<VAR> _allVars;                                              ///< Unique variable pointers
+        std::unordered_set<VAR> _allVarsSet;                                    ///< Fast lookup for uniqueness
         Eigen::SparseMatrix<double> _jacobian;                                  ///< Cached Jacobian
 
     public:
