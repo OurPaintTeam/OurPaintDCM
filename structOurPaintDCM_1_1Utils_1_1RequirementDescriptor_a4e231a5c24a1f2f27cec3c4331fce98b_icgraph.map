@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Utils::RequirementDescriptor::lineLinePerpendicular" name="OurPaintDCM::Utils::RequirementDescriptor::lineLinePerpendicular">
+<area shape="rect" id="Node000001" title="Create perpendicular lines descriptor." alt="" coords="251,5,432,60"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab34a6d3e1ba2dc93955e7acde536a7fb" title="Add perpendicular&#45;lines constraint by IDs." alt="" coords="5,5,203,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="237,35,203,35,203,30,237,30"/>
+</map>

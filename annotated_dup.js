@@ -50,7 +50,8 @@ var annotated_dup =
       ] ],
       [ "Utils", "namespaceOurPaintDCM_1_1Utils.html", [
         [ "ID", "structOurPaintDCM_1_1Utils_1_1ID.html", "structOurPaintDCM_1_1Utils_1_1ID" ],
-        [ "IDGenerator", "classOurPaintDCM_1_1Utils_1_1IDGenerator.html", "classOurPaintDCM_1_1Utils_1_1IDGenerator" ]
+        [ "IDGenerator", "classOurPaintDCM_1_1Utils_1_1IDGenerator.html", "classOurPaintDCM_1_1Utils_1_1IDGenerator" ],
+        [ "RequirementDescriptor", "structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html", "structOurPaintDCM_1_1Utils_1_1RequirementDescriptor" ]
       ] ]
     ] ],
     [ "std", "namespacestd.html", [

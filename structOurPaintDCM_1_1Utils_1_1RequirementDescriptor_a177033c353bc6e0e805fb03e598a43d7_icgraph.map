@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Utils::RequirementDescriptor::lineOnCircle" name="OurPaintDCM::Utils::RequirementDescriptor::lineOnCircle">
+<area shape="rect" id="Node000001" title="Create line&#45;on&#45;circle descriptor." alt="" coords="219,5,400,60"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#aefd4fb76785f5539a9297d3403894dd4" title="Add line&#45;on&#45;circle constraint by IDs." alt="" coords="5,5,171,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,35,171,35,171,30,205,30"/>
+</map>

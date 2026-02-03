@@ -32,6 +32,7 @@ var hierarchy =
       [ "OurPaintDCM::Requirements::PointOnPoint", "classOurPaintDCM_1_1Requirements_1_1PointOnPoint.html", null ],
       [ "OurPaintDCM::Requirements::PointPointDist", "classOurPaintDCM_1_1Requirements_1_1PointPointDist.html", null ]
     ] ],
+    [ "OurPaintDCM::Utils::RequirementDescriptor", "structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html", null ],
     [ "OurPaintDCM::System::RequirementSystem::RequirementEntry", "structOurPaintDCM_1_1System_1_1RequirementSystem_1_1RequirementEntry.html", null ],
     [ "OurPaintDCM::Function::RequirementFunction", "classOurPaintDCM_1_1Function_1_1RequirementFunction.html", [
       [ "OurPaintDCM::Function::ArcCenterOnPerpendicularFunction", "classOurPaintDCM_1_1Function_1_1ArcCenterOnPerpendicularFunction.html", null ],

@@ -13,8 +13,11 @@ var classOurPaintDCM_1_1System_1_1RequirementSystem =
     [ "addPointOnLine", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#a6b6645773c95ffa7ecc9f36aa0419e7a", null ],
     [ "addPointOnPoint", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#a3c47e959870bb0d3afa98ccdb26c4914", null ],
     [ "addPointPointDist", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab572c3a39938a7b042ab9ddd0b1c1488", null ],
+    [ "addRequirement", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#a83793b5b89f46cb835972736f83f02f2", null ],
     [ "addVertical", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#afbddee5832268b0bb2e9939c41161ef9", null ],
     [ "buildDependencyGraph", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#a01c4378da09c06d5ef7aeedf48117fec", null ],
+    [ "getRequirement", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#a8ef15f562e73826a5fa2a9c43ab5b8c6", null ],
+    [ "getRequirements", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#a1005fe993b468f8954124f44976c2cea", null ],
     [ "_reqIdGen", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#af08a754bfa775add4dbe52c49e797d6a", null ],
     [ "_requirements", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#a36a15818b9622a1f33e27170eb8443a7", null ],
     [ "_storage", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#af680e05066419680ef0d3931b669eda1", null ]

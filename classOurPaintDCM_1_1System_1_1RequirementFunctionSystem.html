@@ -157,6 +157,9 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a3ab5ecc552a08f5cde129c6ccd9752cb" id="r_a3ab5ecc552a08f5cde129c6ccd9752cb"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="RequirementFunction_8h.html#abca8dfa78652bc61165262af4fade766">VAR</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a3ab5ecc552a08f5cde129c6ccd9752cb">_allVars</a></td></tr>
 <tr class="memdesc:a3ab5ecc552a08f5cde129c6ccd9752cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unique variable pointers.  <br /></td></tr>
 <tr class="separator:a3ab5ecc552a08f5cde129c6ccd9752cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add6ca7dd0829cde3eaeebf59cebb1c4c" id="r_add6ca7dd0829cde3eaeebf59cebb1c4c"><td class="memItemLeft" align="right" valign="top">std::unordered_set&lt; <a class="el" href="RequirementFunction_8h.html#abca8dfa78652bc61165262af4fade766">VAR</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#add6ca7dd0829cde3eaeebf59cebb1c4c">_allVarsSet</a></td></tr>
+<tr class="memdesc:add6ca7dd0829cde3eaeebf59cebb1c4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fast lookup for uniqueness.  <br /></td></tr>
+<tr class="separator:add6ca7dd0829cde3eaeebf59cebb1c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a136e20b45952782ebc17de4da3478894" id="r_a136e20b45952782ebc17de4da3478894"><td class="memItemLeft" align="right" valign="top">Eigen::SparseMatrix&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a136e20b45952782ebc17de4da3478894">_jacobian</a></td></tr>
 <tr class="memdesc:a136e20b45952782ebc17de4da3478894"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cached Jacobian.  <br /></td></tr>
 <tr class="separator:a136e20b45952782ebc17de4da3478894"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -221,31 +224,33 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classOurPaintDCM_1_1System_1_1RequirementFunctionSystem_aecf2c9fa7cd06edf3b6c169cf75bb6f0_icgraph.png" border="0" usemap="#aclassOurPaintDCM_1_1System_1_1RequirementFunctionSystem_aecf2c9fa7cd06edf3b6c169cf75bb6f0_icgraph" alt=""/></div>
 <map name="aclassOurPaintDCM_1_1System_1_1RequirementFunctionSystem_aecf2c9fa7cd06edf3b6c169cf75bb6f0_icgraph" id="aclassOurPaintDCM_1_1System_1_1RequirementFunctionSystem_aecf2c9fa7cd06edf3b6c169cf75bb6f0_icgraph">
-<area shape="rect" title="Add a new geometric constraint function to the system." alt="" coords="279,439,497,493"/>
+<area shape="rect" title="Add a new geometric constraint function to the system." alt="" coords="492,439,711,493"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a83793b5b89f46cb835972736f83f02f2" title="Add a requirement using a descriptor (unified high&#45;level interface)." alt="" coords="279,439,444,493"/>
+<area shape="poly" title=" " alt="" coords="478,469,444,469,444,463,478,463"/>
 <area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a8c343229dbfbf8badf9d0db172d2e4b5" title="Add arc&#45;center perpendicular&#45;bisector constraint by ID." alt="" coords="5,5,231,60"/>
-<area shape="poly" title=" " alt="" coords="379,425,365,351,338,256,318,207,294,158,264,113,229,73,215,62,218,58,232,69,268,110,298,156,323,205,343,255,370,350,384,425"/>
+<area shape="poly" title=" " alt="" coords="355,425,347,350,326,256,310,207,289,159,262,113,229,73,216,62,219,58,233,69,266,110,293,156,315,205,331,255,352,350,361,424"/>
 <area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a090214a76b5dc63ba09897bac0f2e9d3" title="Add horizontal&#45;line constraint by ID." alt="" coords="35,84,201,139"/>
-<area shape="poly" title=" " alt="" coords="375,426,356,365,327,292,285,217,259,182,229,152,199,133,202,129,232,148,263,179,289,214,332,290,362,364,380,424"/>
+<area shape="poly" title=" " alt="" coords="352,426,339,366,316,292,280,217,256,183,229,152,200,133,203,128,232,148,261,179,284,214,321,290,344,364,357,425"/>
 <area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a6342987e5432d4882aa87a2b75177010" title="Add line&#45;circle distance constraint by IDs." alt="" coords="35,163,201,217"/>
-<area shape="poly" title=" " alt="" coords="368,427,346,382,315,329,276,276,229,231,200,214,202,209,232,227,280,273,319,326,350,379,373,425"/>
+<area shape="poly" title=" " alt="" coords="346,426,329,381,304,329,271,276,229,231,200,213,202,208,232,227,275,273,309,326,334,379,351,425"/>
 <area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a0e9a8ad04cc56cca3511a3c2faa33bbc" title="Add angle&#45;between&#45;lines constraint by IDs." alt="" coords="35,241,201,296"/>
-<area shape="poly" title=" " alt="" coords="356,430,301,368,267,337,229,310,200,294,202,290,232,305,270,333,305,365,360,426"/>
+<area shape="poly" title=" " alt="" coords="335,429,290,367,261,336,229,310,200,293,202,289,232,305,265,333,294,364,339,425"/>
 <area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a94161cac4e0347106d9eca8be3246dfd" title="Add parallel&#45;lines constraint by IDs." alt="" coords="35,320,201,375"/>
-<area shape="poly" title=" " alt="" coords="325,435,230,388,200,377,202,372,232,384,327,430"/>
+<area shape="poly" title=" " alt="" coords="308,433,229,388,200,376,202,371,232,384,310,428"/>
 <area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab34a6d3e1ba2dc93955e7acde536a7fb" title="Add perpendicular&#45;lines constraint by IDs." alt="" coords="19,399,217,453"/>
-<area shape="poly" title=" " alt="" coords="265,450,217,443,217,438,265,445"/>
+<area shape="poly" title=" " alt="" coords="265,453,217,445,217,440,266,448"/>
 <area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#aefd4fb76785f5539a9297d3403894dd4" title="Add line&#45;on&#45;circle constraint by IDs." alt="" coords="35,477,201,532"/>
-<area shape="poly" title=" " alt="" coords="265,486,201,496,200,490,264,481"/>
+<area shape="poly" title=" " alt="" coords="265,484,201,494,200,489,264,479"/>
 <area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#aac6cef4fd8e57b9e3608ac457b5fe715" title="Add point&#45;line distance constraint by IDs." alt="" coords="35,556,201,611"/>
-<area shape="poly" title=" " alt="" coords="324,502,232,546,200,558,198,553,230,541,322,497"/>
+<area shape="poly" title=" " alt="" coords="308,503,232,546,202,559,200,554,229,541,306,498"/>
 <area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a6b6645773c95ffa7ecc9f36aa0419e7a" title="Add point&#45;on&#45;line constraint by IDs." alt="" coords="35,635,201,689"/>
-<area shape="poly" title=" " alt="" coords="359,506,304,566,269,597,232,624,202,640,200,635,229,620,266,593,300,562,355,502"/>
+<area shape="poly" title=" " alt="" coords="339,506,294,566,265,597,232,624,202,641,200,636,229,620,261,593,290,563,334,503"/>
 <area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a3c47e959870bb0d3afa98ccdb26c4914" title="Add point&#45;on&#45;point constraint by IDs." alt="" coords="35,713,201,768"/>
-<area shape="poly" title=" " alt="" coords="372,507,350,552,319,605,279,657,232,703,202,721,200,716,229,699,275,654,314,602,345,550,367,505"/>
+<area shape="poly" title=" " alt="" coords="350,508,333,553,308,605,275,657,232,703,202,721,200,717,229,699,270,654,303,602,328,550,345,506"/>
 <area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab572c3a39938a7b042ab9ddd0b1c1488" title="Add point&#45;point distance constraint by IDs." alt="" coords="35,792,201,847"/>
-<area shape="poly" title=" " alt="" coords="379,508,361,568,331,641,289,716,262,751,232,781,202,801,199,796,229,777,258,747,284,713,326,639,356,566,374,506"/>
+<area shape="poly" title=" " alt="" coords="357,508,343,568,320,641,284,716,260,750,232,781,203,801,200,797,229,777,256,747,279,713,315,639,338,566,351,507"/>
 <area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#afbddee5832268b0bb2e9939c41161ef9" title="Add vertical&#45;line constraint by ID." alt="" coords="35,871,201,925"/>
-<area shape="poly" title=" " alt="" coords="384,508,370,582,342,676,322,726,298,774,268,819,232,860,202,880,199,876,229,856,264,816,293,771,318,723,337,674,365,581,379,507"/>
+<area shape="poly" title=" " alt="" coords="361,507,352,581,331,675,314,725,293,774,266,819,232,860,203,881,200,876,229,856,261,816,288,771,309,723,326,674,346,581,355,507"/>
 </map>
 </div>
 
@@ -412,6 +417,30 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Unique variable pointers. </p>
+
+</div>
+</div>
+<a id="add6ca7dd0829cde3eaeebf59cebb1c4c" name="add6ca7dd0829cde3eaeebf59cebb1c4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add6ca7dd0829cde3eaeebf59cebb1c4c">&#9670;&#160;</a></span>_allVarsSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_set&lt;<a class="el" href="RequirementFunction_8h.html#abca8dfa78652bc61165262af4fade766">VAR</a>&gt; OurPaintDCM::System::RequirementFunctionSystem::_allVarsSet</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Fast lookup for uniqueness. </p>
 
 </div>
 </div>
