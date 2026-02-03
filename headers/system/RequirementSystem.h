@@ -6,6 +6,7 @@
 #include "GeometryStorage.h"
 #include "Enums.h"
 #include "IDGenerator.h"
+#include "utils/RequirementDescriptor.h"
 
 namespace OurPaintDCM::System {
 /**
@@ -13,14 +14,28 @@ namespace OurPaintDCM::System {
  *
  * Adds geometric constraints by IDs and uses RequirementFunctionSystem
  * directly for evaluation and diagnostics.
+ *
+ * ## Usage Example
+ * @code
+ * RequirementSystem system(&storage);
+ *
+ * // Method 1: Using unified addRequirement with descriptor
+ * auto desc = RequirementDescriptor::pointPointDist(p1Id, p2Id, 100.0);
+ * Utils::ID reqId = system.addRequirement(desc);
+ *
+ * // Method 2: Using specialized methods (still supported)
+ * system.addPointOnLine(pointId, lineId);
+ * @endcode
  */
 class RequirementSystem : public RequirementFunctionSystem {
     Figures::GeometryStorage* _storage;
     Utils::IDGenerator _reqIdGen;
 
     struct RequirementEntry {
-        Utils::ID id;
-        std::vector<Utils::ID> objectIds;
+        Utils::ID id;                            ///< Unique ID of this requirement
+        Utils::RequirementType type;             ///< Type of the requirement
+        std::vector<Utils::ID> objectIds;        ///< IDs of objects involved
+        std::optional<double> param;             ///< Optional parameter (distance, angle)
     };
 
     std::vector<RequirementEntry> _requirements;
@@ -31,6 +46,48 @@ public:
      * @param storage Pointer to the storage (must outlive this object).
      */
     explicit RequirementSystem(Figures::GeometryStorage* storage);
+
+
+    /**
+     * @brief Add a requirement using a descriptor (unified high-level interface).
+     *
+     * This is the recommended way to add requirements. It provides a single
+     * entry point for all requirement types and validates the descriptor
+     * before adding.
+     *
+     * @param descriptor The requirement descriptor containing type, object IDs, and optional parameter.
+     * @return ID of the created requirement.
+     * @throws std::invalid_argument if descriptor validation fails.
+     * @throws std::runtime_error if object IDs are not found in storage.
+     *
+     * ## Example
+     * @code
+     * // Using factory method
+     * auto desc = RequirementDescriptor::pointPointDist(p1Id, p2Id, 50.0);
+     * Utils::ID reqId = system.addRequirement(desc);
+     *
+     * // Using direct construction
+     * RequirementDescriptor desc2;
+     * desc2.type = RequirementType::ET_LINELINEPARALLEL;
+     * desc2.objectIds = {line1Id, line2Id};
+     * system.addRequirement(desc2);
+     * @endcode
+     */
+    Utils::ID addRequirement(const Utils::RequirementDescriptor& descriptor);
+
+    /**
+     * @brief Get all stored requirement entries (read-only).
+     * @return Const reference to the vector of requirement entries.
+     */
+    const std::vector<RequirementEntry>& getRequirements() const noexcept { return _requirements; }
+
+    /**
+     * @brief Get requirement entry by ID.
+     * @param reqId The requirement ID.
+     * @return Pointer to the entry, or nullptr if not found.
+     */
+    const RequirementEntry* getRequirement(Utils::ID reqId) const noexcept;
+
 
     /// @brief Add point-line distance constraint by IDs.
     void addPointLineDist(Utils::ID pointId, Utils::ID lineId, double dist);
