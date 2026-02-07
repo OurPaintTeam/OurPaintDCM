@@ -32,6 +32,7 @@ namespace OurPaintDCM::Utils {
  * @endcode
  */
 struct RequirementDescriptor {
+    std::optional<ID> id;              ///< ID of the requirement (set after creation)
     RequirementType type;              ///< Type of the requirement
     std::vector<ID> objectIds;         ///< IDs of objects involved
     std::optional<double> param;       ///< Optional parameter (distance, angle, etc.)
