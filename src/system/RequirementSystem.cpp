@@ -7,7 +7,6 @@ RequirementSystem::RequirementSystem(Figures::GeometryStorage* storage)
     : _storage(storage) {}
 
 Utils::ID RequirementSystem::addRequirement(const Utils::RequirementDescriptor& descriptor) {
-    // Validate descriptor
     descriptor.validate();
 
     const auto& ids = descriptor.objectIds;
@@ -51,7 +50,7 @@ Utils::ID RequirementSystem::addRequirement(const Utils::RequirementDescriptor& 
             break;
         }
         case Utils::RequirementType::ET_LINEINCIRCLE: {
-            // Note: Factory method for LineInCircle might not exist yet
+            // Factory method for LineInCircle might not exist yet
             throw std::runtime_error("LineInCircle requirement is not yet supported via unified interface");
         }
         case Utils::RequirementType::ET_LINELINEPARALLEL: {
@@ -106,6 +105,34 @@ const RequirementSystem::RequirementEntry* RequirementSystem::getRequirement(Uti
     return nullptr;
 }
 
+bool RequirementSystem::hasRequirement(Utils::ID reqId) const noexcept {
+    return getRequirement(reqId) != nullptr;
+}
+
+std::optional<Utils::RequirementType> RequirementSystem::getRequirementType(Utils::ID reqId) const noexcept {
+    const auto* entry = getRequirement(reqId);
+    if (entry) {
+        return entry->type;
+    }
+    return std::nullopt;
+}
+
+std::optional<std::vector<Utils::ID>> RequirementSystem::getRequirementObjectIds(Utils::ID reqId) const noexcept {
+    const auto* entry = getRequirement(reqId);
+    if (entry) {
+        return entry->objectIds;
+    }
+    return std::nullopt;
+}
+
+std::optional<double> RequirementSystem::getRequirementParam(Utils::ID reqId) const noexcept {
+    const auto* entry = getRequirement(reqId);
+    if (entry) {
+        return entry->param;
+    }
+    return std::nullopt;
+}
+
 void RequirementSystem::addPointLineDist(Utils::ID pointId, Utils::ID lineId, double dist) {
     addRequirement(Utils::RequirementDescriptor::pointLineDist(pointId, lineId, dist));
 }
@@ -152,6 +179,11 @@ void RequirementSystem::addHorizontal(Utils::ID lineId) {
 
 void RequirementSystem::addArcCenterOnPerpendicular(Utils::ID arcId) {
     addRequirement(Utils::RequirementDescriptor::arcCenterOnPerpendicular(arcId));
+}
+
+void RequirementSystem::clear() {
+    RequirementFunctionSystem::clear();
+    _requirements.clear();
 }
 
 Figures::ObjectGraph RequirementSystem::buildDependencyGraph() const {

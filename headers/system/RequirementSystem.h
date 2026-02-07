@@ -88,6 +88,41 @@ public:
      */
     const RequirementEntry* getRequirement(Utils::ID reqId) const noexcept;
 
+    /**
+     * @brief Check if requirement with given ID exists.
+     * @param reqId The requirement ID to check.
+     * @return true if requirement exists, false otherwise.
+     */
+    bool hasRequirement(Utils::ID reqId) const noexcept;
+
+    /**
+     * @brief Get requirement type by ID.
+     * @param reqId The requirement ID.
+     * @return Optional containing the requirement type, or nullopt if not found.
+     */
+    std::optional<Utils::RequirementType> getRequirementType(Utils::ID reqId) const noexcept;
+
+    /**
+     * @brief Get object IDs involved in requirement.
+     * @param reqId The requirement ID.
+     * @return Optional containing vector of object IDs, or nullopt if not found.
+     */
+    std::optional<std::vector<Utils::ID>> getRequirementObjectIds(Utils::ID reqId) const noexcept;
+
+    /**
+     * @brief Get parameter value of requirement (distance, angle, etc.).
+     * @param reqId The requirement ID.
+     * @return Optional containing the parameter value, or nullopt if requirement not found or has no parameter.
+     */
+    std::optional<double> getRequirementParam(Utils::ID reqId) const noexcept;
+
+    /**
+     * @brief Get count of all requirements in the system.
+     * @return Number of requirements.
+     */
+    std::size_t getRequirementCount() const noexcept { return _requirements.size(); }
+
+    // ==================== Specialized Methods (Legacy) ====================
 
     /// @brief Add point-line distance constraint by IDs.
     void addPointLineDist(Utils::ID pointId, Utils::ID lineId, double dist);
@@ -124,6 +159,13 @@ public:
 
     /// @brief Add arc-center perpendicular-bisector constraint by ID.
     void addArcCenterOnPerpendicular(Utils::ID arcId);
+
+    /**
+     * @brief Clear all functions, variables, and requirement metadata.
+     * 
+     * Overrides base class clear() to also clear the requirement entries.
+     */
+    void clear();
 
     Figures::ObjectGraph buildDependencyGraph() const;
 };
