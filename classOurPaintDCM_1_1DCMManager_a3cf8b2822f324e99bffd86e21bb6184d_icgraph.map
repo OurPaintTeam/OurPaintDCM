@@ -1,0 +1,10 @@
+<map id="OurPaintDCM::DCMManager::rebuildComponents" name="OurPaintDCM::DCMManager::rebuildComponents">
+<area shape="rect" id="Node000001" title=" " alt="" coords="535,37,739,77"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a60344e1f42d0ac0aea28eed4f53f4215" title="Remove a requirement by ID." alt="" coords="270,5,474,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="521,46,474,40,475,35,521,41"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1DCMManager.html#a0ad8ab5e8bc9d619751d6ef02d86372e" title=" " alt="" coords="257,69,487,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="521,74,487,78,487,73,521,69"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#ac2f4c1cac07c5bc28426b2ceb50ad736" title="Remove a figure by ID." alt="" coords="5,37,209,77"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="257,42,210,48,209,42,256,37"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="243,76,209,72,210,67,244,71"/>
+</map>

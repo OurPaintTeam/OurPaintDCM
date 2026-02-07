@@ -1,5 +1,7 @@
 <map id="OurPaintDCM::Figures::GeometryStorage::createArc" name="OurPaintDCM::Figures::GeometryStorage::createArc">
-<area shape="rect" id="Node000001" title="Create arc." alt="" coords="288,5,503,45"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Create figure without exposing concrete types." alt="" coords="5,5,240,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="274,28,240,28,240,23,274,23"/>
+<area shape="rect" id="Node000001" title="Create arc." alt="" coords="288,37,503,77"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#aac0ea08abe5a8da7d345aa2852e04515" title="Add a new geometric figure using descriptor." alt="" coords="21,5,225,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="274,46,225,40,225,35,274,40"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Create figure without exposing concrete types." alt="" coords="5,69,240,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="275,74,240,78,240,73,274,69"/>
 </map>

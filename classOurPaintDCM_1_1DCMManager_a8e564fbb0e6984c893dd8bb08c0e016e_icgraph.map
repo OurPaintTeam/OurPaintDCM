@@ -1,0 +1,14 @@
+<map id="OurPaintDCM::DCMManager::addFigureToComponent" name="OurPaintDCM::DCMManager::addFigureToComponent">
+<area shape="rect" id="Node000001" title=" " alt="" coords="787,37,991,77"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#aac0ea08abe5a8da7d345aa2852e04515" title="Add a new geometric figure using descriptor." alt="" coords="535,5,739,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="773,45,739,41,739,36,774,40"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#a3cf8b2822f324e99bffd86e21bb6184d" title=" " alt="" coords="535,69,739,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="774,75,739,79,739,74,773,69"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1DCMManager.html#a60344e1f42d0ac0aea28eed4f53f4215" title="Remove a requirement by ID." alt="" coords="270,37,474,77"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="521,78,474,72,475,67,521,73"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1DCMManager.html#a0ad8ab5e8bc9d619751d6ef02d86372e" title=" " alt="" coords="257,101,487,141"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="521,106,487,110,487,105,521,101"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1DCMManager.html#ac2f4c1cac07c5bc28426b2ceb50ad736" title="Remove a figure by ID." alt="" coords="5,69,209,109"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="257,74,210,80,209,74,256,69"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="243,108,209,104,210,99,244,103"/>
+</map>

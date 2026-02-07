@@ -3,9 +3,12 @@ var hierarchy =
     [ "OurPaintDCM::Figures::Arc< PointT >", "structOurPaintDCM_1_1Figures_1_1Arc.html", null ],
     [ "OurPaintDCM::Figures::Circle< PointT >", "structOurPaintDCM_1_1Figures_1_1Circle.html", null ],
     [ "OurPaintDCM::Figures::Circle< OurPaintDCM::Figures::Point2D >", "structOurPaintDCM_1_1Figures_1_1Circle.html", null ],
+    [ "OurPaintDCM::Utils::CircleUpdateDescriptor", "structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor.html", null ],
     [ "OurPaintDCM::Requirements::ComponentElement", "structOurPaintDCM_1_1Requirements_1_1ComponentElement.html", null ],
     [ "OurPaintDCM::Requirements::Components", "classOurPaintDCM_1_1Requirements_1_1Components.html", null ],
+    [ "OurPaintDCM::DCMManager", "classOurPaintDCM_1_1DCMManager.html", null ],
     [ "OurPaintDCM::Figures::FigureData", "structOurPaintDCM_1_1Figures_1_1FigureData.html", null ],
+    [ "OurPaintDCM::Utils::FigureDescriptor", "structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html", null ],
     [ "OurPaintDCM::Figures::FigureEntry", "structOurPaintDCM_1_1Figures_1_1FigureEntry.html", null ],
     [ "OurPaintDCM::Figures::GeometryStorage", "classOurPaintDCM_1_1Figures_1_1GeometryStorage.html", null ],
     [ "std::hash< OurPaintDCM::Utils::ID >", "structstd_1_1hash_3_01OurPaintDCM_1_1Utils_1_1ID_01_4.html", null ],
@@ -18,6 +21,7 @@ var hierarchy =
       [ "OurPaintDCM::Figures::Point2D", "structOurPaintDCM_1_1Figures_1_1Point2D.html", null ]
     ] ],
     [ "OurPaintDCM::Figures::FigureData::PointData", "structOurPaintDCM_1_1Figures_1_1FigureData_1_1PointData.html", null ],
+    [ "OurPaintDCM::Utils::PointUpdateDescriptor", "structOurPaintDCM_1_1Utils_1_1PointUpdateDescriptor.html", null ],
     [ "OurPaintDCM::Requirements::Requirement", "classOurPaintDCM_1_1Requirements_1_1Requirement.html", [
       [ "OurPaintDCM::Requirements::LineCircleDist", "classOurPaintDCM_1_1Requirements_1_1LineCircleDist.html", null ],
       [ "OurPaintDCM::Requirements::LineHorizontal", "classOurPaintDCM_1_1Requirements_1_1LineHorizontal.html", null ],

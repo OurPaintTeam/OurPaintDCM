@@ -49,10 +49,14 @@ var annotated_dup =
         [ "RequirementSystem", "classOurPaintDCM_1_1System_1_1RequirementSystem.html", "classOurPaintDCM_1_1System_1_1RequirementSystem" ]
       ] ],
       [ "Utils", "namespaceOurPaintDCM_1_1Utils.html", [
+        [ "CircleUpdateDescriptor", "structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor.html", "structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor" ],
+        [ "FigureDescriptor", "structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html", "structOurPaintDCM_1_1Utils_1_1FigureDescriptor" ],
         [ "ID", "structOurPaintDCM_1_1Utils_1_1ID.html", "structOurPaintDCM_1_1Utils_1_1ID" ],
         [ "IDGenerator", "classOurPaintDCM_1_1Utils_1_1IDGenerator.html", "classOurPaintDCM_1_1Utils_1_1IDGenerator" ],
+        [ "PointUpdateDescriptor", "structOurPaintDCM_1_1Utils_1_1PointUpdateDescriptor.html", "structOurPaintDCM_1_1Utils_1_1PointUpdateDescriptor" ],
         [ "RequirementDescriptor", "structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html", "structOurPaintDCM_1_1Utils_1_1RequirementDescriptor" ]
-      ] ]
+      ] ],
+      [ "DCMManager", "classOurPaintDCM_1_1DCMManager.html", "classOurPaintDCM_1_1DCMManager" ]
     ] ],
     [ "std", "namespacestd.html", [
       [ "hash< OurPaintDCM::Utils::ID >", "structstd_1_1hash_3_01OurPaintDCM_1_1Utils_1_1ID_01_4.html", "structstd_1_1hash_3_01OurPaintDCM_1_1Utils_1_1ID_01_4" ]

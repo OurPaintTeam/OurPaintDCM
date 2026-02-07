@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['nextid_0',['nextID',['../classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a10d4994ee732333e277d12a1fa2d16cc',1,'OurPaintDCM::Utils::IDGenerator']]]
+  ['mergecomponents_0',['mergeComponents',['../classOurPaintDCM_1_1DCMManager.html#aafb28b69b6934cdc5ac4404adebea02a',1,'OurPaintDCM::DCMManager']]]
 ];

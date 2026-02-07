@@ -1,0 +1,28 @@
+<map id="OurPaintDCM::DCMManager::addFigure" name="OurPaintDCM::DCMManager::addFigure">
+<area shape="rect" id="Node000001" title="Add a new geometric figure using descriptor." alt="" coords="5,261,209,301"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a8e564fbb0e6984c893dd8bb08c0e016e" title=" " alt="" coords="271,5,475,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="114,260,133,217,163,162,204,104,229,78,256,55,264,49,267,54,259,59,232,82,208,108,168,165,138,220,119,262"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a47552c379eb63400b08a0658d155366a" title="Create arc." alt="" coords="265,69,480,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="120,260,173,191,212,152,256,119,268,113,270,117,259,124,215,156,177,194,124,263"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abb4303854d92f17fb5f93a2ae8d1d520" title="Create circle." alt="" coords="257,133,488,173"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="133,259,188,221,256,183,275,175,277,180,258,188,191,225,136,263"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ad3847541d313d2aa8c2764eec26d1aa5" title="Create line between two points." alt="" coords="262,197,483,237"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="190,259,276,238,277,243,192,264"/>
+<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1DCMManager.html#a0246829d84bf9ba1ffba2553d04502c6" title=" " alt="" coords="271,261,475,301"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="209,279,257,279,257,284,209,284"/>
+<area shape="rect" id="Node000008" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a77165102d9ed651bce40f71b9bd434c1" title="Create point with given coordinates." alt="" coords="259,325,486,365"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="192,299,277,320,276,325,190,304"/>
+<area shape="rect" id="Node000009" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af9aa52e57a93fded2dfd79d2a0d04263" title="Get object by ID with type checking." alt="" coords="285,389,460,429"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="136,299,191,337,258,375,277,382,275,387,256,380,188,342,133,304"/>
+<area shape="rect" id="Node000011" href="$classOurPaintDCM_1_1DCMManager.html#aafb28b69b6934cdc5ac4404adebea02a" title=" " alt="" coords="271,453,475,493"/>
+<area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="124,300,177,368,215,407,259,439,270,445,268,450,256,444,212,411,173,372,120,303"/>
+<area shape="rect" id="Node000012" href="$structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#af1a43faa50e20ca3ebe7a3c75ceee954" title="Validate descriptor fields for the given figure type." alt="" coords="299,518,446,573"/>
+<area shape="poly" id="edge14_Node000001_Node000012" title=" " alt="" coords="119,301,139,343,169,397,209,454,233,480,259,503,288,520,285,525,256,507,229,484,205,457,164,400,134,345,114,303"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a10d4994ee732333e277d12a1fa2d16cc" title="Generate and return the next unique ID." alt="" coords="573,165,733,205"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="451,107,489,119,592,158,590,163,487,124,449,112"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="488,164,559,172,558,177,488,169"/>
+<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="483,202,559,193,559,199,484,207"/>
+<area shape="poly" id="edge10_Node000008_Node000004" title=" " alt="" coords="459,323,487,311,525,289,561,263,620,213,623,217,564,267,528,293,489,316,461,328"/>
+<area shape="rect" id="Node000010" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Convert type T to corresponding FigureType." alt="" coords="536,389,769,429"/>
+<area shape="poly" id="edge12_Node000009_Node000010" title=" " alt="" coords="460,407,522,407,522,412,460,412"/>
+</map>

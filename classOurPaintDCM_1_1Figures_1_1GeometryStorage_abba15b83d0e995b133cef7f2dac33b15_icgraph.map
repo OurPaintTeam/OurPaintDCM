@@ -1,59 +1,80 @@
 <map id="OurPaintDCM::Figures::GeometryStorage::typeToEnum" name="OurPaintDCM::Figures::GeometryStorage::typeToEnum">
-<area shape="rect" id="Node000001" title="Convert type T to corresponding FigureType." alt="" coords="868,360,1101,400"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac63c592f3d84c0e516f058277e8d2951" title="Number of arcs." alt="" coords="581,5,792,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="974,347,956,285,926,207,905,166,880,127,852,91,818,59,791,44,794,39,822,55,856,87,885,124,910,163,931,204,961,283,979,346"/>
-<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1d5491ee08660e8d9ee895d9e251464e" title="Build graph of objects where vertices are IDs and edges connect related objects." alt="" coords="573,70,800,125"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="967,349,944,303,911,249,869,194,818,146,786,127,789,122,822,142,873,190,915,246,948,301,971,346"/>
-<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a908d67e49081630224501b60f399b459" title="Build shallow subgraph for a given object ID (one&#45;level neighborhood)." alt="" coords="279,321,505,375"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="965,349,942,309,909,265,868,222,844,205,819,190,748,163,717,157,687,155,658,158,627,164,554,190,509,217,469,252,437,289,413,322,408,319,432,286,465,248,506,213,552,186,625,159,657,152,687,150,718,152,749,158,821,186,847,200,871,218,913,261,946,307,970,346"/>
-<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a0ad747894a11a0265b9ca37c665dab94" title="Number of circles." alt="" coords="573,200,800,240"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="952,353,893,302,857,276,819,254,789,243,791,238,821,250,860,272,897,298,956,349"/>
-<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Create figure without exposing concrete types." alt="" coords="569,264,804,304"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="924,357,819,319,777,307,779,301,821,313,925,352"/>
-<area shape="rect" id="Node000008" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af9aa52e57a93fded2dfd79d2a0d04263" title="Get object by ID with type checking." alt="" coords="599,507,774,547"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="949,411,891,451,821,490,772,509,770,504,819,486,888,447,946,406"/>
-<area shape="rect" id="Node000022" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac83fd7836f932567f54878c58ff58784" title="Find all points that object depends on." alt="" coords="553,328,820,368"/>
-<area shape="poly" id="edge21_Node000001_Node000022" title=" " alt="" coords="854,369,820,365,820,360,855,363"/>
-<area shape="rect" id="Node000023" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a73045b332c8507d45542e23cfdfb3436" title="Find all objects depending on given point." alt="" coords="561,392,813,432"/>
-<area shape="poly" id="edge23_Node000001_Node000023" title=" " alt="" coords="855,397,813,401,813,396,854,391"/>
-<area shape="rect" id="Node000024" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6224cdfa4cbfe3c5016a004cd9517e3e" title="Remove object by ID." alt="" coords="291,429,493,469"/>
-<area shape="poly" id="edge30_Node000001_Node000024" title=" " alt="" coords="932,408,879,430,821,447,735,459,648,464,493,461,494,455,648,458,735,453,819,441,877,425,930,404"/>
-<area shape="rect" id="Node000025" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a547d36cba359b045ab73697bbe827163" title="Get all IDs of specified type." alt="" coords="565,571,808,611"/>
-<area shape="poly" id="edge27_Node000001_Node000025" title=" " alt="" coords="965,413,940,448,907,488,867,528,821,561,796,573,794,568,819,556,863,524,903,485,936,445,961,410"/>
-<area shape="rect" id="Node000026" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a2a1fd787e611eab17615f80097678a23" title="Number of lines." alt="" coords="579,635,794,675"/>
-<area shape="poly" id="edge28_Node000001_Node000026" title=" " alt="" coords="973,414,951,461,918,519,875,576,850,602,821,625,795,639,793,634,819,620,846,598,871,573,914,516,946,459,968,411"/>
-<area shape="rect" id="Node000027" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af2df636c6c7dd47364a8f248c0407e0e" title="Number of points." alt="" coords="575,699,799,739"/>
-<area shape="poly" id="edge29_Node000001_Node000027" title=" " alt="" coords="978,414,959,474,928,548,907,587,883,624,854,659,822,689,800,702,797,697,818,685,851,655,879,621,903,584,923,546,954,472,973,412"/>
-<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a01c4378da09c06d5ef7aeedf48117fec" title=" " alt="" coords="301,70,483,125"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="560,100,483,100,483,95,560,95"/>
-<area shape="rect" id="Node000009" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a83793b5b89f46cb835972736f83f02f2" title="Add a requirement using a descriptor (unified high&#45;level interface)." alt="" coords="309,499,475,554"/>
-<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="586,529,475,529,475,524,586,524"/>
-<area shape="rect" id="Node000010" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a8c343229dbfbf8badf9d0db172d2e4b5" title="Add arc&#45;center perpendicular&#45;bisector constraint by ID." alt="" coords="5,66,231,121"/>
-<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="296,501,277,483,261,460,251,437,242,392,245,348,253,305,261,263,264,221,255,178,244,156,229,134,217,123,221,119,233,130,249,153,260,176,269,220,267,264,258,306,250,349,247,391,256,435,266,457,281,480,299,497"/>
-<area shape="rect" id="Node000011" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a090214a76b5dc63ba09897bac0f2e9d3" title="Add horizontal&#45;line constraint by ID." alt="" coords="35,145,201,199"/>
-<area shape="poly" id="edge10_Node000009_Node000011" title=" " alt="" coords="296,500,277,483,255,447,247,412,248,378,253,345,258,312,258,279,250,246,229,212,216,200,200,191,203,187,219,196,233,209,255,244,263,279,263,312,258,346,253,379,253,412,260,445,281,480,299,496"/>
-<area shape="rect" id="Node000012" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a6342987e5432d4882aa87a2b75177010" title="Add line&#45;circle distance constraint by IDs." alt="" coords="35,223,201,278"/>
-<area shape="poly" id="edge11_Node000009_Node000012" title=" " alt="" coords="296,500,277,483,260,458,253,433,253,385,254,361,252,338,245,315,229,291,200,270,203,266,233,287,250,312,258,337,259,361,258,385,258,432,265,456,281,480,300,496"/>
-<area shape="rect" id="Node000013" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a0e9a8ad04cc56cca3511a3c2faa33bbc" title="Add angle&#45;between&#45;lines constraint by IDs." alt="" coords="35,302,201,357"/>
-<area shape="poly" id="edge12_Node000009_Node000013" title=" " alt="" coords="296,498,277,483,265,468,258,454,252,425,247,397,240,383,229,370,200,351,203,346,232,366,245,381,252,395,258,424,263,452,269,466,281,479,299,494"/>
-<area shape="rect" id="Node000014" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a94161cac4e0347106d9eca8be3246dfd" title="Add parallel&#45;lines constraint by IDs." alt="" coords="35,381,201,435"/>
-<area shape="poly" id="edge13_Node000009_Node000014" title=" " alt="" coords="302,496,277,484,253,466,229,449,200,436,202,431,232,444,256,462,280,479,304,491"/>
-<area shape="rect" id="Node000015" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab34a6d3e1ba2dc93955e7acde536a7fb" title="Add perpendicular&#45;lines constraint by IDs." alt="" coords="19,459,217,514"/>
-<area shape="poly" id="edge14_Node000009_Node000015" title=" " alt="" coords="295,515,217,504,217,498,296,510"/>
-<area shape="rect" id="Node000016" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#aefd4fb76785f5539a9297d3403894dd4" title="Add line&#45;on&#45;circle constraint by IDs." alt="" coords="35,538,201,593"/>
-<area shape="poly" id="edge15_Node000009_Node000016" title=" " alt="" coords="296,543,201,556,200,551,295,538"/>
-<area shape="rect" id="Node000017" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#aac6cef4fd8e57b9e3608ac457b5fe715" title="Add point&#45;line distance constraint by IDs." alt="" coords="35,617,201,671"/>
-<area shape="poly" id="edge16_Node000009_Node000017" title=" " alt="" coords="327,562,232,606,200,619,198,614,230,602,325,558"/>
-<area shape="rect" id="Node000018" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a6b6645773c95ffa7ecc9f36aa0419e7a" title="Add point&#45;on&#45;line constraint by IDs." alt="" coords="35,695,201,750"/>
-<area shape="poly" id="edge17_Node000009_Node000018" title=" " alt="" coords="362,566,306,626,270,658,232,685,202,700,200,696,229,680,267,653,302,623,358,562"/>
-<area shape="rect" id="Node000019" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a3c47e959870bb0d3afa98ccdb26c4914" title="Add point&#45;on&#45;point constraint by IDs." alt="" coords="35,774,201,829"/>
-<area shape="poly" id="edge18_Node000009_Node000019" title=" " alt="" coords="375,568,352,613,320,665,280,718,232,763,202,781,200,777,229,759,276,714,316,662,348,610,371,565"/>
-<area shape="rect" id="Node000020" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab572c3a39938a7b042ab9ddd0b1c1488" title="Add point&#45;point distance constraint by IDs." alt="" coords="35,853,201,907"/>
-<area shape="poly" id="edge19_Node000009_Node000020" title=" " alt="" coords="383,568,364,628,333,702,290,777,263,811,232,842,203,861,200,857,229,838,259,808,285,774,328,699,359,627,378,567"/>
-<area shape="rect" id="Node000021" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#afbddee5832268b0bb2e9939c41161ef9" title="Add vertical&#45;line constraint by ID." alt="" coords="35,931,201,986"/>
-<area shape="poly" id="edge20_Node000009_Node000021" title=" " alt="" coords="388,569,373,643,345,738,324,788,299,836,269,882,232,922,203,942,200,937,229,918,264,878,294,833,319,785,339,736,368,642,383,568"/>
-<area shape="poly" id="edge22_Node000022_Node000005" title=" " alt="" coords="540,351,506,351,506,345,540,345"/>
-<area shape="poly" id="edge24_Node000023_Node000005" title=" " alt="" coords="580,392,505,375,506,370,581,386"/>
-<area shape="poly" id="edge25_Node000023_Node000024" title=" " alt="" coords="548,432,494,439,493,434,547,427"/>
-<area shape="poly" id="edge26_Node000024_Node000024" title=" " alt="" coords="439,418,422,411,392,408,366,410,350,415,344,421,347,428,342,430,339,420,347,410,365,405,392,403,423,405,441,413"/>
+<area shape="rect" id="Node000001" title="Convert type T to corresponding FigureType." alt="" coords="1372,624,1605,664"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac63c592f3d84c0e516f058277e8d2951" title="Number of arcs." alt="" coords="1085,279,1296,319"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1477,612,1459,551,1428,475,1408,436,1383,398,1355,363,1322,333,1295,317,1297,313,1326,329,1359,360,1388,395,1412,434,1433,473,1464,549,1482,610"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1d5491ee08660e8d9ee895d9e251464e" title="Build graph of objects where vertices are IDs and edges connect related objects." alt="" coords="1077,344,1304,398"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="1470,613,1446,570,1413,518,1371,465,1322,420,1290,401,1292,396,1326,416,1375,462,1417,515,1451,567,1474,611"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a908d67e49081630224501b60f399b459" title="Build shallow subgraph for a given object ID (one&#45;level neighborhood)." alt="" coords="783,429,1009,484"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="1468,614,1444,576,1411,534,1371,494,1323,464,1285,450,1245,439,1163,429,1083,429,1010,437,1009,431,1082,424,1163,424,1246,434,1287,445,1325,459,1374,490,1415,531,1448,573,1472,611"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a0ad747894a11a0265b9ca37c665dab94" title="Number of circles." alt="" coords="1077,716,1304,756"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="1426,672,1325,707,1281,719,1280,714,1323,702,1424,667"/>
+<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Create figure without exposing concrete types." alt="" coords="1073,780,1308,820"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="1458,676,1399,725,1363,750,1325,771,1295,783,1293,778,1323,766,1360,745,1396,721,1455,672"/>
+<area shape="rect" id="Node000008" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af9aa52e57a93fded2dfd79d2a0d04263" title="Get object by ID with type checking." alt="" coords="1103,652,1278,692"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="1359,659,1278,667,1278,662,1358,654"/>
+<area shape="rect" id="Node000032" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac83fd7836f932567f54878c58ff58784" title="Find all points that object depends on." alt="" coords="1057,474,1324,514"/>
+<area shape="poly" id="edge31_Node000001_Node000032" title=" " alt="" coords="1453,617,1395,571,1360,548,1323,528,1292,516,1294,511,1325,523,1362,543,1398,567,1457,613"/>
+<area shape="rect" id="Node000033" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a73045b332c8507d45542e23cfdfb3436" title="Find all objects depending on given point." alt="" coords="1065,538,1317,578"/>
+<area shape="poly" id="edge33_Node000001_Node000033" title=" " alt="" coords="1405,623,1323,599,1260,580,1261,575,1325,594,1407,618"/>
+<area shape="rect" id="Node000034" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6224cdfa4cbfe3c5016a004cd9517e3e" title="Remove object by ID." alt="" coords="795,532,997,572"/>
+<area shape="poly" id="edge41_Node000001_Node000034" title=" " alt="" coords="1358,634,1213,617,1057,592,975,575,976,570,1058,587,1214,611,1359,629"/>
+<area shape="rect" id="Node000035" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a547d36cba359b045ab73697bbe827163" title="Get all IDs of specified type." alt="" coords="1069,844,1312,884"/>
+<area shape="poly" id="edge38_Node000001_Node000035" title=" " alt="" coords="1471,678,1446,714,1413,757,1372,799,1325,835,1301,847,1299,842,1323,830,1369,795,1409,754,1442,711,1467,675"/>
+<area shape="rect" id="Node000036" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a2a1fd787e611eab17615f80097678a23" title="Number of lines." alt="" coords="1083,908,1298,948"/>
+<area shape="poly" id="edge39_Node000001_Node000036" title=" " alt="" coords="1478,678,1456,728,1424,787,1380,848,1354,875,1325,899,1300,913,1297,908,1323,894,1351,871,1376,844,1419,785,1452,725,1473,676"/>
+<area shape="rect" id="Node000037" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af2df636c6c7dd47364a8f248c0407e0e" title="Number of points." alt="" coords="1079,972,1303,1012"/>
+<area shape="poly" id="edge40_Node000001_Node000037" title=" " alt="" coords="1482,679,1464,740,1434,817,1413,857,1388,896,1359,932,1326,963,1304,976,1301,971,1322,958,1355,928,1384,893,1408,854,1429,815,1459,738,1477,677"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a01c4378da09c06d5ef7aeedf48117fec" title=" " alt="" coords="805,344,987,398"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="1064,374,987,374,987,368,1064,368"/>
+<area shape="rect" id="Node000009" href="$classOurPaintDCM_1_1DCMManager.html#aac0ea08abe5a8da7d345aa2852e04515" title="Add a new geometric figure using descriptor." alt="" coords="794,676,998,716"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="1090,683,998,691,998,686,1090,678"/>
+<area shape="rect" id="Node000010" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a83793b5b89f46cb835972736f83f02f2" title="Add a requirement using a descriptor (unified high&#45;level interface)." alt="" coords="813,597,979,652"/>
+<area shape="poly" id="edge9_Node000008_Node000010" title=" " alt="" coords="1089,659,978,640,979,635,1090,653"/>
+<area shape="rect" id="Node000028" href="$classOurPaintDCM_1_1DCMManager.html#a608ba72e0ffe84e68c473439495e1cca" title="Get figure descriptor with current state." alt="" coords="794,740,998,780"/>
+<area shape="poly" id="edge27_Node000008_Node000028" title=" " alt="" coords="1091,696,1058,707,1034,719,1010,731,975,743,974,738,1008,726,1032,714,1056,702,1089,691"/>
+<area shape="rect" id="Node000030" href="$classOurPaintDCM_1_1DCMManager.html#a98fe29771e2fc13dccbb5dedc8eb978b" title="Update circle radius." alt="" coords="794,804,998,844"/>
+<area shape="poly" id="edge29_Node000008_Node000030" title=" " alt="" coords="1092,689,1059,707,1042,727,1036,749,1029,772,1011,794,992,807,989,802,1008,790,1024,770,1031,747,1037,724,1056,702,1089,684"/>
+<area shape="rect" id="Node000031" href="$classOurPaintDCM_1_1DCMManager.html#afd23eed2b3ab4410e4372fb5d38084b4" title="Update point coordinates." alt="" coords="794,868,998,908"/>
+<area shape="poly" id="edge30_Node000008_Node000031" title=" " alt="" coords="1092,687,1059,706,1045,724,1038,742,1036,780,1034,819,1026,839,1011,858,995,870,992,866,1007,855,1022,836,1028,818,1030,780,1033,741,1040,722,1056,702,1089,682"/>
+<area shape="rect" id="Node000011" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a8c343229dbfbf8badf9d0db172d2e4b5" title="Add arc&#45;center perpendicular&#45;bisector constraint by ID." alt="" coords="509,164,735,218"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="799,603,781,586,764,563,753,540,744,494,747,450,756,406,765,363,768,320,759,276,748,254,733,232,721,221,725,217,737,228,753,251,764,274,773,320,770,364,761,407,753,451,750,494,759,538,769,560,785,583,803,599"/>
+<area shape="rect" id="Node000012" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a090214a76b5dc63ba09897bac0f2e9d3" title="Add horizontal&#45;line constraint by ID." alt="" coords="539,242,705,297"/>
+<area shape="poly" id="edge11_Node000010_Node000012" title=" " alt="" coords="799,602,781,586,758,550,750,515,751,480,756,446,761,412,762,379,754,345,733,310,720,298,704,289,707,284,723,294,737,307,759,343,768,378,767,413,761,447,756,481,755,514,763,548,785,583,803,598"/>
+<area shape="rect" id="Node000013" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a6342987e5432d4882aa87a2b75177010" title="Add line&#45;circle distance constraint by IDs." alt="" coords="539,321,705,376"/>
+<area shape="poly" id="edge12_Node000010_Node000013" title=" " alt="" coords="799,602,781,586,763,561,756,535,754,510,756,486,758,461,757,437,749,413,733,389,703,368,706,364,737,385,754,411,762,436,763,461,761,486,760,510,761,534,768,558,785,583,803,598"/>
+<area shape="rect" id="Node000014" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a0e9a8ad04cc56cca3511a3c2faa33bbc" title="Add angle&#45;between&#45;lines constraint by IDs." alt="" coords="539,400,705,454"/>
+<area shape="poly" id="edge13_Node000010_Node000014" title=" " alt="" coords="799,600,781,586,768,571,761,556,756,526,751,496,745,482,733,468,703,448,706,444,736,464,749,479,756,495,761,525,766,554,773,568,785,583,802,596"/>
+<area shape="rect" id="Node000015" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a94161cac4e0347106d9eca8be3246dfd" title="Add parallel&#45;lines constraint by IDs." alt="" coords="539,478,705,533"/>
+<area shape="poly" id="edge14_Node000010_Node000015" title=" " alt="" coords="799,596,781,587,757,566,733,547,704,533,706,528,736,542,760,562,784,582,802,591"/>
+<area shape="rect" id="Node000016" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab34a6d3e1ba2dc93955e7acde536a7fb" title="Add perpendicular&#45;lines constraint by IDs." alt="" coords="523,557,721,612"/>
+<area shape="poly" id="edge15_Node000010_Node000016" title=" " alt="" coords="799,613,721,601,721,596,800,608"/>
+<area shape="rect" id="Node000017" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#aefd4fb76785f5539a9297d3403894dd4" title="Add line&#45;on&#45;circle constraint by IDs." alt="" coords="539,636,705,690"/>
+<area shape="poly" id="edge16_Node000010_Node000017" title=" " alt="" coords="800,641,705,654,704,649,799,635"/>
+<area shape="rect" id="Node000018" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#aac6cef4fd8e57b9e3608ac457b5fe715" title="Add point&#45;line distance constraint by IDs." alt="" coords="539,714,705,769"/>
+<area shape="poly" id="edge17_Node000010_Node000018" title=" " alt="" coords="802,658,784,667,760,685,736,704,706,718,704,713,733,700,757,681,781,662,799,653"/>
+<area shape="rect" id="Node000019" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a6b6645773c95ffa7ecc9f36aa0419e7a" title="Add point&#45;on&#45;line constraint by IDs." alt="" coords="539,793,705,848"/>
+<area shape="poly" id="edge18_Node000010_Node000019" title=" " alt="" coords="802,653,785,666,773,680,766,694,761,723,756,752,749,767,736,782,707,802,704,798,733,778,744,765,751,751,756,722,761,693,768,677,781,663,799,649"/>
+<area shape="rect" id="Node000020" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a3c47e959870bb0d3afa98ccdb26c4914" title="Add point&#45;on&#45;point constraint by IDs." alt="" coords="539,872,705,926"/>
+<area shape="poly" id="edge19_Node000010_Node000020" title=" " alt="" coords="803,651,785,666,768,690,761,714,760,738,761,762,763,786,762,811,754,836,737,861,706,883,703,879,733,857,749,833,756,810,758,786,756,762,754,738,756,713,763,688,781,663,799,647"/>
+<area shape="rect" id="Node000021" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab572c3a39938a7b042ab9ddd0b1c1488" title="Add point&#45;point distance constraint by IDs." alt="" coords="539,950,705,1005"/>
+<area shape="poly" id="edge20_Node000010_Node000021" title=" " alt="" coords="803,651,785,666,763,700,755,734,756,767,761,801,766,834,767,869,759,904,737,939,723,953,706,963,703,958,719,948,733,936,754,902,762,868,761,835,756,802,751,768,750,733,759,698,781,663,799,647"/>
+<area shape="rect" id="Node000022" href="$classOurPaintDCM_1_1DCMManager.html#ae497fb8e8aef91685c75adaaad740a1f" title="Add a new requirement using descriptor." alt="" coords="520,1030,724,1070"/>
+<area shape="poly" id="edge21_Node000010_Node000022" title=" " alt="" coords="803,650,785,666,769,689,759,711,750,755,754,798,763,842,772,885,775,930,765,974,753,997,737,1020,723,1032,719,1028,733,1016,749,994,760,972,769,929,766,886,757,843,748,799,745,755,754,709,765,686,781,663,799,646"/>
+<area shape="rect" id="Node000023" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#afbddee5832268b0bb2e9939c41161ef9" title="Add vertical&#45;line constraint by ID." alt="" coords="539,1094,705,1149"/>
+<area shape="poly" id="edge22_Node000010_Node000023" title=" " alt="" coords="803,650,785,666,767,693,755,719,748,745,745,771,750,822,761,872,773,924,777,975,775,1002,768,1029,755,1056,737,1084,723,1097,707,1107,704,1102,720,1093,733,1080,751,1053,763,1027,770,1001,772,975,768,924,756,874,744,823,740,771,742,744,750,717,762,690,781,663,799,646"/>
+<area shape="rect" id="Node000024" href="$classOurPaintDCM_1_1DCMManager.html#afefa4a921a184f413f916e105b2e8a4d" title=" " alt="" coords="518,99,726,139"/>
+<area shape="poly" id="edge23_Node000010_Node000024" title=" " alt="" coords="799,603,781,586,761,557,749,529,742,501,739,473,745,419,758,366,770,313,775,260,773,234,765,207,752,180,733,153,720,141,723,137,737,149,757,177,770,205,778,233,781,260,776,314,763,367,750,420,745,473,747,500,754,527,766,555,785,583,803,599"/>
+<area shape="rect" id="Node000025" href="$classOurPaintDCM_1_1DCMManager.html#a60344e1f42d0ac0aea28eed4f53f4215" title="Remove a requirement by ID." alt="" coords="257,99,461,139"/>
+<area shape="poly" id="edge24_Node000024_Node000025" title=" " alt="" coords="504,122,461,122,461,116,504,116"/>
+<area shape="rect" id="Node000027" href="$classOurPaintDCM_1_1DCMManager.html#af1c24a150cabb5301977c41681901f6c" title="Update requirement parameter value." alt="" coords="257,163,461,203"/>
+<area shape="poly" id="edge26_Node000024_Node000027" title=" " alt="" coords="526,145,443,166,441,161,525,140"/>
+<area shape="rect" id="Node000026" href="$classOurPaintDCM_1_1DCMManager.html#ac2f4c1cac07c5bc28426b2ceb50ad736" title="Remove a figure by ID." alt="" coords="5,71,209,111"/>
+<area shape="poly" id="edge25_Node000025_Node000026" title=" " alt="" coords="244,109,209,105,210,100,244,104"/>
+<area shape="rect" id="Node000029" href="$classOurPaintDCM_1_1DCMManager.html#a39ce5a27157222eff9433dab3342606f" title="Get all figure descriptors." alt="" coords="520,1174,724,1214"/>
+<area shape="poly" id="edge28_Node000028_Node000029" title=" " alt="" coords="788,791,785,794,768,817,757,840,750,863,747,885,751,931,761,977,771,1022,775,1069,773,1092,766,1116,754,1140,737,1164,723,1176,719,1172,733,1160,750,1137,761,1114,767,1091,770,1069,766,1023,756,978,746,932,742,885,745,862,752,838,763,815,781,791,784,787"/>
+<area shape="poly" id="edge32_Node000032_Node000005" title=" " alt="" coords="1043,478,1009,473,1010,468,1044,473"/>
+<area shape="poly" id="edge34_Node000033_Node000005" title=" " alt="" coords="1078,536,1056,528,1032,514,1008,499,979,486,981,481,1011,494,1035,509,1058,523,1079,531"/>
+<area shape="poly" id="edge35_Node000033_Node000034" title=" " alt="" coords="1051,558,997,557,997,552,1051,553"/>
+<area shape="poly" id="edge37_Node000034_Node000026" title=" " alt="" coords="816,528,797,514,780,497,772,480,766,459,760,408,762,286,763,223,761,166,752,120,744,102,733,89,701,65,667,45,630,30,592,20,511,9,430,11,350,21,276,37,160,74,158,68,275,32,349,16,429,6,512,4,593,14,632,25,669,40,704,60,737,85,748,99,757,118,766,166,769,223,767,286,765,408,771,458,777,478,785,494,800,510,819,524"/>
+<area shape="poly" id="edge36_Node000034_Node000034" title=" " alt="" coords="943,521,926,514,896,511,870,513,854,518,848,524,851,531,846,533,843,523,851,513,869,508,896,506,927,509,945,516"/>
 </map>

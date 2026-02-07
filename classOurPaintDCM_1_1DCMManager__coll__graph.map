@@ -1,0 +1,15 @@
+<map id="OurPaintDCM::DCMManager" name="OurPaintDCM::DCMManager">
+<area shape="rect" id="Node000001" title="Main manager class for the DCM (Dynamic Constraint Manager) system." alt="" coords="5,401,209,427"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html" title="Storage for geometric objects with unified identification system." alt="" coords="23,196,186,236"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,250,100,292,101,339,108,401,103,401,95,339,95,292,98,250"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html" title="High&#45;level requirement system bound to GeometryStorage." alt="" coords="171,299,337,339"/>
+<area shape="poly" id="edge6_Node000005_Node000002" title=" " alt="" coords="128,245,156,273,199,296,196,301,152,277,124,249"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html" title="Monotonic unique ID generator." alt="" coords="97,93,243,133"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="153,146,119,197,115,194,148,143"/>
+<area shape="poly" id="edge7_Node000005_Node000003" title=" " alt="" coords="203,142,212,156,229,194,242,233,254,298,249,299,237,234,224,196,208,159,198,145"/>
+<area shape="rect" id="Node000004" href="$structOurPaintDCM_1_1Utils_1_1ID.html" title="Strongly typed wrapper for an unsigned long long identifier." alt="" coords="86,5,254,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="173,44,173,93,167,93,167,44"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="214,348,127,403,124,399,212,344"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html" title="System of geometric constraint functions." alt="" coords="329,196,547,236"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="393,245,290,301,287,296,390,240"/>
+</map>

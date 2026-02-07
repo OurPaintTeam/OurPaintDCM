@@ -1,0 +1,9 @@
+<map id="OurPaintDCM::DCMManager::rebuildRequirementSystem" name="OurPaintDCM::DCMManager::rebuildRequirementSystem">
+<area shape="rect" id="Node000001" title=" " alt="" coords="509,37,717,77"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a60344e1f42d0ac0aea28eed4f53f4215" title="Remove a requirement by ID." alt="" coords="257,5,461,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="495,45,461,41,462,36,496,40"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1DCMManager.html#af1c24a150cabb5301977c41681901f6c" title="Update requirement parameter value." alt="" coords="257,69,461,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="496,75,462,79,461,74,495,69"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#ac2f4c1cac07c5bc28426b2ceb50ad736" title="Remove a figure by ID." alt="" coords="5,5,209,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="244,28,210,28,210,23,244,23"/>
+</map>

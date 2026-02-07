@@ -1,7 +1,10 @@
 var namespaceOurPaintDCM_1_1Utils =
 [
+    [ "CircleUpdateDescriptor", "structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor.html", "structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor" ],
+    [ "FigureDescriptor", "structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html", "structOurPaintDCM_1_1Utils_1_1FigureDescriptor" ],
     [ "ID", "structOurPaintDCM_1_1Utils_1_1ID.html", "structOurPaintDCM_1_1Utils_1_1ID" ],
     [ "IDGenerator", "classOurPaintDCM_1_1Utils_1_1IDGenerator.html", "classOurPaintDCM_1_1Utils_1_1IDGenerator" ],
+    [ "PointUpdateDescriptor", "structOurPaintDCM_1_1Utils_1_1PointUpdateDescriptor.html", "structOurPaintDCM_1_1Utils_1_1PointUpdateDescriptor" ],
     [ "RequirementDescriptor", "structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html", "structOurPaintDCM_1_1Utils_1_1RequirementDescriptor" ],
     [ "IDArithmetic", "conceptOurPaintDCM_1_1Utils_1_1IDArithmetic.html", null ],
     [ "FigureType", "namespaceOurPaintDCM_1_1Utils.html#a04b4a3b6dcee5e30db2920a0034287c1", [

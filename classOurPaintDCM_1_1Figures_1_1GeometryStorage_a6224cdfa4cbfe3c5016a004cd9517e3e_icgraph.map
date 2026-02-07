@@ -1,4 +1,6 @@
 <map id="OurPaintDCM::Figures::GeometryStorage::remove" name="OurPaintDCM::Figures::GeometryStorage::remove">
-<area shape="rect" id="Node000001" title="Remove object by ID." alt="" coords="5,29,208,69"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="141,18,129,11,107,8,87,10,76,15,71,21,74,28,68,30,66,20,72,11,86,5,107,3,130,6,143,13"/>
+<area shape="rect" id="Node000001" title="Remove object by ID." alt="" coords="257,29,460,69"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="401,18,386,11,359,8,334,10,320,15,314,21,317,28,312,30,309,20,317,10,333,5,359,3,388,6,404,13"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#ac2f4c1cac07c5bc28426b2ceb50ad736" title="Remove a figure by ID." alt="" coords="5,29,209,69"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="244,52,209,52,209,47,244,47"/>
 </map>

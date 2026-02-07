@@ -1,0 +1,16 @@
+<map id="OurPaintDCM::DCMManager::mergeComponents" name="OurPaintDCM::DCMManager::mergeComponents">
+<area shape="rect" id="Node000001" title=" " alt="" coords="787,69,991,109"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#aac0ea08abe5a8da7d345aa2852e04515" title="Add a new geometric figure using descriptor." alt="" coords="535,5,739,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="795,68,715,48,717,43,797,63"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#ae497fb8e8aef91685c75adaaad740a1f" title="Add a new requirement using descriptor." alt="" coords="535,69,739,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="773,92,739,92,739,87,773,87"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1DCMManager.html#a3cf8b2822f324e99bffd86e21bb6184d" title=" " alt="" coords="535,133,739,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="797,115,717,136,715,131,795,110"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1DCMManager.html#a60344e1f42d0ac0aea28eed4f53f4215" title="Remove a requirement by ID." alt="" coords="270,101,474,141"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="521,142,474,136,475,131,521,137"/>
+<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1DCMManager.html#a0ad8ab5e8bc9d619751d6ef02d86372e" title=" " alt="" coords="257,165,487,205"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="521,170,487,174,487,169,521,165"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1DCMManager.html#ac2f4c1cac07c5bc28426b2ceb50ad736" title="Remove a figure by ID." alt="" coords="5,133,209,173"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="257,138,210,144,209,138,256,133"/>
+<area shape="poly" id="edge7_Node000007_Node000006" title=" " alt="" coords="243,172,209,168,210,163,244,167"/>
+</map>
