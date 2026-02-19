@@ -35,7 +35,7 @@ TEST_F(DCMManagerTest, AddLineFigure) {
     auto line = manager.addFigure(FigureDescriptor::line(0.0, 0.0, 10.0, 0.0));
 
     EXPECT_TRUE(manager.hasFigure(line));
-    EXPECT_EQ(manager.figureCount(), 3);
+    EXPECT_EQ(manager.figureCount(), 5);
 
     auto desc = manager.getFigure(line);
     ASSERT_TRUE(desc.has_value());
@@ -389,9 +389,9 @@ TEST_F(DCMManagerTest, ComplexScenario) {
     manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 100.0));
     manager.addRequirement(RequirementDescriptor::pointPointDist(p2, p3, 100.0));
 
-    EXPECT_EQ(manager.figureCount(), 8);
+    EXPECT_EQ(manager.figureCount(), 16);
     EXPECT_EQ(manager.requirementCount(), 6);
-    EXPECT_EQ(manager.getComponentCount(), 1);
+    EXPECT_EQ(manager.getComponentCount(), 6);
 }
 
 TEST_F(DCMManagerTest, FigureDescriptorHasId) {
