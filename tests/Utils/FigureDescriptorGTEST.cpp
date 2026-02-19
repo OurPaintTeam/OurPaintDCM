@@ -6,6 +6,7 @@ using namespace OurPaintDCM::Utils;
 TEST(FigureDescriptorTest, DefaultConstructor) {
     FigureDescriptor desc;
     EXPECT_TRUE(desc.pointIds.empty());
+    EXPECT_TRUE(desc.coords.empty());
     EXPECT_FALSE(desc.x.has_value());
     EXPECT_FALSE(desc.y.has_value());
     EXPECT_FALSE(desc.radius.has_value());
@@ -19,36 +20,48 @@ TEST(FigureDescriptorTest, PointFactory) {
     EXPECT_TRUE(desc.y.has_value());
     EXPECT_DOUBLE_EQ(desc.x.value(), 10.0);
     EXPECT_DOUBLE_EQ(desc.y.value(), 20.0);
+    EXPECT_EQ(desc.coords.size(), 2);
+    EXPECT_DOUBLE_EQ(desc.coords[0], 10.0);
+    EXPECT_DOUBLE_EQ(desc.coords[1], 20.0);
     EXPECT_TRUE(desc.pointIds.empty());
 }
 
 TEST(FigureDescriptorTest, LineFactory) {
-    auto desc = FigureDescriptor::line(ID(1), ID(2));
+    auto desc = FigureDescriptor::line(1.0, 2.0, 3.0, 4.0);
 
     EXPECT_EQ(desc.type, FigureType::ET_LINE);
-    EXPECT_EQ(desc.pointIds.size(), 2);
-    EXPECT_EQ(desc.pointIds[0], ID(1));
-    EXPECT_EQ(desc.pointIds[1], ID(2));
+    EXPECT_TRUE(desc.pointIds.empty());
+    EXPECT_EQ(desc.coords.size(), 4);
+    EXPECT_DOUBLE_EQ(desc.coords[0], 1.0);
+    EXPECT_DOUBLE_EQ(desc.coords[1], 2.0);
+    EXPECT_DOUBLE_EQ(desc.coords[2], 3.0);
+    EXPECT_DOUBLE_EQ(desc.coords[3], 4.0);
 }
 
 TEST(FigureDescriptorTest, CircleFactory) {
-    auto desc = FigureDescriptor::circle(ID(5), 15.0);
+    auto desc = FigureDescriptor::circle(5.0, 6.0, 15.0);
 
     EXPECT_EQ(desc.type, FigureType::ET_CIRCLE);
-    EXPECT_EQ(desc.pointIds.size(), 1);
-    EXPECT_EQ(desc.pointIds[0], ID(5));
+    EXPECT_TRUE(desc.pointIds.empty());
+    EXPECT_EQ(desc.coords.size(), 2);
+    EXPECT_DOUBLE_EQ(desc.coords[0], 5.0);
+    EXPECT_DOUBLE_EQ(desc.coords[1], 6.0);
     EXPECT_TRUE(desc.radius.has_value());
     EXPECT_DOUBLE_EQ(desc.radius.value(), 15.0);
 }
 
 TEST(FigureDescriptorTest, ArcFactory) {
-    auto desc = FigureDescriptor::arc(ID(1), ID(2), ID(3));
+    auto desc = FigureDescriptor::arc(1.0, 2.0, 3.0, 4.0, 5.0, 6.0);
 
     EXPECT_EQ(desc.type, FigureType::ET_ARC);
-    EXPECT_EQ(desc.pointIds.size(), 3);
-    EXPECT_EQ(desc.pointIds[0], ID(1));
-    EXPECT_EQ(desc.pointIds[1], ID(2));
-    EXPECT_EQ(desc.pointIds[2], ID(3));
+    EXPECT_TRUE(desc.pointIds.empty());
+    EXPECT_EQ(desc.coords.size(), 6);
+    EXPECT_DOUBLE_EQ(desc.coords[0], 1.0);
+    EXPECT_DOUBLE_EQ(desc.coords[1], 2.0);
+    EXPECT_DOUBLE_EQ(desc.coords[2], 3.0);
+    EXPECT_DOUBLE_EQ(desc.coords[3], 4.0);
+    EXPECT_DOUBLE_EQ(desc.coords[4], 5.0);
+    EXPECT_DOUBLE_EQ(desc.coords[5], 6.0);
 }
 
 TEST(FigureDescriptorTest, ValidatePoint) {
@@ -61,7 +74,7 @@ TEST(FigureDescriptorTest, ValidatePoint) {
 }
 
 TEST(FigureDescriptorTest, ValidateLine) {
-    auto validLine = FigureDescriptor::line(ID(1), ID(2));
+    auto validLine = FigureDescriptor::line(1.0, 2.0, 3.0, 4.0);
     EXPECT_TRUE(validLine.validate());
 
     FigureDescriptor invalidLine;
@@ -71,7 +84,7 @@ TEST(FigureDescriptorTest, ValidateLine) {
 }
 
 TEST(FigureDescriptorTest, ValidateCircle) {
-    auto validCircle = FigureDescriptor::circle(ID(1), 10.0);
+    auto validCircle = FigureDescriptor::circle(1.0, 2.0, 10.0);
     EXPECT_TRUE(validCircle.validate());
 
     FigureDescriptor noCenter;
@@ -98,7 +111,7 @@ TEST(FigureDescriptorTest, ValidateCircle) {
 }
 
 TEST(FigureDescriptorTest, ValidateArc) {
-    auto validArc = FigureDescriptor::arc(ID(1), ID(2), ID(3));
+    auto validArc = FigureDescriptor::arc(1.0, 2.0, 3.0, 4.0, 5.0, 6.0);
     EXPECT_TRUE(validArc.validate());
 
     FigureDescriptor invalidArc;

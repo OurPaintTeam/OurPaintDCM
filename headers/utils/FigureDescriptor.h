@@ -19,6 +19,7 @@ struct FigureDescriptor {
     std::optional<ID> id;
     FigureType type;
     std::vector<ID> pointIds;
+    std::vector<double> coords;
     std::optional<double> x;
     std::optional<double> y;
     std::optional<double> radius;
@@ -47,7 +48,9 @@ struct FigureDescriptor {
      * @return FigureDescriptor for point creation.
      */
     static FigureDescriptor point(double xVal, double yVal) {
-        return {FigureType::ET_POINT2D, {}, xVal, yVal};
+        FigureDescriptor d{FigureType::ET_POINT2D, {}, xVal, yVal};
+        d.coords = {xVal, yVal};
+        return d;
     }
 
     /**
@@ -61,6 +64,20 @@ struct FigureDescriptor {
     }
 
     /**
+     * @brief Create descriptor for a line by coordinates.
+     * @param x1 First point X.
+     * @param y1 First point Y.
+     * @param x2 Second point X.
+     * @param y2 Second point Y.
+     * @return FigureDescriptor for line creation.
+     */
+    static FigureDescriptor line(double x1, double y1, double x2, double y2) {
+        FigureDescriptor d{FigureType::ET_LINE};
+        d.coords = {x1, y1, x2, y2};
+        return d;
+    }
+
+    /**
      * @brief Create descriptor for a circle.
      * @param centerId Center point ID.
      * @param r Radius value.
@@ -68,6 +85,19 @@ struct FigureDescriptor {
      */
     static FigureDescriptor circle(ID centerId, double r) {
         return {FigureType::ET_CIRCLE, {centerId}, std::nullopt, std::nullopt, r};
+    }
+
+    /**
+     * @brief Create descriptor for a circle by center coordinates.
+     * @param cx Center X.
+     * @param cy Center Y.
+     * @param r Radius value.
+     * @return FigureDescriptor for circle creation.
+     */
+    static FigureDescriptor circle(double cx, double cy, double r) {
+        FigureDescriptor d{FigureType::ET_CIRCLE, {}, std::nullopt, std::nullopt, r};
+        d.coords = {cx, cy};
+        return d;
     }
 
     /**
@@ -82,6 +112,22 @@ struct FigureDescriptor {
     }
 
     /**
+     * @brief Create descriptor for an arc by coordinates.
+     * @param x1 First endpoint X.
+     * @param y1 First endpoint Y.
+     * @param x2 Second endpoint X.
+     * @param y2 Second endpoint Y.
+     * @param cx Center X.
+     * @param cy Center Y.
+     * @return FigureDescriptor for arc creation.
+     */
+    static FigureDescriptor arc(double x1, double y1, double x2, double y2, double cx, double cy) {
+        FigureDescriptor d{FigureType::ET_ARC};
+        d.coords = {x1, y1, x2, y2, cx, cy};
+        return d;
+    }
+
+    /**
      * @brief Validate descriptor fields for the given figure type.
      * @return true if valid.
      * @throws std::invalid_argument if validation fails.
@@ -89,26 +135,35 @@ struct FigureDescriptor {
     bool validate() const {
         switch (type) {
             case FigureType::ET_POINT2D:
+                if (coords.size() == 2) {
+                    break;
+                }
                 if (!x.has_value() || !y.has_value()) {
                     throw std::invalid_argument("Point requires x and y coordinates");
                 }
                 break;
             case FigureType::ET_LINE:
+                if (coords.size() == 4) {
+                    break;
+                }
                 if (pointIds.size() != 2) {
-                    throw std::invalid_argument("Line requires exactly 2 point IDs");
+                    throw std::invalid_argument("Line requires coordinates or exactly 2 point IDs");
                 }
                 break;
             case FigureType::ET_CIRCLE:
-                if (pointIds.size() != 1) {
-                    throw std::invalid_argument("Circle requires exactly 1 center point ID");
+                if (coords.size() != 2 && pointIds.size() != 1) {
+                    throw std::invalid_argument("Circle requires center coordinates or exactly 1 center point ID");
                 }
                 if (!radius.has_value() || radius.value() <= 0) {
                     throw std::invalid_argument("Circle requires positive radius");
                 }
                 break;
             case FigureType::ET_ARC:
+                if (coords.size() == 6) {
+                    break;
+                }
                 if (pointIds.size() != 3) {
-                    throw std::invalid_argument("Arc requires exactly 3 point IDs");
+                    throw std::invalid_argument("Arc requires coordinates or exactly 3 point IDs");
                 }
                 break;
         }
