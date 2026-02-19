@@ -4,10 +4,16 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="751,47,715,42,716,37,752,42"/>
 <area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#afefa4a921a184f413f916e105b2e8a4d" title=" " alt="" coords="509,69,717,109"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="752,73,718,78,717,72,751,68"/>
-<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1DCMManager.html#a60344e1f42d0ac0aea28eed4f53f4215" title="Remove a requirement by ID." alt="" coords="257,37,461,77"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="495,77,461,73,462,68,496,72"/>
-<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1DCMManager.html#af1c24a150cabb5301977c41681901f6c" title="Update requirement parameter value." alt="" coords="257,101,461,141"/>
-<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="496,107,462,111,461,106,495,101"/>
-<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1DCMManager.html#ac2f4c1cac07c5bc28426b2ceb50ad736" title="Remove a figure by ID." alt="" coords="5,37,209,77"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="244,60,210,60,210,55,244,55"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1DCMManager.html#a60344e1f42d0ac0aea28eed4f53f4215" title="Remove a requirement by ID." alt="" coords="257,5,461,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="519,68,439,48,440,43,521,63"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1DCMManager.html#a3aae022d74fd7661797cd311f4ef9988" title="Solve the constraint system according to the current mode." alt="" coords="257,69,461,109"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="496,92,461,92,461,87,496,87"/>
+<area shape="rect" id="Node000009" href="$classOurPaintDCM_1_1DCMManager.html#af1c24a150cabb5301977c41681901f6c" title="Update requirement parameter value." alt="" coords="257,133,461,173"/>
+<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="521,115,440,136,439,131,519,110"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1DCMManager.html#ac2f4c1cac07c5bc28426b2ceb50ad736" title="Remove a figure by ID." alt="" coords="5,5,209,45"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="244,28,210,28,210,23,244,23"/>
+<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1DCMManager.html#a98fe29771e2fc13dccbb5dedc8eb978b" title="Update circle radius." alt="" coords="5,69,209,109"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="244,92,210,92,210,87,244,87"/>
+<area shape="rect" id="Node000008" href="$classOurPaintDCM_1_1DCMManager.html#afd23eed2b3ab4410e4372fb5d38084b4" title="Update point coordinates." alt="" coords="5,133,209,173"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="267,115,187,136,186,131,266,110"/>
 </map>

@@ -1,7 +1,7 @@
 var searchData=
 [
   ['center_0',['center',['../structOurPaintDCM_1_1Figures_1_1FigureData.html#a5f2e99515df7ce22ed4948a96bb484c2',1,'OurPaintDCM::Figures::FigureData::center'],['../structOurPaintDCM_1_1Figures_1_1Circle.html#a0f8a88431e8c474561ba33fb578a3e70',1,'OurPaintDCM::Figures::Circle::center']]],
-  ['circle_1',['circle',['../structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#adc6a70772bfdc414024e43d6b1e1d776',1,'OurPaintDCM::Utils::FigureDescriptor::circle()'],['../structOurPaintDCM_1_1Figures_1_1Circle.html#ab3f460bdec036407cbd7d3e8a181d507',1,'OurPaintDCM::Figures::Circle::Circle()'],['../structOurPaintDCM_1_1Figures_1_1Circle.html',1,'OurPaintDCM::Figures::Circle&lt; PointT &gt;']]],
+  ['circle_1',['circle',['../structOurPaintDCM_1_1Figures_1_1Circle.html#ab3f460bdec036407cbd7d3e8a181d507',1,'OurPaintDCM::Figures::Circle::Circle()'],['../structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#ac11d2ebe9e47cbab9ded1ec9823de9aa',1,'OurPaintDCM::Utils::FigureDescriptor::circle(double cx, double cy, double r)'],['../structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#adc6a70772bfdc414024e43d6b1e1d776',1,'OurPaintDCM::Utils::FigureDescriptor::circle(ID centerId, double r)'],['../structOurPaintDCM_1_1Figures_1_1Circle.html',1,'OurPaintDCM::Figures::Circle&lt; PointT &gt;']]],
   ['circle_2eh_2',['Circle.h',['../Circle_8h.html',1,'']]],
   ['circle2d_3',['Circle2D',['../namespaceOurPaintDCM_1_1Figures.html#a17b1e169219e225ed0e0f5496649618a',1,'OurPaintDCM::Figures']]],
   ['circle_3c_20ourpaintdcm_3a_3afigures_3a_3apoint2d_20_3e_4',['Circle&lt; OurPaintDCM::Figures::Point2D &gt;',['../structOurPaintDCM_1_1Figures_1_1Circle.html',1,'OurPaintDCM::Figures']]],
@@ -15,7 +15,7 @@ var searchData=
   ['components_12',['components',['../classOurPaintDCM_1_1Requirements_1_1Components.html',1,'OurPaintDCM::Requirements::Components'],['../classOurPaintDCM_1_1Requirements_1_1Components.html#a060508d2ce30f80851e07dd4f73f2bfc',1,'OurPaintDCM::Requirements::Components::Components()']]],
   ['components_2eh_13',['Components.h',['../Components_8h.html',1,'']]],
   ['contains_14',['contains',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#aeb74338ab2cf7a1651295af9349a55aa',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['coords_15',['coords',['../structOurPaintDCM_1_1Figures_1_1PointBase.html#a840f39824aacf49d36766ee634958325',1,'OurPaintDCM::Figures::PointBase']]],
+  ['coords_15',['coords',['../structOurPaintDCM_1_1Figures_1_1PointBase.html#a840f39824aacf49d36766ee634958325',1,'OurPaintDCM::Figures::PointBase::coords'],['../structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#ac73faa0614a5b39fd0b155951bf96367',1,'OurPaintDCM::Utils::FigureDescriptor::coords']]],
   ['createarc_16',['createArc',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a47552c379eb63400b08a0658d155366a',1,'OurPaintDCM::Figures::GeometryStorage']]],
   ['createarccenteronperpendicular_17',['createArcCenterOnPerpendicular',['../classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#a23a5dbe13ab37755c6ee7d69d0ede13a',1,'OurPaintDCM::Function::RequirementFunctionFactory']]],
   ['createcircle_18',['createCircle',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abb4303854d92f17fb5f93a2ae8d1d520',1,'OurPaintDCM::Figures::GeometryStorage']]],

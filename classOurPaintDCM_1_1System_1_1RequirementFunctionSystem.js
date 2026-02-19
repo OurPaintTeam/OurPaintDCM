@@ -5,6 +5,7 @@ var classOurPaintDCM_1_1System_1_1RequirementFunctionSystem =
     [ "clear", "classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a1002c941f94acba8d202112f2b390eaf", null ],
     [ "diagnose", "classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a9c472d3adb21533117334ff5e2257ab9", null ],
     [ "getAllVars", "classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#aaa4d937f96c0c476456fd54263b9a0a2", null ],
+    [ "getFunctions", "classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a3435b5336d06c8ccbcc617d0f46886dc", null ],
     [ "J", "classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a74a7e3e23d2410b6df96dc36a6bcb883", null ],
     [ "JTJ", "classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a0db002634f1db61786fa9d0697321338", null ],
     [ "residuals", "classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a91946c6253c3303faef588cd7341c4be", null ],

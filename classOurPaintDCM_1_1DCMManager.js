@@ -7,6 +7,7 @@ var classOurPaintDCM_1_1DCMManager =
     [ "addFigure", "classOurPaintDCM_1_1DCMManager.html#aac0ea08abe5a8da7d345aa2852e04515", null ],
     [ "addFigureToComponent", "classOurPaintDCM_1_1DCMManager.html#a8e564fbb0e6984c893dd8bb08c0e016e", null ],
     [ "addRequirement", "classOurPaintDCM_1_1DCMManager.html#ae497fb8e8aef91685c75adaaad740a1f", null ],
+    [ "buildSubsystem", "classOurPaintDCM_1_1DCMManager.html#aae2093b4c34fb47ee9007ca4070faffd", null ],
     [ "clear", "classOurPaintDCM_1_1DCMManager.html#ae72eec034a194a1403c4a9be989168b5", null ],
     [ "createNewComponent", "classOurPaintDCM_1_1DCMManager.html#a0246829d84bf9ba1ffba2553d04502c6", null ],
     [ "figureCount", "classOurPaintDCM_1_1DCMManager.html#a2925433ac1e748ec71815e8788b867ee", null ],
@@ -21,6 +22,7 @@ var classOurPaintDCM_1_1DCMManager =
     [ "getRequirementsForFigure", "classOurPaintDCM_1_1DCMManager.html#a6292fcdc4a4e870d34019280fb2abc4b", null ],
     [ "getRequirementsInComponent", "classOurPaintDCM_1_1DCMManager.html#ac31fe1188d0e781a8934df9657f200ee", null ],
     [ "getRequirementSystem", "classOurPaintDCM_1_1DCMManager.html#a8d6f936a267d4aeeeea37aca8ac2b2ed", null ],
+    [ "getSolveMode", "classOurPaintDCM_1_1DCMManager.html#a7291b96602ce56020e73dbe3c9de8fb9", null ],
     [ "getStorage", "classOurPaintDCM_1_1DCMManager.html#accc96802de102525e304a2c2d08b5fc7", null ],
     [ "hasFigure", "classOurPaintDCM_1_1DCMManager.html#a476df79022bc65eaee402c7d0cf5551a", null ],
     [ "hasRequirement", "classOurPaintDCM_1_1DCMManager.html#aa3615509c04d8e0cfb1759a0f6909fef", null ],
@@ -34,6 +36,8 @@ var classOurPaintDCM_1_1DCMManager =
     [ "removeRequirement", "classOurPaintDCM_1_1DCMManager.html#a60344e1f42d0ac0aea28eed4f53f4215", null ],
     [ "requirementCount", "classOurPaintDCM_1_1DCMManager.html#af528adf800217d00f29a2bf4009d264b", null ],
     [ "requirementSystem", "classOurPaintDCM_1_1DCMManager.html#a4a86fba12f6e9208e8640a034c9aee5b", null ],
+    [ "setSolveMode", "classOurPaintDCM_1_1DCMManager.html#a6f0e705165183b668e6310984be685fd", null ],
+    [ "solve", "classOurPaintDCM_1_1DCMManager.html#a3aae022d74fd7661797cd311f4ef9988", null ],
     [ "splitComponentsAfterRemoval", "classOurPaintDCM_1_1DCMManager.html#a0ad8ab5e8bc9d619751d6ef02d86372e", null ],
     [ "storage", "classOurPaintDCM_1_1DCMManager.html#ae301c50aee15145304ac0e1725c9bbe4", null ],
     [ "updateCircle", "classOurPaintDCM_1_1DCMManager.html#a98fe29771e2fc13dccbb5dedc8eb978b", null ],
@@ -46,5 +50,6 @@ var classOurPaintDCM_1_1DCMManager =
     [ "_nextComponentId", "classOurPaintDCM_1_1DCMManager.html#a9ce97ce1ffe53c734f754f0a38e29bac", null ],
     [ "_reqSystem", "classOurPaintDCM_1_1DCMManager.html#a7d72826831d9a60a0994926a80ae20ef", null ],
     [ "_requirementRecords", "classOurPaintDCM_1_1DCMManager.html#abc0ffa36d838914874f6d58234fbcc97", null ],
+    [ "_solveMode", "classOurPaintDCM_1_1DCMManager.html#a529d9035e0a7b5be8d41b5320bf8b545", null ],
     [ "_storage", "classOurPaintDCM_1_1DCMManager.html#af0433b8d49c4a09464cda9a150f536eb", null ]
 ];
