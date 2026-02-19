@@ -12,40 +12,87 @@ Utils::ID DCMManager::addFigure(const Utils::FigureDescriptor& descriptor) {
 
     Utils::ID figureId;
     std::vector<Utils::ID> relatedFigures;
+    Utils::FigureDescriptor storedDesc = descriptor;
+
+    auto registerPoint = [&](Utils::ID pid, double px, double py) {
+        Utils::FigureDescriptor pd;
+        pd.type = Utils::FigureType::ET_POINT2D;
+        pd.id = pid;
+        pd.coords = {px, py};
+        pd.x = px;
+        pd.y = py;
+        _figureRecords[pid] = pd;
+        ComponentID c = createNewComponent();
+        addFigureToComponent(pid, c);
+    };
 
     switch (descriptor.type) {
         case Utils::FigureType::ET_POINT2D: {
-            auto [id, ptr] = _storage.createPoint(descriptor.x.value(), descriptor.y.value());
+            const double px = descriptor.coords.size() == 2 ? descriptor.coords[0] : descriptor.x.value();
+            const double py = descriptor.coords.size() == 2 ? descriptor.coords[1] : descriptor.y.value();
+            auto [id, ptr] = _storage.createPoint(px, py);
             figureId = id;
             break;
         }
         case Utils::FigureType::ET_LINE: {
-            auto* p1 = _storage.get<Figures::Point2D>(descriptor.pointIds[0]);
-            auto* p2 = _storage.get<Figures::Point2D>(descriptor.pointIds[1]);
-            auto [id, ptr] = _storage.createLine(p1, p2);
-            figureId = id;
-            relatedFigures = descriptor.pointIds;
+            if (descriptor.coords.size() == 4) {
+                auto [p1Id, p1Ptr] = _storage.createPoint(descriptor.coords[0], descriptor.coords[1]);
+                auto [p2Id, p2Ptr] = _storage.createPoint(descriptor.coords[2], descriptor.coords[3]);
+                registerPoint(p1Id, descriptor.coords[0], descriptor.coords[1]);
+                registerPoint(p2Id, descriptor.coords[2], descriptor.coords[3]);
+                auto [id, ptr] = _storage.createLine(p1Ptr, p2Ptr);
+                figureId = id;
+                relatedFigures = {p1Id, p2Id};
+                storedDesc.pointIds = relatedFigures;
+            } else {
+                auto* p1 = _storage.get<Figures::Point2D>(descriptor.pointIds[0]);
+                auto* p2 = _storage.get<Figures::Point2D>(descriptor.pointIds[1]);
+                auto [id, ptr] = _storage.createLine(p1, p2);
+                figureId = id;
+                relatedFigures = descriptor.pointIds;
+            }
             break;
         }
         case Utils::FigureType::ET_CIRCLE: {
-            auto* center = _storage.get<Figures::Point2D>(descriptor.pointIds[0]);
-            auto [id, ptr] = _storage.createCircle(center, descriptor.radius.value());
-            figureId = id;
-            relatedFigures = descriptor.pointIds;
+            if (descriptor.coords.size() == 2) {
+                auto [centerId, cPtr] = _storage.createPoint(descriptor.coords[0], descriptor.coords[1]);
+                registerPoint(centerId, descriptor.coords[0], descriptor.coords[1]);
+                auto [id, ptr] = _storage.createCircle(cPtr, descriptor.radius.value());
+                figureId = id;
+                relatedFigures = {centerId};
+                storedDesc.pointIds = relatedFigures;
+            } else {
+                auto* center = _storage.get<Figures::Point2D>(descriptor.pointIds[0]);
+                auto [id, ptr] = _storage.createCircle(center, descriptor.radius.value());
+                figureId = id;
+                relatedFigures = descriptor.pointIds;
+            }
             break;
         }
         case Utils::FigureType::ET_ARC: {
-            auto* p1 = _storage.get<Figures::Point2D>(descriptor.pointIds[0]);
-            auto* p2 = _storage.get<Figures::Point2D>(descriptor.pointIds[1]);
-            auto* center = _storage.get<Figures::Point2D>(descriptor.pointIds[2]);
-            auto [id, ptr] = _storage.createArc(p1, p2, center);
-            figureId = id;
-            relatedFigures = descriptor.pointIds;
+            if (descriptor.coords.size() == 6) {
+                auto [p1Id, p1Ptr] = _storage.createPoint(descriptor.coords[0], descriptor.coords[1]);
+                auto [p2Id, p2Ptr] = _storage.createPoint(descriptor.coords[2], descriptor.coords[3]);
+                auto [centerId, cPtr] = _storage.createPoint(descriptor.coords[4], descriptor.coords[5]);
+                registerPoint(p1Id, descriptor.coords[0], descriptor.coords[1]);
+                registerPoint(p2Id, descriptor.coords[2], descriptor.coords[3]);
+                registerPoint(centerId, descriptor.coords[4], descriptor.coords[5]);
+                auto [id, ptr] = _storage.createArc(p1Ptr, p2Ptr, cPtr);
+                figureId = id;
+                relatedFigures = {p1Id, p2Id, centerId};
+                storedDesc.pointIds = relatedFigures;
+            } else {
+                auto* p1 = _storage.get<Figures::Point2D>(descriptor.pointIds[0]);
+                auto* p2 = _storage.get<Figures::Point2D>(descriptor.pointIds[1]);
+                auto* center = _storage.get<Figures::Point2D>(descriptor.pointIds[2]);
+                auto [id, ptr] = _storage.createArc(p1, p2, center);
+                figureId = id;
+                relatedFigures = descriptor.pointIds;
+            }
             break;
         }
     }
 
-    Utils::FigureDescriptor storedDesc = descriptor;
     storedDesc.id = figureId;
     _figureRecords[figureId] = storedDesc;
 
