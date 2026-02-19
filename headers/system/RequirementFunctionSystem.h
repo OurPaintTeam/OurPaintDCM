@@ -71,6 +71,9 @@ namespace OurPaintDCM::System {
          */
         Utils::SystemStatus diagnose() const;
 
+        /// @brief Get all constraint functions.
+        const std::vector<std::shared_ptr<Function::RequirementFunction>>& getFunctions() const { return _functions; }
+
         /**
          * @brief Clear all stored functions and variables.
          */
