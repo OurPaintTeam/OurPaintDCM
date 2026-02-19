@@ -6,9 +6,17 @@
 #include "RequirementDescriptor.h"
 #include "FigureDescriptor.h"
 #include "Graph.h"
+#include "Function.h"
+#include "LSMFORLMTask.h"
+#include "LSMTask.h"
+#include "LMWithSparse.h"
+#include "GradientOptimizer.h"
+
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
+#include <memory>
+#include <cmath>
 
 namespace OurPaintDCM {
 
@@ -210,6 +218,19 @@ public:
 
     /// @brief Get current solving mode.
     Utils::SolveMode getSolveMode() const noexcept;
+
+    /**
+     * @brief Solve the constraint system according to the current mode.
+     *
+     * GLOBAL — solves all requirements at once (Levenberg-Marquardt).
+     * LOCAL  — solves only the specified component (Levenberg-Marquardt).
+     * DRAG   — lightweight gradient descent, intended to be called from updatePoint/updateCircle.
+     *
+     * @param componentId Component to solve (used only in LOCAL mode).
+     * @return true if the solver converged.
+     */
+    bool solve(std::optional<ComponentID> componentId = std::nullopt);
+
 private:
     Figures::GeometryStorage _storage;
     System::RequirementSystem _reqSystem;
@@ -221,6 +242,8 @@ private:
     ComponentID _nextComponentId = 0;
     std::size_t _activeComponentCount = 0;
     Utils::SolveMode _solveMode = Utils::SolveMode::GLOBAL;
+
+    std::unique_ptr<System::RequirementSystem> buildSubsystem(ComponentID componentId) const;
 
     void rebuildRequirementSystem();
     void rebuildComponents();

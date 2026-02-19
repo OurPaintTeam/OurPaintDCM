@@ -2,6 +2,45 @@
 #include <algorithm>
 #include <stdexcept>
 
+
+
+namespace {
+
+class RequirementDerivativeAdapter;
+
+class RequirementFunctionAdapter : public Function {
+    std::shared_ptr<OurPaintDCM::Function::RequirementFunction> _req;
+public:
+    explicit RequirementFunctionAdapter(std::shared_ptr<OurPaintDCM::Function::RequirementFunction> req)
+        : _req(std::move(req)) {}
+    double evaluate() const override { return _req->evaluate(); }
+    ::Function* derivative(Variable* var) const override;
+    ::Function* clone() const override { return new RequirementFunctionAdapter(_req); }
+    std::string to_string() const override { return "ReqFunc"; }
+};
+
+class RequirementDerivativeAdapter : public Function {
+    std::shared_ptr<OurPaintDCM::Function::RequirementFunction> _req;
+    double* _var;
+public:
+    RequirementDerivativeAdapter(std::shared_ptr<OurPaintDCM::Function::RequirementFunction> req, double* var)
+        : _req(std::move(req)), _var(var) {}
+    double evaluate() const override {
+        auto grad = _req->gradient();
+        auto it = grad.find(_var);
+        return (it != grad.end()) ? it->second : 0.0;
+    }
+    ::Function* derivative(Variable*) const override { return new Constant(0.0); }
+    ::Function* clone() const override { return new RequirementDerivativeAdapter(_req, _var); }
+    std::string to_string() const override { return "ReqDeriv"; }
+};
+
+::Function* RequirementFunctionAdapter::derivative(Variable* var) const {
+    return new RequirementDerivativeAdapter(_req, var->value);
+}
+
+} // anonymous namespace
+
 namespace OurPaintDCM {
 
 DCMManager::DCMManager()
@@ -375,6 +414,88 @@ void DCMManager::setSolveMode(Utils::SolveMode mode) noexcept {
 Utils::SolveMode DCMManager::getSolveMode() const noexcept {
     return _solveMode;
 }
+
+bool DCMManager::solve(std::optional<ComponentID> componentId) {
+    if (_requirementRecords.empty()) {
+        return true;
+    }
+
+    System::RequirementFunctionSystem* systemPtr = nullptr;
+    std::unique_ptr<System::RequirementSystem> subsystem;
+
+    switch (_solveMode) {
+        case Utils::SolveMode::GLOBAL:
+            rebuildRequirementSystem();
+            systemPtr = &_reqSystem;
+            break;
+        case Utils::SolveMode::LOCAL:
+            if (!componentId.has_value())
+                throw std::runtime_error("LOCAL mode requires a componentID");
+            subsystem = buildSubsystem(componentId.value());
+            systemPtr = subsystem.get();
+            break;
+        case Utils::SolveMode::DRAG:
+            if (componentId.has_value()) {
+                subsystem = buildSubsystem(componentId.value());
+                systemPtr = subsystem.get();
+            } else {
+                rebuildRequirementSystem();
+                systemPtr = &_reqSystem;
+            }
+            break;
+    }
+
+    auto& system = *systemPtr;
+    const auto& reqFuncs = system.getFunctions();
+    auto allVars = system.getAllVars();
+    if (reqFuncs.empty() || allVars.empty()) return true;
+
+    std::vector<Variable*> mathVars;
+    mathVars.reserve(allVars.size());
+    for (auto* v : allVars)
+        mathVars.push_back(new Variable(v));
+
+    std::vector<::Function*> mathFuncs;
+    mathFuncs.reserve(reqFuncs.size());
+    for (auto& rf : reqFuncs)
+        mathFuncs.push_back(new RequirementFunctionAdapter(rf));
+
+    bool converged = false;
+
+    if (_solveMode == Utils::SolveMode::DRAG) {
+        LSMTask task(mathFuncs, mathVars);
+        GradientOptimizer optimizer(0.01, 200);
+        optimizer.setTask(&task);
+        optimizer.optimize();
+        converged = optimizer.isConverged();
+    } else {
+        LSMFORLMTask task(mathFuncs, mathVars);
+        LMSparse solver;
+        solver.setTask(&task);
+        solver.optimize();
+        converged = solver.isConverged();
+        for (auto* f : mathFuncs) delete f;
+    }
+
+    for (auto* v : mathVars) delete v;
+    return converged;
+}
+
+std::unique_ptr<System::RequirementSystem> DCMManager::buildSubsystem(ComponentID componentId) const {
+    auto subsystem = std::make_unique<System::RequirementSystem>(
+        &const_cast<DCMManager*>(this)->_storage);
+
+    auto reqIds = getRequirementsInComponent(componentId);
+    for (const auto& reqId : reqIds) {
+        auto it = _requirementRecords.find(reqId);
+        if (it != _requirementRecords.end()) {
+            subsystem->addRequirement(it->second);
+        }
+    }
+
+    return subsystem;
+}
+
 void DCMManager::rebuildRequirementSystem() {
     _reqSystem.clear();
     for (const auto& [id, desc] : _requirementRecords) {
