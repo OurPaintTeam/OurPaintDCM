@@ -138,6 +138,13 @@ void DCMManager::updatePoint(const Utils::PointUpdateDescriptor& descriptor) {
     if (descriptor.newY.has_value()) {
         point->y() = descriptor.newY.value();
     }
+
+    if (_solveMode == Utils::SolveMode::DRAG) {
+        auto comp = getComponentForFigure(descriptor.pointId);
+        if (comp.has_value()) {
+            solve(comp.value());
+        }
+    }
 }
 
 void DCMManager::updateCircle(const Utils::CircleUpdateDescriptor& descriptor) {
@@ -147,6 +154,13 @@ void DCMManager::updateCircle(const Utils::CircleUpdateDescriptor& descriptor) {
     }
 
     circle->radius = descriptor.newRadius;
+
+    if (_solveMode == Utils::SolveMode::DRAG) {
+        auto comp = getComponentForFigure(descriptor.circleId);
+        if (comp.has_value()) {
+            solve(comp.value());
+        }
+    }
 }
 
 std::optional<Utils::FigureDescriptor> DCMManager::getFigure(Utils::ID figureId) const {
@@ -160,13 +174,29 @@ std::optional<Utils::FigureDescriptor> DCMManager::getFigure(Utils::ID figureId)
     switch (desc.type) {
         case Utils::FigureType::ET_POINT2D: {
             auto* point = _storage.get<Figures::Point2D>(figureId);
+            desc.coords = {point->x(), point->y()};
             desc.x = point->x();
             desc.y = point->y();
             break;
         }
+        case Utils::FigureType::ET_LINE: {
+            auto* p1 = _storage.get<Figures::Point2D>(desc.pointIds[0]);
+            auto* p2 = _storage.get<Figures::Point2D>(desc.pointIds[1]);
+            desc.coords = {p1->x(), p1->y(), p2->x(), p2->y()};
+            break;
+        }
         case Utils::FigureType::ET_CIRCLE: {
+            auto* center = _storage.get<Figures::Point2D>(desc.pointIds[0]);
             auto* circle = _storage.get<Figures::Circle2D>(figureId);
+            desc.coords = {center->x(), center->y()};
             desc.radius = circle->radius;
+            break;
+        }
+        case Utils::FigureType::ET_ARC: {
+            auto* p1 = _storage.get<Figures::Point2D>(desc.pointIds[0]);
+            auto* p2 = _storage.get<Figures::Point2D>(desc.pointIds[1]);
+            auto* center = _storage.get<Figures::Point2D>(desc.pointIds[2]);
+            desc.coords = {p1->x(), p1->y(), p2->x(), p2->y(), center->x(), center->y()};
             break;
         }
         default:
@@ -337,6 +367,14 @@ void DCMManager::clear() {
     _activeComponentCount = 0;
 }
 
+void DCMManager::setSolveMode(Utils::SolveMode mode) noexcept {
+    _solveMode = mode;
+}
+
+
+Utils::SolveMode DCMManager::getSolveMode() const noexcept {
+    return _solveMode;
+}
 void DCMManager::rebuildRequirementSystem() {
     _reqSystem.clear();
     for (const auto& [id, desc] : _requirementRecords) {

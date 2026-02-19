@@ -202,6 +202,14 @@ public:
      */
     void clear();
 
+    /**
+     * @brief Switch current solving mode.
+     * @param mode New solving mode.
+     */
+    void setSolveMode(Utils::SolveMode mode) noexcept;
+
+    /// @brief Get current solving mode.
+    Utils::SolveMode getSolveMode() const noexcept;
 private:
     Figures::GeometryStorage _storage;
     System::RequirementSystem _reqSystem;
@@ -212,6 +220,7 @@ private:
     std::vector<std::unordered_set<Utils::ID>> _components;
     ComponentID _nextComponentId = 0;
     std::size_t _activeComponentCount = 0;
+    Utils::SolveMode _solveMode = Utils::SolveMode::GLOBAL;
 
     void rebuildRequirementSystem();
     void rebuildComponents();
