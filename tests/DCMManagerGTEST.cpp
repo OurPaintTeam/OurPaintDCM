@@ -32,7 +32,7 @@ TEST_F(DCMManagerTest, AddPointFigure) {
 TEST_F(DCMManagerTest, AddLineFigure) {
     auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
     auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 0.0));
-    auto line = manager.addFigure(FigureDescriptor::line(p1, p2));
+    auto line = manager.addFigure(FigureDescriptor::line(0.0, 0.0, 10.0, 0.0));
 
     EXPECT_TRUE(manager.hasFigure(line));
     EXPECT_EQ(manager.figureCount(), 3);
@@ -44,8 +44,7 @@ TEST_F(DCMManagerTest, AddLineFigure) {
 }
 
 TEST_F(DCMManagerTest, AddCircleFigure) {
-    auto center = manager.addFigure(FigureDescriptor::point(5.0, 5.0));
-    auto circle = manager.addFigure(FigureDescriptor::circle(center, 10.0));
+    auto circle = manager.addFigure(FigureDescriptor::circle(5.0, 5.0, 10.0));
 
     EXPECT_TRUE(manager.hasFigure(circle));
 
@@ -56,10 +55,7 @@ TEST_F(DCMManagerTest, AddCircleFigure) {
 }
 
 TEST_F(DCMManagerTest, AddArcFigure) {
-    auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
-    auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 0.0));
-    auto center = manager.addFigure(FigureDescriptor::point(5.0, 5.0));
-    auto arc = manager.addFigure(FigureDescriptor::arc(p1, p2, center));
+    auto arc = manager.addFigure(FigureDescriptor::arc(0.0, 0.0, 10.0, 0.0, 5.0, 5.0));
 
     EXPECT_TRUE(manager.hasFigure(arc));
 
@@ -105,8 +101,7 @@ TEST_F(DCMManagerTest, UpdatePoint) {
 }
 
 TEST_F(DCMManagerTest, UpdateCircle) {
-    auto center = manager.addFigure(FigureDescriptor::point(5.0, 5.0));
-    auto circleId = manager.addFigure(FigureDescriptor::circle(center, 10.0));
+    auto circleId = manager.addFigure(FigureDescriptor::circle(5.0, 5.0, 10.0));
 
     manager.updateCircle(CircleUpdateDescriptor(circleId, 25.0));
 
@@ -161,7 +156,7 @@ TEST_F(DCMManagerTest, UpdateRequirementParam) {
 TEST_F(DCMManagerTest, GetRequirement) {
     auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
     auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 0.0));
-    auto line = manager.addFigure(FigureDescriptor::line(p1, p2));
+    auto line = manager.addFigure(FigureDescriptor::line(0.0, 0.0, 10.0, 0.0));
 
     auto req1 = manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 50.0));
     auto req2 = manager.addRequirement(RequirementDescriptor::horizontal(line));
@@ -189,7 +184,7 @@ TEST_F(DCMManagerTest, GetRequirementNotFound) {
 TEST_F(DCMManagerTest, GetAllRequirements) {
     auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
     auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 0.0));
-    auto line = manager.addFigure(FigureDescriptor::line(p1, p2));
+    auto line = manager.addFigure(FigureDescriptor::line(0.0, 0.0, 10.0, 0.0));
 
     manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 50.0));
     manager.addRequirement(RequirementDescriptor::horizontal(line));
@@ -288,13 +283,11 @@ TEST_F(DCMManagerTest, GetAllComponents) {
 }
 
 TEST_F(DCMManagerTest, MergeMultipleComponentsAtOnce) {
-    auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
     auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 0.0));
-    auto p3 = manager.addFigure(FigureDescriptor::point(20.0, 0.0));
 
-    EXPECT_EQ(manager.getComponentCount(), 3);
+    EXPECT_EQ(manager.getComponentCount(), 1);
 
-    auto line = manager.addFigure(FigureDescriptor::line(p1, p3));
+    auto line = manager.addFigure(FigureDescriptor::line(0.0, 0.0, 20.0, 0.0));
     manager.addRequirement(RequirementDescriptor::pointOnLine(p2, line));
 
     EXPECT_LE(manager.getComponentCount(), 2);
@@ -384,10 +377,10 @@ TEST_F(DCMManagerTest, ComplexScenario) {
     auto p3 = manager.addFigure(FigureDescriptor::point(100.0, 100.0));
     auto p4 = manager.addFigure(FigureDescriptor::point(0.0, 100.0));
 
-    auto l1 = manager.addFigure(FigureDescriptor::line(p1, p2));
-    auto l2 = manager.addFigure(FigureDescriptor::line(p2, p3));
-    auto l3 = manager.addFigure(FigureDescriptor::line(p3, p4));
-    auto l4 = manager.addFigure(FigureDescriptor::line(p4, p1));
+    auto l1 = manager.addFigure(FigureDescriptor::line(0.0, 0.0, 100.0, 0.0));
+    auto l2 = manager.addFigure(FigureDescriptor::line(100.0, 0.0, 100.0, 100.0));
+    auto l3 = manager.addFigure(FigureDescriptor::line(100.0, 100.0, 0.0, 100.0));
+    auto l4 = manager.addFigure(FigureDescriptor::line(0.0, 100.0, 0.0, 0.0));
 
     manager.addRequirement(RequirementDescriptor::horizontal(l1));
     manager.addRequirement(RequirementDescriptor::horizontal(l3));
