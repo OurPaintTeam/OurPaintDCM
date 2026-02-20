@@ -10,7 +10,7 @@ RequirementFunctionSystem::RequirementFunctionSystem() = default;
 void RequirementFunctionSystem::addFunction(std::shared_ptr<RequirementFunction> func) {
     _functions.push_back(func);
     for (auto v : func->getVars()) {
-        if (std::find(_allVars.begin(), _allVars.end(), v) == _allVars.end()) {
+        if (_allVarsSet.insert(v).second) {
             _allVars.push_back(v);
         }
     }
@@ -92,5 +92,6 @@ OurPaintDCM::Utils::SystemStatus RequirementFunctionSystem::diagnose() const {
 void RequirementFunctionSystem::clear() {
     _functions.clear();
     _allVars.clear();
+    _allVarsSet.clear();
     _jacobian.resize(0, 0);
 }
