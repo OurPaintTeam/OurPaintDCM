@@ -26,7 +26,10 @@ var namespaceOurPaintDCM_1_1Utils =
       [ "ET_LINELINEANGLE", "namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a4526e77595711478f14703eee10d67ba", null ],
       [ "ET_VERTICAL", "namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a84967ad3b7986053dfc6cfd1a3cbdf16", null ],
       [ "ET_HORIZONTAL", "namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a158b2265b2387e5fd9f484eec3691e1f", null ],
-      [ "ET_ARCCENTERONPERPENDICULAR", "namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a93fabf744e124d0cd0c6c3212882300c", null ]
+      [ "ET_ARCCENTERONPERPENDICULAR", "namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a93fabf744e124d0cd0c6c3212882300c", null ],
+      [ "ET_FIXPOINT", "namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a47e907c7c654795231350732d7b2ab4b", null ],
+      [ "ET_FIXLINE", "namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a8301936036492570639532339b626d29", null ],
+      [ "ET_FIXCIRCLE", "namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a05614f5614e1e7a6d41d8481e2ea2ff3", null ]
     ] ],
     [ "SolveMode", "namespaceOurPaintDCM_1_1Utils.html#a6f2b4a61c8ed5b8b772f8424adf5af15", [
       [ "GLOBAL", "namespaceOurPaintDCM_1_1Utils.html#a6f2b4a61c8ed5b8b772f8424adf5af15a6eecfba72d12922ee1dead07a0ef3334", null ],

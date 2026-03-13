@@ -1,6 +1,7 @@
 var namespaceOurPaintDCM_1_1Function =
 [
     [ "ArcCenterOnPerpendicularFunction", "classOurPaintDCM_1_1Function_1_1ArcCenterOnPerpendicularFunction.html", "classOurPaintDCM_1_1Function_1_1ArcCenterOnPerpendicularFunction" ],
+    [ "FixCoordinateFunction", "classOurPaintDCM_1_1Function_1_1FixCoordinateFunction.html", "classOurPaintDCM_1_1Function_1_1FixCoordinateFunction" ],
     [ "HorizontalFunction", "classOurPaintDCM_1_1Function_1_1HorizontalFunction.html", "classOurPaintDCM_1_1Function_1_1HorizontalFunction" ],
     [ "LineCircleDistanceFunction", "classOurPaintDCM_1_1Function_1_1LineCircleDistanceFunction.html", "classOurPaintDCM_1_1Function_1_1LineCircleDistanceFunction" ],
     [ "LineLineAngleFunction", "classOurPaintDCM_1_1Function_1_1LineLineAngleFunction.html", "classOurPaintDCM_1_1Function_1_1LineLineAngleFunction" ],

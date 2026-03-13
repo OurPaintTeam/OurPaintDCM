@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Function::FixCoordinateFunction" name="OurPaintDCM::Function::FixCoordinateFunction">
+<area shape="rect" id="Node000001" title="Fixes a single coordinate at a target value." alt="" coords="5,93,180,133"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Function_1_1RequirementFunction.html" title="Abstract base class for all geometric constraint functions." alt="" coords="7,5,178,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="95,59,95,93,90,93,90,59"/>
+</map>

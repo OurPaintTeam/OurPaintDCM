@@ -13,5 +13,6 @@ var RequirementFunction_8h =
     [ "OurPaintDCM::Function::VerticalFunction", "classOurPaintDCM_1_1Function_1_1VerticalFunction.html", "classOurPaintDCM_1_1Function_1_1VerticalFunction" ],
     [ "OurPaintDCM::Function::HorizontalFunction", "classOurPaintDCM_1_1Function_1_1HorizontalFunction.html", "classOurPaintDCM_1_1Function_1_1HorizontalFunction" ],
     [ "OurPaintDCM::Function::ArcCenterOnPerpendicularFunction", "classOurPaintDCM_1_1Function_1_1ArcCenterOnPerpendicularFunction.html", "classOurPaintDCM_1_1Function_1_1ArcCenterOnPerpendicularFunction" ],
+    [ "OurPaintDCM::Function::FixCoordinateFunction", "classOurPaintDCM_1_1Function_1_1FixCoordinateFunction.html", "classOurPaintDCM_1_1Function_1_1FixCoordinateFunction" ],
     [ "VAR", "RequirementFunction_8h.html#abca8dfa78652bc61165262af4fade766", null ]
 ];
