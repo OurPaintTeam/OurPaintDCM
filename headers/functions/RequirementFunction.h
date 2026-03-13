@@ -221,6 +221,23 @@ namespace OurPaintDCM::Function {
         std::unordered_map<VAR, double> gradient() const override;
         size_t getVarCount() const override;
     };
+
+    /**
+     * @brief Fixes a single coordinate at a target value.
+     *
+     * Used as a building block for fix-point, fix-line, and fix-circle constraints.
+     * Each instance pins one scalar variable: evaluate() = *var - target.
+     *
+     * Variables: [coordinate]
+     */
+    class FixCoordinateFunction : public RequirementFunction {
+        double _target;
+    public:
+        FixCoordinateFunction(Utils::RequirementType type, const std::vector<VAR>& vars, double target);
+        double evaluate() const override;
+        std::unordered_map<VAR, double> gradient() const override;
+        size_t getVarCount() const override;
+    };
 }
 
 #endif // OURPAINTDCM_FUNCTION_MATHFUNCTION_H

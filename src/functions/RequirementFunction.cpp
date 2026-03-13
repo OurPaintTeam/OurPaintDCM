@@ -805,3 +805,23 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::ArcCenterOnPerpendicularF
 size_t OurPaintDCM::Function::ArcCenterOnPerpendicularFunction::getVarCount() const {
     return 6;
 }
+
+OurPaintDCM::Function::FixCoordinateFunction::FixCoordinateFunction(
+    Utils::RequirementType type, const std::vector<VAR>& vars, double target)
+    : RequirementFunction(type, vars), _target(target) {
+    if (vars.size() != 1) {
+        throw std::invalid_argument("This function must have 1 variable");
+    }
+}
+
+double OurPaintDCM::Function::FixCoordinateFunction::evaluate() const {
+    return *_vars[0] - _target;
+}
+
+std::unordered_map<VAR, double> OurPaintDCM::Function::FixCoordinateFunction::gradient() const {
+    return {{_vars[0], 1.0}};
+}
+
+size_t OurPaintDCM::Function::FixCoordinateFunction::getVarCount() const {
+    return 1;
+}
