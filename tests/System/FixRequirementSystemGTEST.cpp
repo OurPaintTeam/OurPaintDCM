@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "RequirementSystem.h"
 #include "GeometryStorage.h"
+#include <cmath>
 
 using namespace OurPaintDCM::System;
 using namespace OurPaintDCM::Figures;
@@ -42,7 +43,7 @@ TEST_F(FixRequirementSystemTest, AddFixPointResiduals) {
     system.addFixPoint(p1Id);
 
     auto res = system.residuals();
-    EXPECT_EQ(res.size(), 2u);
+    ASSERT_EQ(res.size(), 2u);
     EXPECT_NEAR(res[0], 0.0, 1e-9);
     EXPECT_NEAR(res[1], 0.0, 1e-9);
 }
@@ -56,6 +57,7 @@ TEST_F(FixRequirementSystemTest, AddFixPointDetectsDeviation) {
     pt->y() = 200.0;
 
     auto res = system.residuals();
+    ASSERT_EQ(res.size(), 2u);
     EXPECT_NEAR(res[0], 99.0, 1e-9);
     EXPECT_NEAR(res[1], 198.0, 1e-9);
 }
@@ -91,7 +93,7 @@ TEST_F(FixRequirementSystemTest, AddFixLineResiduals) {
     system.addFixLine(lineId);
 
     auto res = system.residuals();
-    EXPECT_EQ(res.size(), 4u);
+    ASSERT_EQ(res.size(), 4u);
     for (double r : res) {
         EXPECT_NEAR(r, 0.0, 1e-9);
     }
@@ -105,6 +107,7 @@ TEST_F(FixRequirementSystemTest, AddFixLineDetectsDeviation) {
     pt1->x() = 0.0;
 
     auto res = system.residuals();
+    ASSERT_EQ(res.size(), 4u);
     EXPECT_NEAR(res[0], -1.0, 1e-9);
 }
 
@@ -139,7 +142,7 @@ TEST_F(FixRequirementSystemTest, AddFixCircleResiduals) {
     system.addFixCircle(circleId);
 
     auto res = system.residuals();
-    EXPECT_EQ(res.size(), 3u);
+    ASSERT_EQ(res.size(), 3u);
     for (double r : res) {
         EXPECT_NEAR(r, 0.0, 1e-9);
     }
@@ -154,6 +157,7 @@ TEST_F(FixRequirementSystemTest, AddFixCircleDetectsDeviation) {
     c->radius = 20.0;
 
     auto res = system.residuals();
+    ASSERT_EQ(res.size(), 3u);
     EXPECT_NEAR(res[0], -3.0, 1e-9);
     EXPECT_NEAR(res[2], 12.5, 1e-9);
 }
@@ -210,9 +214,10 @@ TEST_F(FixRequirementSystemTest, FixWithOtherConstraints) {
     system.addPointPointDist(p1Id, p2Id, 5.0);
 
     auto res = system.residuals();
-    EXPECT_EQ(res.size(), 3u);
+    ASSERT_EQ(res.size(), 3u);
     EXPECT_NEAR(res[0], 0.0, 1e-9);
     EXPECT_NEAR(res[1], 0.0, 1e-9);
+    EXPECT_NEAR(res[2], std::sqrt(32.0) - 5.0, 1e-9);
 }
 
 TEST_F(FixRequirementSystemTest, FixPointSharedVarsWithLine) {

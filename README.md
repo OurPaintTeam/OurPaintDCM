@@ -225,27 +225,9 @@ auto status = dcm.getRequirementSystem().diagnose();
 add_subdirectory(external/OurPaintDCM)
 
 target_link_libraries(my_cad PRIVATE OurPaintDCM)
-
-target_include_directories(my_cad PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/OurPaintDCM/headers
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/OurPaintDCM/headers/figures
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/OurPaintDCM/headers/functions
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/OurPaintDCM/headers/system
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/OurPaintDCM/headers/requirements
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/OurPaintDCM/headers/utils
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/OurPaintDCM/math/headers
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/OurPaintDCM/math/headers/optimizers
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/OurPaintDCM/math/headers/optimizers/MatrixOptimizers
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/OurPaintDCM/math/headers/optimizers/EigenOptimizers
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/OurPaintDCM/math/headers/decomposition
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/OurPaintDCM/math/headers/graph
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/OurPaintDCM/math/headers/Tasks
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/OurPaintDCM/math/headers/Tasks/Matrix
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/OurPaintDCM/math/headers/Tasks/Eigen
-)
 ```
 
-Библиотека уже собирается как `OurPaintDCM`, но для внешнего CAD сейчас проще и надёжнее явно передать include-пути, которые используются внутри проекта.
+`OurPaintDCM` экспортирует свои include-директории через target-based CMake API, поэтому при использовании через `add_subdirectory(...)` достаточно просто линковаться с целью `OurPaintDCM` без ручного перечисления include-путей в вашем CAD.
 
 #### Шаг 2. Сделать адаптер между объектами CAD и DCM
 
