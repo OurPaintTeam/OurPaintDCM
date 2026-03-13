@@ -49,7 +49,16 @@ enum class RequirementType: uint8_t {
     ET_HORIZONTAL,
 
     /// Default constraints for every arc, for making 3 points working like a arc
-    ET_ARCCENTERONPERPENDICULAR
+    ET_ARCCENTERONPERPENDICULAR,
+
+    /// Fix a point at its current position.
+    ET_FIXPOINT,
+
+    /// Fix a line (both endpoints) at its current position.
+    ET_FIXLINE,
+
+    /// Fix a circle (center and radius) at its current position.
+    ET_FIXCIRCLE
 };
 
 /**
