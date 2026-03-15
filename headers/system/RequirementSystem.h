@@ -160,6 +160,15 @@ public:
     /// @brief Add arc-center perpendicular-bisector constraint by ID.
     void addArcCenterOnPerpendicular(Utils::ID arcId);
 
+    /// @brief Fix a point at its current position.
+    void addFixPoint(Utils::ID pointId);
+
+    /// @brief Fix a line (both endpoints) at its current position.
+    void addFixLine(Utils::ID lineId);
+
+    /// @brief Fix a circle (center and radius) at its current position.
+    void addFixCircle(Utils::ID circleId);
+
     /**
      * @brief Clear all functions, variables, and requirement metadata.
      * 

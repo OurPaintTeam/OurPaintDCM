@@ -92,6 +92,21 @@ public:
     static std::shared_ptr<ArcCenterOnPerpendicularFunction> createArcCenterOnPerpendicular(
         Figures::Arc<Figures::Point2D>* arc
     );
+
+    /// @brief Create fix-point functions (one per coordinate).
+    static std::vector<std::shared_ptr<FixCoordinateFunction>> createFixPoint(
+        Figures::Point2D* point
+    );
+
+    /// @brief Create fix-line functions (one per endpoint coordinate).
+    static std::vector<std::shared_ptr<FixCoordinateFunction>> createFixLine(
+        Figures::Line<Figures::Point2D>* line
+    );
+
+    /// @brief Create fix-circle functions (one per center coordinate + radius).
+    static std::vector<std::shared_ptr<FixCoordinateFunction>> createFixCircle(
+        Figures::Circle<Figures::Point2D>* circle
+    );
 };
 
 }

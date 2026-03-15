@@ -118,6 +118,21 @@ struct RequirementDescriptor {
         return {RequirementType::ET_ARCCENTERONPERPENDICULAR, {arcId}};
     }
 
+    /// @brief Create fix-point descriptor
+    static RequirementDescriptor fixPoint(ID pointId) {
+        return {RequirementType::ET_FIXPOINT, {pointId}};
+    }
+
+    /// @brief Create fix-line descriptor
+    static RequirementDescriptor fixLine(ID lineId) {
+        return {RequirementType::ET_FIXLINE, {lineId}};
+    }
+
+    /// @brief Create fix-circle descriptor
+    static RequirementDescriptor fixCircle(ID circleId) {
+        return {RequirementType::ET_FIXCIRCLE, {circleId}};
+    }
+
     // ==================== Validation ====================
 
     /**
@@ -144,6 +159,9 @@ struct RequirementDescriptor {
             case RequirementType::ET_VERTICAL:
             case RequirementType::ET_HORIZONTAL:
             case RequirementType::ET_ARCCENTERONPERPENDICULAR:
+            case RequirementType::ET_FIXPOINT:
+            case RequirementType::ET_FIXLINE:
+            case RequirementType::ET_FIXCIRCLE:
                 if (objectIds.size() != 1) {
                     throw std::invalid_argument("Requirement type requires exactly 1 object ID");
                 }

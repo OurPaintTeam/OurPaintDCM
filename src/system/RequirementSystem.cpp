@@ -1,4 +1,4 @@
-#include "system/RequirementSystem.h"
+#include "RequirementSystem.h"
 #include <stdexcept>
 
 namespace OurPaintDCM::System {
@@ -86,9 +86,27 @@ Utils::ID RequirementSystem::addRequirement(const Utils::RequirementDescriptor& 
             func = Function::RequirementFunctionFactory::createArcCenterOnPerpendicular(arc);
             break;
         }
+        case Utils::RequirementType::ET_FIXPOINT: {
+            auto* point = _storage->get<Figures::Point2D>(ids[0]);
+            auto funcs = Function::RequirementFunctionFactory::createFixPoint(point);
+            for (auto& f : funcs) addFunction(f);
+            break;
+        }
+        case Utils::RequirementType::ET_FIXLINE: {
+            auto* line = _storage->get<Figures::Line2D>(ids[0]);
+            auto funcs = Function::RequirementFunctionFactory::createFixLine(line);
+            for (auto& f : funcs) addFunction(f);
+            break;
+        }
+        case Utils::RequirementType::ET_FIXCIRCLE: {
+            auto* circle = _storage->get<Figures::Circle2D>(ids[0]);
+            auto funcs = Function::RequirementFunctionFactory::createFixCircle(circle);
+            for (auto& f : funcs) addFunction(f);
+            break;
+        }
     }
 
-    addFunction(func);
+    if (func) addFunction(func);
 
     Utils::ID reqId = _reqIdGen.nextID();
     _requirements.push_back({reqId, descriptor.type, descriptor.objectIds, descriptor.param});
@@ -104,35 +122,6 @@ const RequirementSystem::RequirementEntry* RequirementSystem::getRequirement(Uti
     }
     return nullptr;
 }
-
-bool RequirementSystem::hasRequirement(Utils::ID reqId) const noexcept {
-    return getRequirement(reqId) != nullptr;
-}
-
-std::optional<Utils::RequirementType> RequirementSystem::getRequirementType(Utils::ID reqId) const noexcept {
-    const auto* entry = getRequirement(reqId);
-    if (entry) {
-        return entry->type;
-    }
-    return std::nullopt;
-}
-
-std::optional<std::vector<Utils::ID>> RequirementSystem::getRequirementObjectIds(Utils::ID reqId) const noexcept {
-    const auto* entry = getRequirement(reqId);
-    if (entry) {
-        return entry->objectIds;
-    }
-    return std::nullopt;
-}
-
-std::optional<double> RequirementSystem::getRequirementParam(Utils::ID reqId) const noexcept {
-    const auto* entry = getRequirement(reqId);
-    if (entry) {
-        return entry->param;
-    }
-    return std::nullopt;
-}
-
 void RequirementSystem::addPointLineDist(Utils::ID pointId, Utils::ID lineId, double dist) {
     addRequirement(Utils::RequirementDescriptor::pointLineDist(pointId, lineId, dist));
 }
@@ -179,6 +168,18 @@ void RequirementSystem::addHorizontal(Utils::ID lineId) {
 
 void RequirementSystem::addArcCenterOnPerpendicular(Utils::ID arcId) {
     addRequirement(Utils::RequirementDescriptor::arcCenterOnPerpendicular(arcId));
+}
+
+void RequirementSystem::addFixPoint(Utils::ID pointId) {
+    addRequirement(Utils::RequirementDescriptor::fixPoint(pointId));
+}
+
+void RequirementSystem::addFixLine(Utils::ID lineId) {
+    addRequirement(Utils::RequirementDescriptor::fixLine(lineId));
+}
+
+void RequirementSystem::addFixCircle(Utils::ID circleId) {
+    addRequirement(Utils::RequirementDescriptor::fixCircle(circleId));
 }
 
 void RequirementSystem::clear() {

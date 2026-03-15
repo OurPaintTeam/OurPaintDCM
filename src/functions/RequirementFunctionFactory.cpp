@@ -147,4 +147,43 @@ std::shared_ptr<ArcCenterOnPerpendicularFunction> RequirementFunctionFactory::cr
     };
     return std::make_shared<ArcCenterOnPerpendicularFunction>(vars);
 }
+std::vector<std::shared_ptr<FixCoordinateFunction>> RequirementFunctionFactory::createFixPoint(
+    Figures::Point2D* point
+) {
+    return {
+        std::make_shared<FixCoordinateFunction>(
+            Utils::RequirementType::ET_FIXPOINT, std::vector<VAR>{point->ptrX()}, point->x()),
+        std::make_shared<FixCoordinateFunction>(
+            Utils::RequirementType::ET_FIXPOINT, std::vector<VAR>{point->ptrY()}, point->y())
+    };
+}
+
+std::vector<std::shared_ptr<FixCoordinateFunction>> RequirementFunctionFactory::createFixLine(
+    Figures::Line<Figures::Point2D>* line
+) {
+    return {
+        std::make_shared<FixCoordinateFunction>(
+            Utils::RequirementType::ET_FIXLINE, std::vector<VAR>{line->p1->ptrX()}, line->p1->x()),
+        std::make_shared<FixCoordinateFunction>(
+            Utils::RequirementType::ET_FIXLINE, std::vector<VAR>{line->p1->ptrY()}, line->p1->y()),
+        std::make_shared<FixCoordinateFunction>(
+            Utils::RequirementType::ET_FIXLINE, std::vector<VAR>{line->p2->ptrX()}, line->p2->x()),
+        std::make_shared<FixCoordinateFunction>(
+            Utils::RequirementType::ET_FIXLINE, std::vector<VAR>{line->p2->ptrY()}, line->p2->y())
+    };
+}
+
+std::vector<std::shared_ptr<FixCoordinateFunction>> RequirementFunctionFactory::createFixCircle(
+    Figures::Circle<Figures::Point2D>* circle
+) {
+    return {
+        std::make_shared<FixCoordinateFunction>(
+            Utils::RequirementType::ET_FIXCIRCLE, std::vector<VAR>{circle->center->ptrX()}, circle->center->x()),
+        std::make_shared<FixCoordinateFunction>(
+            Utils::RequirementType::ET_FIXCIRCLE, std::vector<VAR>{circle->center->ptrY()}, circle->center->y()),
+        std::make_shared<FixCoordinateFunction>(
+            Utils::RequirementType::ET_FIXCIRCLE, std::vector<VAR>{circle->ptrRadius()}, circle->radius)
+    };
+}
+
 } // namespace OurPaintDCM::Function
