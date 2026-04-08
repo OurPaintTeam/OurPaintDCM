@@ -365,6 +365,30 @@ public:
      */
     [[nodiscard]] ObjectGraph buildObjectSubgraph(ID id) const;
 
+    /**
+     * @brief Get all active points with their IDs.
+     * @return Vector of pairs {ID, const Point2D*} for all active points.
+     */
+    [[nodiscard]] std::vector<std::pair<ID, const Point2D*>> allPointsWithID() const;
+
+    /**
+     * @brief Get all active lines with their IDs.
+     * @return Vector of pairs {ID, const Line2D*} for all active lines.
+     */
+    [[nodiscard]] std::vector<std::pair<ID, const Line2D*>> allLinesWithID() const;
+
+    /**
+     * @brief Get all active circles with their IDs.
+     * @return Vector of pairs {ID, const Circle2D*} for all active circles.
+     */
+    [[nodiscard]] std::vector<std::pair<ID, const Circle2D*>> allCirclesWithID() const;
+
+    /**
+     * @brief Get all active arcs with their IDs.
+     * @return Vector of pairs {ID, const Arc2D*} for all active arcs.
+     */
+    [[nodiscard]] std::vector<std::pair<ID, const Arc2D*>> allArcsWithID() const;
+
 private:
     /**
      * @brief Storage for each object type.

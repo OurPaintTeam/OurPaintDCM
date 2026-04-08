@@ -337,6 +337,45 @@ std::vector<ID> GeometryStorage::getDependencies(ID id) const {
     return result;
 }
 
+std::vector<std::pair<ID, const Point2D*>> GeometryStorage::allPointsWithID() const {
+    std::vector<std::pair<ID, const Point2D*>> result;
+    result.reserve(m_pointToID.size());
+    for (const auto& [ptr, id] : m_pointToID) {
+        result.emplace_back(id, ptr);
+    }
+    return result;
+}
+
+std::vector<std::pair<ID, const Line2D*>> GeometryStorage::allLinesWithID() const {
+    std::vector<std::pair<ID, const Line2D*>> result;
+    for (const auto& [id, entry] : m_index) {
+        if (entry.type == FigureType::ET_LINE) {
+            result.emplace_back(id, static_cast<const Line2D*>(entry.ptr));
+        }
+    }
+    return result;
+}
+
+std::vector<std::pair<ID, const Circle2D*>> GeometryStorage::allCirclesWithID() const {
+    std::vector<std::pair<ID, const Circle2D*>> result;
+    for (const auto& [id, entry] : m_index) {
+        if (entry.type == FigureType::ET_CIRCLE) {
+            result.emplace_back(id, static_cast<const Circle2D*>(entry.ptr));
+        }
+    }
+    return result;
+}
+
+std::vector<std::pair<ID, const Arc2D*>> GeometryStorage::allArcsWithID() const {
+    std::vector<std::pair<ID, const Arc2D*>> result;
+    for (const auto& [id, entry] : m_index) {
+        if (entry.type == FigureType::ET_ARC) {
+            result.emplace_back(id, static_cast<const Arc2D*>(entry.ptr));
+        }
+    }
+    return result;
+}
+
 std::optional<ID> GeometryStorage::findPointID(const Point2D* ptr) const noexcept {
     auto it = m_pointToID.find(ptr);
     if (it != m_pointToID.end()) {

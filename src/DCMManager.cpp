@@ -261,6 +261,64 @@ std::vector<Utils::FigureDescriptor> DCMManager::getAllFigures() const {
     return result;
 }
 
+std::vector<Utils::FigureDescriptor> DCMManager::getAllPoints() const {
+    const auto pointsWithID = _storage.allPointsWithID();
+    std::vector<Utils::FigureDescriptor> result;
+    result.reserve(pointsWithID.size());
+    for (const auto& [id, ptr] : pointsWithID) {
+        result.push_back({
+            .id = id,
+            .type = Utils::FigureType::ET_POINT2D,
+            .center = {ptr->x(), ptr->y()}
+        });
+    }
+    return result;
+}
+
+std::vector<Utils::FigureDescriptor> DCMManager::getAllLines() const {
+    const auto linesWithID = _storage.allLinesWithID();
+    std::vector<Utils::FigureDescriptor> result;
+    result.reserve(linesWithID.size());
+    for (const auto& [id, ptr] : linesWithID) {
+        result.push_back({
+            .id = id,
+            .type = Utils::FigureType::ET_LINE,
+            .points = {{ptr->p1->x(), ptr->p1->y()}, {ptr->p2->x(), ptr->p2->y()}}
+        });
+    }
+    return result;
+}
+
+std::vector<Utils::FigureDescriptor> DCMManager::getAllCircles() const {
+    const auto circlesWithID = _storage.allCirclesWithID();
+    std::vector<Utils::FigureDescriptor> result;
+    result.reserve(circlesWithID.size());
+    for (const auto& [id, ptr] : circlesWithID) {
+        result.push_back({
+            .id = id,
+            .type = Utils::FigureType::ET_CIRCLE,
+            .center = {ptr->center->x(), ptr->center->y()},
+            .radius = ptr->radius
+        });
+    }
+    return result;
+}
+
+std::vector<Utils::FigureDescriptor> DCMManager::getAllArcs() const {
+    const auto arcsWithID = _storage.allArcsWithID();
+    std::vector<Utils::FigureDescriptor> result;
+    result.reserve(arcsWithID.size());
+    for (const auto& [id, ptr] : arcsWithID) {
+        result.push_back({
+            .id = id,
+            .type = Utils::FigureType::ET_ARC,
+            .points = {{ptr->p1->x(), ptr->p1->y()}, {ptr->p2->x(), ptr->p2->y()}},
+            .center = {ptr->p_center->x(), ptr->p_center->y()}
+        });
+    }
+    return result;
+}
+
 Utils::ID DCMManager::addRequirement(const Utils::RequirementDescriptor& descriptor) {
     descriptor.validate();
 

@@ -94,6 +94,30 @@ public:
     std::vector<Utils::FigureDescriptor> getAllFigures() const;
 
     /**
+     * @brief Get all point descriptors.
+     * @return Vector of FigureDescriptors for all points.
+     */
+    std::vector<Utils::FigureDescriptor> getAllPoints() const;
+
+    /**
+     * @brief Get all line descriptors.
+     * @return Vector of FigureDescriptors for all lines.
+     */
+    std::vector<Utils::FigureDescriptor> getAllLines() const;
+
+    /**
+     * @brief Get all circle descriptors.
+     * @return Vector of FigureDescriptors for all circles.
+     */
+    std::vector<Utils::FigureDescriptor> getAllCircles() const;
+
+    /**
+     * @brief Get all arc descriptors.
+     * @return Vector of FigureDescriptors for all arcs.
+     */
+    std::vector<Utils::FigureDescriptor> getAllArcs() const;
+
+    /**
      * @brief Add a new requirement using descriptor.
      * @param descriptor RequirementDescriptor containing requirement data.
      * @return ID of the created requirement.
