@@ -266,11 +266,10 @@ std::vector<Utils::FigureDescriptor> DCMManager::getAllPoints() const {
     std::vector<Utils::FigureDescriptor> result;
     result.reserve(pointsWithID.size());
     for (const auto& [id, ptr] : pointsWithID) {
-        result.push_back({
-            .id = id,
-            .type = Utils::FigureType::ET_POINT2D,
-            .center = {ptr->x(), ptr->y()}
-        });
+        auto desc = getFigure(id);
+        if (desc.has_value()) {
+            result.push_back(desc.value());
+        }
     }
     return result;
 }
@@ -280,11 +279,10 @@ std::vector<Utils::FigureDescriptor> DCMManager::getAllLines() const {
     std::vector<Utils::FigureDescriptor> result;
     result.reserve(linesWithID.size());
     for (const auto& [id, ptr] : linesWithID) {
-        result.push_back({
-            .id = id,
-            .type = Utils::FigureType::ET_LINE,
-            .points = {{ptr->p1->x(), ptr->p1->y()}, {ptr->p2->x(), ptr->p2->y()}}
-        });
+        auto desc = getFigure(id);
+        if (desc.has_value()) {
+            result.push_back(desc.value());
+        }
     }
     return result;
 }
@@ -294,12 +292,10 @@ std::vector<Utils::FigureDescriptor> DCMManager::getAllCircles() const {
     std::vector<Utils::FigureDescriptor> result;
     result.reserve(circlesWithID.size());
     for (const auto& [id, ptr] : circlesWithID) {
-        result.push_back({
-            .id = id,
-            .type = Utils::FigureType::ET_CIRCLE,
-            .center = {ptr->center->x(), ptr->center->y()},
-            .radius = ptr->radius
-        });
+        auto desc = getFigure(id);
+        if (desc.has_value()) {
+            result.push_back(desc.value());
+        }
     }
     return result;
 }
@@ -309,12 +305,10 @@ std::vector<Utils::FigureDescriptor> DCMManager::getAllArcs() const {
     std::vector<Utils::FigureDescriptor> result;
     result.reserve(arcsWithID.size());
     for (const auto& [id, ptr] : arcsWithID) {
-        result.push_back({
-            .id = id,
-            .type = Utils::FigureType::ET_ARC,
-            .points = {{ptr->p1->x(), ptr->p1->y()}, {ptr->p2->x(), ptr->p2->y()}},
-            .center = {ptr->p_center->x(), ptr->p_center->y()}
-        });
+        auto desc = getFigure(id);
+        if (desc.has_value()) {
+            result.push_back(desc.value());
+        }
     }
     return result;
 }

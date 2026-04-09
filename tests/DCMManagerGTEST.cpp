@@ -125,10 +125,10 @@ TEST_F(DCMManagerTest, GetAllPointsWithID) {
     auto p3 = manager.addFigure(FigureDescriptor::point(5.0, 5.0));
     auto l1 = manager.addFigure(FigureDescriptor::line(p1, p2));
 
-    auto points = manager.getAllPointsWithID();
+    auto points = manager.getAllPoints();
     EXPECT_EQ(points.size(), 3);
-    // Check that all are points and have correct IDs
-    for (const auto& [id, desc] : points) {
+    // Check that all are points and have correct values
+    for (const auto& desc : points) {
         EXPECT_EQ(desc.type, FigureType::ET_POINT2D);
         EXPECT_TRUE(desc.x.has_value() && desc.y.has_value());
     }
