@@ -1,8 +1,5 @@
 #include "DCMManager.h"
-#include <algorithm>
 #include <stdexcept>
-
-
 
 namespace {
 
@@ -541,7 +538,6 @@ void DCMManager::clear() {
 void DCMManager::setSolveMode(Utils::SolveMode mode) noexcept {
     _solveMode = mode;
 }
-
 
 Utils::SolveMode DCMManager::getSolveMode() const noexcept {
     return _solveMode;
