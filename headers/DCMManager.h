@@ -28,6 +28,9 @@ using ComponentGraph = Graph<Utils::ID, Utils::ID, UndirectedPolicy, WeightedPol
  *
  * Provides unified CRUD operations for geometric figures and requirements.
  * Manages connected components of the constraint graph.
+ *
+ * Change geometry through addFigure / removeFigure / update*; inspect it via getStorage().
+ * Mutable storage() is an escape hatch only; the caller bears all consequences (see that method’s docs).
  */
 class DCMManager {
 public:
@@ -194,8 +197,8 @@ public:
     std::vector<std::vector<Utils::ID>> getAllComponents() const;
 
     /**
-     * @brief Get read-only access to GeometryStorage.
-     * @return Const reference to internal GeometryStorage.
+     * @brief Read-only access to GeometryStorage (preferred, safe path).
+     * @return Const reference; geometry cannot be modified through this accessor.
      */
     const Figures::GeometryStorage& getStorage() const noexcept;
 
@@ -206,8 +209,12 @@ public:
     const System::RequirementSystem& getRequirementSystem() const noexcept;
 
     /**
-     * @brief Get mutable access to GeometryStorage.
-     * @return Reference to internal GeometryStorage.
+     * @brief Mutable GeometryStorage access — use only when absolutely necessary.
+     *
+     * @warning Normal code should use addFigure, removeFigure, updatePoint, updateCircle, and getStorage().
+     * Direct mutation bypasses manager invariants: _figureRecords, connected components, and RequirementSystem
+     * consistency. Restoring a coherent state is entirely the caller's responsibility. Any risk of broken solvers,
+     * stale IDs, or undefined behaviour is solely on the code that calls this method.
      */
     Figures::GeometryStorage& storage() noexcept;
 
@@ -218,8 +225,9 @@ public:
     System::RequirementSystem& requirementSystem() noexcept;
 
     /**
-     * @brief Get total figure count.
-     * @return Number of figures.
+     * @brief Number of objects in GeometryStorage (getStorage().size()).
+     *
+     * Tracks the canonical geometry set; keeps agreement with hasFigure / removeFigure when records and storage stay in sync.
      */
     std::size_t figureCount() const noexcept;
 
@@ -270,6 +278,8 @@ private:
     std::unique_ptr<System::RequirementSystem> buildSubsystem(ComponentID componentId) const;
 
     void rebuildRequirementSystem();
+    /** Drops requirement records whose objectIds reference IDs no longer in GeometryStorage; rebuilds the system if needed. */
+    void pruneRequirementsWithMissingObjects();
     void rebuildComponents();
     void mergeComponents(const std::vector<Utils::ID>& figureIds);
     void splitComponentsAfterRemoval();

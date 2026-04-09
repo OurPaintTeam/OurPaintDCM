@@ -69,63 +69,75 @@ Utils::ID DCMManager::addFigure(const Utils::FigureDescriptor& descriptor) {
         case Utils::FigureType::ET_POINT2D: {
             const double px = descriptor.coords.size() == 2 ? descriptor.coords[0] : descriptor.x.value();
             const double py = descriptor.coords.size() == 2 ? descriptor.coords[1] : descriptor.y.value();
-            auto [id, ptr] = _storage.createPoint(px, py);
-            figureId = id;
+            figureId = _storage.createPoint(px, py);
             break;
         }
         case Utils::FigureType::ET_LINE: {
             if (descriptor.coords.size() == 4) {
-                auto [p1Id, p1Ptr] = _storage.createPoint(descriptor.coords[0], descriptor.coords[1]);
-                auto [p2Id, p2Ptr] = _storage.createPoint(descriptor.coords[2], descriptor.coords[3]);
+                const Utils::ID p1Id = _storage.createPoint(descriptor.coords[0], descriptor.coords[1]);
+                const Utils::ID p2Id = _storage.createPoint(descriptor.coords[2], descriptor.coords[3]);
                 registerPoint(p1Id, descriptor.coords[0], descriptor.coords[1]);
                 registerPoint(p2Id, descriptor.coords[2], descriptor.coords[3]);
-                auto [id, ptr] = _storage.createLine(p1Ptr, p2Ptr);
-                figureId = id;
+                auto lineOpt = _storage.createLine(p1Id, p2Id);
+                if (!lineOpt) {
+                    throw std::runtime_error("Line creation failed");
+                }
+                figureId = *lineOpt;
                 relatedFigures = {p1Id, p2Id};
                 storedDesc.pointIds = relatedFigures;
             } else {
-                auto* p1 = _storage.get<Figures::Point2D>(descriptor.pointIds[0]);
-                auto* p2 = _storage.get<Figures::Point2D>(descriptor.pointIds[1]);
-                auto [id, ptr] = _storage.createLine(p1, p2);
-                figureId = id;
+                auto lineOpt = _storage.createLine(descriptor.pointIds[0], descriptor.pointIds[1]);
+                if (!lineOpt) {
+                    throw std::runtime_error("Line creation failed");
+                }
+                figureId = *lineOpt;
                 relatedFigures = descriptor.pointIds;
             }
             break;
         }
         case Utils::FigureType::ET_CIRCLE: {
             if (descriptor.coords.size() == 2) {
-                auto [centerId, cPtr] = _storage.createPoint(descriptor.coords[0], descriptor.coords[1]);
+                const Utils::ID centerId = _storage.createPoint(descriptor.coords[0], descriptor.coords[1]);
                 registerPoint(centerId, descriptor.coords[0], descriptor.coords[1]);
-                auto [id, ptr] = _storage.createCircle(cPtr, descriptor.radius.value());
-                figureId = id;
+                auto circOpt = _storage.createCircle(centerId, descriptor.radius.value());
+                if (!circOpt) {
+                    throw std::runtime_error("Circle creation failed");
+                }
+                figureId = *circOpt;
                 relatedFigures = {centerId};
                 storedDesc.pointIds = relatedFigures;
             } else {
-                auto* center = _storage.get<Figures::Point2D>(descriptor.pointIds[0]);
-                auto [id, ptr] = _storage.createCircle(center, descriptor.radius.value());
-                figureId = id;
+                auto circOpt = _storage.createCircle(descriptor.pointIds[0], descriptor.radius.value());
+                if (!circOpt) {
+                    throw std::runtime_error("Circle creation failed");
+                }
+                figureId = *circOpt;
                 relatedFigures = descriptor.pointIds;
             }
             break;
         }
         case Utils::FigureType::ET_ARC: {
             if (descriptor.coords.size() == 6) {
-                auto [p1Id, p1Ptr] = _storage.createPoint(descriptor.coords[0], descriptor.coords[1]);
-                auto [p2Id, p2Ptr] = _storage.createPoint(descriptor.coords[2], descriptor.coords[3]);
-                auto [centerId, cPtr] = _storage.createPoint(descriptor.coords[4], descriptor.coords[5]);
+                const Utils::ID p1Id = _storage.createPoint(descriptor.coords[0], descriptor.coords[1]);
+                const Utils::ID p2Id = _storage.createPoint(descriptor.coords[2], descriptor.coords[3]);
+                const Utils::ID centerId = _storage.createPoint(descriptor.coords[4], descriptor.coords[5]);
                 registerPoint(p1Id, descriptor.coords[0], descriptor.coords[1]);
                 registerPoint(p2Id, descriptor.coords[2], descriptor.coords[3]);
                 registerPoint(centerId, descriptor.coords[4], descriptor.coords[5]);
-                auto [id, ptr] = _storage.createArc(p1Ptr, p2Ptr, cPtr);
-                figureId = id;
+                auto arcOpt = _storage.createArc(p1Id, p2Id, centerId);
+                if (!arcOpt) {
+                    throw std::runtime_error("Arc creation failed");
+                }
+                figureId = *arcOpt;
                 relatedFigures = {p1Id, p2Id, centerId};
                 storedDesc.pointIds = relatedFigures;
             } else {
-                auto* p1 = _storage.get<Figures::Point2D>(descriptor.pointIds[0]);
-                auto* p2 = _storage.get<Figures::Point2D>(descriptor.pointIds[1]);
-                auto* center = _storage.get<Figures::Point2D>(descriptor.pointIds[2]);
-                auto [id, ptr] = _storage.createArc(p1, p2, center);
-                figureId = id;
+                auto arcOpt = _storage.createArc(
+                    descriptor.pointIds[0], descriptor.pointIds[1], descriptor.pointIds[2]);
+                if (!arcOpt) {
+                    throw std::runtime_error("Arc creation failed");
+                }
+                figureId = *arcOpt;
                 relatedFigures = descriptor.pointIds;
             }
             break;
@@ -158,10 +170,30 @@ void DCMManager::removeFigure(Utils::ID figureId, bool forceCascade) {
         }
     }
 
-    _figureRecords.erase(figureId);
+    std::vector<Utils::ID> cascadedFigures;
+    if (forceCascade) {
+        const auto ty = _storage.getType(figureId);
+        if (ty.has_value() && *ty == Utils::FigureType::ET_POINT2D) {
+            cascadedFigures = _storage.getDependents(figureId);
+        }
+    }
 
+    const auto removed = _storage.remove(figureId, forceCascade);
+    if (removed == Figures::RemoveResult::NotFound) {
+        throw std::runtime_error("Figure not found");
+    }
+    if (removed == Figures::RemoveResult::BlockedByDependents) {
+        throw std::runtime_error("Dependencies exist");
+    }
+
+    for (const auto& id : cascadedFigures) {
+        _figureRecords.erase(id);
+        removeFigureFromComponent(id);
+    }
+    _figureRecords.erase(figureId);
     removeFigureFromComponent(figureId);
-    _storage.remove(figureId, forceCascade);
+
+    pruneRequirementsWithMissingObjects();
     splitComponentsAfterRemoval();
 }
 
@@ -204,7 +236,7 @@ void DCMManager::updateCircle(const Utils::CircleUpdateDescriptor& descriptor) {
 
 std::optional<Utils::FigureDescriptor> DCMManager::getFigure(Utils::ID figureId) const {
     auto it = _figureRecords.find(figureId);
-    if (it == _figureRecords.end()) {
+    if (it == _figureRecords.end() || !_storage.contains(figureId)) {
         return std::nullopt;
     }
 
@@ -213,28 +245,49 @@ std::optional<Utils::FigureDescriptor> DCMManager::getFigure(Utils::ID figureId)
     switch (desc.type) {
         case Utils::FigureType::ET_POINT2D: {
             auto* point = _storage.get<Figures::Point2D>(figureId);
+            if (!point) {
+                return std::nullopt;
+            }
             desc.coords = {point->x(), point->y()};
             desc.x = point->x();
             desc.y = point->y();
             break;
         }
         case Utils::FigureType::ET_LINE: {
+            if (desc.pointIds.size() < 2) {
+                return std::nullopt;
+            }
             auto* p1 = _storage.get<Figures::Point2D>(desc.pointIds[0]);
             auto* p2 = _storage.get<Figures::Point2D>(desc.pointIds[1]);
+            if (!p1 || !p2) {
+                return std::nullopt;
+            }
             desc.coords = {p1->x(), p1->y(), p2->x(), p2->y()};
             break;
         }
         case Utils::FigureType::ET_CIRCLE: {
+            if (desc.pointIds.empty()) {
+                return std::nullopt;
+            }
             auto* center = _storage.get<Figures::Point2D>(desc.pointIds[0]);
             auto* circle = _storage.get<Figures::Circle2D>(figureId);
+            if (!center || !circle) {
+                return std::nullopt;
+            }
             desc.coords = {center->x(), center->y()};
             desc.radius = circle->radius;
             break;
         }
         case Utils::FigureType::ET_ARC: {
+            if (desc.pointIds.size() < 3) {
+                return std::nullopt;
+            }
             auto* p1 = _storage.get<Figures::Point2D>(desc.pointIds[0]);
             auto* p2 = _storage.get<Figures::Point2D>(desc.pointIds[1]);
             auto* center = _storage.get<Figures::Point2D>(desc.pointIds[2]);
+            if (!p1 || !p2 || !center) {
+                return std::nullopt;
+            }
             desc.coords = {p1->x(), p1->y(), p2->x(), p2->y(), center->x(), center->y()};
             break;
         }
@@ -246,7 +299,7 @@ std::optional<Utils::FigureDescriptor> DCMManager::getFigure(Utils::ID figureId)
 }
 
 bool DCMManager::hasFigure(Utils::ID figureId) const noexcept {
-    return _figureRecords.count(figureId) > 0;
+    return _figureRecords.count(figureId) > 0 && _storage.contains(figureId);
 }
 
 std::vector<Utils::FigureDescriptor> DCMManager::getAllFigures() const {
@@ -262,33 +315,33 @@ std::vector<Utils::FigureDescriptor> DCMManager::getAllFigures() const {
 }
 
 std::vector<Utils::FigureDescriptor> DCMManager::getAllPoints() const {
-    const auto pointsWithID = _storage.allPointsWithID();
+    const auto& pointsWithID = _storage.pointsWithIds();
     std::vector<Utils::FigureDescriptor> result;
     result.reserve(pointsWithID.size());
-    for (const auto& [id, ptr] : pointsWithID) {
+    for (const auto& ref : pointsWithID) {
         Utils::FigureDescriptor desc;
-        desc.id = id;
+        desc.id = ref.id;
         desc.type = Utils::FigureType::ET_POINT2D;
-        desc.x = ptr->x();
-        desc.y = ptr->y();
+        desc.x = ref.ptr->x();
+        desc.y = ref.ptr->y();
         result.push_back(desc);
     }
     return result;
 }
 
 std::vector<Utils::FigureDescriptor> DCMManager::getAllLines() const {
-    const auto linesWithID = _storage.allLinesWithID();
+    const auto& linesWithID = _storage.linesWithIds();
     std::vector<Utils::FigureDescriptor> result;
     result.reserve(linesWithID.size());
-    for (const auto& [id, ptr] : linesWithID) {
-        auto rec = _figureRecords.find(id);
+    for (const auto& ref : linesWithID) {
+        auto rec = _figureRecords.find(ref.id);
         if (rec == _figureRecords.end()) continue;
         
         auto* p1 = _storage.get<Figures::Point2D>(rec->second.pointIds[0]);
         auto* p2 = _storage.get<Figures::Point2D>(rec->second.pointIds[1]);
         
         Utils::FigureDescriptor desc;
-        desc.id = id;
+        desc.id = ref.id;
         desc.type = Utils::FigureType::ET_LINE;
         desc.pointIds = rec->second.pointIds;
         desc.coords = {p1->x(), p1->y(), p2->x(), p2->y()};
@@ -298,32 +351,32 @@ std::vector<Utils::FigureDescriptor> DCMManager::getAllLines() const {
 }
 
 std::vector<Utils::FigureDescriptor> DCMManager::getAllCircles() const {
-    const auto circlesWithID = _storage.allCirclesWithID();
+    const auto& circlesWithID = _storage.circlesWithIds();
     std::vector<Utils::FigureDescriptor> result;
     result.reserve(circlesWithID.size());
-    for (const auto& [id, ptr] : circlesWithID) {
-        auto rec = _figureRecords.find(id);
+    for (const auto& ref : circlesWithID) {
+        auto rec = _figureRecords.find(ref.id);
         if (rec == _figureRecords.end()) continue;
         
         auto* center = _storage.get<Figures::Point2D>(rec->second.pointIds[0]);
         
         Utils::FigureDescriptor desc;
-        desc.id = id;
+        desc.id = ref.id;
         desc.type = Utils::FigureType::ET_CIRCLE;
         desc.pointIds = rec->second.pointIds;
         desc.coords = {center->x(), center->y()};
-        desc.radius = ptr->radius;
+        desc.radius = ref.ptr->radius;
         result.push_back(desc);
     }
     return result;
 }
 
 std::vector<Utils::FigureDescriptor> DCMManager::getAllArcs() const {
-    const auto arcsWithID = _storage.allArcsWithID();
+    const auto& arcsWithID = _storage.arcsWithIds();
     std::vector<Utils::FigureDescriptor> result;
     result.reserve(arcsWithID.size());
-    for (const auto& [id, ptr] : arcsWithID) {
-        auto rec = _figureRecords.find(id);
+    for (const auto& ref : arcsWithID) {
+        auto rec = _figureRecords.find(ref.id);
         if (rec == _figureRecords.end()) continue;
         
         auto* p1 = _storage.get<Figures::Point2D>(rec->second.pointIds[0]);
@@ -331,7 +384,7 @@ std::vector<Utils::FigureDescriptor> DCMManager::getAllArcs() const {
         auto* center = _storage.get<Figures::Point2D>(rec->second.pointIds[2]);
         
         Utils::FigureDescriptor desc;
-        desc.id = id;
+        desc.id = ref.id;
         desc.type = Utils::FigureType::ET_ARC;
         desc.pointIds = rec->second.pointIds;
         desc.coords = {p1->x(), p1->y(), p2->x(), p2->y(), center->x(), center->y()};
@@ -467,7 +520,7 @@ System::RequirementSystem& DCMManager::requirementSystem() noexcept {
 }
 
 std::size_t DCMManager::figureCount() const noexcept {
-    return _figureRecords.size();
+    return _storage.size();
 }
 
 std::size_t DCMManager::requirementCount() const noexcept {
@@ -579,6 +632,28 @@ void DCMManager::rebuildRequirementSystem() {
     _reqSystem.clear();
     for (const auto& [id, desc] : _requirementRecords) {
         _reqSystem.addRequirement(desc);
+    }
+}
+
+void DCMManager::pruneRequirementsWithMissingObjects() {
+    bool changed = false;
+    for (auto it = _requirementRecords.begin(); it != _requirementRecords.end();) {
+        bool stale = false;
+        for (const auto& oid : it->second.objectIds) {
+            if (!_storage.contains(oid)) {
+                stale = true;
+                break;
+            }
+        }
+        if (stale) {
+            it = _requirementRecords.erase(it);
+            changed = true;
+        } else {
+            ++it;
+        }
+    }
+    if (changed) {
+        rebuildRequirementSystem();
     }
 }
 
