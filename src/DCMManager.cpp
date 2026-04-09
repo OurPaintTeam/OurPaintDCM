@@ -609,16 +609,22 @@ bool DCMManager::solve(std::optional<ComponentID> componentId) {
         optimizer.setTask(&task);
         optimizer.optimize();
         converged = optimizer.isConverged();
+        // LSMTask::~LSMTask deletes residual functions in mathFuncs (non-VARIABLE); do not delete here.
     } else {
         LSMFORLMTask task(mathFuncs, mathVars);
         LMSparse solver;
         solver.setTask(&task);
         solver.optimize();
         converged = solver.isConverged();
-        for (auto* f : mathFuncs) delete f;
+        for (auto* f : mathFuncs) {
+            delete f;
+        }
+        // LSMFORLMTask does not own m_functions; only c_function and Jacobian entries are freed in ~LSMFORLMTask.
     }
 
-    for (auto* v : mathVars) delete v;
+    for (auto* v : mathVars) {
+        delete v;
+    }
     return converged;
 }
 
@@ -672,13 +678,13 @@ void DCMManager::rebuildComponents() {
     _nextComponentId = 0;
     _activeComponentCount = 0;
 
-    for (const auto& [id, desc] : _figureRecords) {
-        ComponentID compId = createNewComponent();
-        addFigureToComponent(id, compId);
+    for (const auto& entry : _figureRecords) {
+        const ComponentID compId = createNewComponent();
+        addFigureToComponent(entry.first, compId);
     }
 
-    for (const auto& [id, desc] : _requirementRecords) {
-        mergeComponents(desc.objectIds);
+    for (const auto& entry : _requirementRecords) {
+        mergeComponents(entry.second.objectIds);
     }
 }
 
