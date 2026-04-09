@@ -12,8 +12,8 @@ std::pair<ID, Point2D*> GeometryStorage::createPoint(double x, double y) {
     Point2D* ptr = &m_points.back();
     
     m_index.emplace(id, FigureEntry{FigureType::ET_POINT2D, ptr});
-    
     m_pointToID.emplace(ptr, id);
+    m_pointIDs.push_back(id);
     
     return {id, ptr};
 }
@@ -25,6 +25,7 @@ std::pair<ID, Line2D*> GeometryStorage::createLine(Point2D* p1, Point2D* p2) {
     Line2D* ptr = &m_lines.back();
     
     m_index.emplace(id, FigureEntry{FigureType::ET_LINE, ptr});
+    m_lineIDs.push_back(id);
     
     return {id, ptr};
 }
@@ -36,6 +37,7 @@ std::pair<ID, Circle2D*> GeometryStorage::createCircle(Point2D* center, double r
     Circle2D* ptr = &m_circles.back();
     
     m_index.emplace(id, FigureEntry{FigureType::ET_CIRCLE, ptr});
+    m_circleIDs.push_back(id);
     
     return {id, ptr};
 }
@@ -47,6 +49,7 @@ std::pair<ID, Arc2D*> GeometryStorage::createArc(Point2D* p1, Point2D* p2, Point
     Arc2D* ptr = &m_arcs.back();
     
     m_index.emplace(id, FigureEntry{FigureType::ET_ARC, ptr});
+    m_arcIDs.push_back(id);
     
     return {id, ptr};
 }
@@ -147,11 +150,16 @@ void GeometryStorage::remove(ID id, bool forceCascade) {
         
         const Point2D* ptrPoint = static_cast<const Point2D*>(entry.ptr);
         m_pointToID.erase(ptrPoint);
+        std::erase(m_pointIDs, id);
+    } else if (entry.type == FigureType::ET_LINE) {
+        std::erase(m_lineIDs, id);
+    } else if (entry.type == FigureType::ET_CIRCLE) {
+        std::erase(m_circleIDs, id);
+    } else if (entry.type == FigureType::ET_ARC) {
+        std::erase(m_arcIDs, id);
     }
     
     m_index.erase(it);
-    
-    return;
 }
 
 void GeometryStorage::clear() noexcept {
@@ -161,6 +169,10 @@ void GeometryStorage::clear() noexcept {
     m_arcs.clear();
     m_index.clear();
     m_pointToID.clear();
+    m_pointIDs.clear();
+    m_lineIDs.clear();
+    m_circleIDs.clear();
+    m_arcIDs.clear();
     m_idGen.reset();
 }
 
@@ -205,15 +217,18 @@ std::span<const Arc2D> GeometryStorage::allArcs() const noexcept {
 }
 
 std::vector<ID> GeometryStorage::getIDsByType(FigureType type) const {
-    std::vector<ID> result;
-    
-    for (const auto& [id, entry] : m_index) {
-        if (entry.type == type) {
-            result.push_back(id);
-        }
+    switch (type) {
+        case FigureType::ET_POINT2D:
+            return m_pointIDs;
+        case FigureType::ET_LINE:
+            return m_lineIDs;
+        case FigureType::ET_CIRCLE:
+            return m_circleIDs;
+        case FigureType::ET_ARC:
+            return m_arcIDs;
+        default:
+            return {};
     }
-    
-    return result;
 }
 
 const std::unordered_map<ID, FigureEntry>& GeometryStorage::allEntries() const noexcept {
@@ -225,27 +240,19 @@ std::size_t GeometryStorage::size() const noexcept {
 }
 
 std::size_t GeometryStorage::pointCount() const noexcept {
-    return std::ranges::count_if(m_index, [](const auto& pair) {
-        return pair.second.type == FigureType::ET_POINT2D;
-    });
+    return m_pointIDs.size();
 }
 
 std::size_t GeometryStorage::lineCount() const noexcept {
-    return std::ranges::count_if(m_index, [](const auto& pair) {
-        return pair.second.type == FigureType::ET_LINE;
-    });
+    return m_lineIDs.size();
 }
 
 std::size_t GeometryStorage::circleCount() const noexcept {
-    return std::ranges::count_if(m_index, [](const auto& pair) {
-        return pair.second.type == FigureType::ET_CIRCLE;
-    });
+    return m_circleIDs.size();
 }
 
 std::size_t GeometryStorage::arcCount() const noexcept {
-    return std::ranges::count_if(m_index, [](const auto& pair) {
-        return pair.second.type == FigureType::ET_ARC;
-    });
+    return m_arcIDs.size();
 }
 
 bool GeometryStorage::empty() const noexcept {
@@ -339,18 +346,23 @@ std::vector<ID> GeometryStorage::getDependencies(ID id) const {
 
 std::vector<std::pair<ID, const Point2D*>> GeometryStorage::allPointsWithID() const {
     std::vector<std::pair<ID, const Point2D*>> result;
-    result.reserve(m_pointToID.size());
-    for (const auto& [ptr, id] : m_pointToID) {
-        result.emplace_back(id, ptr);
+    result.reserve(m_pointIDs.size());
+    for (ID id : m_pointIDs) {
+        auto it = m_index.find(id);
+        if (it != m_index.end()) {
+            result.emplace_back(id, static_cast<const Point2D*>(it->second.ptr));
+        }
     }
     return result;
 }
 
 std::vector<std::pair<ID, const Line2D*>> GeometryStorage::allLinesWithID() const {
     std::vector<std::pair<ID, const Line2D*>> result;
-    for (const auto& [id, entry] : m_index) {
-        if (entry.type == FigureType::ET_LINE) {
-            result.emplace_back(id, static_cast<const Line2D*>(entry.ptr));
+    result.reserve(m_lineIDs.size());
+    for (ID id : m_lineIDs) {
+        auto it = m_index.find(id);
+        if (it != m_index.end()) {
+            result.emplace_back(id, static_cast<const Line2D*>(it->second.ptr));
         }
     }
     return result;
@@ -358,9 +370,11 @@ std::vector<std::pair<ID, const Line2D*>> GeometryStorage::allLinesWithID() cons
 
 std::vector<std::pair<ID, const Circle2D*>> GeometryStorage::allCirclesWithID() const {
     std::vector<std::pair<ID, const Circle2D*>> result;
-    for (const auto& [id, entry] : m_index) {
-        if (entry.type == FigureType::ET_CIRCLE) {
-            result.emplace_back(id, static_cast<const Circle2D*>(entry.ptr));
+    result.reserve(m_circleIDs.size());
+    for (ID id : m_circleIDs) {
+        auto it = m_index.find(id);
+        if (it != m_index.end()) {
+            result.emplace_back(id, static_cast<const Circle2D*>(it->second.ptr));
         }
     }
     return result;
@@ -368,9 +382,11 @@ std::vector<std::pair<ID, const Circle2D*>> GeometryStorage::allCirclesWithID() 
 
 std::vector<std::pair<ID, const Arc2D*>> GeometryStorage::allArcsWithID() const {
     std::vector<std::pair<ID, const Arc2D*>> result;
-    for (const auto& [id, entry] : m_index) {
-        if (entry.type == FigureType::ET_ARC) {
-            result.emplace_back(id, static_cast<const Arc2D*>(entry.ptr));
+    result.reserve(m_arcIDs.size());
+    for (ID id : m_arcIDs) {
+        auto it = m_index.find(id);
+        if (it != m_index.end()) {
+            result.emplace_back(id, static_cast<const Arc2D*>(it->second.ptr));
         }
     }
     return result;

@@ -425,6 +425,17 @@ private:
     std::unordered_map<const Point2D*, ID> m_pointToID;
 
     /**
+     * @brief Fast type-specific ID lookup.
+     * 
+     * Keeps separate ID lists for each figure type so type-based
+     * queries do not have to scan the full index.
+     */
+    std::vector<ID> m_pointIDs;
+    std::vector<ID> m_lineIDs;
+    std::vector<ID> m_circleIDs;
+    std::vector<ID> m_arcIDs;
+
+    /**
      * @brief Convert type T to corresponding FigureType.
      */
     template <SupportedFigure T>
