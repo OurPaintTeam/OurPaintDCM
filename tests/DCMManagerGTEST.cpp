@@ -324,10 +324,7 @@ TEST_F(DCMManagerTest, StorageAccess) {
     auto p = manager.addFigure(FigureDescriptor::point(5.0, 10.0));
 
     const auto& constStorage = manager.getStorage();
-    auto& mutableStorage = manager.storage();
-
     EXPECT_TRUE(constStorage.contains(p));
-    EXPECT_TRUE(mutableStorage.contains(p));
 }
 
 TEST_F(DCMManagerTest, RequirementSystemAccess) {

@@ -18,26 +18,30 @@ protected:
     Arc2D* arc;
 
     void SetUp() override {
-        auto [id1, pt1] = storage.createPoint(0.0, 0.0);
-        auto [id2, pt2] = storage.createPoint(3.0, 4.0);
-        auto [id3, pt3] = storage.createPoint(6.0, 0.0);
-        auto [id4, pt4] = storage.createPoint(5.0, 5.0);
+        const ID id1 = storage.createPoint(0.0, 0.0);
+        const ID id2 = storage.createPoint(3.0, 4.0);
+        const ID id3 = storage.createPoint(6.0, 0.0);
+        const ID id4 = storage.createPoint(5.0, 5.0);
 
-        p1 = pt1;
-        p2 = pt2;
-        p3 = pt3;
-        center = pt4;
+        p1 = storage.get<Point2D>(id1);
+        p2 = storage.get<Point2D>(id2);
+        p3 = storage.get<Point2D>(id3);
+        center = storage.get<Point2D>(id4);
 
-        auto [lid1, l1] = storage.createLine(p1, p2);
-        auto [lid2, l2] = storage.createLine(p2, p3);
-        line1 = l1;
-        line2 = l2;
+        auto lid1 = storage.createLine(id1, id2);
+        auto lid2 = storage.createLine(id2, id3);
+        ASSERT_TRUE(lid1.has_value());
+        ASSERT_TRUE(lid2.has_value());
+        line1 = storage.get<Line2D>(*lid1);
+        line2 = storage.get<Line2D>(*lid2);
 
-        auto [cid, c] = storage.createCircle(center, 10.0);
-        circle = c;
+        auto cid = storage.createCircle(id4, 10.0);
+        ASSERT_TRUE(cid.has_value());
+        circle = storage.get<Circle2D>(*cid);
 
-        auto [aid, a] = storage.createArc(p1, p3, center);
-        arc = a;
+        auto aid = storage.createArc(id1, id3, id4);
+        ASSERT_TRUE(aid.has_value());
+        arc = storage.get<Arc2D>(*aid);
     }
 };
 
