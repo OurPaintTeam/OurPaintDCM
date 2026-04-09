@@ -256,24 +256,22 @@ std::optional<Utils::FigureDescriptor> DCMManager::getFigure(Utils::ID figureId)
             if (desc.pointIds.size() < 2) {
                 return std::nullopt;
             }
-            auto* p1 = _storage.get<Figures::Point2D>(desc.pointIds[0]);
-            auto* p2 = _storage.get<Figures::Point2D>(desc.pointIds[1]);
-            if (!p1 || !p2) {
+            const auto* line = _storage.get<Figures::Line2D>(figureId);
+            if (line == nullptr || line->p1 == nullptr || line->p2 == nullptr) {
                 return std::nullopt;
             }
-            desc.coords = {p1->x(), p1->y(), p2->x(), p2->y()};
+            desc.coords = {line->p1->x(), line->p1->y(), line->p2->x(), line->p2->y()};
             break;
         }
         case Utils::FigureType::ET_CIRCLE: {
             if (desc.pointIds.empty()) {
                 return std::nullopt;
             }
-            auto* center = _storage.get<Figures::Point2D>(desc.pointIds[0]);
-            auto* circle = _storage.get<Figures::Circle2D>(figureId);
-            if (!center || !circle) {
+            const auto* circle = _storage.get<Figures::Circle2D>(figureId);
+            if (circle == nullptr || circle->center == nullptr) {
                 return std::nullopt;
             }
-            desc.coords = {center->x(), center->y()};
+            desc.coords = {circle->center->x(), circle->center->y()};
             desc.radius = circle->radius;
             break;
         }
@@ -281,17 +279,17 @@ std::optional<Utils::FigureDescriptor> DCMManager::getFigure(Utils::ID figureId)
             if (desc.pointIds.size() < 3) {
                 return std::nullopt;
             }
-            auto* p1 = _storage.get<Figures::Point2D>(desc.pointIds[0]);
-            auto* p2 = _storage.get<Figures::Point2D>(desc.pointIds[1]);
-            auto* center = _storage.get<Figures::Point2D>(desc.pointIds[2]);
-            if (!p1 || !p2 || !center) {
+            const auto* arc = _storage.get<Figures::Arc2D>(figureId);
+            if (arc == nullptr || arc->p1 == nullptr || arc->p2 == nullptr || arc->p_center == nullptr) {
                 return std::nullopt;
             }
-            desc.coords = {p1->x(), p1->y(), p2->x(), p2->y(), center->x(), center->y()};
+            desc.coords = {
+                arc->p1->x(), arc->p1->y(), arc->p2->x(), arc->p2->y(),
+                arc->p_center->x(), arc->p_center->y()};
             break;
         }
         default:
-            break;
+            return std::nullopt;
     }
 
     return desc;
