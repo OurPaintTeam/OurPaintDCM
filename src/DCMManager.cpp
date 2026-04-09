@@ -139,6 +139,8 @@ Utils::ID DCMManager::addFigure(const Utils::FigureDescriptor& descriptor) {
             }
             break;
         }
+        default:
+            throw std::invalid_argument("Unsupported figure type for addFigure");
     }
 
     storedDesc.id = figureId;
