@@ -266,10 +266,12 @@ std::vector<Utils::FigureDescriptor> DCMManager::getAllPoints() const {
     std::vector<Utils::FigureDescriptor> result;
     result.reserve(pointsWithID.size());
     for (const auto& [id, ptr] : pointsWithID) {
-        auto desc = getFigure(id);
-        if (desc.has_value()) {
-            result.push_back(desc.value());
-        }
+        Utils::FigureDescriptor desc;
+        desc.id = id;
+        desc.type = Utils::FigureType::ET_POINT2D;
+        desc.x = ptr->x();
+        desc.y = ptr->y();
+        result.push_back(desc);
     }
     return result;
 }
@@ -279,10 +281,18 @@ std::vector<Utils::FigureDescriptor> DCMManager::getAllLines() const {
     std::vector<Utils::FigureDescriptor> result;
     result.reserve(linesWithID.size());
     for (const auto& [id, ptr] : linesWithID) {
-        auto desc = getFigure(id);
-        if (desc.has_value()) {
-            result.push_back(desc.value());
-        }
+        auto rec = _figureRecords.find(id);
+        if (rec == _figureRecords.end()) continue;
+        
+        auto* p1 = _storage.get<Figures::Point2D>(rec->second.pointIds[0]);
+        auto* p2 = _storage.get<Figures::Point2D>(rec->second.pointIds[1]);
+        
+        Utils::FigureDescriptor desc;
+        desc.id = id;
+        desc.type = Utils::FigureType::ET_LINE;
+        desc.pointIds = rec->second.pointIds;
+        desc.coords = {p1->x(), p1->y(), p2->x(), p2->y()};
+        result.push_back(desc);
     }
     return result;
 }
@@ -292,10 +302,18 @@ std::vector<Utils::FigureDescriptor> DCMManager::getAllCircles() const {
     std::vector<Utils::FigureDescriptor> result;
     result.reserve(circlesWithID.size());
     for (const auto& [id, ptr] : circlesWithID) {
-        auto desc = getFigure(id);
-        if (desc.has_value()) {
-            result.push_back(desc.value());
-        }
+        auto rec = _figureRecords.find(id);
+        if (rec == _figureRecords.end()) continue;
+        
+        auto* center = _storage.get<Figures::Point2D>(rec->second.pointIds[0]);
+        
+        Utils::FigureDescriptor desc;
+        desc.id = id;
+        desc.type = Utils::FigureType::ET_CIRCLE;
+        desc.pointIds = rec->second.pointIds;
+        desc.coords = {center->x(), center->y()};
+        desc.radius = ptr->radius;
+        result.push_back(desc);
     }
     return result;
 }
@@ -305,10 +323,19 @@ std::vector<Utils::FigureDescriptor> DCMManager::getAllArcs() const {
     std::vector<Utils::FigureDescriptor> result;
     result.reserve(arcsWithID.size());
     for (const auto& [id, ptr] : arcsWithID) {
-        auto desc = getFigure(id);
-        if (desc.has_value()) {
-            result.push_back(desc.value());
-        }
+        auto rec = _figureRecords.find(id);
+        if (rec == _figureRecords.end()) continue;
+        
+        auto* p1 = _storage.get<Figures::Point2D>(rec->second.pointIds[0]);
+        auto* p2 = _storage.get<Figures::Point2D>(rec->second.pointIds[1]);
+        auto* center = _storage.get<Figures::Point2D>(rec->second.pointIds[2]);
+        
+        Utils::FigureDescriptor desc;
+        desc.id = id;
+        desc.type = Utils::FigureType::ET_ARC;
+        desc.pointIds = rec->second.pointIds;
+        desc.coords = {p1->x(), p1->y(), p2->x(), p2->y(), center->x(), center->y()};
+        result.push_back(desc);
     }
     return result;
 }
