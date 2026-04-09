@@ -331,65 +331,74 @@ std::vector<Utils::FigureDescriptor> DCMManager::getAllPoints() const {
 }
 
 std::vector<Utils::FigureDescriptor> DCMManager::getAllLines() const {
-    const auto& linesWithID = _storage.linesWithIds();
+    const auto& lines = _storage.linesWithIds();
     std::vector<Utils::FigureDescriptor> result;
-    result.reserve(linesWithID.size());
-    for (const auto& ref : linesWithID) {
-        auto rec = _figureRecords.find(ref.id);
-        if (rec == _figureRecords.end()) continue;
-        
-        auto* p1 = _storage.get<Figures::Point2D>(rec->second.pointIds[0]);
-        auto* p2 = _storage.get<Figures::Point2D>(rec->second.pointIds[1]);
-        
+    result.reserve(lines.size());
+    for (const auto& ref : lines) {
+        const auto rec = _figureRecords.find(ref.id);
+        if (rec == _figureRecords.end() || rec->second.pointIds.size() < 2 || ref.ptr == nullptr) {
+            continue;
+        }
+        const Figures::Point2D* p1 = ref.ptr->p1;
+        const Figures::Point2D* p2 = ref.ptr->p2;
+        if (p1 == nullptr || p2 == nullptr) {
+            continue;
+        }
         Utils::FigureDescriptor desc;
         desc.id = ref.id;
         desc.type = Utils::FigureType::ET_LINE;
         desc.pointIds = rec->second.pointIds;
         desc.coords = {p1->x(), p1->y(), p2->x(), p2->y()};
-        result.push_back(desc);
+        result.push_back(std::move(desc));
     }
     return result;
 }
 
 std::vector<Utils::FigureDescriptor> DCMManager::getAllCircles() const {
-    const auto& circlesWithID = _storage.circlesWithIds();
+    const auto& circles = _storage.circlesWithIds();
     std::vector<Utils::FigureDescriptor> result;
-    result.reserve(circlesWithID.size());
-    for (const auto& ref : circlesWithID) {
-        auto rec = _figureRecords.find(ref.id);
-        if (rec == _figureRecords.end()) continue;
-        
-        auto* center = _storage.get<Figures::Point2D>(rec->second.pointIds[0]);
-        
+    result.reserve(circles.size());
+    for (const auto& ref : circles) {
+        const auto rec = _figureRecords.find(ref.id);
+        if (rec == _figureRecords.end() || rec->second.pointIds.empty() || ref.ptr == nullptr) {
+            continue;
+        }
+        const Figures::Point2D* center = ref.ptr->center;
+        if (center == nullptr) {
+            continue;
+        }
         Utils::FigureDescriptor desc;
         desc.id = ref.id;
         desc.type = Utils::FigureType::ET_CIRCLE;
         desc.pointIds = rec->second.pointIds;
         desc.coords = {center->x(), center->y()};
         desc.radius = ref.ptr->radius;
-        result.push_back(desc);
+        result.push_back(std::move(desc));
     }
     return result;
 }
 
 std::vector<Utils::FigureDescriptor> DCMManager::getAllArcs() const {
-    const auto& arcsWithID = _storage.arcsWithIds();
+    const auto& arcs = _storage.arcsWithIds();
     std::vector<Utils::FigureDescriptor> result;
-    result.reserve(arcsWithID.size());
-    for (const auto& ref : arcsWithID) {
-        auto rec = _figureRecords.find(ref.id);
-        if (rec == _figureRecords.end()) continue;
-        
-        auto* p1 = _storage.get<Figures::Point2D>(rec->second.pointIds[0]);
-        auto* p2 = _storage.get<Figures::Point2D>(rec->second.pointIds[1]);
-        auto* center = _storage.get<Figures::Point2D>(rec->second.pointIds[2]);
-        
+    result.reserve(arcs.size());
+    for (const auto& ref : arcs) {
+        const auto rec = _figureRecords.find(ref.id);
+        if (rec == _figureRecords.end() || rec->second.pointIds.size() < 3 || ref.ptr == nullptr) {
+            continue;
+        }
+        const Figures::Point2D* p1 = ref.ptr->p1;
+        const Figures::Point2D* p2 = ref.ptr->p2;
+        const Figures::Point2D* center = ref.ptr->p_center;
+        if (p1 == nullptr || p2 == nullptr || center == nullptr) {
+            continue;
+        }
         Utils::FigureDescriptor desc;
         desc.id = ref.id;
         desc.type = Utils::FigureType::ET_ARC;
         desc.pointIds = rec->second.pointIds;
         desc.coords = {p1->x(), p1->y(), p2->x(), p2->y(), center->x(), center->y()};
-        result.push_back(desc);
+        result.push_back(std::move(desc));
     }
     return result;
 }
