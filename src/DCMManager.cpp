@@ -457,8 +457,8 @@ bool DCMManager::hasRequirement(Utils::ID reqId) const noexcept {
 std::vector<Utils::RequirementDescriptor> DCMManager::getAllRequirements() const {
     std::vector<Utils::RequirementDescriptor> result;
     result.reserve(_requirementRecords.size());
-    for (const auto& [id, desc] : _requirementRecords) {
-        result.push_back(desc);
+    for (const auto& entry : _requirementRecords) {
+        result.push_back(entry.second);
     }
     return result;
 }
