@@ -305,7 +305,7 @@ std::vector<Utils::FigureDescriptor> DCMManager::getAllFigures() const {
     for (const auto& [id, desc] : _figureRecords) {
         auto fullDesc = getFigure(id);
         if (fullDesc.has_value()) {
-            result.push_back(fullDesc.value());
+            result.push_back(std::move(*fullDesc));
         }
     }
     return result;
