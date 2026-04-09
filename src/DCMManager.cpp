@@ -298,7 +298,7 @@ std::optional<Utils::FigureDescriptor> DCMManager::getFigure(Utils::ID figureId)
 }
 
 bool DCMManager::hasFigure(Utils::ID figureId) const noexcept {
-    return _figureRecords.count(figureId) > 0 && _storage.contains(figureId);
+    return _figureRecords.contains(figureId) && _storage.contains(figureId);
 }
 
 std::vector<Utils::FigureDescriptor> DCMManager::getAllFigures() const {
@@ -440,7 +440,7 @@ std::optional<Utils::RequirementDescriptor> DCMManager::getRequirement(Utils::ID
 }
 
 bool DCMManager::hasRequirement(Utils::ID reqId) const noexcept {
-    return _requirementRecords.count(reqId) > 0;
+    return _requirementRecords.contains(reqId);
 }
 
 std::vector<Utils::RequirementDescriptor> DCMManager::getAllRequirements() const {
@@ -481,7 +481,7 @@ std::vector<Utils::ID> DCMManager::getRequirementsInComponent(ComponentID compon
 
     for (const auto& [reqId, desc] : _requirementRecords) {
         for (const auto& objId : desc.objectIds) {
-            if (compFigures.count(objId) > 0) {
+            if (compFigures.contains(objId)) {
                 result.push_back(reqId);
                 break;
             }
