@@ -312,16 +312,20 @@ std::vector<Utils::FigureDescriptor> DCMManager::getAllFigures() const {
 }
 
 std::vector<Utils::FigureDescriptor> DCMManager::getAllPoints() const {
-    const auto& pointsWithID = _storage.pointsWithIds();
+    const auto& points = _storage.pointsWithIds();
     std::vector<Utils::FigureDescriptor> result;
-    result.reserve(pointsWithID.size());
-    for (const auto& ref : pointsWithID) {
+    result.reserve(points.size());
+    for (const auto& ref : points) {
+        if (ref.ptr == nullptr) {
+            continue;
+        }
         Utils::FigureDescriptor desc;
         desc.id = ref.id;
         desc.type = Utils::FigureType::ET_POINT2D;
+        desc.coords = {ref.ptr->x(), ref.ptr->y()};
         desc.x = ref.ptr->x();
         desc.y = ref.ptr->y();
-        result.push_back(desc);
+        result.push_back(std::move(desc));
     }
     return result;
 }
