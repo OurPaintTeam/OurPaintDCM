@@ -45,6 +45,7 @@ target_include_directories(OurPaintDCM PUBLIC
 target_link_libraries(OurPaintDCM PUBLIC Math)
 target_link_libraries(OurPaintDCM PUBLIC Eigen3::Eigen)
 add_subdirectory(math)
+add_subdirectory(app)
 
 enable_testing()
 include(FetchContent)
