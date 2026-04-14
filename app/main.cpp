@@ -336,6 +336,12 @@ int main() {
                     auto id = mgr.addRequirement(RequirementDescriptor::horizontal(ID(l)));
                     std::cout << "Horizontal added, id=" << id.id << "\n";
                 }
+                else if (what == "fixP") {
+                    unsigned long long l;
+                    ss >> l;
+                    auto id = mgr.addRequirement(RequirementDescriptor::fixPoint(ID(l)));
+                    std::cout << "FixPoint added, id=" << id.id << "\n";
+                }
                 else {
                     std::cout << "Unknown requirement: " << what << "\n";
                 }
