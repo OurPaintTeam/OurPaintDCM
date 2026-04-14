@@ -33,6 +33,9 @@ static const char* reqTypeName(RequirementType t) {
         case RequirementType::ET_VERTICAL:               return "Vertical";
         case RequirementType::ET_HORIZONTAL:             return "Horizontal";
         case RequirementType::ET_ARCCENTERONPERPENDICULAR: return "ArcCenterPerp";
+        case RequirementType::ET_FIXPOINT:              return "FixPoint";
+        case RequirementType::ET_FIXLINE:               return "FixLine";
+        case RequirementType::ET_FIXCIRCLE:             return "FixCircle";
     }
     return "?";
 }
@@ -83,6 +86,7 @@ Requirements:
   req angle <l1> <l2> <angle>         - angle between lines
   req vertical <l>                    - vertical line
   req horizontal <l>                  - horizontal line
+  req fixP <p> [x y]                  - fix point (optionally set coords first)
   remove req <id>                     - remove requirement
   update req <id> <param>             - update requirement param
 
@@ -337,9 +341,19 @@ int main() {
                     std::cout << "Horizontal added, id=" << id.id << "\n";
                 }
                 else if (what == "fixP") {
-                    unsigned long long l;
-                    ss >> l;
-                    auto id = mgr.addRequirement(RequirementDescriptor::fixPoint(ID(l)));
+                    unsigned long long pid;
+                    ss >> pid;
+                    double x = 0.0;
+                    double y = 0.0;
+                    if (ss >> x >> y) {
+                        auto* p = mgr.storage().get<Figures::Point2D>(ID(pid));
+                        if (!p) {
+                            throw std::runtime_error("Point not found");
+                        }
+                        p->x() = x;
+                        p->y() = y;
+                    }
+                    auto id = mgr.addRequirement(RequirementDescriptor::fixPoint(ID(pid)));
                     std::cout << "FixPoint added, id=" << id.id << "\n";
                 }
                 else {
