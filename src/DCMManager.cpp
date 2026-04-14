@@ -653,24 +653,55 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
     auto allVars = system.getAllVars();
     if (reqFuncs.empty() || allVars.empty()) return true;
 
+    // Preprocess algebraic assignments (x = c): eliminate variable and drop this residual.
+    std::unordered_map<double*, double> eliminatedAssignments;
+    std::vector<std::shared_ptr<OurPaintDCM::Function::RequirementFunction>> activeReqFuncs;
+    activeReqFuncs.reserve(reqFuncs.size());
+    for (const auto& rf : reqFuncs) {
+        double* assignedVar = nullptr;
+        double assignedValue = 0.0;
+        if (rf->tryGetAssignment(assignedVar, assignedValue)) {
+            eliminatedAssignments[assignedVar] = assignedValue;
+            *assignedVar = assignedValue;
+            continue;
+        }
+        activeReqFuncs.push_back(rf);
+    }
+
+    if (activeReqFuncs.empty()) {
+        return true;
+    }
+
     std::vector<Variable*> mathVars;
     mathVars.reserve(allVars.size());
     if (lockedVars.empty()) {
         for (auto* v : allVars) {
+            if (eliminatedAssignments.contains(v)) {
+                continue;
+            }
             mathVars.push_back(new Variable(v));
         }
     } else {
         for (auto* v : allVars) {
-            if (!lockedVars.contains(v)) {
+            if (!lockedVars.contains(v) && !eliminatedAssignments.contains(v)) {
                 mathVars.push_back(new Variable(v));
             }
         }
     }
-    if (mathVars.empty()) return true;
+    if (mathVars.empty()) {
+        // If temporary drag locks consume all remaining DOF, retry without locks.
+        // This keeps fixed/eliminated vars constant, but allows the solver
+        // to satisfy constraints by moving the dragged point to a feasible position.
+        if (!lockedVars.empty()) {
+            const std::unordered_set<double*> noLockedVars;
+            return solveWithLockedVars(componentId, noLockedVars);
+        }
+        return true;
+    }
 
     std::vector<::Function*> mathFuncs;
-    mathFuncs.reserve(reqFuncs.size());
-    for (auto& rf : reqFuncs)
+    mathFuncs.reserve(activeReqFuncs.size());
+    for (auto& rf : activeReqFuncs)
         mathFuncs.push_back(new RequirementFunctionAdapter(rf));
 
     LSMFORLMTask task(mathFuncs, mathVars);

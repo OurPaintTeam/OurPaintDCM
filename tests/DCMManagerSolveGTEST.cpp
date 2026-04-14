@@ -136,6 +136,43 @@ TEST_F(DCMManagerSolveTest, DragMode_UpdateFixedCircleRadius_Ignored) {
     EXPECT_NEAR(c->radius.value(), 10.0, 1e-6);
 }
 
+TEST_F(DCMManagerSolveTest, DragMode_MovingOtherPointDoesNotMoveFixedPoint) {
+    auto p1 = manager.addFigure(FigureDescriptor::point(5.85786437626905, 5.85786437626905));
+    auto p2 = manager.addFigure(FigureDescriptor::point(20.0, 20.0));
+    manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 20.0));
+    manager.addRequirement(RequirementDescriptor::fixPoint(p2));
+    manager.setSolveMode(SolveMode::DRAG);
+
+    manager.updatePoint(PointUpdateDescriptor(p1, -10.0, -10.0));
+
+    auto d2 = manager.getFigure(p2);
+    ASSERT_TRUE(d2.has_value());
+    EXPECT_NEAR(d2->x.value(), 20.0, 1e-9);
+    EXPECT_NEAR(d2->y.value(), 20.0, 1e-9);
+}
+
+TEST_F(DCMManagerSolveTest, DragMode_FallbackWithoutLocksWhenNoDofLeft) {
+    auto pFixed = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    auto pDrag = manager.addFigure(FigureDescriptor::point(10.0, 0.0));
+    manager.addRequirement(RequirementDescriptor::pointPointDist(pFixed, pDrag, 10.0));
+    manager.addRequirement(RequirementDescriptor::fixPoint(pFixed));
+    manager.setSolveMode(SolveMode::DRAG);
+
+    // Impossible to keep this exact drag position and the fixed distance simultaneously
+    // if dragged vars are hard-locked. Solver should fallback and project to feasible state.
+    manager.updatePoint(PointUpdateDescriptor(pDrag, 20.0, 0.0));
+
+    auto dFixed = manager.getFigure(pFixed);
+    auto dDrag = manager.getFigure(pDrag);
+    ASSERT_TRUE(dFixed.has_value() && dDrag.has_value());
+    EXPECT_NEAR(dFixed->x.value(), 0.0, 1e-9);
+    EXPECT_NEAR(dFixed->y.value(), 0.0, 1e-9);
+
+    const double dx = dDrag->x.value() - dFixed->x.value();
+    const double dy = dDrag->y.value() - dFixed->y.value();
+    EXPECT_NEAR(std::sqrt(dx * dx + dy * dy), 10.0, 1e-6);
+}
+
 TEST_F(DCMManagerSolveTest, GlobalSolve_Rectangle) {
     auto l1 = manager.addFigure(FigureDescriptor::line(0.0, 0.0, 100.0, 2.0));
     auto l2 = manager.addFigure(FigureDescriptor::line(100.0, 2.0, 102.0, 52.0));
