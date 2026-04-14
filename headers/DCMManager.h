@@ -8,9 +8,7 @@
 #include "Graph.h"
 #include "Function.h"
 #include "LSMFORLMTask.h"
-#include "LSMTask.h"
 #include "LMWithSparse.h"
-#include "GradientOptimizer.h"
 
 #include <unordered_map>
 #include <unordered_set>
@@ -264,6 +262,9 @@ public:
     bool solve(std::optional<ComponentID> componentId = std::nullopt);
 
 private:
+    bool solveWithLockedVars(std::optional<ComponentID> componentId,
+                             const std::unordered_set<double*>& lockedVars);
+
     Figures::GeometryStorage _storage;
     System::RequirementSystem _reqSystem;
 
