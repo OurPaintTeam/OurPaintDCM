@@ -108,6 +108,34 @@ TEST_F(DCMManagerSolveTest, DragMode_AutoSolveOnUpdate) {
     EXPECT_NEAR(dist, 5.0, 0.5);
 }
 
+TEST_F(DCMManagerSolveTest, DragMode_UpdateFixedPoint_RevertsToFixedCoordinates) {
+    auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    auto p2 = manager.addFigure(FigureDescriptor::point(5.0, 0.0));
+    manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 5.0));
+    manager.addRequirement(RequirementDescriptor::fixPoint(p1));
+
+    manager.setSolveMode(SolveMode::DRAG);
+    manager.updatePoint(PointUpdateDescriptor(p1, 2.0, 3.0));
+
+    auto d1 = manager.getFigure(p1);
+    ASSERT_TRUE(d1.has_value());
+    EXPECT_NEAR(d1->x.value(), 0.0, 1e-6);
+    EXPECT_NEAR(d1->y.value(), 0.0, 1e-6);
+}
+
+TEST_F(DCMManagerSolveTest, DragMode_UpdateFixedCircleRadius_Ignored) {
+    auto circle = manager.addFigure(FigureDescriptor::circle(0.0, 0.0, 10.0));
+    manager.addRequirement(RequirementDescriptor::fixCircle(circle));
+    manager.setSolveMode(SolveMode::DRAG);
+
+    manager.updateCircle(CircleUpdateDescriptor(circle, 25.0));
+
+    auto c = manager.getFigure(circle);
+    ASSERT_TRUE(c.has_value());
+    ASSERT_TRUE(c->radius.has_value());
+    EXPECT_NEAR(c->radius.value(), 10.0, 1e-6);
+}
+
 TEST_F(DCMManagerSolveTest, GlobalSolve_Rectangle) {
     auto l1 = manager.addFigure(FigureDescriptor::line(0.0, 0.0, 100.0, 2.0));
     auto l2 = manager.addFigure(FigureDescriptor::line(100.0, 2.0, 102.0, 52.0));
