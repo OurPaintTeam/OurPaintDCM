@@ -412,6 +412,20 @@ TEST_F(DCMManagerTest, RemoveFigureWithCascade) {
     EXPECT_FALSE(manager.hasRequirement(reqId));
 }
 
+TEST_F(DCMManagerTest, RemoveLineWithCascadeAlsoRemovesItsPoints) {
+    auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 0.0));
+    auto line = manager.addFigure(FigureDescriptor::line(p1, p2));
+    auto reqId = manager.addRequirement(RequirementDescriptor::horizontal(line));
+
+    manager.removeFigure(line, true);
+
+    EXPECT_FALSE(manager.hasFigure(line));
+    EXPECT_FALSE(manager.hasFigure(p1));
+    EXPECT_FALSE(manager.hasFigure(p2));
+    EXPECT_FALSE(manager.hasRequirement(reqId));
+}
+
 TEST_F(DCMManagerTest, ComplexScenario) {
     auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
     auto p2 = manager.addFigure(FigureDescriptor::point(100.0, 0.0));

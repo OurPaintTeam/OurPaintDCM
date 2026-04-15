@@ -45,14 +45,15 @@ target_include_directories(OurPaintDCM PUBLIC
 target_link_libraries(OurPaintDCM PUBLIC Math)
 target_link_libraries(OurPaintDCM PUBLIC Eigen3::Eigen)
 add_subdirectory(math)
-add_subdirectory(app)
 
-enable_testing()
-include(FetchContent)
-FetchContent_Declare(
-        googletest
-        URL https://github.com/google/googletest/archive/refs/tags/v1.17.0.zip
-)
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
-add_subdirectory(tests)
+if(PROJECT_IS_TOP_LEVEL)
+    enable_testing()
+    include(FetchContent)
+    FetchContent_Declare(
+            googletest
+            URL https://github.com/google/googletest/archive/refs/tags/v1.17.0.zip
+    )
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
+    add_subdirectory(tests)
+endif()

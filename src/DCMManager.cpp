@@ -162,11 +162,13 @@ void DCMManager::removeFigure(Utils::ID figureId, bool forceCascade) {
         throw std::runtime_error("Figure not found");
     }
 
+    std::vector<Utils::ID> dependencyPoints;
     if (forceCascade) {
         auto reqs = getRequirementsForFigure(figureId);
         for (const auto& reqId : reqs) {
             removeRequirement(reqId);
         }
+        dependencyPoints = _storage.getDependencies(figureId);
     }
 
     std::vector<Utils::ID> cascadedFigures;
@@ -191,6 +193,14 @@ void DCMManager::removeFigure(Utils::ID figureId, bool forceCascade) {
     }
     _figureRecords.erase(figureId);
     removeFigureFromComponent(figureId);
+
+    if (forceCascade) {
+        for (const auto& depPointId : dependencyPoints) {
+            if (_storage.contains(depPointId)) {
+                removeFigure(depPointId, true);
+            }
+        }
+    }
 
     pruneRequirementsWithMissingObjects();
     splitComponentsAfterRemoval();
