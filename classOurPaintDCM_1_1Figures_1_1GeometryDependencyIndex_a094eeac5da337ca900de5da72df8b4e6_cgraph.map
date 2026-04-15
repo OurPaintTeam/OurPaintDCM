@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Figures::GeometryDependencyIndex::linkArc" name="OurPaintDCM::Figures::GeometryDependencyIndex::linkArc">
+<area shape="rect" id="Node000001" title="Registers an arc through p1, p2 with center center." alt="" coords="5,5,217,60"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a718506d0d6f415a83efc2ac02ef688d0" title="Appends id to vec if not already present (linear scan)." alt="" coords="265,5,477,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="217,30,252,30,252,35,217,35"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Figures::GeometryGraphBuilder::buildObjectSubgraph" name="OurPaintDCM::Figures::GeometryGraphBuilder::buildObjectSubgraph">
+<area shape="rect" id="Node000001" title="Local neighbourhood around id: vertex id, adjacent figures/points, and edges among them." alt="" coords="280,5,460,60"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a06b553516b5a4ef350fdbf2c266893ce" title="Local subgraph around id: the object, its neighbours, and edges among them." alt="" coords="5,5,232,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="266,35,232,35,232,30,266,30"/>
+</map>

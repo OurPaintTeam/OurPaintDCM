@@ -1,0 +1,9 @@
+<map id="OurPaintDCM::Figures::GeometryDependencyIndex::linkArc" name="OurPaintDCM::Figures::GeometryDependencyIndex::linkArc">
+<area shape="rect" id="Node000001" title="Registers an arc through p1, p2 with center center." alt="" coords="551,30,763,85"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a3011ee4e5dfcc3db76123cac9d1fcb6b" title="Creates an arc through two points with a center point." alt="" coords="288,37,503,77"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="537,60,503,60,503,55,537,55"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#aac0ea08abe5a8da7d345aa2852e04515" title="Add a new geometric figure using descriptor." alt="" coords="21,5,225,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="274,46,225,40,225,35,274,40"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Creates a figure from aggregated FigureData (may create nested points)." alt="" coords="5,69,240,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="275,74,240,78,240,73,274,69"/>
+</map>

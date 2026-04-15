@@ -1,0 +1,9 @@
+<map id="OurPaintDCM::DCMManager::getAllLines" name="OurPaintDCM::DCMManager::getAllLines">
+<area shape="rect" id="Node000001" title="Get all line descriptors." alt="" coords="5,69,209,109"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#aed808f2fda9f304afacdcd1f7afbd8f7" title="Read&#45;only cache of all lines." alt="" coords="257,5,491,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="191,67,276,46,278,51,192,72"/>
+<area shape="rect" id="Node000003" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a783b0f201624031dd0cd387bb6c52bf9" title="Get X coordinate." alt="" coords="293,69,455,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="210,87,279,87,279,92,210,92"/>
+<area shape="rect" id="Node000004" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a7c02a5b6825f0d56942b49b68a6fd33c" title="Get Y coordinate." alt="" coords="293,133,455,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="192,107,280,128,279,133,191,112"/>
+</map>

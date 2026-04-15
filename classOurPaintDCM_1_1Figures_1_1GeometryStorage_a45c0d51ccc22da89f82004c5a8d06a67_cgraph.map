@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::allocCircle" name="OurPaintDCM::Figures::GeometryStorage::allocCircle">
+<area shape="rect" id="Node000001" title="Allocates or reuses a circle slot." alt="" coords="5,5,227,45"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Maps C++ figure type to FigureType enum." alt="" coords="275,5,508,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="227,23,261,23,261,28,227,28"/>
+</map>

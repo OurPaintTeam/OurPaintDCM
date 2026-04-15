@@ -1,0 +1,9 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::allocPoint" name="OurPaintDCM::Figures::GeometryStorage::allocPoint">
+<area shape="rect" id="Node000001" title="Allocates or reuses a point slot; returns slot index." alt="" coords="563,37,780,77"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a10f995acdcc7f0e1858f8cec1677e16b" title="Creates a point at (x, y)." alt="" coords="288,37,515,77"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="549,60,515,60,515,55,549,55"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#aac0ea08abe5a8da7d345aa2852e04515" title="Add a new geometric figure using descriptor." alt="" coords="21,5,225,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="274,45,225,40,225,34,274,40"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Creates a figure from aggregated FigureData (may create nested points)." alt="" coords="5,69,240,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="275,75,241,79,240,73,274,69"/>
+</map>

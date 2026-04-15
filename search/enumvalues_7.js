@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['well_5fconstrained_0',['WELL_CONSTRAINED',['../namespaceOurPaintDCM_1_1Utils.html#ae51395db4b382114f464d061563658caaa6fe173e0f8c78314af47a9713c5e85e',1,'OurPaintDCM::Utils']]]
+  ['singular_5fsystem_0',['SINGULAR_SYSTEM',['../namespaceOurPaintDCM_1_1Utils.html#ae51395db4b382114f464d061563658caa718dd381fba412c630106d7a86168c91',1,'OurPaintDCM::Utils']]]
 ];

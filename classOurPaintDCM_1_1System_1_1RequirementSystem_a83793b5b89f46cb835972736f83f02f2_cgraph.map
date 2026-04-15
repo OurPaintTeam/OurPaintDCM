@@ -32,12 +32,12 @@
 <area shape="poly" id="edge28_Node000001_Node000021" title=" " alt="" coords="171,738,218,738,218,743,171,743"/>
 <area shape="rect" id="Node000022" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#aa51e210dd2bad7149ce788ab7560ebd7" title="Create vertical&#45;line function." alt="" coords="232,1185,448,1240"/>
 <area shape="poly" id="edge31_Node000001_Node000022" title=" " alt="" coords="92,768,97,846,115,954,131,1012,153,1070,183,1123,221,1171,225,1175,221,1179,217,1174,178,1126,148,1072,126,1014,109,955,92,847,87,768"/>
-<area shape="rect" id="Node000023" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af9aa52e57a93fded2dfd79d2a0d04263" title="Get object by ID with type checking." alt="" coords="253,1265,427,1305"/>
-<area shape="poly" id="edge32_Node000001_Node000023" title=" " alt="" coords="95,768,110,874,137,1020,154,1093,174,1160,196,1214,221,1251,241,1266,238,1270,217,1255,191,1217,169,1162,149,1094,131,1021,105,875,90,769"/>
-<area shape="rect" id="Node000025" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a10d4994ee732333e277d12a1fa2d16cc" title="Generate and return the next unique ID." alt="" coords="260,1329,420,1369"/>
-<area shape="poly" id="edge34_Node000001_Node000025" title=" " alt="" coords="94,768,107,886,132,1050,150,1134,170,1211,194,1273,207,1297,220,1315,249,1334,246,1338,217,1319,202,1300,189,1275,165,1212,144,1135,127,1051,102,887,89,769"/>
-<area shape="rect" id="Node000026" href="$structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html#a99f0e928eebfacb51d696d0f76941b6e" title="Validate that descriptor has correct number of objects for its type." alt="" coords="249,1393,431,1448"/>
-<area shape="poly" id="edge35_Node000001_Node000026" title=" " alt="" coords="94,768,106,897,130,1080,147,1174,167,1260,192,1331,206,1358,221,1379,239,1394,235,1398,217,1382,201,1361,187,1333,162,1262,141,1175,124,1081,100,897,89,768"/>
+<area shape="rect" id="Node000023" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a62a4b5b4374ad2df26dc8611111690a0" title="Mutable access to a figure by ID and expected type." alt="" coords="253,1289,427,1329"/>
+<area shape="poly" id="edge32_Node000001_Node000023" title=" " alt="" coords="91,768,94,858,99,918,109,985,125,1055,149,1125,180,1191,221,1251,238,1267,258,1280,255,1285,234,1271,217,1254,175,1194,144,1127,120,1056,104,986,94,919,88,858,86,768"/>
+<area shape="rect" id="Node000025" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a10d4994ee732333e277d12a1fa2d16cc" title="Generate and return the next unique ID." alt="" coords="260,1353,420,1393"/>
+<area shape="poly" id="edge35_Node000001_Node000025" title=" " alt="" coords="94,768,106,890,131,1062,148,1150,169,1230,193,1295,206,1320,221,1339,248,1358,245,1362,217,1343,202,1323,188,1297,163,1231,143,1151,126,1063,101,891,89,769"/>
+<area shape="rect" id="Node000026" href="$structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html#a99f0e928eebfacb51d696d0f76941b6e" title="Validate that descriptor has correct number of objects for its type." alt="" coords="249,1417,431,1472"/>
+<area shape="poly" id="edge36_Node000001_Node000026" title=" " alt="" coords="94,768,105,901,128,1092,145,1190,166,1279,191,1353,205,1381,221,1403,239,1418,235,1422,217,1406,201,1384,186,1355,161,1281,140,1191,123,1093,100,902,88,768"/>
 <area shape="rect" id="Node000005" href="$structOurPaintDCM_1_1Figures_1_1Circle.html#afeaf4ede849ebf501c7b13247e66a70b" title=" " alt="" coords="545,249,707,289"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="441,215,540,242,538,247,439,220"/>
 <area shape="rect" id="Node000008" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#ad4e6e2bae59f79ba39b367ca1bc6580f" title=" " alt="" coords="545,611,707,651"/>
@@ -58,6 +58,7 @@
 <area shape="poly" id="edge27_Node000020_Node000009" title=" " alt="" coords="448,672,532,682,531,687,448,677"/>
 <area shape="poly" id="edge29_Node000021_Node000008" title=" " alt="" coords="433,711,460,698,484,680,508,661,530,651,532,656,511,666,487,684,463,703,436,716"/>
 <area shape="poly" id="edge30_Node000021_Node000009" title=" " alt="" coords="448,721,531,708,532,713,448,726"/>
-<area shape="rect" id="Node000024" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Convert type T to corresponding FigureType." alt="" coords="509,1265,743,1305"/>
-<area shape="poly" id="edge33_Node000023_Node000024" title=" " alt="" coords="427,1282,496,1282,496,1287,427,1287"/>
+<area shape="poly" id="edge33_Node000023_Node000023" title=" " alt="" coords="293,1289,291,1279,298,1270,315,1264,340,1262,369,1265,385,1272,383,1277,368,1270,340,1267,316,1269,301,1274,296,1280,298,1288"/>
+<area shape="rect" id="Node000024" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Maps C++ figure type to FigureType enum." alt="" coords="509,1289,743,1329"/>
+<area shape="poly" id="edge34_Node000023_Node000024" title=" " alt="" coords="427,1306,496,1306,496,1311,427,1311"/>
 </map>

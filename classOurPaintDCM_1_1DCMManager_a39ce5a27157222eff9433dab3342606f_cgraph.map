@@ -1,13 +1,12 @@
 <map id="OurPaintDCM::DCMManager::getAllFigures" name="OurPaintDCM::DCMManager::getAllFigures">
-<area shape="rect" id="Node000001" title="Get all figure descriptors." alt="" coords="5,69,209,109"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a608ba72e0ffe84e68c473439495e1cca" title="Get figure descriptor with current state." alt="" coords="257,69,461,109"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,87,244,87,244,92,209,92"/>
-<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af9aa52e57a93fded2dfd79d2a0d04263" title="Get object by ID with type checking." alt="" coords="509,5,684,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="434,67,508,46,510,51,435,72"/>
-<area shape="rect" id="Node000005" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a783b0f201624031dd0cd387bb6c52bf9" title="Get X coordinate." alt="" coords="515,69,678,109"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="462,87,502,87,502,92,462,92"/>
-<area shape="rect" id="Node000006" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a7c02a5b6825f0d56942b49b68a6fd33c" title="Get Y coordinate." alt="" coords="515,133,678,173"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="435,107,510,127,508,132,434,112"/>
-<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Convert type T to corresponding FigureType." alt="" coords="732,5,965,45"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="684,23,718,23,718,28,684,28"/>
+<area shape="rect" id="Node000001" title="Get all figure descriptors." alt="" coords="5,49,209,89"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a608ba72e0ffe84e68c473439495e1cca" title="Get figure descriptor with current state." alt="" coords="257,49,461,89"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,67,244,67,244,72,209,72"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#aeb74338ab2cf7a1651295af9349a55aa" title="True if id is currently a live object in this storage." alt="" coords="509,5,717,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="461,49,495,43,496,48,462,54"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a62a4b5b4374ad2df26dc8611111690a0" title="Mutable access to a figure by ID and expected type." alt="" coords="526,93,701,133"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="462,84,513,93,512,99,461,90"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="566,94,563,84,571,74,588,69,613,67,643,70,659,77,657,82,641,75,613,72,589,74,574,79,569,85,571,92"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Maps C++ figure type to FigureType enum." alt="" coords="765,93,999,133"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="701,111,752,111,752,116,701,116"/>
 </map>

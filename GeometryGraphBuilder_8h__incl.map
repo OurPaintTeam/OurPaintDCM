@@ -1,0 +1,15 @@
+<map id="headers/figures/GeometryGraphBuilder.h" name="headers/figures/GeometryGraphBuilder.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="48,5,239,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="21,93,95,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="124,48,83,86,79,82,121,44"/>
+<area shape="rect" id="Node000003" href="$ID_8h.html" title=" " alt="" coords="119,93,167,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="146,46,146,79,141,79,141,46"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="191,93,266,119"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="166,44,208,82,204,86,162,48"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,167,76,192"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="128,121,70,161,67,156,125,116"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="100,167,187,192"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="146,119,146,153,141,153,141,119"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="211,167,291,192"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="162,116,224,157,221,161,159,121"/>
+</map>

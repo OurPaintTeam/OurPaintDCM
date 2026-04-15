@@ -1,0 +1,9 @@
+<map id="OurPaintDCM::DCMManager::getAllCircles" name="OurPaintDCM::DCMManager::getAllCircles">
+<area shape="rect" id="Node000001" title="Get all circle descriptors." alt="" coords="5,69,209,109"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a86fdaf33645554fa756915cd74ad954e" title="Read&#45;only cache of all circles." alt="" coords="257,5,501,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="193,67,280,46,281,51,194,72"/>
+<area shape="rect" id="Node000003" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a783b0f201624031dd0cd387bb6c52bf9" title="Get X coordinate." alt="" coords="298,69,461,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="209,87,284,87,284,92,209,92"/>
+<area shape="rect" id="Node000004" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a7c02a5b6825f0d56942b49b68a6fd33c" title="Get Y coordinate." alt="" coords="298,133,461,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="194,107,286,129,284,134,193,112"/>
+</map>

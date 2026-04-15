@@ -1,7 +1,9 @@
 <map id="OurPaintDCM::Figures::GeometryStorage" name="OurPaintDCM::Figures::GeometryStorage">
-<area shape="rect" id="Node000001" title="Storage for geometric objects with unified identification system." alt="" coords="8,196,171,236"/>
+<area shape="rect" id="Node000001" title="ID&#45;first 2D geometry store with slot pools and a bidirectional point↔figure dependency index." alt="" coords="111,196,273,236"/>
 <area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html" title="Monotonic unique ID generator." alt="" coords="16,93,163,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,147,92,196,87,196,87,147"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="120,141,175,194,171,198,116,145"/>
 <area shape="rect" id="Node000003" href="$structOurPaintDCM_1_1Utils_1_1ID.html" title="Strongly typed wrapper for an unsigned long long identifier." alt="" coords="5,5,173,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="92,44,92,93,87,93,87,44"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html" title="Bidirectional adjacency for point↔figure incidence." alt="" coords="187,93,399,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="267,145,213,198,209,194,263,141"/>
 </map>

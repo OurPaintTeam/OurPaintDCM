@@ -1,5 +1,7 @@
 <map id="OurPaintDCM::Figures::GeometryStorage::clear" name="OurPaintDCM::Figures::GeometryStorage::clear">
-<area shape="rect" id="Node000001" title="Clear entire storage." alt="" coords="5,5,191,45"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a70025ff26074369425935e60dcec77bc" title="Reset generator back to initial state (ID = 1)." alt="" coords="239,5,389,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="191,23,225,23,225,28,191,28"/>
+<area shape="rect" id="Node000001" title="Removes every object, resets ID generator, clears all indices and free lists." alt="" coords="5,49,191,89"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a2049c25cef51a442be4f363bfe836041" title="Clears both maps." alt="" coords="239,5,451,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,53,225,47,225,53,191,58"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a70025ff26074369425935e60dcec77bc" title="Reset generator back to initial state (ID = 1)." alt="" coords="269,85,420,125"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="191,80,256,89,255,94,190,85"/>
 </map>

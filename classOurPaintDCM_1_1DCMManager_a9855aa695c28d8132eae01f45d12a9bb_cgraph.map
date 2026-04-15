@@ -1,0 +1,9 @@
+<map id="OurPaintDCM::DCMManager::getAllArcs" name="OurPaintDCM::DCMManager::getAllArcs">
+<area shape="rect" id="Node000001" title="Get all arc descriptors." alt="" coords="5,69,209,109"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ae43f095747353c89a6aa56ba3b8ac3c8" title="Read&#45;only cache of all arcs." alt="" coords="257,5,487,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,67,275,46,276,51,191,72"/>
+<area shape="rect" id="Node000003" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a783b0f201624031dd0cd387bb6c52bf9" title="Get X coordinate." alt="" coords="291,69,453,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="210,87,277,87,277,92,210,92"/>
+<area shape="rect" id="Node000004" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a7c02a5b6825f0d56942b49b68a6fd33c" title="Get Y coordinate." alt="" coords="291,133,453,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="191,107,278,128,277,133,190,112"/>
+</map>

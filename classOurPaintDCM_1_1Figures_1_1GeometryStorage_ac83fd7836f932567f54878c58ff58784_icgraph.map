@@ -1,5 +1,7 @@
 <map id="OurPaintDCM::Figures::GeometryStorage::getDependencies" name="OurPaintDCM::Figures::GeometryStorage::getDependencies">
-<area shape="rect" id="Node000001" title="Find all points that object depends on." alt="" coords="280,13,547,53"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a908d67e49081630224501b60f399b459" title="Build shallow subgraph for a given object ID (one&#45;level neighborhood)." alt="" coords="5,5,232,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="266,35,232,35,232,30,266,30"/>
+<area shape="rect" id="Node000001" title="Point IDs this figure depends on (endpoints / center); empty for points." alt="" coords="508,13,775,53"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryGraphBuilder.html#a7f6d373db3dda20f0d99a7d9af872995" title="Local neighbourhood around id: vertex id, adjacent figures/points, and edges among them." alt="" coords="280,5,460,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="494,35,460,35,460,30,494,30"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a06b553516b5a4ef350fdbf2c266893ce" title="Local subgraph around id: the object, its neighbours, and edges among them." alt="" coords="5,5,232,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="266,35,232,35,232,30,266,30"/>
 </map>

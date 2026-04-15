@@ -1,9 +1,13 @@
 <map id="OurPaintDCM::System::RequirementSystem::buildDependencyGraph" name="OurPaintDCM::System::RequirementSystem::buildDependencyGraph">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,30,188,85"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1d5491ee08660e8d9ee895d9e251464e" title="Build graph of objects where vertices are IDs and edges connect related objects." alt="" coords="236,30,463,85"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="188,55,222,55,222,60,188,60"/>
-<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6926e48ad2b405395193869662e513b7" title="Find point ID by pointer." alt="" coords="515,5,739,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="463,42,502,37,502,42,463,47"/>
-<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Convert type T to corresponding FigureType." alt="" coords="511,69,744,109"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="463,68,497,72,497,77,463,73"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,62,188,117"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1d5491ee08660e8d9ee895d9e251464e" title="Full object graph: all vertices plus edges between figures and their points." alt="" coords="236,62,463,117"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="188,87,222,87,222,92,188,92"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryGraphBuilder.html#a9c296000107e045b88f7249a28ee9a6f" title="Full object graph: every live ID as vertex; edges join each figure to its point IDs." alt="" coords="511,62,691,117"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="463,87,497,87,497,92,463,92"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ae43f095747353c89a6aa56ba3b8ac3c8" title="Read&#45;only cache of all arcs." alt="" coords="746,5,975,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="690,65,765,46,766,51,692,70"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a86fdaf33645554fa756915cd74ad954e" title="Read&#45;only cache of all circles." alt="" coords="739,69,983,109"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="691,87,725,87,725,92,691,92"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#aed808f2fda9f304afacdcd1f7afbd8f7" title="Read&#45;only cache of all lines." alt="" coords="744,133,977,173"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="692,109,766,127,765,133,690,114"/>
 </map>

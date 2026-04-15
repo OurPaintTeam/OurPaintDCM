@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Figures::GeometryDependencyIndex::eraseId" name="OurPaintDCM::Figures::GeometryDependencyIndex::eraseId">
+<area shape="rect" id="Node000001" title="Removes all occurrences of id from vec." alt="" coords="265,5,477,60"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a3c43dea9d73c90f535a38b92c66d7c28" title="Removes figureId from both directions: drops figure→points and removes the figure from each point’s i..." alt="" coords="5,5,217,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="252,35,218,35,218,30,252,30"/>
+</map>

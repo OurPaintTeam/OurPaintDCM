@@ -1,0 +1,11 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::circlesWithIds" name="OurPaintDCM::Figures::GeometryStorage::circlesWithIds">
+<area shape="rect" id="Node000001" title="Read&#45;only cache of all circles." alt="" coords="763,49,1007,89"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryGraphBuilder.html#a9c296000107e045b88f7249a28ee9a6f" title="Full object graph: every live ID as vertex; edges join each figure to its point IDs." alt="" coords="523,5,703,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="748,53,703,47,703,42,749,48"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1DCMManager.html#a677b08a58d70fdc35586e96701b9c1c2" title="Get all circle descriptors." alt="" coords="511,85,715,125"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="749,89,715,94,714,89,749,84"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1d5491ee08660e8d9ee895d9e251464e" title="Full object graph: all vertices plus edges between figures and their points." alt="" coords="236,5,463,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="509,35,463,35,463,30,509,30"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a01c4378da09c06d5ef7aeedf48117fec" title=" " alt="" coords="5,5,188,60"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="222,35,188,35,188,30,222,30"/>
+</map>

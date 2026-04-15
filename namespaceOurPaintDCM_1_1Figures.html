@@ -99,7 +99,8 @@ $(document).ready(function(){initNavTree('namespaceOurPaintDCM_1_1Figures.html',
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#concepts">Concepts</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle"><div class="title">OurPaintDCM::Figures Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -113,13 +114,22 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic circle structure for 2D/3D points.  <a href="structOurPaintDCM_1_1Figures_1_1Circle.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOurPaintDCM_1_1Figures_1_1FigureData.html">FigureData</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input data for figure creation without exposing internal types.  <a href="structOurPaintDCM_1_1Figures_1_1FigureData.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aggregated coordinates for <a class="el" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Creates a figure from aggregated FigureData (may create nested points).">GeometryStorage::createFigure()</a> (batch / descriptor path).  <a href="structOurPaintDCM_1_1Figures_1_1FigureData.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOurPaintDCM_1_1Figures_1_1FigureEntry.html">FigureEntry</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to store metadata about a geometric object.  <a href="structOurPaintDCM_1_1Figures_1_1FigureEntry.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps a public figure ID to its FigureType and index in the per-type slot pool.  <a href="structOurPaintDCM_1_1Figures_1_1FigureEntry.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOurPaintDCM_1_1Figures_1_1FigureRef.html">FigureRef</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cached handle for linear iteration: stable ID with a non-owning pointer into storage.  <a href="structOurPaintDCM_1_1Figures_1_1FigureRef.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html">GeometryDependencyIndex</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bidirectional adjacency for point↔figure incidence.  <a href="classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Figures_1_1GeometryGraphBuilder.html">GeometryGraphBuilder</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds topology graphs using only public <a class="el" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html" title="ID-first 2D geometry store with slot pools and a bidirectional point↔figure dependency index.">GeometryStorage</a> APIs.  <a href="classOurPaintDCM_1_1Figures_1_1GeometryGraphBuilder.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html">GeometryStorage</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storage for geometric objects with unified identification system.  <a href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID-first 2D geometry store with slot pools and a bidirectional point↔figure dependency index.  <a href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOurPaintDCM_1_1Figures_1_1Line.html">Line</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standart segment class.  <a href="structOurPaintDCM_1_1Figures_1_1Line.html#details">More...</a><br /></td></tr>
@@ -134,19 +144,28 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="concepts" name="concepts"></a>
 Concepts</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conceptOurPaintDCM_1_1Figures_1_1SupportedFigure.html">SupportedFigure</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concept to check if a type is a supported geometric figure. <br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Types allowed for GeometryStorage::get(). <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:a3aaa4496aea5108e30bdc72c14cf87d9" id="r_a3aaa4496aea5108e30bdc72c14cf87d9"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Figures.html#a3aaa4496aea5108e30bdc72c14cf87d9">ObjectGraph</a> = Graph&lt; <a class="el" href="structOurPaintDCM_1_1Utils_1_1ID.html">Utils::ID</a>, <a class="el" href="structOurPaintDCM_1_1Utils_1_1ID.html">Utils::ID</a>, UndirectedPolicy, WeightedPolicy &gt;</td></tr>
+<tr class="separator:a3aaa4496aea5108e30bdc72c14cf87d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae08636f07ccdc0c93d8c8bea2ca6de84" id="r_ae08636f07ccdc0c93d8c8bea2ca6de84"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Figures.html#ae08636f07ccdc0c93d8c8bea2ca6de84">Line2D</a> = <a class="el" href="structOurPaintDCM_1_1Figures_1_1Line.html">Line</a>&lt; <a class="el" href="structOurPaintDCM_1_1Figures_1_1Point2D.html">Point2D</a> &gt;</td></tr>
 <tr class="separator:ae08636f07ccdc0c93d8c8bea2ca6de84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a17b1e169219e225ed0e0f5496649618a" id="r_a17b1e169219e225ed0e0f5496649618a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Figures.html#a17b1e169219e225ed0e0f5496649618a">Circle2D</a> = <a class="el" href="structOurPaintDCM_1_1Figures_1_1Circle.html">Circle</a>&lt; <a class="el" href="structOurPaintDCM_1_1Figures_1_1Point2D.html">Point2D</a> &gt;</td></tr>
 <tr class="separator:a17b1e169219e225ed0e0f5496649618a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab70c8ae61e35e15fd055991066dbc410" id="r_ab70c8ae61e35e15fd055991066dbc410"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Figures.html#ab70c8ae61e35e15fd055991066dbc410">Arc2D</a> = <a class="el" href="structOurPaintDCM_1_1Figures_1_1Arc.html">Arc</a>&lt; <a class="el" href="structOurPaintDCM_1_1Figures_1_1Point2D.html">Point2D</a> &gt;</td></tr>
 <tr class="separator:ab70c8ae61e35e15fd055991066dbc410"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18ddc7c48f2b59032f62d9840953a66f" id="r_a18ddc7c48f2b59032f62d9840953a66f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Figures.html#a18ddc7c48f2b59032f62d9840953a66f">ObjectGraph</a> = Graph&lt; <a class="el" href="structOurPaintDCM_1_1Utils_1_1ID.html">ID</a>, <a class="el" href="structOurPaintDCM_1_1Utils_1_1ID.html">ID</a>, UndirectedPolicy, WeightedPolicy &gt;</td></tr>
-<tr class="separator:a18ddc7c48f2b59032f62d9840953a66f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a6acd1b74d93332600c2ac10797cc3c5a" id="r_a6acd1b74d93332600c2ac10797cc3c5a"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Figures.html#a6acd1b74d93332600c2ac10797cc3c5a">RemoveResult</a> : std::uint8_t { <a class="el" href="namespaceOurPaintDCM_1_1Figures.html#a6acd1b74d93332600c2ac10797cc3c5aaa60852f204ed8028c1c58808b746d115">Ok</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Figures.html#a6acd1b74d93332600c2ac10797cc3c5aa38c300f4fc9ce8a77aad4a30de05cad8">NotFound</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Figures.html#a6acd1b74d93332600c2ac10797cc3c5aa22de33d5c2706d26cac31587147236fd">BlockedByDependents</a>
+ }</td></tr>
+<tr class="memdesc:a6acd1b74d93332600c2ac10797cc3c5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Outcome of a non-throwing remove operation.  <a href="namespaceOurPaintDCM_1_1Figures.html#a6acd1b74d93332600c2ac10797cc3c5a">More...</a><br /></td></tr>
+<tr class="separator:a6acd1b74d93332600c2ac10797cc3c5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="ab70c8ae61e35e15fd055991066dbc410" name="ab70c8ae61e35e15fd055991066dbc410"></a>
@@ -191,17 +210,50 @@ Typedefs</h2></td></tr>
 
 </div>
 </div>
-<a id="a18ddc7c48f2b59032f62d9840953a66f" name="a18ddc7c48f2b59032f62d9840953a66f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a18ddc7c48f2b59032f62d9840953a66f">&#9670;&#160;</a></span>ObjectGraph</h2>
+<a id="a3aaa4496aea5108e30bdc72c14cf87d9" name="a3aaa4496aea5108e30bdc72c14cf87d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3aaa4496aea5108e30bdc72c14cf87d9">&#9670;&#160;</a></span>ObjectGraph</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespaceOurPaintDCM_1_1Figures.html#a18ddc7c48f2b59032f62d9840953a66f">OurPaintDCM::Figures::ObjectGraph</a> = typedef Graph&lt;<a class="el" href="structOurPaintDCM_1_1Utils_1_1ID.html">ID</a>, <a class="el" href="structOurPaintDCM_1_1Utils_1_1ID.html">ID</a>, UndirectedPolicy, WeightedPolicy&gt;</td>
+          <td class="memname">typedef Graph&lt; <a class="el" href="structOurPaintDCM_1_1Utils_1_1ID.html">ID</a>, <a class="el" href="structOurPaintDCM_1_1Utils_1_1ID.html">ID</a>, UndirectedPolicy, WeightedPolicy &gt; <a class="el" href="namespaceOurPaintDCM_1_1Figures.html#a3aaa4496aea5108e30bdc72c14cf87d9">OurPaintDCM::Figures::ObjectGraph</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a6acd1b74d93332600c2ac10797cc3c5a" name="a6acd1b74d93332600c2ac10797cc3c5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6acd1b74d93332600c2ac10797cc3c5a">&#9670;&#160;</a></span>RemoveResult</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="namespaceOurPaintDCM_1_1Figures.html#a6acd1b74d93332600c2ac10797cc3c5a">OurPaintDCM::Figures::RemoveResult</a> : std::uint8_t</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Outcome of a non-throwing remove operation. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a6acd1b74d93332600c2ac10797cc3c5aaa60852f204ed8028c1c58808b746d115" name="a6acd1b74d93332600c2ac10797cc3c5aaa60852f204ed8028c1c58808b746d115"></a>Ok&#160;</td><td class="fielddoc"><p>Object removed; state updated atomically for this call. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a6acd1b74d93332600c2ac10797cc3c5aa38c300f4fc9ce8a77aad4a30de05cad8" name="a6acd1b74d93332600c2ac10797cc3c5aa38c300f4fc9ce8a77aad4a30de05cad8"></a>NotFound&#160;</td><td class="fielddoc"><p>No object with this ID (or wrong branch for removeFigureOnly). </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a6acd1b74d93332600c2ac10797cc3c5aa22de33d5c2706d26cac31587147236fd" name="a6acd1b74d93332600c2ac10797cc3c5aa22de33d5c2706d26cac31587147236fd"></a>BlockedByDependents&#160;</td><td class="fielddoc"><p>Point still referenced by figures; use forceCascade or delete figures first. </p>
+</td></tr>
+</table>
 
 </div>
 </div>

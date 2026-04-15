@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::allocArc" name="OurPaintDCM::Figures::GeometryStorage::allocArc">
+<area shape="rect" id="Node000001" title="Allocates or reuses an arc slot." alt="" coords="5,5,211,45"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Maps C++ figure type to FigureType enum." alt="" coords="259,5,492,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="211,23,245,23,245,28,211,28"/>
+</map>

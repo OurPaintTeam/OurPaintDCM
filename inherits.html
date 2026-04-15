@@ -124,7 +124,7 @@ $(document).ready(function(){initNavTree('hierarchy.html',''); initResizable(); 
 </td></tr>
 <tr><td><img src="inherit_graph_4.png" border="0" usemap="#aOurPaintDCM_1_1Figures_1_1FigureData" alt=""/>
 <map name="aOurPaintDCM_1_1Figures_1_1FigureData" id="aOurPaintDCM_1_1Figures_1_1FigureData">
-<area shape="rect" href="structOurPaintDCM_1_1Figures_1_1FigureData.html" title="Input data for figure creation without exposing internal types." alt="" coords="5,5,168,45"/>
+<area shape="rect" href="structOurPaintDCM_1_1Figures_1_1FigureData.html" title="Aggregated coordinates for GeometryStorage::createFigure() (batch / descriptor path)." alt="" coords="5,5,168,45"/>
 </map>
 </td></tr>
 <tr><td><img src="inherit_graph_5.png" border="0" usemap="#aOurPaintDCM_1_1Figures_1_1FigureData_1_1PointData" alt=""/>
@@ -134,37 +134,52 @@ $(document).ready(function(){initNavTree('hierarchy.html',''); initResizable(); 
 </td></tr>
 <tr><td><img src="inherit_graph_6.png" border="0" usemap="#aOurPaintDCM_1_1Figures_1_1FigureEntry" alt=""/>
 <map name="aOurPaintDCM_1_1Figures_1_1FigureEntry" id="aOurPaintDCM_1_1Figures_1_1FigureEntry">
-<area shape="rect" href="structOurPaintDCM_1_1Figures_1_1FigureEntry.html" title="Structure to store metadata about a geometric object." alt="" coords="5,5,168,45"/>
+<area shape="rect" href="structOurPaintDCM_1_1Figures_1_1FigureEntry.html" title="Maps a public figure ID to its FigureType and index in the per&#45;type slot pool." alt="" coords="5,5,168,45"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_7.png" border="0" usemap="#aOurPaintDCM_1_1Figures_1_1GeometryStorage" alt=""/>
+<tr><td><img src="inherit_graph_7.png" border="0" usemap="#aOurPaintDCM_1_1Figures_1_1FigureRef_3_01T_01_4" alt=""/>
+<map name="aOurPaintDCM_1_1Figures_1_1FigureRef_3_01T_01_4" id="aOurPaintDCM_1_1Figures_1_1FigureRef_3_01T_01_4">
+<area shape="rect" href="structOurPaintDCM_1_1Figures_1_1FigureRef.html" title="Cached handle for linear iteration: stable ID with a non&#45;owning pointer into storage." alt="" coords="5,5,168,45"/>
+</map>
+</td></tr>
+<tr><td><img src="inherit_graph_8.png" border="0" usemap="#aOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex" alt=""/>
+<map name="aOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex" id="aOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex">
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html" title="Bidirectional adjacency for point↔figure incidence." alt="" coords="5,5,217,45"/>
+</map>
+</td></tr>
+<tr><td><img src="inherit_graph_9.png" border="0" usemap="#aOurPaintDCM_1_1Figures_1_1GeometryGraphBuilder" alt=""/>
+<map name="aOurPaintDCM_1_1Figures_1_1GeometryGraphBuilder" id="aOurPaintDCM_1_1Figures_1_1GeometryGraphBuilder">
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryGraphBuilder.html" title="Builds topology graphs using only public GeometryStorage APIs." alt="" coords="5,5,185,45"/>
+</map>
+</td></tr>
+<tr><td><img src="inherit_graph_10.png" border="0" usemap="#aOurPaintDCM_1_1Figures_1_1GeometryStorage" alt=""/>
 <map name="aOurPaintDCM_1_1Figures_1_1GeometryStorage" id="aOurPaintDCM_1_1Figures_1_1GeometryStorage">
-<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html" title="Storage for geometric objects with unified identification system." alt="" coords="5,5,168,45"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html" title="ID&#45;first 2D geometry store with slot pools and a bidirectional point↔figure dependency index." alt="" coords="5,5,168,45"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_8.png" border="0" usemap="#aOurPaintDCM_1_1Figures_1_1Line_3_01OurPaintDCM_1_1Figures_1_1Point2D_01_4" alt=""/>
+<tr><td><img src="inherit_graph_11.png" border="0" usemap="#aOurPaintDCM_1_1Figures_1_1Line_3_01OurPaintDCM_1_1Figures_1_1Point2D_01_4" alt=""/>
 <map name="aOurPaintDCM_1_1Figures_1_1Line_3_01OurPaintDCM_1_1Figures_1_1Point2D_01_4" id="aOurPaintDCM_1_1Figures_1_1Line_3_01OurPaintDCM_1_1Figures_1_1Point2D_01_4">
 <area shape="rect" href="structOurPaintDCM_1_1Figures_1_1Line.html" title=" " alt="" coords="5,5,172,60"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_9.png" border="0" usemap="#aOurPaintDCM_1_1Figures_1_1Line_3_01PointT_01_4" alt=""/>
+<tr><td><img src="inherit_graph_12.png" border="0" usemap="#aOurPaintDCM_1_1Figures_1_1Line_3_01PointT_01_4" alt=""/>
 <map name="aOurPaintDCM_1_1Figures_1_1Line_3_01PointT_01_4" id="aOurPaintDCM_1_1Figures_1_1Line_3_01PointT_01_4">
 <area shape="rect" href="structOurPaintDCM_1_1Figures_1_1Line.html" title="Standart segment class." alt="" coords="5,5,168,45"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_10.png" border="0" usemap="#aOurPaintDCM_1_1Figures_1_1PointBase_3_012_01_4" alt=""/>
+<tr><td><img src="inherit_graph_13.png" border="0" usemap="#aOurPaintDCM_1_1Figures_1_1PointBase_3_012_01_4" alt=""/>
 <map name="aOurPaintDCM_1_1Figures_1_1PointBase_3_012_01_4" id="aOurPaintDCM_1_1Figures_1_1PointBase_3_012_01_4">
 <area shape="rect" href="structOurPaintDCM_1_1Figures_1_1PointBase.html" title=" " alt="" coords="5,5,168,45"/>
 <area shape="rect" href="structOurPaintDCM_1_1Figures_1_1Point2D.html" title="2D point structure." alt="" coords="216,5,379,45"/>
 <area shape="poly" title=" " alt="" coords="182,23,216,23,216,28,182,28"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_11.png" border="0" usemap="#aOurPaintDCM_1_1Figures_1_1PointBase_3_01N_01_4" alt=""/>
+<tr><td><img src="inherit_graph_14.png" border="0" usemap="#aOurPaintDCM_1_1Figures_1_1PointBase_3_01N_01_4" alt=""/>
 <map name="aOurPaintDCM_1_1Figures_1_1PointBase_3_01N_01_4" id="aOurPaintDCM_1_1Figures_1_1PointBase_3_01N_01_4">
 <area shape="rect" href="structOurPaintDCM_1_1Figures_1_1PointBase.html" title="Generic base class for N&#45;dimensional points." alt="" coords="5,5,168,45"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_12.png" border="0" usemap="#aOurPaintDCM_1_1Function_1_1RequirementFunction" alt=""/>
+<tr><td><img src="inherit_graph_15.png" border="0" usemap="#aOurPaintDCM_1_1Function_1_1RequirementFunction" alt=""/>
 <map name="aOurPaintDCM_1_1Function_1_1RequirementFunction" id="aOurPaintDCM_1_1Function_1_1RequirementFunction">
 <area shape="rect" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html" title="Abstract base class for all geometric constraint functions." alt="" coords="5,389,176,429"/>
 <area shape="rect" href="classOurPaintDCM_1_1Function_1_1ArcCenterOnPerpendicularFunction.html" title="Default constraint used for arcs: the arc center lies on a perpendicular bisector." alt="" coords="224,5,480,45"/>
@@ -195,22 +210,22 @@ $(document).ready(function(){initNavTree('hierarchy.html',''); initResizable(); 
 <area shape="poly" title=" " alt="" coords="97,443,107,510,129,596,145,640,167,684,193,724,226,759,245,773,268,782,266,787,243,777,222,763,189,728,162,687,140,643,123,597,102,511,92,444"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_13.png" border="0" usemap="#aOurPaintDCM_1_1Function_1_1RequirementFunctionFactory" alt=""/>
+<tr><td><img src="inherit_graph_16.png" border="0" usemap="#aOurPaintDCM_1_1Function_1_1RequirementFunctionFactory" alt=""/>
 <map name="aOurPaintDCM_1_1Function_1_1RequirementFunctionFactory" id="aOurPaintDCM_1_1Function_1_1RequirementFunctionFactory">
 <area shape="rect" href="classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html" title="Factory for creating RequirementFunction objects from geometric figures." alt="" coords="5,5,221,45"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_14.png" border="0" usemap="#aOurPaintDCM_1_1Requirements_1_1ComponentElement" alt=""/>
+<tr><td><img src="inherit_graph_17.png" border="0" usemap="#aOurPaintDCM_1_1Requirements_1_1ComponentElement" alt=""/>
 <map name="aOurPaintDCM_1_1Requirements_1_1ComponentElement" id="aOurPaintDCM_1_1Requirements_1_1ComponentElement">
 <area shape="rect" href="structOurPaintDCM_1_1Requirements_1_1ComponentElement.html" title="struct which describe one item of component" alt="" coords="5,5,212,45"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_15.png" border="0" usemap="#aOurPaintDCM_1_1Requirements_1_1Components" alt=""/>
+<tr><td><img src="inherit_graph_18.png" border="0" usemap="#aOurPaintDCM_1_1Requirements_1_1Components" alt=""/>
 <map name="aOurPaintDCM_1_1Requirements_1_1Components" id="aOurPaintDCM_1_1Requirements_1_1Components">
 <area shape="rect" href="classOurPaintDCM_1_1Requirements_1_1Components.html" title="class which describe all components" alt="" coords="5,5,212,45"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_16.png" border="0" usemap="#aOurPaintDCM_1_1Requirements_1_1Requirement" alt=""/>
+<tr><td><img src="inherit_graph_19.png" border="0" usemap="#aOurPaintDCM_1_1Requirements_1_1Requirement" alt=""/>
 <map name="aOurPaintDCM_1_1Requirements_1_1Requirement" id="aOurPaintDCM_1_1Requirements_1_1Requirement">
 <area shape="rect" href="classOurPaintDCM_1_1Requirements_1_1Requirement.html" title="Base class for all geometric requirements (constraints)." alt="" coords="5,357,212,397"/>
 <area shape="rect" href="classOurPaintDCM_1_1Requirements_1_1LineCircleDist.html" title="Constraint: Distance between a line and a circle." alt="" coords="260,5,467,45"/>
@@ -239,49 +254,49 @@ $(document).ready(function(){initNavTree('hierarchy.html',''); initResizable(); 
 <area shape="poly" title=" " alt="" coords="119,410,135,471,162,548,181,588,204,627,231,663,262,695,279,707,276,711,258,699,227,667,200,630,177,591,157,550,130,473,114,412"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_17.png" border="0" usemap="#aOurPaintDCM_1_1System_1_1RequirementFunctionSystem" alt=""/>
+<tr><td><img src="inherit_graph_20.png" border="0" usemap="#aOurPaintDCM_1_1System_1_1RequirementFunctionSystem" alt=""/>
 <map name="aOurPaintDCM_1_1System_1_1RequirementFunctionSystem" id="aOurPaintDCM_1_1System_1_1RequirementFunctionSystem">
 <area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html" title="System of geometric constraint functions." alt="" coords="5,5,224,45"/>
 <area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html" title="High&#45;level requirement system bound to GeometryStorage." alt="" coords="272,5,437,45"/>
 <area shape="poly" title=" " alt="" coords="238,23,272,23,272,28,238,28"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_18.png" border="0" usemap="#aOurPaintDCM_1_1System_1_1RequirementSystem_1_1RequirementEntry" alt=""/>
+<tr><td><img src="inherit_graph_21.png" border="0" usemap="#aOurPaintDCM_1_1System_1_1RequirementSystem_1_1RequirementEntry" alt=""/>
 <map name="aOurPaintDCM_1_1System_1_1RequirementSystem_1_1RequirementEntry" id="aOurPaintDCM_1_1System_1_1RequirementSystem_1_1RequirementEntry">
 <area shape="rect" href="structOurPaintDCM_1_1System_1_1RequirementSystem_1_1RequirementEntry.html" title=" " alt="" coords="5,5,171,60"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_19.png" border="0" usemap="#aOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor" alt=""/>
+<tr><td><img src="inherit_graph_22.png" border="0" usemap="#aOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor" alt=""/>
 <map name="aOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor" id="aOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor">
 <area shape="rect" href="structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor.html" title="Descriptor for updating circle radius." alt="" coords="5,5,187,45"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_20.png" border="0" usemap="#aOurPaintDCM_1_1Utils_1_1FigureDescriptor" alt=""/>
+<tr><td><img src="inherit_graph_23.png" border="0" usemap="#aOurPaintDCM_1_1Utils_1_1FigureDescriptor" alt=""/>
 <map name="aOurPaintDCM_1_1Utils_1_1FigureDescriptor" id="aOurPaintDCM_1_1Utils_1_1FigureDescriptor">
 <area shape="rect" href="structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html" title="High&#45;level descriptor for geometric figures." alt="" coords="5,5,152,45"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_21.png" border="0" usemap="#aOurPaintDCM_1_1Utils_1_1ID" alt=""/>
+<tr><td><img src="inherit_graph_24.png" border="0" usemap="#aOurPaintDCM_1_1Utils_1_1ID" alt=""/>
 <map name="aOurPaintDCM_1_1Utils_1_1ID" id="aOurPaintDCM_1_1Utils_1_1ID">
 <area shape="rect" href="structOurPaintDCM_1_1Utils_1_1ID.html" title="Strongly typed wrapper for an unsigned long long identifier." alt="" coords="5,5,173,31"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_22.png" border="0" usemap="#aOurPaintDCM_1_1Utils_1_1IDGenerator" alt=""/>
+<tr><td><img src="inherit_graph_25.png" border="0" usemap="#aOurPaintDCM_1_1Utils_1_1IDGenerator" alt=""/>
 <map name="aOurPaintDCM_1_1Utils_1_1IDGenerator" id="aOurPaintDCM_1_1Utils_1_1IDGenerator">
 <area shape="rect" href="classOurPaintDCM_1_1Utils_1_1IDGenerator.html" title="Monotonic unique ID generator." alt="" coords="5,5,152,45"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_23.png" border="0" usemap="#aOurPaintDCM_1_1Utils_1_1PointUpdateDescriptor" alt=""/>
+<tr><td><img src="inherit_graph_26.png" border="0" usemap="#aOurPaintDCM_1_1Utils_1_1PointUpdateDescriptor" alt=""/>
 <map name="aOurPaintDCM_1_1Utils_1_1PointUpdateDescriptor" id="aOurPaintDCM_1_1Utils_1_1PointUpdateDescriptor">
 <area shape="rect" href="structOurPaintDCM_1_1Utils_1_1PointUpdateDescriptor.html" title="Descriptor for updating point coordinates." alt="" coords="5,5,183,45"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_24.png" border="0" usemap="#aOurPaintDCM_1_1Utils_1_1RequirementDescriptor" alt=""/>
+<tr><td><img src="inherit_graph_27.png" border="0" usemap="#aOurPaintDCM_1_1Utils_1_1RequirementDescriptor" alt=""/>
 <map name="aOurPaintDCM_1_1Utils_1_1RequirementDescriptor" id="aOurPaintDCM_1_1Utils_1_1RequirementDescriptor">
 <area shape="rect" href="structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html" title="High&#45;level descriptor for geometric requirements." alt="" coords="5,5,187,45"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_25.png" border="0" usemap="#astd_1_1hash_3_01OurPaintDCM_1_1Utils_1_1ID_01_4" alt=""/>
+<tr><td><img src="inherit_graph_28.png" border="0" usemap="#astd_1_1hash_3_01OurPaintDCM_1_1Utils_1_1ID_01_4" alt=""/>
 <map name="astd_1_1hash_3_01OurPaintDCM_1_1Utils_1_1ID_01_4" id="astd_1_1hash_3_01OurPaintDCM_1_1Utils_1_1ID_01_4">
 <area shape="rect" href="structstd_1_1hash_3_01OurPaintDCM_1_1Utils_1_1ID_01_4.html" title=" " alt="" coords="5,5,188,45"/>
 </map>

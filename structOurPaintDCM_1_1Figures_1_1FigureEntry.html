@@ -104,7 +104,7 @@ $(document).ready(function(){initNavTree('structOurPaintDCM_1_1Figures_1_1Figure
 </div><!--header-->
 <div class="contents">
 
-<p>Structure to store metadata about a geometric object.  
+<p>Maps a public figure ID to its FigureType and index in the per-type slot pool.  
  <a href="structOurPaintDCM_1_1Figures_1_1FigureEntry.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="GeometryStorage_8h_source.html">GeometryStorage.h</a>&gt;</code></p>
@@ -113,7 +113,7 @@ Collaboration diagram for OurPaintDCM::Figures::FigureEntry:</div>
 <div class="dyncontent">
 <div class="center"><img src="structOurPaintDCM_1_1Figures_1_1FigureEntry__coll__graph.png" border="0" usemap="#aOurPaintDCM_1_1Figures_1_1FigureEntry_coll__map" alt="Collaboration graph"/></div>
 <map name="aOurPaintDCM_1_1Figures_1_1FigureEntry_coll__map" id="aOurPaintDCM_1_1Figures_1_1FigureEntry_coll__map">
-<area shape="rect" title="Structure to store metadata about a geometric object." alt="" coords="5,93,168,133"/>
+<area shape="rect" title="Maps a public figure ID to its FigureType and index in the per&#45;type slot pool." alt="" coords="5,93,168,133"/>
 <area shape="rect" title=" " alt="" coords="41,5,133,31"/>
 <area shape="poly" title=" " alt="" coords="89,44,89,93,84,93,84,44"/>
 </map>
@@ -121,30 +121,23 @@ Collaboration diagram for OurPaintDCM::Figures::FigureEntry:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af62f4fc0b80a6996d6ff4d612aaba309" id="r_af62f4fc0b80a6996d6ff4d612aaba309"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOurPaintDCM_1_1Figures_1_1FigureEntry.html#af62f4fc0b80a6996d6ff4d612aaba309">FigureEntry</a> () noexcept</td></tr>
-<tr class="separator:af62f4fc0b80a6996d6ff4d612aaba309"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a19e883001a955d3a3a86e36074b76f56" id="r_a19e883001a955d3a3a86e36074b76f56"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOurPaintDCM_1_1Figures_1_1FigureEntry.html#a19e883001a955d3a3a86e36074b76f56">FigureEntry</a> (FigureType t, void *p) noexcept</td></tr>
-<tr class="separator:a19e883001a955d3a3a86e36074b76f56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d3db757fa71e0bcbda7042b2dda9237" id="r_a7d3db757fa71e0bcbda7042b2dda9237"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOurPaintDCM_1_1Figures_1_1FigureEntry.html#a7d3db757fa71e0bcbda7042b2dda9237">FigureEntry</a> () noexcept=default</td></tr>
+<tr class="separator:a7d3db757fa71e0bcbda7042b2dda9237"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa2cec8bec996da20408050b7a4136b5" id="r_aaa2cec8bec996da20408050b7a4136b5"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOurPaintDCM_1_1Figures_1_1FigureEntry.html#aaa2cec8bec996da20408050b7a4136b5">FigureEntry</a> (FigureType t, std::uint32_t s) noexcept</td></tr>
+<tr class="separator:aaa2cec8bec996da20408050b7a4136b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ad1fc2feaa67825a2bad895c7bd0ab1ee" id="r_ad1fc2feaa67825a2bad895c7bd0ab1ee"><td class="memItemLeft" align="right" valign="top">FigureType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOurPaintDCM_1_1Figures_1_1FigureEntry.html#ad1fc2feaa67825a2bad895c7bd0ab1ee">type</a></td></tr>
-<tr class="memdesc:ad1fc2feaa67825a2bad895c7bd0ab1ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of geometric object.  <br /></td></tr>
+<tr class="memitem:ad1fc2feaa67825a2bad895c7bd0ab1ee" id="r_ad1fc2feaa67825a2bad895c7bd0ab1ee"><td class="memItemLeft" align="right" valign="top">FigureType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOurPaintDCM_1_1Figures_1_1FigureEntry.html#ad1fc2feaa67825a2bad895c7bd0ab1ee">type</a> {}</td></tr>
 <tr class="separator:ad1fc2feaa67825a2bad895c7bd0ab1ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac16dbd567f2ef35ef9d50c2c8cf5ce64" id="r_ac16dbd567f2ef35ef9d50c2c8cf5ce64"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOurPaintDCM_1_1Figures_1_1FigureEntry.html#ac16dbd567f2ef35ef9d50c2c8cf5ce64">ptr</a></td></tr>
-<tr class="memdesc:ac16dbd567f2ef35ef9d50c2c8cf5ce64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the object itself.  <br /></td></tr>
-<tr class="separator:ac16dbd567f2ef35ef9d50c2c8cf5ce64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39ba73a1c6fa42faa08a612054cdae03" id="r_a39ba73a1c6fa42faa08a612054cdae03"><td class="memItemLeft" align="right" valign="top">std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOurPaintDCM_1_1Figures_1_1FigureEntry.html#a39ba73a1c6fa42faa08a612054cdae03">slot</a> {}</td></tr>
+<tr class="separator:a39ba73a1c6fa42faa08a612054cdae03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure to store metadata about a geometric object. </p>
-<p>Stores:</p><ul>
-<li>type: figure type (Point, <a class="el" href="structOurPaintDCM_1_1Figures_1_1Line.html" title="Standart segment class.">Line</a>, <a class="el" href="structOurPaintDCM_1_1Figures_1_1Circle.html" title="Generic circle structure for 2D/3D points.">Circle</a>, <a class="el" href="structOurPaintDCM_1_1Figures_1_1Arc.html" title="Geometric figure: Arc.">Arc</a>)</li>
-<li>ptr: raw pointer to object (void* for universality)</li>
-</ul>
-<p>Why void*? This allows storing all types in a single unordered_map. When retrieving, we know the type from <code>type</code> field and perform safe static_cast. </p>
+<div class="textblock"><p>Maps a public figure ID to its FigureType and index in the per-type slot pool. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="af62f4fc0b80a6996d6ff4d612aaba309" name="af62f4fc0b80a6996d6ff4d612aaba309"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af62f4fc0b80a6996d6ff4d612aaba309">&#9670;&#160;</a></span>FigureEntry() <span class="overload">[1/2]</span></h2>
+<a id="a7d3db757fa71e0bcbda7042b2dda9237" name="a7d3db757fa71e0bcbda7042b2dda9237"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d3db757fa71e0bcbda7042b2dda9237">&#9670;&#160;</a></span>FigureEntry() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -161,15 +154,15 @@ Public Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">constexpr</span><span class="mlabel">default</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a19e883001a955d3a3a86e36074b76f56" name="a19e883001a955d3a3a86e36074b76f56"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a19e883001a955d3a3a86e36074b76f56">&#9670;&#160;</a></span>FigureEntry() <span class="overload">[2/2]</span></h2>
+<a id="aaa2cec8bec996da20408050b7a4136b5" name="aaa2cec8bec996da20408050b7a4136b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa2cec8bec996da20408050b7a4136b5">&#9670;&#160;</a></span>FigureEntry() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -186,8 +179,8 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>p</em>&#160;</td>
+          <td class="paramtype">std::uint32_t&#160;</td>
+          <td class="paramname"><em>s</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -205,19 +198,17 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="ac16dbd567f2ef35ef9d50c2c8cf5ce64" name="ac16dbd567f2ef35ef9d50c2c8cf5ce64"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac16dbd567f2ef35ef9d50c2c8cf5ce64">&#9670;&#160;</a></span>ptr</h2>
+<a id="a39ba73a1c6fa42faa08a612054cdae03" name="a39ba73a1c6fa42faa08a612054cdae03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39ba73a1c6fa42faa08a612054cdae03">&#9670;&#160;</a></span>slot</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* OurPaintDCM::Figures::FigureEntry::ptr</td>
+          <td class="memname">std::uint32_t OurPaintDCM::Figures::FigureEntry::slot {}</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Pointer to the object itself. </p>
 
 </div>
 </div>
@@ -228,12 +219,10 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">FigureType OurPaintDCM::Figures::FigureEntry::type</td>
+          <td class="memname">FigureType OurPaintDCM::Figures::FigureEntry::type {}</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Type of geometric object. </p>
 
 </div>
 </div>

@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['objectids_0',['objectids',['../structOurPaintDCM_1_1System_1_1RequirementSystem_1_1RequirementEntry.html#a19c235d4c842e9e499627172c858b948',1,'OurPaintDCM::System::RequirementSystem::RequirementEntry::objectIds'],['../structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html#a209994961bb3c1785866c9ab036cff17',1,'OurPaintDCM::Utils::RequirementDescriptor::objectIds']]]
+  ['newradius_0',['newRadius',['../structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor.html#a2e88b93665e4f711176fdcd6695302b5',1,'OurPaintDCM::Utils::CircleUpdateDescriptor']]],
+  ['newx_1',['newX',['../structOurPaintDCM_1_1Utils_1_1PointUpdateDescriptor.html#afec9b24c75cad787debb7bd518029b98',1,'OurPaintDCM::Utils::PointUpdateDescriptor']]],
+  ['newy_2',['newY',['../structOurPaintDCM_1_1Utils_1_1PointUpdateDescriptor.html#a4dce4b6cd546a9220c1e0c1e8dead2c6',1,'OurPaintDCM::Utils::PointUpdateDescriptor']]]
 ];

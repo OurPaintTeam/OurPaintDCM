@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::pointsWithIds" name="OurPaintDCM::Figures::GeometryStorage::pointsWithIds">
+<area shape="rect" id="Node000001" title="Read&#45;only cache of all points for fast iteration (IDs + const pointers)." alt="" coords="257,5,500,45"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#ae6a9d597b8fab7df762474f9c00d5490" title="Get all point descriptors." alt="" coords="5,5,209,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="244,28,209,28,209,23,244,23"/>
+</map>

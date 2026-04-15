@@ -1,0 +1,15 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::createPoint" name="OurPaintDCM::Figures::GeometryStorage::createPoint">
+<area shape="rect" id="Node000001" title="Creates a point at (x, y)." alt="" coords="5,125,232,165"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a2ca116fd57028ea0d08e39deae492efc" title="Allocates or reuses a point slot; returns slot index." alt="" coords="280,5,497,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="151,123,209,89,279,55,299,47,301,52,281,60,212,94,153,127"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a62a4b5b4374ad2df26dc8611111690a0" title="Mutable access to a figure by ID and expected type." alt="" coords="301,93,476,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="232,129,287,123,288,128,233,135"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a10d4994ee732333e277d12a1fa2d16cc" title="Generate and return the next unique ID." alt="" coords="309,157,469,197"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="233,156,295,164,294,169,232,161"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#aae5120f69b2f051f7279a16af3a06d55" title="Appends to per&#45;type iteration cache and position map." alt="" coords="287,222,490,277"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="170,163,281,207,301,214,299,219,279,212,168,168"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Maps C++ figure type to FigureType enum." alt="" coords="545,49,779,89"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="498,40,532,46,531,51,497,45"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="476,97,531,88,532,93,476,102"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="339,94,336,84,344,74,362,69,389,67,420,69,437,77,435,82,419,75,389,72,363,74,347,79,341,85,344,92"/>
+</map>

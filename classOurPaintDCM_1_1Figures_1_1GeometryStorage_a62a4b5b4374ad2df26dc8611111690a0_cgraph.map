@@ -1,0 +1,6 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::get" name="OurPaintDCM::Figures::GeometryStorage::get">
+<area shape="rect" id="Node000001" title="Mutable access to a figure by ID and expected type." alt="" coords="5,29,180,69"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="46,30,43,20,51,10,67,5,93,3,122,6,138,13,135,18,120,11,93,8,68,10,54,15,48,21,51,28"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Maps C++ figure type to FigureType enum." alt="" coords="228,29,461,69"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="180,47,214,47,214,52,180,52"/>
+</map>

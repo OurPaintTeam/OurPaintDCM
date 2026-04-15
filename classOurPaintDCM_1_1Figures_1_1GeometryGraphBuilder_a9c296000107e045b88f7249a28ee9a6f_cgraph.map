@@ -1,0 +1,9 @@
+<map id="OurPaintDCM::Figures::GeometryGraphBuilder::buildObjectGraph" name="OurPaintDCM::Figures::GeometryGraphBuilder::buildObjectGraph">
+<area shape="rect" id="Node000001" title="Full object graph: every live ID as vertex; edges join each figure to its point IDs." alt="" coords="5,62,185,117"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ae43f095747353c89a6aa56ba3b8ac3c8" title="Read&#45;only cache of all arcs." alt="" coords="241,5,470,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,65,260,46,261,51,186,70"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a86fdaf33645554fa756915cd74ad954e" title="Read&#45;only cache of all circles." alt="" coords="233,69,477,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="186,87,220,87,220,92,186,92"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#aed808f2fda9f304afacdcd1f7afbd8f7" title="Read&#45;only cache of all lines." alt="" coords="239,133,472,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="186,109,261,127,260,133,185,114"/>
+</map>

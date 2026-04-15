@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::size" name="OurPaintDCM::Figures::GeometryStorage::size">
+<area shape="rect" id="Node000001" title="Total number of live objects (all types)." alt="" coords="257,5,436,45"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a2925433ac1e748ec71815e8788b867ee" title="Number of objects in GeometryStorage (getStorage().size())." alt="" coords="5,5,209,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="244,28,210,28,210,23,244,23"/>
+</map>

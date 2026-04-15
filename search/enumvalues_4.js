@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['over_5fconstrained_0',['OVER_CONSTRAINED',['../namespaceOurPaintDCM_1_1Utils.html#ae51395db4b382114f464d061563658caa532fd16f2b8c05d88045d98ae5e32699',1,'OurPaintDCM::Utils']]]
+  ['local_0',['LOCAL',['../namespaceOurPaintDCM_1_1Utils.html#a6f2b4a61c8ed5b8b772f8424adf5af15a54b4c4075463b2e02cd69f5cd139b5b2',1,'OurPaintDCM::Utils']]]
 ];
