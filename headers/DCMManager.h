@@ -120,9 +120,14 @@ public:
 
     /**
      * @brief Add a new requirement using descriptor.
+     *
+     * If descriptor.id is set, that ID is used (must be unique and non-zero).
+     * Otherwise a new ID is allocated. The function layer is updated incrementally;
+     * full rebuild from records happens only after remove/param change/prune or on first access while stale.
+     *
      * @param descriptor RequirementDescriptor containing requirement data.
-     * @return ID of the created requirement.
-     * @throws std::invalid_argument if descriptor validation fails.
+     * @return ID of the requirement (assigned or generated).
+     * @throws std::invalid_argument if descriptor validation fails, id is zero, or id already exists.
      */
     Utils::ID addRequirement(const Utils::RequirementDescriptor& descriptor);
 
@@ -204,7 +209,7 @@ public:
      * @brief Get read-only access to RequirementSystem.
      * @return Const reference to internal RequirementSystem.
      */
-    const System::RequirementSystem& getRequirementSystem() const noexcept;
+    const System::RequirementSystem& getRequirementSystem() const;
 
     /**
      * @brief Mutable GeometryStorage access — use only when absolutely necessary.
@@ -220,7 +225,7 @@ public:
      * @brief Get mutable access to RequirementSystem.
      * @return Reference to internal RequirementSystem.
      */
-    System::RequirementSystem& requirementSystem() noexcept;
+    System::RequirementSystem& requirementSystem();
 
     /**
      * @brief Number of objects in GeometryStorage (getStorage().size()).
@@ -278,7 +283,12 @@ private:
 
     std::unique_ptr<System::RequirementSystem> buildSubsystem(ComponentID componentId) const;
 
+    /// Rebuild _reqSystem from _requirementRecords and mark it in sync.
     void rebuildRequirementSystem();
+    /// If records and _reqSystem differ, perform rebuildRequirementSystem().
+    void syncRequirementSystemIfNeeded();
+
+    bool _reqSystemSyncedWithRecords = true;
     /** Drops requirement records whose objectIds reference IDs no longer in GeometryStorage; rebuilds the system if needed. */
     void pruneRequirementsWithMissingObjects();
     void rebuildComponents();

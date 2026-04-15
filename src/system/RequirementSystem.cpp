@@ -120,7 +120,16 @@ Utils::ID RequirementSystem::addRequirement(const Utils::RequirementDescriptor& 
 
     if (func) addFunction(func);
 
-    Utils::ID reqId = _reqIdGen.nextID();
+    Utils::ID reqId;
+    if (descriptor.id.has_value()) {
+        reqId = *descriptor.id;
+        const unsigned long long nextMin = reqId.id + 1ULL;
+        if (nextMin > _reqIdGen.current().id) {
+            _reqIdGen.set(Utils::ID(nextMin));
+        }
+    } else {
+        reqId = _reqIdGen.nextID();
+    }
     _requirements.push_back({reqId, descriptor.type, descriptor.objectIds, descriptor.param});
 
     return reqId;

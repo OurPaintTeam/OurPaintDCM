@@ -462,6 +462,17 @@ std::vector<Utils::FigureDescriptor> DCMManager::getAllArcs() const {
 Utils::ID DCMManager::addRequirement(const Utils::RequirementDescriptor& descriptor) {
     descriptor.validate();
 
+    if (descriptor.id.has_value()) {
+        if (descriptor.id->id == 0ULL) {
+            throw std::invalid_argument("Requirement id must not be 0");
+        }
+        if (_requirementRecords.contains(*descriptor.id)) {
+            throw std::invalid_argument("Requirement id already exists");
+        }
+    }
+
+    syncRequirementSystemIfNeeded();
+
     Utils::ID reqId = _reqSystem.addRequirement(descriptor);
 
     Utils::RequirementDescriptor storedDesc = descriptor;
@@ -480,7 +491,7 @@ void DCMManager::removeRequirement(Utils::ID reqId) {
     }
 
     _requirementRecords.erase(it);
-    rebuildRequirementSystem();
+    _reqSystemSyncedWithRecords = false;
     rebuildComponents();
 }
 
@@ -495,7 +506,7 @@ void DCMManager::updateRequirementParam(Utils::ID reqId, double newParam) {
     }
 
     it->second.param = newParam;
-    rebuildRequirementSystem();
+    _reqSystemSyncedWithRecords = false;
 }
 
 std::optional<Utils::RequirementDescriptor> DCMManager::getRequirement(Utils::ID reqId) const noexcept {
@@ -573,7 +584,8 @@ const Figures::GeometryStorage& DCMManager::getStorage() const noexcept {
     return _storage;
 }
 
-const System::RequirementSystem& DCMManager::getRequirementSystem() const noexcept {
+const System::RequirementSystem& DCMManager::getRequirementSystem() const {
+    const_cast<DCMManager*>(this)->syncRequirementSystemIfNeeded();
     return _reqSystem;
 }
 
@@ -581,7 +593,8 @@ Figures::GeometryStorage& DCMManager::storage() noexcept {
     return _storage;
 }
 
-System::RequirementSystem& DCMManager::requirementSystem() noexcept {
+System::RequirementSystem& DCMManager::requirementSystem() {
+    syncRequirementSystemIfNeeded();
     return _reqSystem;
 }
 
@@ -602,6 +615,7 @@ void DCMManager::clear() {
     _components.clear();
     _nextComponentId = 0;
     _activeComponentCount = 0;
+    _reqSystemSyncedWithRecords = true;
 }
 
 void DCMManager::setSolveMode(Utils::SolveMode mode) noexcept {
@@ -628,7 +642,7 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
 
     switch (_solveMode) {
         case Utils::SolveMode::GLOBAL:
-            rebuildRequirementSystem();
+            syncRequirementSystemIfNeeded();
             systemPtr = &_reqSystem;
             break;
         case Utils::SolveMode::LOCAL:
@@ -642,7 +656,7 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
                 subsystem = buildSubsystem(componentId.value());
                 systemPtr = subsystem.get();
             } else {
-                rebuildRequirementSystem();
+                syncRequirementSystemIfNeeded();
                 systemPtr = &_reqSystem;
             }
             break;
@@ -740,6 +754,14 @@ void DCMManager::rebuildRequirementSystem() {
     for (const auto& [id, desc] : _requirementRecords) {
         _reqSystem.addRequirement(desc);
     }
+    _reqSystemSyncedWithRecords = true;
+}
+
+void DCMManager::syncRequirementSystemIfNeeded() {
+    if (_reqSystemSyncedWithRecords) {
+        return;
+    }
+    rebuildRequirementSystem();
 }
 
 void DCMManager::pruneRequirementsWithMissingObjects() {
@@ -760,7 +782,7 @@ void DCMManager::pruneRequirementsWithMissingObjects() {
         }
     }
     if (changed) {
-        rebuildRequirementSystem();
+        _reqSystemSyncedWithRecords = false;
     }
 }
 
