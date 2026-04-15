@@ -1,5 +1,7 @@
 # Рекурсивно ищем все .cpp файлы в tests/ и подпапках
 file(GLOB_RECURSE TEST_SOURCES *.cpp)
+# Исключаем перформанс-тест drag из автоподхвата
+list(FILTER TEST_SOURCES EXCLUDE REGEX ".*/DragOptimizersBenchmarkGTEST\\.cpp$")
 
 find_package(Threads REQUIRED)
 
