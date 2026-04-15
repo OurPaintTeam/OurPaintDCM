@@ -15,26 +15,25 @@ protected:
     ID arcId;
 
     void SetUp() override {
-        auto [id1, pt1] = storage.createPoint(0.0, 0.0);
-        auto [id2, pt2] = storage.createPoint(3.0, 4.0);
-        auto [id3, pt3] = storage.createPoint(6.0, 0.0);
-        auto [id4, pt4] = storage.createPoint(5.0, 5.0);
+        p1Id = storage.createPoint(0.0, 0.0);
+        p2Id = storage.createPoint(3.0, 4.0);
+        p3Id = storage.createPoint(6.0, 0.0);
+        centerId = storage.createPoint(5.0, 5.0);
 
-        p1Id = id1;
-        p2Id = id2;
-        p3Id = id3;
-        centerId = id4;
+        auto line1Opt = storage.createLine(p1Id, p2Id);
+        auto line2Opt = storage.createLine(p2Id, p3Id);
+        ASSERT_TRUE(line1Opt.has_value());
+        ASSERT_TRUE(line2Opt.has_value());
+        line1Id = *line1Opt;
+        line2Id = *line2Opt;
 
-        auto [lid1, l1] = storage.createLine(pt1, pt2);
-        auto [lid2, l2] = storage.createLine(pt2, pt3);
-        line1Id = lid1;
-        line2Id = lid2;
+        auto circOpt = storage.createCircle(centerId, 10.0);
+        ASSERT_TRUE(circOpt.has_value());
+        circleId = *circOpt;
 
-        auto [cid, c] = storage.createCircle(pt4, 10.0);
-        circleId = cid;
-
-        auto [aid, a] = storage.createArc(pt1, pt3, pt4);
-        arcId = aid;
+        auto arcOpt = storage.createArc(p1Id, p3Id, centerId);
+        ASSERT_TRUE(arcOpt.has_value());
+        arcId = *arcOpt;
     }
 };
 

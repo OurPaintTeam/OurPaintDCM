@@ -1,6 +1,18 @@
 #include "RequirementSystem.h"
 #include <stdexcept>
 
+namespace {
+
+template <typename T>
+T* requireGeometry(T* ptr) {
+    if (ptr == nullptr) {
+        throw std::runtime_error("Invalid geometry ID or type mismatch");
+    }
+    return ptr;
+}
+
+} // namespace
+
 namespace OurPaintDCM::System {
 
 RequirementSystem::RequirementSystem(Figures::GeometryStorage* storage)
@@ -14,38 +26,38 @@ Utils::ID RequirementSystem::addRequirement(const Utils::RequirementDescriptor& 
 
     switch (descriptor.type) {
         case Utils::RequirementType::ET_POINTLINEDIST: {
-            auto* point = _storage->get<Figures::Point2D>(ids[0]);
-            auto* line = _storage->get<Figures::Line2D>(ids[1]);
+            auto* point = requireGeometry(_storage->get<Figures::Point2D>(ids[0]));
+            auto* line = requireGeometry(_storage->get<Figures::Line2D>(ids[1]));
             func = Function::RequirementFunctionFactory::createPointLineDist(point, line, descriptor.param.value());
             break;
         }
         case Utils::RequirementType::ET_POINTONLINE: {
-            auto* point = _storage->get<Figures::Point2D>(ids[0]);
-            auto* line = _storage->get<Figures::Line2D>(ids[1]);
+            auto* point = requireGeometry(_storage->get<Figures::Point2D>(ids[0]));
+            auto* line = requireGeometry(_storage->get<Figures::Line2D>(ids[1]));
             func = Function::RequirementFunctionFactory::createPointOnLine(point, line);
             break;
         }
         case Utils::RequirementType::ET_POINTPOINTDIST: {
-            auto* p1 = _storage->get<Figures::Point2D>(ids[0]);
-            auto* p2 = _storage->get<Figures::Point2D>(ids[1]);
+            auto* p1 = requireGeometry(_storage->get<Figures::Point2D>(ids[0]));
+            auto* p2 = requireGeometry(_storage->get<Figures::Point2D>(ids[1]));
             func = Function::RequirementFunctionFactory::createPointPointDist(p1, p2, descriptor.param.value());
             break;
         }
         case Utils::RequirementType::ET_POINTONPOINT: {
-            auto* p1 = _storage->get<Figures::Point2D>(ids[0]);
-            auto* p2 = _storage->get<Figures::Point2D>(ids[1]);
+            auto* p1 = requireGeometry(_storage->get<Figures::Point2D>(ids[0]));
+            auto* p2 = requireGeometry(_storage->get<Figures::Point2D>(ids[1]));
             func = Function::RequirementFunctionFactory::createPointOnPoint(p1, p2);
             break;
         }
         case Utils::RequirementType::ET_LINECIRCLEDIST: {
-            auto* line = _storage->get<Figures::Line2D>(ids[0]);
-            auto* circle = _storage->get<Figures::Circle2D>(ids[1]);
+            auto* line = requireGeometry(_storage->get<Figures::Line2D>(ids[0]));
+            auto* circle = requireGeometry(_storage->get<Figures::Circle2D>(ids[1]));
             func = Function::RequirementFunctionFactory::createLineCircleDist(line, circle, descriptor.param.value());
             break;
         }
         case Utils::RequirementType::ET_LINEONCIRCLE: {
-            auto* line = _storage->get<Figures::Line2D>(ids[0]);
-            auto* circle = _storage->get<Figures::Circle2D>(ids[1]);
+            auto* line = requireGeometry(_storage->get<Figures::Line2D>(ids[0]));
+            auto* circle = requireGeometry(_storage->get<Figures::Circle2D>(ids[1]));
             func = Function::RequirementFunctionFactory::createLineOnCircle(line, circle);
             break;
         }
@@ -54,52 +66,52 @@ Utils::ID RequirementSystem::addRequirement(const Utils::RequirementDescriptor& 
             throw std::runtime_error("LineInCircle requirement is not yet supported via unified interface");
         }
         case Utils::RequirementType::ET_LINELINEPARALLEL: {
-            auto* l1 = _storage->get<Figures::Line2D>(ids[0]);
-            auto* l2 = _storage->get<Figures::Line2D>(ids[1]);
+            auto* l1 = requireGeometry(_storage->get<Figures::Line2D>(ids[0]));
+            auto* l2 = requireGeometry(_storage->get<Figures::Line2D>(ids[1]));
             func = Function::RequirementFunctionFactory::createLineLineParallel(l1, l2);
             break;
         }
         case Utils::RequirementType::ET_LINELINEPERPENDICULAR: {
-            auto* l1 = _storage->get<Figures::Line2D>(ids[0]);
-            auto* l2 = _storage->get<Figures::Line2D>(ids[1]);
+            auto* l1 = requireGeometry(_storage->get<Figures::Line2D>(ids[0]));
+            auto* l2 = requireGeometry(_storage->get<Figures::Line2D>(ids[1]));
             func = Function::RequirementFunctionFactory::createLineLinePerpendicular(l1, l2);
             break;
         }
         case Utils::RequirementType::ET_LINELINEANGLE: {
-            auto* l1 = _storage->get<Figures::Line2D>(ids[0]);
-            auto* l2 = _storage->get<Figures::Line2D>(ids[1]);
+            auto* l1 = requireGeometry(_storage->get<Figures::Line2D>(ids[0]));
+            auto* l2 = requireGeometry(_storage->get<Figures::Line2D>(ids[1]));
             func = Function::RequirementFunctionFactory::createLineLineAngle(l1, l2, descriptor.param.value());
             break;
         }
         case Utils::RequirementType::ET_VERTICAL: {
-            auto* line = _storage->get<Figures::Line2D>(ids[0]);
+            auto* line = requireGeometry(_storage->get<Figures::Line2D>(ids[0]));
             func = Function::RequirementFunctionFactory::createVertical(line);
             break;
         }
         case Utils::RequirementType::ET_HORIZONTAL: {
-            auto* line = _storage->get<Figures::Line2D>(ids[0]);
+            auto* line = requireGeometry(_storage->get<Figures::Line2D>(ids[0]));
             func = Function::RequirementFunctionFactory::createHorizontal(line);
             break;
         }
         case Utils::RequirementType::ET_ARCCENTERONPERPENDICULAR: {
-            auto* arc = _storage->get<Figures::Arc2D>(ids[0]);
+            auto* arc = requireGeometry(_storage->get<Figures::Arc2D>(ids[0]));
             func = Function::RequirementFunctionFactory::createArcCenterOnPerpendicular(arc);
             break;
         }
         case Utils::RequirementType::ET_FIXPOINT: {
-            auto* point = _storage->get<Figures::Point2D>(ids[0]);
+            auto* point = requireGeometry(_storage->get<Figures::Point2D>(ids[0]));
             auto funcs = Function::RequirementFunctionFactory::createFixPoint(point);
             for (auto& f : funcs) addFunction(f);
             break;
         }
         case Utils::RequirementType::ET_FIXLINE: {
-            auto* line = _storage->get<Figures::Line2D>(ids[0]);
+            auto* line = requireGeometry(_storage->get<Figures::Line2D>(ids[0]));
             auto funcs = Function::RequirementFunctionFactory::createFixLine(line);
             for (auto& f : funcs) addFunction(f);
             break;
         }
         case Utils::RequirementType::ET_FIXCIRCLE: {
-            auto* circle = _storage->get<Figures::Circle2D>(ids[0]);
+            auto* circle = requireGeometry(_storage->get<Figures::Circle2D>(ids[0]));
             auto funcs = Function::RequirementFunctionFactory::createFixCircle(circle);
             for (auto& f : funcs) addFunction(f);
             break;

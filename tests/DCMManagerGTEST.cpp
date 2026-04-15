@@ -119,6 +119,21 @@ TEST_F(DCMManagerTest, GetAllFigures) {
     EXPECT_EQ(figures.size(), 3);
 }
 
+TEST_F(DCMManagerTest, GetAllPointsWithID) {
+    auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 0.0));
+    auto p3 = manager.addFigure(FigureDescriptor::point(5.0, 5.0));
+    auto l1 = manager.addFigure(FigureDescriptor::line(p1, p2));
+
+    auto points = manager.getAllPoints();
+    EXPECT_EQ(points.size(), 3);
+    // Check that all are points and have correct values
+    for (const auto& desc : points) {
+        EXPECT_EQ(desc.type, FigureType::ET_POINT2D);
+        EXPECT_TRUE(desc.x.has_value() && desc.y.has_value());
+    }
+}
+
 TEST_F(DCMManagerTest, AddRequirement) {
     auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
     auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 0.0));
@@ -309,10 +324,7 @@ TEST_F(DCMManagerTest, StorageAccess) {
     auto p = manager.addFigure(FigureDescriptor::point(5.0, 10.0));
 
     const auto& constStorage = manager.getStorage();
-    auto& mutableStorage = manager.storage();
-
     EXPECT_TRUE(constStorage.contains(p));
-    EXPECT_TRUE(mutableStorage.contains(p));
 }
 
 TEST_F(DCMManagerTest, RequirementSystemAccess) {

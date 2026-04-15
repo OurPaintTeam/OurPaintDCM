@@ -28,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake build-essential
+          sudo apt-get install -y cmake build-essential valgrind
 
       - name: Cache CMake build
         uses: actions/cache@v3
@@ -46,3 +46,6 @@ jobs:
 
       - name: Run tests
         run: ctest --test-dir build --output-on-failure
+
+      - name: Run valgrind on all tests
+        run: bash scripts/run_valgrind_all.sh build

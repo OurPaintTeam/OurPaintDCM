@@ -1,19 +1,7 @@
 #ifndef OURPAINTDCM_HEADERS_FIGURES_GEOMETRYSTORAGE_H
 #define OURPAINTDCM_HEADERS_FIGURES_GEOMETRYSTORAGE_H
 
-#include <deque>
-#include <unordered_map>
-#include <optional>
-#include <span>
-#include <string>
-#include <string_view>
-#include <ranges>
-#include <concepts>
-#include <type_traits>
-#include <functional>
-#include <vector>
-#include <stdexcept>
-
+#include "GeometryDependencyIndex.h"
 #include "Point2D.h"
 #include "Line.h"
 #include "Circle.h"
@@ -22,6 +10,14 @@
 #include "IDGenerator.h"
 #include "Enums.h"
 #include "Graph.h"
+
+#include <cstdint>
+#include <memory>
+#include <optional>
+#include <unordered_map>
+#include <vector>
+#include <concepts>
+#include <stdexcept>
 
 namespace OurPaintDCM::Figures {
 
@@ -34,10 +30,7 @@ using Arc2D    = Arc<Point2D>;
 using ObjectGraph = Graph<ID, ID, UndirectedPolicy, WeightedPolicy>;
 
 /**
- * @brief Concept to check if a type is a supported geometric figure.
- * 
- * Allows template functions to be used only with allowed types.
- * Errors will be caught at compile time with clear messages.
+ * @brief Types allowed for GeometryStorage::get().
  */
 template <typename T>
 concept SupportedFigure = std::same_as<T, Point2D> ||
@@ -46,25 +39,27 @@ concept SupportedFigure = std::same_as<T, Point2D> ||
                           std::same_as<T, Arc2D>;
 
 /**
- * @brief Structure to store metadata about a geometric object.
- * 
- * Stores:
- * - type: figure type (Point, Line, Circle, Arc)
- * - ptr: raw pointer to object (void* for universality)
- * 
- * Why void*? This allows storing all types in a single unordered_map.
- * When retrieving, we know the type from `type` field and perform safe static_cast.
+ * @brief Outcome of a non-throwing remove operation.
  */
-struct FigureEntry {
-    FigureType type;  ///< Type of geometric object
-    void*      ptr;   ///< Pointer to the object itself
-    
-    constexpr FigureEntry() noexcept : type{}, ptr{nullptr} {}
-    constexpr FigureEntry(FigureType t, void* p) noexcept : type(t), ptr(p) {}
+enum class RemoveResult : std::uint8_t {
+    Ok,                   /**< Object removed; state updated atomically for this call. */
+    NotFound,             /**< No object with this ID (or wrong branch for removeFigureOnly). */
+    BlockedByDependents,  /**< Point still referenced by figures; use forceCascade or delete figures first. */
 };
 
 /**
- * @brief Input data for figure creation without exposing internal types.
+ * @brief Maps a public figure ID to its FigureType and index in the per-type slot pool.
+ */
+struct FigureEntry {
+    FigureType    type{};
+    std::uint32_t slot{};
+
+    constexpr FigureEntry() noexcept = default;
+    constexpr FigureEntry(FigureType t, std::uint32_t s) noexcept : type(t), slot(s) {}
+};
+
+/**
+ * @brief Aggregated coordinates for GeometryStorage::createFigure() (batch / descriptor path).
  */
 struct FigureData {
     struct PointData {
@@ -73,345 +68,278 @@ struct FigureData {
     };
     std::vector<PointData> points{};
     PointData center{};
-    double radius{};
+    double     radius{};
 };
 
+/**
+ * @brief Cached handle for linear iteration: stable ID with a non-owning pointer into storage.
+ *
+ * Pointer remains valid while the object exists and is not removed from this storage.
+ */
+template <typename T>
+struct FigureRef {
+    ID         id{};
+    const T*   ptr{nullptr};
+};
 
 /**
- * @brief Storage for geometric objects with unified identification system.
- 
- * ## Usage Example
- * @code
- * GeometryStorage storage;
- * 
- * // Create points
- * auto [id1, p1] = storage.createPoint(0.0, 5.0);
- * auto [id2, p2] = storage.createPoint(10.0, 5.0);
- * 
- * // Create line between points
- * auto [lineId, line] = storage.createLine(p1, p2);
- * 
- * // Get object by ID
- * Point2D* point = storage.get<Point2D>(id1).value();
- * 
- * // Safe retrieval with type checking
- * auto result = storage.get<Line2D>(lineId);
- * if (result) {
- *     Line2D* myLine = result.value();
- * }
- * @endcode
+ * @brief ID-first 2D geometry store with slot pools and a bidirectional point↔figure dependency index.
+ *
+ * Dependency queries avoid scanning the whole scene: incident figures per point are O(degree)
+ * in the index; each figure keeps a fixed small list of endpoint / center IDs.
  */
 class GeometryStorage {
 public:
-    /**
-     * @brief Default constructor.
-     * 
-     * Creates empty storage with ID generator starting from 1.
-     */
+    /** @brief Constructs an empty storage; IDs start from the generator default. */
     GeometryStorage() = default;
-    
-    /// @brief Default destructor (deque will free memory itself).
+    /** @brief Releases all figures and clears indices. */
     ~GeometryStorage() = default;
-    
-    /// @brief Copying disabled (storage contains unique objects).
+
     GeometryStorage(const GeometryStorage&) = delete;
     GeometryStorage& operator=(const GeometryStorage&) = delete;
-    
-    /// @brief Move allowed.
+    /** @brief Move-constructs; source is left in a valid empty state. */
     GeometryStorage(GeometryStorage&&) noexcept = default;
+    /** @brief Move-assigns; source is left in a valid empty state. */
     GeometryStorage& operator=(GeometryStorage&&) noexcept = default;
-    
+
     /**
-     * @brief Create point with given coordinates.
-     * 
-     * @param x X coordinate
-     * @param y Y coordinate
-     * @return Pair {ID, pointer to created point}
-     * 
-     * Complexity: O(1) amortized (push_back in deque + insert in map)
+     * @brief Creates a point at (x, y).
+     * @return New unique ID for the point.
      */
-    [[nodiscard]] std::pair<ID, Point2D*> createPoint(double x, double y);
-    
+    [[nodiscard]] ID createPoint(double x, double y);
+
     /**
-     * @brief Create line between two points.
-     * 
-     * @param p1 Pointer to first point (must belong to this storage)
-     * @param p2 Pointer to second point
-     * @return Pair {ID, pointer to created line}
-     * 
-     * @warning Passed points must be created in THIS storage.
-     *          Otherwise behavior is undefined on deletion.
+     * @brief Creates a line through two existing points.
+     * @param p1 First endpoint ID (must be ET_POINT2D).
+     * @param p2 Second endpoint ID (must be ET_POINT2D).
+     * @return Line ID, or std::nullopt if either ID is missing or not a point.
      */
-    [[nodiscard]] std::pair<ID, Line2D*> createLine(Point2D* p1, Point2D* p2);
-    
+    [[nodiscard]] std::optional<ID> createLine(ID p1, ID p2);
+
     /**
-     * @brief Create circle.
-     * 
-     * @param center Pointer to center (point from this storage)
-     * @param radius Circle radius
-     * @return Pair {ID, pointer to created circle}
+     * @brief Creates a circle with given center and radius.
+     * @param center Center point ID (must be ET_POINT2D).
+     * @param radius Non-negative radius (semantics validated by Circle type).
+     * @return Circle ID, or std::nullopt if center is invalid.
      */
-    [[nodiscard]] std::pair<ID, Circle2D*> createCircle(Point2D* center, double radius);
-    
+    [[nodiscard]] std::optional<ID> createCircle(ID center, double radius);
+
     /**
-     * @brief Create arc.
-     * 
-     * @param p1 First endpoint of arc
-     * @param p2 Second endpoint of arc
-     * @param center Center of arc
-     * @return Pair {ID, pointer to created arc}
+     * @brief Creates an arc through two points with a center point.
+     * @param p1 First endpoint ID.
+     * @param p2 Second endpoint ID.
+     * @param center Center point ID.
+     * @return Arc ID, or std::nullopt if any ID is missing or not a point.
      */
-    [[nodiscard]] std::pair<ID, Arc2D*> createArc(Point2D* p1, Point2D* p2, Point2D* center);
-    
+    [[nodiscard]] std::optional<ID> createArc(ID p1, ID p2, ID center);
+
     /**
-     * @brief Create figure without exposing concrete types.
-     * 
-     * @param type Figure type to create
-     * @param data Input data (coordinates and radius)
-     * @return ID of created figure
-     * @throws std::runtime_error when data invalid or type unknown
+     * @brief Creates a figure from aggregated FigureData (may create nested points).
+     * @param type Figure kind (point, line, circle, arc).
+     * @param data Coordinates and radius as required by @p type.
+     * @return ID of the top-level created figure (for line/circle/arc) or point.
+     * @throws std::runtime_error if @p data is inconsistent or creation fails.
      */
     [[nodiscard]] ID createFigure(FigureType type, const FigureData& data);
-    
+
     /**
-     * @brief Get object by ID with type checking.
-     * 
-     * @tparam T Expected object type (Point2D, Line2D, Circle2D, Arc2D)
-     * @param id Object identifier
-     * @return T* if found
-     * @throws std::runtime_error if ID missing or type mismatch
-     * 
-     * Complexity: O(1) — lookup in unordered_map
-     * 
+     * @brief Mutable access to a figure by ID and expected type.
+     * @return Pointer into storage, or nullptr if ID missing or type mismatch.
      */
     template <SupportedFigure T>
-    [[nodiscard]] T* get(ID id) const;
-    
+    [[nodiscard]] T* get(ID id) noexcept;
+
     /**
-     * @brief Get object by ID without type checking (unsafe).
-     * 
-     * @param id Object identifier
-     * @return void* or nullptr if not found
-     * 
-     * @warning Caller must know the object type!
-     * 
-     * Useful when type is already known from another source (e.g., from FigureEntry).
+     * @brief Const access to a figure by ID and expected type.
+     * @return Pointer into storage, or nullptr if ID missing or type mismatch.
      */
-    [[nodiscard]] void* getRaw(ID id) const noexcept;
-    
+    template <SupportedFigure T>
+    [[nodiscard]] const T* get(ID id) const noexcept;
+
     /**
-     * @brief Get object type by ID.
-     * 
-     * @param id Object identifier
-     * @return std::optional<FigureType> — type or nullopt if ID not found
+     * @brief Returns the stored FigureType for an ID, if present.
      */
     [[nodiscard]] std::optional<FigureType> getType(ID id) const noexcept;
-    
+
     /**
-     * @brief Get full figure entry.
-     * 
-     * @param id Object identifier
-     * @return std::optional<FigureEntry> — entry or nullopt if not found
+     * @brief Returns the internal FigureEntry (type + pool slot) for diagnostics/tools.
      */
     [[nodiscard]] std::optional<FigureEntry> getEntry(ID id) const noexcept;
-    
+
     /**
-     * @brief Check if object exists.
-     * 
-     * @param id Object identifier
-     * @return true if object exists
+     * @brief True if @p id is currently a live object in this storage.
      */
     [[nodiscard]] bool contains(ID id) const noexcept;
 
     /**
-     * @brief Remove object by ID.
-     * 
-     * @param id Identifier of object to remove
-     * @param forceCascade If true — also removes dependent objects.
-     *                     If false — returns DEPENDENCY_EXISTS error if dependencies exist.
-     * @throws std::runtime_error when ID not found or dependencies block removal
-     * 
-     * ## Algorithm
-     * 1. Check existence
-     * 2. If Point2D, check dependencies (Line/Circle/Arc that use it)
-     * 3. If forceCascade=false and dependencies exist — error
-     * 4. If forceCascade=true — first remove dependent objects
-     * 5. Mark slot in deque as "deleted" (lazy deletion)
-     * 
-     * ## Why lazy deletion?
-     * Real deletion from middle of deque is O(n).
-     * We just remove entry from index. Object remains in memory,
-     * but is inaccessible. Can implement compaction if needed.
+     * @brief Removes an object by ID without throwing.
+     *
+     * For a point: if figures still reference it, returns BlockedByDependents unless
+     * @p forceCascade is true, in which case dependent figures are removed first, then the point.
+     * For a non-point figure: removes only that figure and updates the dependency index.
+     *
+     * @param id Object to remove.
+     * @param forceCascade When true, delete incident figures before deleting a point.
+     * @return RemoveResult describing success or reason for failure.
      */
-    void remove(ID id, bool forceCascade = false);
-    
+    [[nodiscard]] RemoveResult remove(ID id, bool forceCascade = false) noexcept;
+
     /**
-     * @brief Clear entire storage.
-     * 
-     * Removes all objects and resets ID generator.
+     * @brief Removes every object, resets ID generator, clears all indices and free lists.
      */
     void clear() noexcept;
 
     /**
-     * @brief Get span of all points.
-     * 
-     * @return std::span<Point2D> — contiguous view of all points
-     * 
-     * @note Span invalidates when adding new points!
-     *       Use for read-only iteration.
-     */
-    [[nodiscard]] std::span<Point2D> allPoints() noexcept;
-    [[nodiscard]] std::span<const Point2D> allPoints() const noexcept;
-    
-    [[nodiscard]] std::span<Line2D> allLines() noexcept;
-    [[nodiscard]] std::span<const Line2D> allLines() const noexcept;
-    
-    [[nodiscard]] std::span<Circle2D> allCircles() noexcept;
-    [[nodiscard]] std::span<const Circle2D> allCircles() const noexcept;
-    
-    [[nodiscard]] std::span<Arc2D> allArcs() noexcept;
-    [[nodiscard]] std::span<const Arc2D> allArcs() const noexcept;
-    
-    /**
-     * @brief Get all IDs of specified type.
-     * 
-     * @param type Figure type for filtering
-     * @return Vector of IDs of all objects of this type
-     * 
-     * Uses std::ranges for efficient filtering.
+     * @brief Lists all IDs of a given figure type (order matches internal cache order).
+     * @note complexity O(n) for n of that type — intended for enumeration, not hot paths.
      */
     [[nodiscard]] std::vector<ID> getIDsByType(FigureType type) const;
-    
-    /**
-     * @brief Get all entries (ID + Entry).
-     * 
-     * @return Const reference to internal index
-     * 
-     * Allows iterating over all objects:
-     * @code
-     * for (const auto& [id, entry] : storage.allEntries()) {
-     *     std::cout << "ID: " << id.id << ", Type: " << static_cast<int>(entry.type) << "\n";
-     * }
-     * @endcode
-     */
-    [[nodiscard]] const std::unordered_map<ID, FigureEntry>& allEntries() const noexcept;
-    
-    /**
-     * @brief Total number of objects in storage.
-     */
+
+    /** @brief Total number of live objects (all types). */
     [[nodiscard]] std::size_t size() const noexcept;
-    
-    /**
-     * @brief Number of points.
-     */
+    /** @brief Number of live points. */
     [[nodiscard]] std::size_t pointCount() const noexcept;
-    
-    /**
-     * @brief Number of lines.
-     */
+    /** @brief Number of live lines. */
     [[nodiscard]] std::size_t lineCount() const noexcept;
-    
-    /**
-     * @brief Number of circles.
-     */
+    /** @brief Number of live circles. */
     [[nodiscard]] std::size_t circleCount() const noexcept;
-    
-    /**
-     * @brief Number of arcs.
-     */
+    /** @brief Number of live arcs. */
     [[nodiscard]] std::size_t arcCount() const noexcept;
-    
-    /**
-     * @brief Check if empty.
-     */
+    /** @brief True if size() == 0. */
     [[nodiscard]] bool empty() const noexcept;
-    
+
     /**
-     * @brief Get current ID generator value.
-     * 
-     * Useful for serialization/deserialization.
+     * @brief Last issued ID from the internal generator (same as IDGenerator::current()).
      */
     [[nodiscard]] const ID& currentID() const noexcept;
+
     /**
-     * @brief Find all objects depending on given point.
-     * 
-     * @param pointId Point ID
-     * @return Vector of IDs of objects (Line, Circle, Arc) using this point
-     * 
-     * Useful before deleting point to see what will "break".
+     * @brief Figures incident on a point (lines/circles/arcs that use this point).
+     * @param pointId Must reference a point; otherwise returns empty vector.
+     * @return Copy of the index list; cost O(degree) for allocation and copy.
      */
     [[nodiscard]] std::vector<ID> getDependents(ID pointId) const;
-    
+
     /**
-     * @brief Find all points that object depends on.
-     * 
-     * @param id Object ID (Line, Circle, Arc)
-     * @return Vector of IDs of points referenced by object
+     * @brief Point IDs this figure depends on (endpoints / center); empty for points.
+     * @return Copy of stored arity list; lookup O(1), copy O(k) for k endpoints.
      */
     [[nodiscard]] std::vector<ID> getDependencies(ID id) const;
 
     /**
-     * @brief Build graph of objects where vertices are IDs and edges connect related objects.
-     * 
-     * Edge weight is ID(-1) as helper value for connected objects
+     * @brief Full object graph: all vertices plus edges between figures and their points.
      */
     [[nodiscard]] ObjectGraph buildObjectGraph() const;
-    
+
     /**
-     * @brief Build shallow subgraph for a given object ID (one-level neighborhood).
-     * 
-     * Includes the object and its direct dependencies/dependents only.
-     * @throws std::runtime_error if ID not found
+     * @brief Local subgraph around @p id: the object, its neighbours, and edges among them.
+     * @return std::nullopt if @p id is not in storage.
      */
-    [[nodiscard]] ObjectGraph buildObjectSubgraph(ID id) const;
+    [[nodiscard]] std::optional<ObjectGraph> buildObjectSubgraph(ID id) const;
+
+    /** @brief Read-only cache of all points for fast iteration (IDs + const pointers). */
+    [[nodiscard]] const std::vector<FigureRef<Point2D>>& pointsWithIds() const noexcept { return m_pointsWithIds; }
+    /** @brief Read-only cache of all lines. */
+    [[nodiscard]] const std::vector<FigureRef<Line2D>>& linesWithIds() const noexcept { return m_linesWithIds; }
+    /** @brief Read-only cache of all circles. */
+    [[nodiscard]] const std::vector<FigureRef<Circle2D>>& circlesWithIds() const noexcept { return m_circlesWithIds; }
+    /** @brief Read-only cache of all arcs. */
+    [[nodiscard]] const std::vector<FigureRef<Arc2D>>& arcsWithIds() const noexcept { return m_arcsWithIds; }
+
+#ifndef NDEBUG
+    /**
+     * @brief Validates index, caches, slot occupancy, and dependency arity in debug builds.
+     * @return False if any invariant is violated.
+     */
+    [[nodiscard]] bool validate() const noexcept;
+
+    /** @brief Point pool vector size (includes free slots); for tests/diagnostics only. */
+    [[nodiscard]] std::size_t debugPointPoolSize() const noexcept { return m_pointSlots.size(); }
+    /** @brief Line pool vector size (includes free slots); for tests/diagnostics only. */
+    [[nodiscard]] std::size_t debugLinePoolSize() const noexcept { return m_lineSlots.size(); }
+#endif
 
 private:
     /**
-     * @brief Storage for each object type.
-     * 
-     * We use deque instead of vector because:
-     * - On push_back, pointers to EXISTING elements are NOT invalidated
-     * - This is critical since Line/Circle/Arc store Point2D*
-     * - Vector on reallocation would move all Point2D, breaking all pointers
+     * @brief Removes a line, circle, or arc by ID; does not delete points.
+     * @return NotFound if id missing, is a point, or unknown type.
      */
-    std::deque<Point2D>  m_points;
-    std::deque<Line2D>   m_lines;
-    std::deque<Circle2D> m_circles;
-    std::deque<Arc2D>    m_arcs;
-    
-    /**
-     * @brief Main index: ID -> (type + pointer).
-     * 
-     * Provides O(1) access to any object by its unique ID.
-     * Hash function for ID is defined in ID.h (std::hash specialization).
-     */
-    std::unordered_map<ID, FigureEntry> m_index;
-    
-    /**
-     * @brief Unique ID generator.
-     * 
-     * Single generator for entire storage all objects get unique ID
-     * from unified sequence.
-     */
-    IDGenerator m_idGen;
-    
-    /**
-     * @brief Reverse index: Point2D* -> ID.
-     */
-    std::unordered_map<const Point2D*, ID> m_pointToID;
+    [[nodiscard]] RemoveResult removeFigureOnly(ID id) noexcept;
 
     /**
-     * @brief Convert type T to corresponding FigureType.
+     * @brief Returns @p id if it names a point; otherwise std::nullopt.
      */
+    std::optional<ID> tryPointId(ID id) const noexcept;
+
+    /** @brief Appends to per-type iteration cache and position map. */
+    void registerPointCache(ID id, const Point2D* ptr);
+    void registerLineCache(ID id, const Line2D* ptr);
+    void registerCircleCache(ID id, const Circle2D* ptr);
+    void registerArcCache(ID id, const Arc2D* ptr);
+
+    /** @brief Swaps out of dense cache by ID (swap-with-last). */
+    void erasePointCache(ID id) noexcept;
+    void eraseLineCache(ID id) noexcept;
+    void eraseCircleCache(ID id) noexcept;
+    void eraseArcCache(ID id) noexcept;
+
+    /**
+     * @brief Removes one entry from @p cache and keeps @p posMap consistent.
+     */
+    template <typename T>
+    static void eraseCachedById(
+        ID id,
+        std::vector<FigureRef<T>>& cache,
+        std::unordered_map<ID, std::size_t>& posMap
+    ) noexcept;
+
+    /** @brief Allocates or reuses a point slot; returns slot index. */
+    std::size_t allocPoint(double x, double y);
+    /** @brief Allocates or reuses a line slot; line stores raw pointers @p a, @p b. */
+    std::size_t allocLine(Point2D* a, Point2D* b);
+    /** @brief Allocates or reuses a circle slot. */
+    std::size_t allocCircle(Point2D* c, double r);
+    /** @brief Allocates or reuses an arc slot. */
+    std::size_t allocArc(Point2D* p1, Point2D* p2, Point2D* c);
+
+    /** @brief Destroys point in slot and pushes slot index onto the point free list. */
+    void freePoint(std::size_t slot);
+    /** @brief Destroys line in slot and pushes slot index onto the line free list. */
+    void freeLine(std::size_t slot);
+    /** @brief Destroys circle in slot and pushes slot index onto the circle free list. */
+    void freeCircle(std::size_t slot);
+    /** @brief Destroys arc in slot and pushes slot index onto the arc free list. */
+    void freeArc(std::size_t slot);
+
+    /** @brief Maps C++ figure type to FigureType enum. */
     template <SupportedFigure T>
     static constexpr FigureType typeToEnum() noexcept;
-    
-    /**
-     * @brief Find point ID by pointer.
-     */
-    [[nodiscard]] std::optional<ID> findPointID(const Point2D* ptr) const noexcept;
+
+    std::vector<std::unique_ptr<Point2D>> m_pointSlots;
+    std::vector<std::size_t>              m_pointFree;
+    std::vector<std::unique_ptr<Line2D>> m_lineSlots;
+    std::vector<std::size_t>              m_lineFree;
+    std::vector<std::unique_ptr<Circle2D>> m_circleSlots;
+    std::vector<std::size_t>              m_circleFree;
+    std::vector<std::unique_ptr<Arc2D>> m_arcSlots;
+    std::vector<std::size_t>              m_arcFree;
+
+    std::unordered_map<ID, FigureEntry> m_index;
+    IDGenerator                         m_idGen;
+    GeometryDependencyIndex             m_deps;
+
+    std::vector<FigureRef<Point2D>>  m_pointsWithIds;
+    std::vector<FigureRef<Line2D>>   m_linesWithIds;
+    std::vector<FigureRef<Circle2D>> m_circlesWithIds;
+    std::vector<FigureRef<Arc2D>>    m_arcsWithIds;
+
+    std::unordered_map<ID, std::size_t> m_pointWithIdPos;
+    std::unordered_map<ID, std::size_t> m_lineWithIdPos;
+    std::unordered_map<ID, std::size_t> m_circleWithIdPos;
+    std::unordered_map<ID, std::size_t> m_arcWithIdPos;
 };
 
+/** @brief Compile-time FigureType for template get(). */
 template <SupportedFigure T>
 constexpr FigureType GeometryStorage::typeToEnum() noexcept {
     if constexpr (std::same_as<T, Point2D>)  return FigureType::ET_POINT2D;
@@ -420,23 +348,67 @@ constexpr FigureType GeometryStorage::typeToEnum() noexcept {
     if constexpr (std::same_as<T, Arc2D>)    return FigureType::ET_ARC;
 }
 
+/** @brief Non-const get(); see class GeometryStorage::get. */
 template <SupportedFigure T>
-T* GeometryStorage::get(ID id) const {
+T* GeometryStorage::get(ID id) noexcept {
     auto it = m_index.find(id);
-    if (it == m_index.end()) {
-        throw std::runtime_error("Object with given ID not found");
+    if (it == m_index.end() || it->second.type != typeToEnum<T>()) {
+        return nullptr;
     }
-    
-    const FigureEntry& entry = it->second;
-    if (entry.type != typeToEnum<T>()) {
-        throw std::runtime_error("Requested type does not match actual type");
+    const std::uint32_t s = it->second.slot;
+    if constexpr (std::same_as<T, Point2D>) {
+        return m_pointSlots[s].get();
+    } else if constexpr (std::same_as<T, Line2D>) {
+        return m_lineSlots[s].get();
+    } else if constexpr (std::same_as<T, Circle2D>) {
+        return m_circleSlots[s].get();
+    } else {
+        return m_arcSlots[s].get();
     }
-    
-    return static_cast<T*>(entry.ptr);
 }
 
+/** @brief Const get(); see class GeometryStorage::get. */
+template <SupportedFigure T>
+const T* GeometryStorage::get(ID id) const noexcept {
+    auto it = m_index.find(id);
+    if (it == m_index.end() || it->second.type != typeToEnum<T>()) {
+        return nullptr;
+    }
+    const std::uint32_t s = it->second.slot;
+    if constexpr (std::same_as<T, Point2D>) {
+        return m_pointSlots[s].get();
+    } else if constexpr (std::same_as<T, Line2D>) {
+        return m_lineSlots[s].get();
+    } else if constexpr (std::same_as<T, Circle2D>) {
+        return m_circleSlots[s].get();
+    } else {
+        return m_arcSlots[s].get();
+    }
+}
+
+/**
+ * @brief Erase-by-swap in the dense FigureRef cache; updates secondary position map.
+ */
+template <typename T>
+void GeometryStorage::eraseCachedById(
+    ID id,
+    std::vector<FigureRef<T>>& cache,
+    std::unordered_map<ID, std::size_t>& posMap
+) noexcept {
+    auto it = posMap.find(id);
+    if (it == posMap.end()) {
+        return;
+    }
+    const std::size_t idx = it->second;
+    const std::size_t lastIdx = cache.size() - 1;
+    if (idx != lastIdx) {
+        cache[idx] = cache[lastIdx];
+        posMap[cache[idx].id] = idx;
+    }
+    cache.pop_back();
+    posMap.erase(it);
+}
 
 } // namespace OurPaintDCM::Figures
 
-#endif // OURPAINTDCM_HEADERS_FIGURES_GEOMETRYSTORAGE_H
-
+#endif

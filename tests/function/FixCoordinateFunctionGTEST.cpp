@@ -83,7 +83,9 @@ TEST(FixCoordinateFunctionTest, TracksVariableChanges) {
 
 TEST(FixCoordinateFactoryTest, CreateFixPoint) {
     GeometryStorage storage;
-    auto [id, pt] = storage.createPoint(3.0, 4.0);
+    const ID id = storage.createPoint(3.0, 4.0);
+    Point2D* pt = storage.get<Point2D>(id);
+    ASSERT_NE(pt, nullptr);
     auto funcs = RequirementFunctionFactory::createFixPoint(pt);
 
     ASSERT_EQ(funcs.size(), 2u);
@@ -97,7 +99,9 @@ TEST(FixCoordinateFactoryTest, CreateFixPoint) {
 
 TEST(FixCoordinateFactoryTest, CreateFixPointDetectsMovement) {
     GeometryStorage storage;
-    auto [id, pt] = storage.createPoint(3.0, 4.0);
+    const ID id = storage.createPoint(3.0, 4.0);
+    Point2D* pt = storage.get<Point2D>(id);
+    ASSERT_NE(pt, nullptr);
     auto funcs = RequirementFunctionFactory::createFixPoint(pt);
 
     pt->x() = 10.0;
@@ -108,9 +112,14 @@ TEST(FixCoordinateFactoryTest, CreateFixPointDetectsMovement) {
 
 TEST(FixCoordinateFactoryTest, CreateFixLine) {
     GeometryStorage storage;
-    auto [id1, pt1] = storage.createPoint(1.0, 2.0);
-    auto [id2, pt2] = storage.createPoint(5.0, 6.0);
-    auto [lid, line] = storage.createLine(pt1, pt2);
+    const ID id1 = storage.createPoint(1.0, 2.0);
+    const ID id2 = storage.createPoint(5.0, 6.0);
+    Point2D* pt1 = storage.get<Point2D>(id1);
+    Point2D* pt2 = storage.get<Point2D>(id2);
+    auto lineOpt = storage.createLine(id1, id2);
+    ASSERT_TRUE(lineOpt.has_value());
+    Line2D* line = storage.get<Line2D>(*lineOpt);
+    ASSERT_NE(line, nullptr);
 
     auto funcs = RequirementFunctionFactory::createFixLine(line);
     ASSERT_EQ(funcs.size(), 4u);
@@ -127,9 +136,14 @@ TEST(FixCoordinateFactoryTest, CreateFixLine) {
 
 TEST(FixCoordinateFactoryTest, CreateFixLineDetectsMovement) {
     GeometryStorage storage;
-    auto [id1, pt1] = storage.createPoint(1.0, 2.0);
-    auto [id2, pt2] = storage.createPoint(5.0, 6.0);
-    auto [lid, line] = storage.createLine(pt1, pt2);
+    const ID id1 = storage.createPoint(1.0, 2.0);
+    const ID id2 = storage.createPoint(5.0, 6.0);
+    Point2D* pt1 = storage.get<Point2D>(id1);
+    Point2D* pt2 = storage.get<Point2D>(id2);
+    auto lineOpt = storage.createLine(id1, id2);
+    ASSERT_TRUE(lineOpt.has_value());
+    Line2D* line = storage.get<Line2D>(*lineOpt);
+    ASSERT_NE(line, nullptr);
 
     auto funcs = RequirementFunctionFactory::createFixLine(line);
 
@@ -141,8 +155,13 @@ TEST(FixCoordinateFactoryTest, CreateFixLineDetectsMovement) {
 
 TEST(FixCoordinateFactoryTest, CreateFixCircle) {
     GeometryStorage storage;
-    auto [cid, center] = storage.createPoint(3.0, 4.0);
-    auto [circId, circle] = storage.createCircle(center, 7.5);
+    const ID cid = storage.createPoint(3.0, 4.0);
+    Point2D* center = storage.get<Point2D>(cid);
+    ASSERT_NE(center, nullptr);
+    auto circOpt = storage.createCircle(cid, 7.5);
+    ASSERT_TRUE(circOpt.has_value());
+    Circle2D* circle = storage.get<Circle2D>(*circOpt);
+    ASSERT_NE(circle, nullptr);
 
     auto funcs = RequirementFunctionFactory::createFixCircle(circle);
     ASSERT_EQ(funcs.size(), 3u);
@@ -158,8 +177,13 @@ TEST(FixCoordinateFactoryTest, CreateFixCircle) {
 
 TEST(FixCoordinateFactoryTest, CreateFixCircleDetectsMovement) {
     GeometryStorage storage;
-    auto [cid, center] = storage.createPoint(3.0, 4.0);
-    auto [circId, circle] = storage.createCircle(center, 7.5);
+    const ID cid = storage.createPoint(3.0, 4.0);
+    Point2D* center = storage.get<Point2D>(cid);
+    ASSERT_NE(center, nullptr);
+    auto circOpt = storage.createCircle(cid, 7.5);
+    ASSERT_TRUE(circOpt.has_value());
+    Circle2D* circle = storage.get<Circle2D>(*circOpt);
+    ASSERT_NE(circle, nullptr);
 
     auto funcs = RequirementFunctionFactory::createFixCircle(circle);
 

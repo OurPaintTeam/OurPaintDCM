@@ -15,19 +15,17 @@ protected:
     ID circleId;
 
     void SetUp() override {
-        auto [id1, pt1] = storage.createPoint(1.0, 2.0);
-        auto [id2, pt2] = storage.createPoint(5.0, 6.0);
-        auto [id3, pt3] = storage.createPoint(3.0, 4.0);
+        p1Id = storage.createPoint(1.0, 2.0);
+        p2Id = storage.createPoint(5.0, 6.0);
+        centerId = storage.createPoint(3.0, 4.0);
 
-        p1Id = id1;
-        p2Id = id2;
-        centerId = id3;
+        auto lineOpt = storage.createLine(p1Id, p2Id);
+        ASSERT_TRUE(lineOpt.has_value());
+        lineId = *lineOpt;
 
-        auto [lid, l] = storage.createLine(pt1, pt2);
-        lineId = lid;
-
-        auto [cid, c] = storage.createCircle(pt3, 7.5);
-        circleId = cid;
+        auto circOpt = storage.createCircle(centerId, 7.5);
+        ASSERT_TRUE(circOpt.has_value());
+        circleId = *circOpt;
     }
 };
 

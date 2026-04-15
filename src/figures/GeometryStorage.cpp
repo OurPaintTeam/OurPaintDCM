@@ -1,54 +1,180 @@
 #include "GeometryStorage.h"
+#include "GeometryGraphBuilder.h"
 
 #include <algorithm>
-#include <ranges>
 
 namespace OurPaintDCM::Figures {
 
-std::pair<ID, Point2D*> GeometryStorage::createPoint(double x, double y) {
-    ID id = m_idGen.nextID();
-    
-    m_points.emplace_back(x, y);
-    Point2D* ptr = &m_points.back();
-    
-    m_index.emplace(id, FigureEntry{FigureType::ET_POINT2D, ptr});
-    
-    m_pointToID.emplace(ptr, id);
-    
-    return {id, ptr};
+void GeometryStorage::registerPointCache(ID id, const Point2D* ptr) {
+    m_pointWithIdPos.emplace(id, m_pointsWithIds.size());
+    m_pointsWithIds.push_back(FigureRef<Point2D>{id, ptr});
 }
 
-std::pair<ID, Line2D*> GeometryStorage::createLine(Point2D* p1, Point2D* p2) {
-    ID id = m_idGen.nextID();
-    
-    m_lines.emplace_back(p1, p2);
-    Line2D* ptr = &m_lines.back();
-    
-    m_index.emplace(id, FigureEntry{FigureType::ET_LINE, ptr});
-    
-    return {id, ptr};
+void GeometryStorage::registerLineCache(ID id, const Line2D* ptr) {
+    m_lineWithIdPos.emplace(id, m_linesWithIds.size());
+    m_linesWithIds.push_back(FigureRef<Line2D>{id, ptr});
 }
 
-std::pair<ID, Circle2D*> GeometryStorage::createCircle(Point2D* center, double radius) {
-    ID id = m_idGen.nextID();
-    
-    m_circles.emplace_back(center, radius);
-    Circle2D* ptr = &m_circles.back();
-    
-    m_index.emplace(id, FigureEntry{FigureType::ET_CIRCLE, ptr});
-    
-    return {id, ptr};
+void GeometryStorage::registerCircleCache(ID id, const Circle2D* ptr) {
+    m_circleWithIdPos.emplace(id, m_circlesWithIds.size());
+    m_circlesWithIds.push_back(FigureRef<Circle2D>{id, ptr});
 }
 
-std::pair<ID, Arc2D*> GeometryStorage::createArc(Point2D* p1, Point2D* p2, Point2D* center) {
-    ID id = m_idGen.nextID();
-    
-    m_arcs.emplace_back(p1, p2, center);
-    Arc2D* ptr = &m_arcs.back();
-    
-    m_index.emplace(id, FigureEntry{FigureType::ET_ARC, ptr});
-    
-    return {id, ptr};
+void GeometryStorage::registerArcCache(ID id, const Arc2D* ptr) {
+    m_arcWithIdPos.emplace(id, m_arcsWithIds.size());
+    m_arcsWithIds.push_back(FigureRef<Arc2D>{id, ptr});
+}
+
+void GeometryStorage::erasePointCache(ID id) noexcept {
+    eraseCachedById(id, m_pointsWithIds, m_pointWithIdPos);
+}
+
+void GeometryStorage::eraseLineCache(ID id) noexcept {
+    eraseCachedById(id, m_linesWithIds, m_lineWithIdPos);
+}
+
+void GeometryStorage::eraseCircleCache(ID id) noexcept {
+    eraseCachedById(id, m_circlesWithIds, m_circleWithIdPos);
+}
+
+void GeometryStorage::eraseArcCache(ID id) noexcept {
+    eraseCachedById(id, m_arcsWithIds, m_arcWithIdPos);
+}
+
+std::size_t GeometryStorage::allocPoint(double x, double y) {
+    if (!m_pointFree.empty()) {
+        const std::size_t i = m_pointFree.back();
+        m_pointFree.pop_back();
+        m_pointSlots[i] = std::make_unique<Point2D>(x, y);
+        return i;
+    }
+    m_pointSlots.push_back(std::make_unique<Point2D>(x, y));
+    return m_pointSlots.size() - 1;
+}
+
+std::size_t GeometryStorage::allocLine(Point2D* a, Point2D* b) {
+    if (!m_lineFree.empty()) {
+        const std::size_t i = m_lineFree.back();
+        m_lineFree.pop_back();
+        m_lineSlots[i] = std::make_unique<Line2D>(a, b);
+        return i;
+    }
+    m_lineSlots.push_back(std::make_unique<Line2D>(a, b));
+    return m_lineSlots.size() - 1;
+}
+
+std::size_t GeometryStorage::allocCircle(Point2D* c, double r) {
+    if (!m_circleFree.empty()) {
+        const std::size_t i = m_circleFree.back();
+        m_circleFree.pop_back();
+        m_circleSlots[i] = std::make_unique<Circle2D>(c, r);
+        return i;
+    }
+    m_circleSlots.push_back(std::make_unique<Circle2D>(c, r));
+    return m_circleSlots.size() - 1;
+}
+
+std::size_t GeometryStorage::allocArc(Point2D* p1, Point2D* p2, Point2D* c) {
+    if (!m_arcFree.empty()) {
+        const std::size_t i = m_arcFree.back();
+        m_arcFree.pop_back();
+        m_arcSlots[i] = std::make_unique<Arc2D>(p1, p2, c);
+        return i;
+    }
+    m_arcSlots.push_back(std::make_unique<Arc2D>(p1, p2, c));
+    return m_arcSlots.size() - 1;
+}
+
+void GeometryStorage::freePoint(std::size_t slot) {
+    m_pointSlots[slot].reset();
+    m_pointFree.push_back(slot);
+}
+
+void GeometryStorage::freeLine(std::size_t slot) {
+    m_lineSlots[slot].reset();
+    m_lineFree.push_back(slot);
+}
+
+void GeometryStorage::freeCircle(std::size_t slot) {
+    m_circleSlots[slot].reset();
+    m_circleFree.push_back(slot);
+}
+
+void GeometryStorage::freeArc(std::size_t slot) {
+    m_arcSlots[slot].reset();
+    m_arcFree.push_back(slot);
+}
+
+std::optional<ID> GeometryStorage::tryPointId(ID id) const noexcept {
+    auto it = m_index.find(id);
+    if (it == m_index.end() || it->second.type != FigureType::ET_POINT2D) {
+        return std::nullopt;
+    }
+    return id;
+}
+
+ID GeometryStorage::createPoint(double x, double y) {
+    const std::size_t slot = allocPoint(x, y);
+    const ID id = m_idGen.nextID();
+    m_index.emplace(id, FigureEntry{FigureType::ET_POINT2D, static_cast<std::uint32_t>(slot)});
+    registerPointCache(id, m_pointSlots[slot].get());
+    return id;
+}
+
+std::optional<ID> GeometryStorage::createLine(ID p1, ID p2) {
+    auto it1 = m_index.find(p1);
+    auto it2 = m_index.find(p2);
+    if (it1 == m_index.end() || it2 == m_index.end()) {
+        return std::nullopt;
+    }
+    if (it1->second.type != FigureType::ET_POINT2D || it2->second.type != FigureType::ET_POINT2D) {
+        return std::nullopt;
+    }
+    Point2D* a = m_pointSlots[it1->second.slot].get();
+    Point2D* b = m_pointSlots[it2->second.slot].get();
+    const std::size_t slot = allocLine(a, b);
+    const ID id = m_idGen.nextID();
+    m_index.emplace(id, FigureEntry{FigureType::ET_LINE, static_cast<std::uint32_t>(slot)});
+    m_deps.linkLine(id, p1, p2);
+    registerLineCache(id, m_lineSlots[slot].get());
+    return id;
+}
+
+std::optional<ID> GeometryStorage::createCircle(ID center, double radius) {
+    auto it = m_index.find(center);
+    if (it == m_index.end() || it->second.type != FigureType::ET_POINT2D) {
+        return std::nullopt;
+    }
+    Point2D* c = m_pointSlots[it->second.slot].get();
+    const std::size_t slot = allocCircle(c, radius);
+    const ID id = m_idGen.nextID();
+    m_index.emplace(id, FigureEntry{FigureType::ET_CIRCLE, static_cast<std::uint32_t>(slot)});
+    m_deps.linkCircle(id, center);
+    registerCircleCache(id, m_circleSlots[slot].get());
+    return id;
+}
+
+std::optional<ID> GeometryStorage::createArc(ID p1, ID p2, ID center) {
+    auto it1 = m_index.find(p1);
+    auto it2 = m_index.find(p2);
+    auto itc = m_index.find(center);
+    if (it1 == m_index.end() || it2 == m_index.end() || itc == m_index.end()) {
+        return std::nullopt;
+    }
+    if (it1->second.type != FigureType::ET_POINT2D ||
+        it2->second.type != FigureType::ET_POINT2D ||
+        itc->second.type != FigureType::ET_POINT2D) {
+        return std::nullopt;
+    }
+    Point2D* a = m_pointSlots[it1->second.slot].get();
+    Point2D* b = m_pointSlots[it2->second.slot].get();
+    Point2D* c = m_pointSlots[itc->second.slot].get();
+    const std::size_t slot = allocArc(a, b, c);
+    const ID id = m_idGen.nextID();
+    m_index.emplace(id, FigureEntry{FigureType::ET_ARC, static_cast<std::uint32_t>(slot)});
+    m_deps.linkArc(id, p1, p2, center);
+    registerArcCache(id, m_arcSlots[slot].get());
+    return id;
 }
 
 ID GeometryStorage::createFigure(FigureType type, const FigureData& data) {
@@ -58,166 +184,186 @@ ID GeometryStorage::createFigure(FigureType type, const FigureData& data) {
                 throw std::runtime_error("Point data not provided");
             }
             const auto& p = data.points.front();
-            auto result = createPoint(p.x, p.y);
-            return result.first;
+            return createPoint(p.x, p.y);
         }
         case FigureType::ET_LINE: {
             if (data.points.size() < 2) {
                 throw std::runtime_error("Line requires two points");
             }
-            const auto& p1 = data.points[0];
-            const auto& p2 = data.points[1];
-            auto point1 = createPoint(p1.x, p1.y);
-            auto point2 = createPoint(p2.x, p2.y);
-            auto lineResult = createLine(point1.second, point2.second);
-            return lineResult.first;
+            const ID idA = createPoint(data.points[0].x, data.points[0].y);
+            const ID idB = createPoint(data.points[1].x, data.points[1].y);
+            auto lineId = createLine(idA, idB);
+            if (!lineId) {
+                throw std::runtime_error("Line creation failed");
+            }
+            return *lineId;
         }
         case FigureType::ET_CIRCLE: {
-            auto centerPoint = createPoint(data.center.x, data.center.y);
-            auto circleResult = createCircle(centerPoint.second, data.radius);
-            return circleResult.first;
+            const ID c = createPoint(data.center.x, data.center.y);
+            auto circ = createCircle(c, data.radius);
+            if (!circ) {
+                throw std::runtime_error("Circle creation failed");
+            }
+            return *circ;
         }
         case FigureType::ET_ARC: {
             if (data.points.size() < 2) {
                 throw std::runtime_error("Arc requires two endpoints");
             }
-            const auto& p1 = data.points[0];
-            const auto& p2 = data.points[1];
-            auto point1 = createPoint(p1.x, p1.y);
-            auto point2 = createPoint(p2.x, p2.y);
-            auto centerPoint = createPoint(data.center.x, data.center.y);
-            auto arcResult = createArc(point1.second, point2.second, centerPoint.second);
-            return arcResult.first;
+            const ID id1 = createPoint(data.points[0].x, data.points[0].y);
+            const ID id2 = createPoint(data.points[1].x, data.points[1].y);
+            const ID idC = createPoint(data.center.x, data.center.y);
+            auto arcId = createArc(id1, id2, idC);
+            if (!arcId) {
+                throw std::runtime_error("Arc creation failed");
+            }
+            return *arcId;
         }
         default:
             throw std::runtime_error("Unknown figure type");
     }
 }
 
-void* GeometryStorage::getRaw(ID id) const noexcept {
+RemoveResult GeometryStorage::removeFigureOnly(ID id) noexcept {
     auto it = m_index.find(id);
-    return (it != m_index.end()) ? it->second.ptr : nullptr;
+    if (it == m_index.end() || it->second.type == FigureType::ET_POINT2D) {
+        return RemoveResult::NotFound;
+    }
+    const FigureEntry ent = it->second;
+    m_deps.unlinkFigure(id);
+
+    switch (ent.type) {
+        case FigureType::ET_LINE:
+            eraseLineCache(id);
+            m_lineSlots[ent.slot].reset();
+            m_lineFree.push_back(ent.slot);
+            break;
+        case FigureType::ET_CIRCLE:
+            eraseCircleCache(id);
+            m_circleSlots[ent.slot].reset();
+            m_circleFree.push_back(ent.slot);
+            break;
+        case FigureType::ET_ARC:
+            eraseArcCache(id);
+            m_arcSlots[ent.slot].reset();
+            m_arcFree.push_back(ent.slot);
+            break;
+        default:
+            return RemoveResult::NotFound;
+    }
+    m_index.erase(it);
+    return RemoveResult::Ok;
+}
+
+RemoveResult GeometryStorage::remove(ID id, bool forceCascade) noexcept {
+    auto it = m_index.find(id);
+    if (it == m_index.end()) {
+        return RemoveResult::NotFound;
+    }
+
+    if (it->second.type == FigureType::ET_POINT2D) {
+        if (m_deps.hasDependents(id)) {
+            if (!forceCascade) {
+                return RemoveResult::BlockedByDependents;
+            }
+            const std::vector<ID> toRemove = m_deps.dependentsOfPoint(id);
+            for (ID fig : toRemove) {
+                (void)removeFigureOnly(fig);
+            }
+        }
+        auto itPt = m_index.find(id);
+        if (itPt == m_index.end() || itPt->second.type != FigureType::ET_POINT2D) {
+            return RemoveResult::NotFound;
+        }
+        const std::uint32_t slot = itPt->second.slot;
+        erasePointCache(id);
+        freePoint(slot);
+        m_index.erase(itPt);
+        return RemoveResult::Ok;
+    }
+
+    return removeFigureOnly(id);
+}
+
+void GeometryStorage::clear() noexcept {
+    m_pointSlots.clear();
+    m_lineSlots.clear();
+    m_circleSlots.clear();
+    m_arcSlots.clear();
+    m_pointFree.clear();
+    m_lineFree.clear();
+    m_circleFree.clear();
+    m_arcFree.clear();
+    m_index.clear();
+    m_deps.clear();
+    m_pointsWithIds.clear();
+    m_linesWithIds.clear();
+    m_circlesWithIds.clear();
+    m_arcsWithIds.clear();
+    m_pointWithIdPos.clear();
+    m_lineWithIdPos.clear();
+    m_circleWithIdPos.clear();
+    m_arcWithIdPos.clear();
+    m_idGen.reset();
 }
 
 std::optional<FigureType> GeometryStorage::getType(ID id) const noexcept {
     auto it = m_index.find(id);
-    if (it != m_index.end()) {
-        return it->second.type;
+    if (it == m_index.end()) {
+        return std::nullopt;
     }
-    return std::nullopt;
+    return it->second.type;
 }
 
 std::optional<FigureEntry> GeometryStorage::getEntry(ID id) const noexcept {
     auto it = m_index.find(id);
-    if (it != m_index.end()) {
-        return it->second;
+    if (it == m_index.end()) {
+        return std::nullopt;
     }
-    return std::nullopt;
+    return it->second;
 }
 
 bool GeometryStorage::contains(ID id) const noexcept {
     return m_index.contains(id);
 }
 
-
-void GeometryStorage::remove(ID id, bool forceCascade) {
-    auto it = m_index.find(id);
-    if (it == m_index.end()) {
-        throw std::runtime_error("ID not found");
-    }
-    
-    const FigureEntry& entry = it->second;
-    
-    if (entry.type == FigureType::ET_POINT2D) {
-        std::vector<ID> dependents = getDependents(id);
-        
-        if (!dependents.empty()) {
-            if (!forceCascade) {
-                throw std::runtime_error("Dependencies exist");
-            }
-            
-            for (ID depId : dependents) {
-                try {
-                    remove(depId, false);
-                } catch (const std::runtime_error&) {
-                    // ignore if already removed
-                }
-            }
-        }
-        
-        const Point2D* ptrPoint = static_cast<const Point2D*>(entry.ptr);
-        m_pointToID.erase(ptrPoint);
-    }
-    
-    m_index.erase(it);
-    
-    return;
-}
-
-void GeometryStorage::clear() noexcept {
-    m_points.clear();
-    m_lines.clear();
-    m_circles.clear();
-    m_arcs.clear();
-    m_index.clear();
-    m_pointToID.clear();
-    m_idGen.reset();
-}
-
-std::span<Point2D> GeometryStorage::allPoints() noexcept {
-    if (m_points.empty()) return {};
-    return std::span<Point2D>{&m_points.front(), m_points.size()};
-}
-
-std::span<const Point2D> GeometryStorage::allPoints() const noexcept {
-    if (m_points.empty()) return {};
-    return std::span<const Point2D>{&m_points.front(), m_points.size()};
-}
-
-std::span<Line2D> GeometryStorage::allLines() noexcept {
-    if (m_lines.empty()) return {};
-    return std::span<Line2D>{&m_lines.front(), m_lines.size()};
-}
-
-std::span<const Line2D> GeometryStorage::allLines() const noexcept {
-    if (m_lines.empty()) return {};
-    return std::span<const Line2D>{&m_lines.front(), m_lines.size()};
-}
-
-std::span<Circle2D> GeometryStorage::allCircles() noexcept {
-    if (m_circles.empty()) return {};
-    return std::span<Circle2D>{&m_circles.front(), m_circles.size()};
-}
-
-std::span<const Circle2D> GeometryStorage::allCircles() const noexcept {
-    if (m_circles.empty()) return {};
-    return std::span<const Circle2D>{&m_circles.front(), m_circles.size()};
-}
-
-std::span<Arc2D> GeometryStorage::allArcs() noexcept {
-    if (m_arcs.empty()) return {};
-    return std::span<Arc2D>{&m_arcs.front(), m_arcs.size()};
-}
-
-std::span<const Arc2D> GeometryStorage::allArcs() const noexcept {
-    if (m_arcs.empty()) return {};
-    return std::span<const Arc2D>{&m_arcs.front(), m_arcs.size()};
-}
-
 std::vector<ID> GeometryStorage::getIDsByType(FigureType type) const {
-    std::vector<ID> result;
-    
-    for (const auto& [id, entry] : m_index) {
-        if (entry.type == type) {
-            result.push_back(id);
+    switch (type) {
+        case FigureType::ET_POINT2D: {
+            std::vector<ID> ids;
+            ids.reserve(m_pointsWithIds.size());
+            for (const auto& r : m_pointsWithIds) {
+                ids.push_back(r.id);
+            }
+            return ids;
         }
+        case FigureType::ET_LINE: {
+            std::vector<ID> ids;
+            ids.reserve(m_linesWithIds.size());
+            for (const auto& r : m_linesWithIds) {
+                ids.push_back(r.id);
+            }
+            return ids;
+        }
+        case FigureType::ET_CIRCLE: {
+            std::vector<ID> ids;
+            ids.reserve(m_circlesWithIds.size());
+            for (const auto& r : m_circlesWithIds) {
+                ids.push_back(r.id);
+            }
+            return ids;
+        }
+        case FigureType::ET_ARC: {
+            std::vector<ID> ids;
+            ids.reserve(m_arcsWithIds.size());
+            for (const auto& r : m_arcsWithIds) {
+                ids.push_back(r.id);
+            }
+            return ids;
+        }
+        default:
+            return {};
     }
-    
-    return result;
-}
-
-const std::unordered_map<ID, FigureEntry>& GeometryStorage::allEntries() const noexcept {
-    return m_index;
 }
 
 std::size_t GeometryStorage::size() const noexcept {
@@ -225,27 +371,19 @@ std::size_t GeometryStorage::size() const noexcept {
 }
 
 std::size_t GeometryStorage::pointCount() const noexcept {
-    return std::ranges::count_if(m_index, [](const auto& pair) {
-        return pair.second.type == FigureType::ET_POINT2D;
-    });
+    return m_pointsWithIds.size();
 }
 
 std::size_t GeometryStorage::lineCount() const noexcept {
-    return std::ranges::count_if(m_index, [](const auto& pair) {
-        return pair.second.type == FigureType::ET_LINE;
-    });
+    return m_linesWithIds.size();
 }
 
 std::size_t GeometryStorage::circleCount() const noexcept {
-    return std::ranges::count_if(m_index, [](const auto& pair) {
-        return pair.second.type == FigureType::ET_CIRCLE;
-    });
+    return m_circlesWithIds.size();
 }
 
 std::size_t GeometryStorage::arcCount() const noexcept {
-    return std::ranges::count_if(m_index, [](const auto& pair) {
-        return pair.second.type == FigureType::ET_ARC;
-    });
+    return m_arcsWithIds.size();
 }
 
 bool GeometryStorage::empty() const noexcept {
@@ -257,175 +395,101 @@ const ID& GeometryStorage::currentID() const noexcept {
 }
 
 std::vector<ID> GeometryStorage::getDependents(ID pointId) const {
-    std::vector<ID> result;
-    
-    auto entryOpt = getEntry(pointId);
-    if (!entryOpt || entryOpt->type != FigureType::ET_POINT2D) {
-        return result;
+    if (!tryPointId(pointId)) {
+        return {};
     }
-    
-    const Point2D* targetPoint = static_cast<const Point2D*>(entryOpt->ptr);
-    
-    for (const auto& [id, entry] : m_index) {
-        switch (entry.type) {
-            case FigureType::ET_LINE: {
-                const Line2D* line = static_cast<const Line2D*>(entry.ptr);
-                if (line->p1 == targetPoint || line->p2 == targetPoint) {
-                    result.push_back(id);
-                }
-                break;
-            }
-            case FigureType::ET_CIRCLE: {
-                const Circle2D* circle = static_cast<const Circle2D*>(entry.ptr);
-                if (circle->center == targetPoint) {
-                    result.push_back(id);
-                }
-                break;
-            }
-            case FigureType::ET_ARC: {
-                const Arc2D* arc = static_cast<const Arc2D*>(entry.ptr);
-                if (arc->p1 == targetPoint || arc->p2 == targetPoint || arc->p_center == targetPoint) {
-                    result.push_back(id);
-                }
-                break;
-            }
-            default:
-                break;
-        }
-    }
-    
-    return result;
+    return m_deps.dependentsOfPoint(pointId);
 }
 
 std::vector<ID> GeometryStorage::getDependencies(ID id) const {
-    std::vector<ID> result;
-    
-    auto entryOpt = getEntry(id);
-    if (!entryOpt) {
-        return result;
+    auto it = m_index.find(id);
+    if (it == m_index.end() || it->second.type == FigureType::ET_POINT2D) {
+        return {};
     }
-    
-    std::vector<const Point2D*> pointPtrs;
-    
-    switch (entryOpt->type) {
-        case FigureType::ET_POINT2D:
-            break;
-        case FigureType::ET_LINE: {
-            const Line2D* line = static_cast<const Line2D*>(entryOpt->ptr);
-            pointPtrs = {line->p1, line->p2};
-            break;
-        }
-        case FigureType::ET_CIRCLE: {
-            const Circle2D* circle = static_cast<const Circle2D*>(entryOpt->ptr);
-            pointPtrs = {circle->center};
-            break;
-        }
-        case FigureType::ET_ARC: {
-            const Arc2D* arc = static_cast<const Arc2D*>(entryOpt->ptr);
-            pointPtrs = {arc->p1, arc->p2, arc->p_center};
-            break;
-        }
-    }
-    
-    for (const Point2D* ptr : pointPtrs) {
-        auto idOpt = findPointID(ptr);
-        if (idOpt) {
-            result.push_back(*idOpt);
-        }
-    }
-    
-    return result;
-}
-
-std::optional<ID> GeometryStorage::findPointID(const Point2D* ptr) const noexcept {
-    auto it = m_pointToID.find(ptr);
-    if (it != m_pointToID.end()) {
-        return it->second;
-    }
-    return std::nullopt;
+    const auto& v = m_deps.pointsForFigure(id);
+    return {v.begin(), v.end()};
 }
 
 ObjectGraph GeometryStorage::buildObjectGraph() const {
-    ObjectGraph graph;
-    const ID helperWeight = ID(static_cast<unsigned long long>(-1));
+    return GeometryGraphBuilder::buildObjectGraph(*this);
+}
 
-    for (const auto& [id, entry] : m_index) {
-        graph.addVertex(id);
+std::optional<ObjectGraph> GeometryStorage::buildObjectSubgraph(ID id) const {
+    return GeometryGraphBuilder::buildObjectSubgraph(*this, id);
+}
+
+#ifndef NDEBUG
+bool GeometryStorage::validate() const noexcept {
+    const std::size_t totalCached =
+        m_pointsWithIds.size() + m_linesWithIds.size() + m_circlesWithIds.size() + m_arcsWithIds.size();
+    if (m_index.size() != totalCached) {
+        return false;
     }
-
-    for (const auto& [id, entry] : m_index) {
-        switch (entry.type) {
-            case FigureType::ET_LINE: {
-                const Line2D* line = static_cast<const Line2D*>(entry.ptr);
-                if (auto p1 = findPointID(line->p1)) {
-                    graph.addEdge(id, *p1, helperWeight);
+    if (m_index.size() != m_pointWithIdPos.size() + m_lineWithIdPos.size() + m_circleWithIdPos.size() +
+                               m_arcWithIdPos.size()) {
+        return false;
+    }
+    for (const auto& [id, ent] : m_index) {
+        switch (ent.type) {
+            case FigureType::ET_POINT2D:
+                if (ent.slot >= m_pointSlots.size() || !m_pointSlots[ent.slot]) {
+                    return false;
                 }
-                if (auto p2 = findPointID(line->p2)) {
-                    graph.addEdge(id, *p2, helperWeight);
-                }
-                break;
-            }
-            case FigureType::ET_CIRCLE: {
-                const Circle2D* circle = static_cast<const Circle2D*>(entry.ptr);
-                if (auto c = findPointID(circle->center)) {
-                    graph.addEdge(id, *c, helperWeight);
+                if (m_pointSlots[ent.slot].get() != get<Point2D>(id)) {
+                    return false;
                 }
                 break;
-            }
-            case FigureType::ET_ARC: {
-                const Arc2D* arc = static_cast<const Arc2D*>(entry.ptr);
-                if (auto p1 = findPointID(arc->p1)) {
-                    graph.addEdge(id, *p1, helperWeight);
-                }
-                if (auto p2 = findPointID(arc->p2)) {
-                    graph.addEdge(id, *p2, helperWeight);
-                }
-                if (auto c = findPointID(arc->p_center)) {
-                    graph.addEdge(id, *c, helperWeight);
+            case FigureType::ET_LINE:
+                if (ent.slot >= m_lineSlots.size() || !m_lineSlots[ent.slot]) {
+                    return false;
                 }
                 break;
-            }
+            case FigureType::ET_CIRCLE:
+                if (ent.slot >= m_circleSlots.size() || !m_circleSlots[ent.slot]) {
+                    return false;
+                }
+                break;
+            case FigureType::ET_ARC:
+                if (ent.slot >= m_arcSlots.size() || !m_arcSlots[ent.slot]) {
+                    return false;
+                }
+                break;
             default:
-                break;
+                return false;
         }
     }
-
-    return graph;
-}
-
-ObjectGraph GeometryStorage::buildObjectSubgraph(ID id) const {
-    auto typeOpt = getType(id);
-    if (!typeOpt) {
-        throw std::runtime_error("ID not found");
-    }
-
-    ObjectGraph graph;
-    const ID helperWeight = ID(static_cast<unsigned long long>(-1));
-
-    graph.addVertex(id);
-
-    if (*typeOpt == FigureType::ET_POINT2D) {
-        auto dependents = getDependents(id);
-        for (const ID depId : dependents) {
-            graph.addVertex(depId);
-            graph.addEdge(id, depId, helperWeight);
-            auto depPoints = getDependencies(depId);
-            for (const ID pointId : depPoints) {
-                graph.addVertex(pointId);
-                graph.addEdge(depId, pointId, helperWeight);
-            }
+    for (const auto& r : m_pointsWithIds) {
+        if (!contains(r.id) || get<Point2D>(r.id) != r.ptr) {
+            return false;
         }
-        return graph;
     }
-
-    auto dependencies = getDependencies(id);
-    for (const ID depId : dependencies) {
-        graph.addVertex(depId);
-        graph.addEdge(id, depId, helperWeight);
+    for (const auto& r : m_linesWithIds) {
+        if (!contains(r.id) || get<Line2D>(r.id) != r.ptr) {
+            return false;
+        }
+        const auto& pts = m_deps.pointsForFigure(r.id);
+        if (pts.size() != 2) {
+            return false;
+        }
     }
-
-    return graph;
+    for (const auto& r : m_circlesWithIds) {
+        if (!contains(r.id) || get<Circle2D>(r.id) != r.ptr) {
+            return false;
+        }
+        if (m_deps.pointsForFigure(r.id).size() != 1) {
+            return false;
+        }
+    }
+    for (const auto& r : m_arcsWithIds) {
+        if (!contains(r.id) || get<Arc2D>(r.id) != r.ptr) {
+            return false;
+        }
+        if (m_deps.pointsForFigure(r.id).size() != 3) {
+            return false;
+        }
+    }
+    return true;
 }
+#endif
 
-}
-
+} // namespace OurPaintDCM::Figures

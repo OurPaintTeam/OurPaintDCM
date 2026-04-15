@@ -1,8 +1,5 @@
 #include "DCMManager.h"
-#include <algorithm>
 #include <stdexcept>
-
-
 
 namespace {
 
@@ -69,67 +66,81 @@ Utils::ID DCMManager::addFigure(const Utils::FigureDescriptor& descriptor) {
         case Utils::FigureType::ET_POINT2D: {
             const double px = descriptor.coords.size() == 2 ? descriptor.coords[0] : descriptor.x.value();
             const double py = descriptor.coords.size() == 2 ? descriptor.coords[1] : descriptor.y.value();
-            auto [id, ptr] = _storage.createPoint(px, py);
-            figureId = id;
+            figureId = _storage.createPoint(px, py);
             break;
         }
         case Utils::FigureType::ET_LINE: {
             if (descriptor.coords.size() == 4) {
-                auto [p1Id, p1Ptr] = _storage.createPoint(descriptor.coords[0], descriptor.coords[1]);
-                auto [p2Id, p2Ptr] = _storage.createPoint(descriptor.coords[2], descriptor.coords[3]);
+                const Utils::ID p1Id = _storage.createPoint(descriptor.coords[0], descriptor.coords[1]);
+                const Utils::ID p2Id = _storage.createPoint(descriptor.coords[2], descriptor.coords[3]);
                 registerPoint(p1Id, descriptor.coords[0], descriptor.coords[1]);
                 registerPoint(p2Id, descriptor.coords[2], descriptor.coords[3]);
-                auto [id, ptr] = _storage.createLine(p1Ptr, p2Ptr);
-                figureId = id;
+                auto lineOpt = _storage.createLine(p1Id, p2Id);
+                if (!lineOpt) {
+                    throw std::runtime_error("Line creation failed");
+                }
+                figureId = *lineOpt;
                 relatedFigures = {p1Id, p2Id};
                 storedDesc.pointIds = relatedFigures;
             } else {
-                auto* p1 = _storage.get<Figures::Point2D>(descriptor.pointIds[0]);
-                auto* p2 = _storage.get<Figures::Point2D>(descriptor.pointIds[1]);
-                auto [id, ptr] = _storage.createLine(p1, p2);
-                figureId = id;
+                auto lineOpt = _storage.createLine(descriptor.pointIds[0], descriptor.pointIds[1]);
+                if (!lineOpt) {
+                    throw std::runtime_error("Line creation failed");
+                }
+                figureId = *lineOpt;
                 relatedFigures = descriptor.pointIds;
             }
             break;
         }
         case Utils::FigureType::ET_CIRCLE: {
             if (descriptor.coords.size() == 2) {
-                auto [centerId, cPtr] = _storage.createPoint(descriptor.coords[0], descriptor.coords[1]);
+                const Utils::ID centerId = _storage.createPoint(descriptor.coords[0], descriptor.coords[1]);
                 registerPoint(centerId, descriptor.coords[0], descriptor.coords[1]);
-                auto [id, ptr] = _storage.createCircle(cPtr, descriptor.radius.value());
-                figureId = id;
+                auto circOpt = _storage.createCircle(centerId, descriptor.radius.value());
+                if (!circOpt) {
+                    throw std::runtime_error("Circle creation failed");
+                }
+                figureId = *circOpt;
                 relatedFigures = {centerId};
                 storedDesc.pointIds = relatedFigures;
             } else {
-                auto* center = _storage.get<Figures::Point2D>(descriptor.pointIds[0]);
-                auto [id, ptr] = _storage.createCircle(center, descriptor.radius.value());
-                figureId = id;
+                auto circOpt = _storage.createCircle(descriptor.pointIds[0], descriptor.radius.value());
+                if (!circOpt) {
+                    throw std::runtime_error("Circle creation failed");
+                }
+                figureId = *circOpt;
                 relatedFigures = descriptor.pointIds;
             }
             break;
         }
         case Utils::FigureType::ET_ARC: {
             if (descriptor.coords.size() == 6) {
-                auto [p1Id, p1Ptr] = _storage.createPoint(descriptor.coords[0], descriptor.coords[1]);
-                auto [p2Id, p2Ptr] = _storage.createPoint(descriptor.coords[2], descriptor.coords[3]);
-                auto [centerId, cPtr] = _storage.createPoint(descriptor.coords[4], descriptor.coords[5]);
+                const Utils::ID p1Id = _storage.createPoint(descriptor.coords[0], descriptor.coords[1]);
+                const Utils::ID p2Id = _storage.createPoint(descriptor.coords[2], descriptor.coords[3]);
+                const Utils::ID centerId = _storage.createPoint(descriptor.coords[4], descriptor.coords[5]);
                 registerPoint(p1Id, descriptor.coords[0], descriptor.coords[1]);
                 registerPoint(p2Id, descriptor.coords[2], descriptor.coords[3]);
                 registerPoint(centerId, descriptor.coords[4], descriptor.coords[5]);
-                auto [id, ptr] = _storage.createArc(p1Ptr, p2Ptr, cPtr);
-                figureId = id;
+                auto arcOpt = _storage.createArc(p1Id, p2Id, centerId);
+                if (!arcOpt) {
+                    throw std::runtime_error("Arc creation failed");
+                }
+                figureId = *arcOpt;
                 relatedFigures = {p1Id, p2Id, centerId};
                 storedDesc.pointIds = relatedFigures;
             } else {
-                auto* p1 = _storage.get<Figures::Point2D>(descriptor.pointIds[0]);
-                auto* p2 = _storage.get<Figures::Point2D>(descriptor.pointIds[1]);
-                auto* center = _storage.get<Figures::Point2D>(descriptor.pointIds[2]);
-                auto [id, ptr] = _storage.createArc(p1, p2, center);
-                figureId = id;
+                auto arcOpt = _storage.createArc(
+                    descriptor.pointIds[0], descriptor.pointIds[1], descriptor.pointIds[2]);
+                if (!arcOpt) {
+                    throw std::runtime_error("Arc creation failed");
+                }
+                figureId = *arcOpt;
                 relatedFigures = descriptor.pointIds;
             }
             break;
         }
+        default:
+            throw std::invalid_argument("Unsupported figure type for addFigure");
     }
 
     storedDesc.id = figureId;
@@ -158,10 +169,30 @@ void DCMManager::removeFigure(Utils::ID figureId, bool forceCascade) {
         }
     }
 
-    _figureRecords.erase(figureId);
+    std::vector<Utils::ID> cascadedFigures;
+    if (forceCascade) {
+        const auto ty = _storage.getType(figureId);
+        if (ty.has_value() && *ty == Utils::FigureType::ET_POINT2D) {
+            cascadedFigures = _storage.getDependents(figureId);
+        }
+    }
 
+    const auto removed = _storage.remove(figureId, forceCascade);
+    if (removed == Figures::RemoveResult::NotFound) {
+        throw std::runtime_error("Figure not found");
+    }
+    if (removed == Figures::RemoveResult::BlockedByDependents) {
+        throw std::runtime_error("Dependencies exist");
+    }
+
+    for (const auto& id : cascadedFigures) {
+        _figureRecords.erase(id);
+        removeFigureFromComponent(id);
+    }
+    _figureRecords.erase(figureId);
     removeFigureFromComponent(figureId);
-    _storage.remove(figureId, forceCascade);
+
+    pruneRequirementsWithMissingObjects();
     splitComponentsAfterRemoval();
 }
 
@@ -204,7 +235,7 @@ void DCMManager::updateCircle(const Utils::CircleUpdateDescriptor& descriptor) {
 
 std::optional<Utils::FigureDescriptor> DCMManager::getFigure(Utils::ID figureId) const {
     auto it = _figureRecords.find(figureId);
-    if (it == _figureRecords.end()) {
+    if (it == _figureRecords.end() || !_storage.contains(figureId)) {
         return std::nullopt;
     }
 
@@ -213,40 +244,59 @@ std::optional<Utils::FigureDescriptor> DCMManager::getFigure(Utils::ID figureId)
     switch (desc.type) {
         case Utils::FigureType::ET_POINT2D: {
             auto* point = _storage.get<Figures::Point2D>(figureId);
+            if (!point) {
+                return std::nullopt;
+            }
             desc.coords = {point->x(), point->y()};
             desc.x = point->x();
             desc.y = point->y();
             break;
         }
         case Utils::FigureType::ET_LINE: {
-            auto* p1 = _storage.get<Figures::Point2D>(desc.pointIds[0]);
-            auto* p2 = _storage.get<Figures::Point2D>(desc.pointIds[1]);
-            desc.coords = {p1->x(), p1->y(), p2->x(), p2->y()};
+            if (desc.pointIds.size() < 2) {
+                return std::nullopt;
+            }
+            const auto* line = _storage.get<Figures::Line2D>(figureId);
+            if (line == nullptr || line->p1 == nullptr || line->p2 == nullptr) {
+                return std::nullopt;
+            }
+            desc.coords = {line->p1->x(), line->p1->y(), line->p2->x(), line->p2->y()};
             break;
         }
         case Utils::FigureType::ET_CIRCLE: {
-            auto* center = _storage.get<Figures::Point2D>(desc.pointIds[0]);
-            auto* circle = _storage.get<Figures::Circle2D>(figureId);
-            desc.coords = {center->x(), center->y()};
+            if (desc.pointIds.empty()) {
+                return std::nullopt;
+            }
+            const auto* circle = _storage.get<Figures::Circle2D>(figureId);
+            if (circle == nullptr || circle->center == nullptr) {
+                return std::nullopt;
+            }
+            desc.coords = {circle->center->x(), circle->center->y()};
             desc.radius = circle->radius;
             break;
         }
         case Utils::FigureType::ET_ARC: {
-            auto* p1 = _storage.get<Figures::Point2D>(desc.pointIds[0]);
-            auto* p2 = _storage.get<Figures::Point2D>(desc.pointIds[1]);
-            auto* center = _storage.get<Figures::Point2D>(desc.pointIds[2]);
-            desc.coords = {p1->x(), p1->y(), p2->x(), p2->y(), center->x(), center->y()};
+            if (desc.pointIds.size() < 3) {
+                return std::nullopt;
+            }
+            const auto* arc = _storage.get<Figures::Arc2D>(figureId);
+            if (arc == nullptr || arc->p1 == nullptr || arc->p2 == nullptr || arc->p_center == nullptr) {
+                return std::nullopt;
+            }
+            desc.coords = {
+                arc->p1->x(), arc->p1->y(), arc->p2->x(), arc->p2->y(),
+                arc->p_center->x(), arc->p_center->y()};
             break;
         }
         default:
-            break;
+            return std::nullopt;
     }
 
     return desc;
 }
 
 bool DCMManager::hasFigure(Utils::ID figureId) const noexcept {
-    return _figureRecords.count(figureId) > 0;
+    return _figureRecords.contains(figureId) && _storage.contains(figureId);
 }
 
 std::vector<Utils::FigureDescriptor> DCMManager::getAllFigures() const {
@@ -255,8 +305,100 @@ std::vector<Utils::FigureDescriptor> DCMManager::getAllFigures() const {
     for (const auto& [id, desc] : _figureRecords) {
         auto fullDesc = getFigure(id);
         if (fullDesc.has_value()) {
-            result.push_back(fullDesc.value());
+            result.push_back(std::move(*fullDesc));
         }
+    }
+    return result;
+}
+
+std::vector<Utils::FigureDescriptor> DCMManager::getAllPoints() const {
+    const auto& points = _storage.pointsWithIds();
+    std::vector<Utils::FigureDescriptor> result;
+    result.reserve(points.size());
+    for (const auto& ref : points) {
+        if (ref.ptr == nullptr) {
+            continue;
+        }
+        Utils::FigureDescriptor desc;
+        desc.id = ref.id;
+        desc.type = Utils::FigureType::ET_POINT2D;
+        desc.coords = {ref.ptr->x(), ref.ptr->y()};
+        desc.x = ref.ptr->x();
+        desc.y = ref.ptr->y();
+        result.push_back(std::move(desc));
+    }
+    return result;
+}
+
+std::vector<Utils::FigureDescriptor> DCMManager::getAllLines() const {
+    const auto& lines = _storage.linesWithIds();
+    std::vector<Utils::FigureDescriptor> result;
+    result.reserve(lines.size());
+    for (const auto& ref : lines) {
+        const auto rec = _figureRecords.find(ref.id);
+        if (rec == _figureRecords.end() || rec->second.pointIds.size() < 2 || ref.ptr == nullptr) {
+            continue;
+        }
+        const Figures::Point2D* p1 = ref.ptr->p1;
+        const Figures::Point2D* p2 = ref.ptr->p2;
+        if (p1 == nullptr || p2 == nullptr) {
+            continue;
+        }
+        Utils::FigureDescriptor desc;
+        desc.id = ref.id;
+        desc.type = Utils::FigureType::ET_LINE;
+        desc.pointIds = rec->second.pointIds;
+        desc.coords = {p1->x(), p1->y(), p2->x(), p2->y()};
+        result.push_back(std::move(desc));
+    }
+    return result;
+}
+
+std::vector<Utils::FigureDescriptor> DCMManager::getAllCircles() const {
+    const auto& circles = _storage.circlesWithIds();
+    std::vector<Utils::FigureDescriptor> result;
+    result.reserve(circles.size());
+    for (const auto& ref : circles) {
+        const auto rec = _figureRecords.find(ref.id);
+        if (rec == _figureRecords.end() || rec->second.pointIds.empty() || ref.ptr == nullptr) {
+            continue;
+        }
+        const Figures::Point2D* center = ref.ptr->center;
+        if (center == nullptr) {
+            continue;
+        }
+        Utils::FigureDescriptor desc;
+        desc.id = ref.id;
+        desc.type = Utils::FigureType::ET_CIRCLE;
+        desc.pointIds = rec->second.pointIds;
+        desc.coords = {center->x(), center->y()};
+        desc.radius = ref.ptr->radius;
+        result.push_back(std::move(desc));
+    }
+    return result;
+}
+
+std::vector<Utils::FigureDescriptor> DCMManager::getAllArcs() const {
+    const auto& arcs = _storage.arcsWithIds();
+    std::vector<Utils::FigureDescriptor> result;
+    result.reserve(arcs.size());
+    for (const auto& ref : arcs) {
+        const auto rec = _figureRecords.find(ref.id);
+        if (rec == _figureRecords.end() || rec->second.pointIds.size() < 3 || ref.ptr == nullptr) {
+            continue;
+        }
+        const Figures::Point2D* p1 = ref.ptr->p1;
+        const Figures::Point2D* p2 = ref.ptr->p2;
+        const Figures::Point2D* center = ref.ptr->p_center;
+        if (p1 == nullptr || p2 == nullptr || center == nullptr) {
+            continue;
+        }
+        Utils::FigureDescriptor desc;
+        desc.id = ref.id;
+        desc.type = Utils::FigureType::ET_ARC;
+        desc.pointIds = rec->second.pointIds;
+        desc.coords = {p1->x(), p1->y(), p2->x(), p2->y(), center->x(), center->y()};
+        result.push_back(std::move(desc));
     }
     return result;
 }
@@ -309,14 +451,14 @@ std::optional<Utils::RequirementDescriptor> DCMManager::getRequirement(Utils::ID
 }
 
 bool DCMManager::hasRequirement(Utils::ID reqId) const noexcept {
-    return _requirementRecords.count(reqId) > 0;
+    return _requirementRecords.contains(reqId);
 }
 
 std::vector<Utils::RequirementDescriptor> DCMManager::getAllRequirements() const {
     std::vector<Utils::RequirementDescriptor> result;
     result.reserve(_requirementRecords.size());
-    for (const auto& [id, desc] : _requirementRecords) {
-        result.push_back(desc);
+    for (const auto& entry : _requirementRecords) {
+        result.push_back(entry.second);
     }
     return result;
 }
@@ -350,7 +492,7 @@ std::vector<Utils::ID> DCMManager::getRequirementsInComponent(ComponentID compon
 
     for (const auto& [reqId, desc] : _requirementRecords) {
         for (const auto& objId : desc.objectIds) {
-            if (compFigures.count(objId) > 0) {
+            if (compFigures.contains(objId)) {
                 result.push_back(reqId);
                 break;
             }
@@ -388,7 +530,7 @@ System::RequirementSystem& DCMManager::requirementSystem() noexcept {
 }
 
 std::size_t DCMManager::figureCount() const noexcept {
-    return _figureRecords.size();
+    return _storage.size();
 }
 
 std::size_t DCMManager::requirementCount() const noexcept {
@@ -409,7 +551,6 @@ void DCMManager::clear() {
 void DCMManager::setSolveMode(Utils::SolveMode mode) noexcept {
     _solveMode = mode;
 }
-
 
 Utils::SolveMode DCMManager::getSolveMode() const noexcept {
     return _solveMode;
@@ -468,16 +609,22 @@ bool DCMManager::solve(std::optional<ComponentID> componentId) {
         optimizer.setTask(&task);
         optimizer.optimize();
         converged = optimizer.isConverged();
+        // LSMTask::~LSMTask deletes residual functions in mathFuncs (non-VARIABLE); do not delete here.
     } else {
         LSMFORLMTask task(mathFuncs, mathVars);
         LMSparse solver;
         solver.setTask(&task);
         solver.optimize();
         converged = solver.isConverged();
-        for (auto* f : mathFuncs) delete f;
+        for (auto* f : mathFuncs) {
+            delete f;
+        }
+        // LSMFORLMTask does not own m_functions; only c_function and Jacobian entries are freed in ~LSMFORLMTask.
     }
 
-    for (auto* v : mathVars) delete v;
+    for (auto* v : mathVars) {
+        delete v;
+    }
     return converged;
 }
 
@@ -503,19 +650,41 @@ void DCMManager::rebuildRequirementSystem() {
     }
 }
 
+void DCMManager::pruneRequirementsWithMissingObjects() {
+    bool changed = false;
+    for (auto it = _requirementRecords.begin(); it != _requirementRecords.end();) {
+        bool stale = false;
+        for (const auto& oid : it->second.objectIds) {
+            if (!_storage.contains(oid)) {
+                stale = true;
+                break;
+            }
+        }
+        if (stale) {
+            it = _requirementRecords.erase(it);
+            changed = true;
+        } else {
+            ++it;
+        }
+    }
+    if (changed) {
+        rebuildRequirementSystem();
+    }
+}
+
 void DCMManager::rebuildComponents() {
     _figureToComponent.clear();
     _components.clear();
     _nextComponentId = 0;
     _activeComponentCount = 0;
 
-    for (const auto& [id, desc] : _figureRecords) {
-        ComponentID compId = createNewComponent();
-        addFigureToComponent(id, compId);
+    for (const auto& entry : _figureRecords) {
+        const ComponentID compId = createNewComponent();
+        addFigureToComponent(entry.first, compId);
     }
 
-    for (const auto& [id, desc] : _requirementRecords) {
-        mergeComponents(desc.objectIds);
+    for (const auto& entry : _requirementRecords) {
+        mergeComponents(entry.second.objectIds);
     }
 }
 
