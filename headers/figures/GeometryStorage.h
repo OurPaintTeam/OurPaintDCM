@@ -411,4 +411,5 @@ void GeometryStorage::eraseCachedById(
 
 } // namespace OurPaintDCM::Figures
 
-#endif
+#endif // OURPAINTDCM_HEADERS_FIGURES_GEOMETRYSTORAGE_H
+
