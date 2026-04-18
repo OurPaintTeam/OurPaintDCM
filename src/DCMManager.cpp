@@ -735,10 +735,6 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
     solver.setTask(&task);
     solver.optimize();
     const bool converged = solver.isConverged();
-    for (auto* f : mathFuncs) {
-        delete f;
-    }
-    // LSMFORLMTask does not own m_functions; only c_function and Jacobian entries are freed in ~LSMFORLMTask.
 
     for (auto* v : mathVars) {
         delete v;
