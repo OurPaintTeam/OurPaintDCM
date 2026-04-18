@@ -1,4 +1,6 @@
 #include "DCMManager.h"
+#include "SparseLSMTask.h"
+#include "sparse/SparseLevenbergMarquardtSolver.h"
 #include <stdexcept>
 
 namespace {
@@ -728,8 +730,8 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
     for (auto& rf : activeReqFuncs)
         mathFuncs.push_back(new RequirementFunctionAdapter(rf));
 
-    LSMFORLMTask task(mathFuncs, mathVars);
-    LMSparse solver;
+    SparseLSMTask task(mathFuncs, mathVars);
+    SparseLMSolver solver;
     solver.setTask(&task);
     solver.optimize();
     const bool converged = solver.isConverged();

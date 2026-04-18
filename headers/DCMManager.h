@@ -7,8 +7,6 @@
 #include "FigureDescriptor.h"
 #include "Graph.h"
 #include "Function.h"
-#include "LSMFORLMTask.h"
-#include "LMWithSparse.h"
 
 #include <unordered_map>
 #include <unordered_set>
