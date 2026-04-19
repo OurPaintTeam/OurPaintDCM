@@ -1,4 +1,6 @@
 #include "DCMManager.h"
+#include "SparseLSMTask.h"
+#include "sparse/SparseLevenbergMarquardtSolver.h"
 #include <stdexcept>
 
 namespace {
@@ -162,11 +164,13 @@ void DCMManager::removeFigure(Utils::ID figureId, bool forceCascade) {
         throw std::runtime_error("Figure not found");
     }
 
+    std::vector<Utils::ID> dependencyPoints;
     if (forceCascade) {
         auto reqs = getRequirementsForFigure(figureId);
         for (const auto& reqId : reqs) {
             removeRequirement(reqId);
         }
+        dependencyPoints = _storage.getDependencies(figureId);
     }
 
     std::vector<Utils::ID> cascadedFigures;
@@ -192,6 +196,14 @@ void DCMManager::removeFigure(Utils::ID figureId, bool forceCascade) {
     _figureRecords.erase(figureId);
     removeFigureFromComponent(figureId);
 
+    if (forceCascade) {
+        for (const auto& depPointId : dependencyPoints) {
+            if (_storage.contains(depPointId)) {
+                removeFigure(depPointId, true);
+            }
+        }
+    }
+
     pruneRequirementsWithMissingObjects();
     splitComponentsAfterRemoval();
 }
@@ -202,6 +214,46 @@ void DCMManager::updatePoint(const Utils::PointUpdateDescriptor& descriptor) {
         throw std::runtime_error("Point not found");
     }
 
+    auto pointHasFixConstraint = [&]() {
+        for (const auto& [_, req] : _requirementRecords) {
+            switch (req.type) {
+                case Utils::RequirementType::ET_FIXPOINT: {
+                    if (!req.objectIds.empty() && req.objectIds[0] == descriptor.pointId) {
+                        return true;
+                    }
+                    break;
+                }
+                case Utils::RequirementType::ET_FIXLINE: {
+                    if (req.objectIds.empty()) {
+                        break;
+                    }
+                    const auto* line = _storage.get<Figures::Line2D>(req.objectIds[0]);
+                    if (line != nullptr && (line->p1 == point || line->p2 == point)) {
+                        return true;
+                    }
+                    break;
+                }
+                case Utils::RequirementType::ET_FIXCIRCLE: {
+                    if (req.objectIds.empty()) {
+                        break;
+                    }
+                    const auto* circle = _storage.get<Figures::Circle2D>(req.objectIds[0]);
+                    if (circle != nullptr && circle->center == point) {
+                        return true;
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+        return false;
+    };
+
+    if (pointHasFixConstraint()) {
+        return;
+    }
+
     if (descriptor.newX.has_value()) {
         point->x() = descriptor.newX.value();
     }
@@ -210,9 +262,11 @@ void DCMManager::updatePoint(const Utils::PointUpdateDescriptor& descriptor) {
     }
 
     if (_solveMode == Utils::SolveMode::DRAG) {
+        std::unordered_set<double*> lockedVars;
+        lockedVars = {point->ptrX(), point->ptrY()};
         auto comp = getComponentForFigure(descriptor.pointId);
         if (comp.has_value()) {
-            solve(comp.value());
+            solveWithLockedVars(comp.value(), lockedVars);
         }
     }
 }
@@ -223,12 +277,26 @@ void DCMManager::updateCircle(const Utils::CircleUpdateDescriptor& descriptor) {
         throw std::runtime_error("Circle not found");
     }
 
+    bool radiusHasFixConstraint = false;
+    for (const auto& [_, req] : _requirementRecords) {
+        if (req.type == Utils::RequirementType::ET_FIXCIRCLE &&
+            !req.objectIds.empty() &&
+            req.objectIds[0] == descriptor.circleId) {
+            radiusHasFixConstraint = true;
+            break;
+        }
+    }
+    if (radiusHasFixConstraint) {
+        return;
+    }
+
     circle->radius = descriptor.newRadius;
 
     if (_solveMode == Utils::SolveMode::DRAG) {
+        std::unordered_set<double*> lockedVars = {circle->ptrRadius()};
         auto comp = getComponentForFigure(descriptor.circleId);
         if (comp.has_value()) {
-            solve(comp.value());
+            solveWithLockedVars(comp.value(), lockedVars);
         }
     }
 }
@@ -406,6 +474,17 @@ std::vector<Utils::FigureDescriptor> DCMManager::getAllArcs() const {
 Utils::ID DCMManager::addRequirement(const Utils::RequirementDescriptor& descriptor) {
     descriptor.validate();
 
+    if (descriptor.id.has_value()) {
+        if (descriptor.id->id == 0ULL) {
+            throw std::invalid_argument("Requirement id must not be 0");
+        }
+        if (_requirementRecords.contains(*descriptor.id)) {
+            throw std::invalid_argument("Requirement id already exists");
+        }
+    }
+
+    syncRequirementSystemIfNeeded();
+
     Utils::ID reqId = _reqSystem.addRequirement(descriptor);
 
     Utils::RequirementDescriptor storedDesc = descriptor;
@@ -424,7 +503,7 @@ void DCMManager::removeRequirement(Utils::ID reqId) {
     }
 
     _requirementRecords.erase(it);
-    rebuildRequirementSystem();
+    _reqSystemSyncedWithRecords = false;
     rebuildComponents();
 }
 
@@ -439,7 +518,7 @@ void DCMManager::updateRequirementParam(Utils::ID reqId, double newParam) {
     }
 
     it->second.param = newParam;
-    rebuildRequirementSystem();
+    _reqSystemSyncedWithRecords = false;
 }
 
 std::optional<Utils::RequirementDescriptor> DCMManager::getRequirement(Utils::ID reqId) const noexcept {
@@ -517,7 +596,8 @@ const Figures::GeometryStorage& DCMManager::getStorage() const noexcept {
     return _storage;
 }
 
-const System::RequirementSystem& DCMManager::getRequirementSystem() const noexcept {
+const System::RequirementSystem& DCMManager::getRequirementSystem() const {
+    const_cast<DCMManager*>(this)->syncRequirementSystemIfNeeded();
     return _reqSystem;
 }
 
@@ -525,7 +605,8 @@ Figures::GeometryStorage& DCMManager::storage() noexcept {
     return _storage;
 }
 
-System::RequirementSystem& DCMManager::requirementSystem() noexcept {
+System::RequirementSystem& DCMManager::requirementSystem() {
+    syncRequirementSystemIfNeeded();
     return _reqSystem;
 }
 
@@ -546,6 +627,7 @@ void DCMManager::clear() {
     _components.clear();
     _nextComponentId = 0;
     _activeComponentCount = 0;
+    _reqSystemSyncedWithRecords = true;
 }
 
 void DCMManager::setSolveMode(Utils::SolveMode mode) noexcept {
@@ -557,6 +639,12 @@ Utils::SolveMode DCMManager::getSolveMode() const noexcept {
 }
 
 bool DCMManager::solve(std::optional<ComponentID> componentId) {
+    const std::unordered_set<double*> noLockedVars;
+    return solveWithLockedVars(componentId, noLockedVars);
+}
+
+bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
+                                     const std::unordered_set<double*>& lockedVars) {
     if (_requirementRecords.empty()) {
         return true;
     }
@@ -566,7 +654,7 @@ bool DCMManager::solve(std::optional<ComponentID> componentId) {
 
     switch (_solveMode) {
         case Utils::SolveMode::GLOBAL:
-            rebuildRequirementSystem();
+            syncRequirementSystemIfNeeded();
             systemPtr = &_reqSystem;
             break;
         case Utils::SolveMode::LOCAL:
@@ -580,7 +668,7 @@ bool DCMManager::solve(std::optional<ComponentID> componentId) {
                 subsystem = buildSubsystem(componentId.value());
                 systemPtr = subsystem.get();
             } else {
-                rebuildRequirementSystem();
+                syncRequirementSystemIfNeeded();
                 systemPtr = &_reqSystem;
             }
             break;
@@ -591,36 +679,62 @@ bool DCMManager::solve(std::optional<ComponentID> componentId) {
     auto allVars = system.getAllVars();
     if (reqFuncs.empty() || allVars.empty()) return true;
 
+    // Preprocess algebraic assignments (x = c): eliminate variable and drop this residual.
+    std::unordered_map<double*, double> eliminatedAssignments;
+    std::vector<std::shared_ptr<OurPaintDCM::Function::RequirementFunction>> activeReqFuncs;
+    activeReqFuncs.reserve(reqFuncs.size());
+    for (const auto& rf : reqFuncs) {
+        double* assignedVar = nullptr;
+        double assignedValue = 0.0;
+        if (rf->tryGetAssignment(assignedVar, assignedValue)) {
+            eliminatedAssignments[assignedVar] = assignedValue;
+            *assignedVar = assignedValue;
+            continue;
+        }
+        activeReqFuncs.push_back(rf);
+    }
+
+    if (activeReqFuncs.empty()) {
+        return true;
+    }
+
     std::vector<Variable*> mathVars;
     mathVars.reserve(allVars.size());
-    for (auto* v : allVars)
-        mathVars.push_back(new Variable(v));
+    if (lockedVars.empty()) {
+        for (auto* v : allVars) {
+            if (eliminatedAssignments.contains(v)) {
+                continue;
+            }
+            mathVars.push_back(new Variable(v));
+        }
+    } else {
+        for (auto* v : allVars) {
+            if (!lockedVars.contains(v) && !eliminatedAssignments.contains(v)) {
+                mathVars.push_back(new Variable(v));
+            }
+        }
+    }
+    if (mathVars.empty()) {
+        // If temporary drag locks consume all remaining DOF, retry without locks.
+        // This keeps fixed/eliminated vars constant, but allows the solver
+        // to satisfy constraints by moving the dragged point to a feasible position.
+        if (!lockedVars.empty()) {
+            const std::unordered_set<double*> noLockedVars;
+            return solveWithLockedVars(componentId, noLockedVars);
+        }
+        return true;
+    }
 
     std::vector<::Function*> mathFuncs;
-    mathFuncs.reserve(reqFuncs.size());
-    for (auto& rf : reqFuncs)
+    mathFuncs.reserve(activeReqFuncs.size());
+    for (auto& rf : activeReqFuncs)
         mathFuncs.push_back(new RequirementFunctionAdapter(rf));
 
-    bool converged = false;
-
-    if (_solveMode == Utils::SolveMode::DRAG) {
-        LSMTask task(mathFuncs, mathVars);
-        GradientOptimizer optimizer(0.01, 200);
-        optimizer.setTask(&task);
-        optimizer.optimize();
-        converged = optimizer.isConverged();
-        // LSMTask::~LSMTask deletes residual functions in mathFuncs (non-VARIABLE); do not delete here.
-    } else {
-        LSMFORLMTask task(mathFuncs, mathVars);
-        LMSparse solver;
-        solver.setTask(&task);
-        solver.optimize();
-        converged = solver.isConverged();
-        for (auto* f : mathFuncs) {
-            delete f;
-        }
-        // LSMFORLMTask does not own m_functions; only c_function and Jacobian entries are freed in ~LSMFORLMTask.
-    }
+    SparseLSMTask task(mathFuncs, mathVars);
+    SparseLMSolver solver;
+    solver.setTask(&task);
+    solver.optimize();
+    const bool converged = solver.isConverged();
 
     for (auto* v : mathVars) {
         delete v;
@@ -648,6 +762,14 @@ void DCMManager::rebuildRequirementSystem() {
     for (const auto& [id, desc] : _requirementRecords) {
         _reqSystem.addRequirement(desc);
     }
+    _reqSystemSyncedWithRecords = true;
+}
+
+void DCMManager::syncRequirementSystemIfNeeded() {
+    if (_reqSystemSyncedWithRecords) {
+        return;
+    }
+    rebuildRequirementSystem();
 }
 
 void DCMManager::pruneRequirementsWithMissingObjects() {
@@ -668,7 +790,7 @@ void DCMManager::pruneRequirementsWithMissingObjects() {
         }
     }
     if (changed) {
-        rebuildRequirementSystem();
+        _reqSystemSyncedWithRecords = false;
     }
 }
 

@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <stdexcept>
 #include "DCMManager.h"
 
 using namespace OurPaintDCM;
@@ -142,6 +143,34 @@ TEST_F(DCMManagerTest, AddRequirement) {
 
     EXPECT_TRUE(manager.hasRequirement(reqId));
     EXPECT_EQ(manager.requirementCount(), 1);
+}
+
+TEST_F(DCMManagerTest, AddRequirementWithExplicitId) {
+    auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 0.0));
+
+    auto desc = RequirementDescriptor::pointPointDist(p1, p2, 50.0);
+    desc.id = ID(42);
+    auto reqId = manager.addRequirement(desc);
+
+    EXPECT_EQ(reqId, ID(42));
+    auto stored = manager.getRequirement(ID(42));
+    ASSERT_TRUE(stored.has_value());
+    EXPECT_EQ(stored->id.value(), ID(42));
+}
+
+TEST_F(DCMManagerTest, AddRequirementDuplicateExplicitIdThrows) {
+    auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 0.0));
+    auto p3 = manager.addFigure(FigureDescriptor::point(5.0, 5.0));
+
+    auto d1 = RequirementDescriptor::pointPointDist(p1, p2, 50.0);
+    d1.id = ID(7);
+    manager.addRequirement(d1);
+
+    auto d2 = RequirementDescriptor::pointPointDist(p1, p3, 30.0);
+    d2.id = ID(7);
+    EXPECT_THROW(manager.addRequirement(d2), std::invalid_argument);
 }
 
 TEST_F(DCMManagerTest, RemoveRequirement) {
@@ -380,6 +409,20 @@ TEST_F(DCMManagerTest, RemoveFigureWithCascade) {
     manager.removeFigure(p1, true);
 
     EXPECT_FALSE(manager.hasFigure(p1));
+    EXPECT_FALSE(manager.hasRequirement(reqId));
+}
+
+TEST_F(DCMManagerTest, RemoveLineWithCascadeAlsoRemovesItsPoints) {
+    auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 0.0));
+    auto line = manager.addFigure(FigureDescriptor::line(p1, p2));
+    auto reqId = manager.addRequirement(RequirementDescriptor::horizontal(line));
+
+    manager.removeFigure(line, true);
+
+    EXPECT_FALSE(manager.hasFigure(line));
+    EXPECT_FALSE(manager.hasFigure(p1));
+    EXPECT_FALSE(manager.hasFigure(p2));
     EXPECT_FALSE(manager.hasRequirement(reqId));
 }
 

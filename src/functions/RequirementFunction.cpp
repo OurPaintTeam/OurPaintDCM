@@ -825,3 +825,9 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::FixCoordinateFunction::gr
 size_t OurPaintDCM::Function::FixCoordinateFunction::getVarCount() const {
     return 1;
 }
+
+bool OurPaintDCM::Function::FixCoordinateFunction::tryGetAssignment(VAR& var, double& value) const {
+    var = _vars[0];
+    value = _target;
+    return true;
+}

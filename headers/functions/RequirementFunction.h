@@ -46,6 +46,18 @@ namespace OurPaintDCM::Function {
         /// Return the number of variables used.
         virtual size_t getVarCount() const = 0;
 
+        /**
+         * @brief Try to expose this requirement as a direct assignment var = value.
+         *
+         * Default implementation returns false. Requirements like FixCoordinateFunction
+         * override it to provide algebraic elimination metadata.
+         */
+        virtual bool tryGetAssignment(VAR& var, double& value) const {
+            (void)var;
+            (void)value;
+            return false;
+        }
+
         /// Return the type of this geometric requirement.
         virtual Utils::RequirementType getType() const {
             return _t;
@@ -237,6 +249,7 @@ namespace OurPaintDCM::Function {
         double evaluate() const override;
         std::unordered_map<VAR, double> gradient() const override;
         size_t getVarCount() const override;
+        bool tryGetAssignment(VAR& var, double& value) const override;
     };
 }
 
