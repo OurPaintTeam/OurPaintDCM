@@ -1,9 +1,10 @@
 <map id="OurPaintDCM::Figures::GeometryStorage::getType" name="OurPaintDCM::Figures::GeometryStorage::getType">
-<area shape="rect" id="Node000001" title="Returns the stored FigureType for an ID, if present." alt="" coords="532,49,736,89"/>
+<area shape="rect" id="Node000001" title="Returns the stored FigureType for an ID, if present." alt="" coords="532,61,736,101"/>
 <area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryGraphBuilder.html#a7f6d373db3dda20f0d99a7d9af872995" title="Local neighbourhood around id: vertex id, adjacent figures/points, and edges among them." alt="" coords="292,5,472,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="518,55,472,48,473,43,519,50"/>
-<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1DCMManager.html#ac2f4c1cac07c5bc28426b2ceb50ad736" title="Remove a figure by ID." alt="" coords="280,85,484,125"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="519,88,485,93,484,87,518,82"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="518,61,472,52,473,47,519,56"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1DCMManager.html#ac2f4c1cac07c5bc28426b2ceb50ad736" title="Remove a figure by ID." alt="" coords="280,109,484,149"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="519,105,485,112,484,107,518,100"/>
 <area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a06b553516b5a4ef350fdbf2c266893ce" title="Local subgraph around id: the object, its neighbours, and edges among them." alt="" coords="5,5,232,60"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="278,35,232,35,232,30,278,30"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="425,97,410,90,382,87,358,89,343,94,338,100,340,108,335,109,333,99,340,90,357,84,382,82,411,85,427,92"/>
 </map>

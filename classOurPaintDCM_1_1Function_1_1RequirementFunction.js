@@ -9,6 +9,7 @@ var classOurPaintDCM_1_1Function_1_1RequirementFunction =
     [ "getWeight", "classOurPaintDCM_1_1Function_1_1RequirementFunction.html#ade767e09c4f222ae5446ef14370082fe", null ],
     [ "gradient", "classOurPaintDCM_1_1Function_1_1RequirementFunction.html#ab82f7adda3b45c169d2e31b1f14e19c2", null ],
     [ "setWeight", "classOurPaintDCM_1_1Function_1_1RequirementFunction.html#a57e8845fe03c0bb3e84a0eb9572e24d6", null ],
+    [ "tryGetAssignment", "classOurPaintDCM_1_1Function_1_1RequirementFunction.html#ada51a1d5de8cd32efa901664022ab1db", null ],
     [ "_t", "classOurPaintDCM_1_1Function_1_1RequirementFunction.html#a0529b15fbf67d9854e35bd3cc3326149", null ],
     [ "_vars", "classOurPaintDCM_1_1Function_1_1RequirementFunction.html#af7462fc56069a6b0ec8e7bf9e752068e", null ],
     [ "_weight", "classOurPaintDCM_1_1Function_1_1RequirementFunction.html#a6cbe0c65247e9137840e2d2897cec1f9", null ]

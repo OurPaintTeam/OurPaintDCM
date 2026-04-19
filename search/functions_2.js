@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['circle_0',['circle',['../structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#adc6a70772bfdc414024e43d6b1e1d776',1,'OurPaintDCM::Utils::FigureDescriptor::circle()'],['../structOurPaintDCM_1_1Figures_1_1Circle.html#ab3f460bdec036407cbd7d3e8a181d507',1,'OurPaintDCM::Figures::Circle::Circle()'],['../structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#ac11d2ebe9e47cbab9ded1ec9823de9aa',1,'OurPaintDCM::Utils::FigureDescriptor::circle()']]],
+  ['circle_0',['circle',['../structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#ac11d2ebe9e47cbab9ded1ec9823de9aa',1,'OurPaintDCM::Utils::FigureDescriptor::circle(double cx, double cy, double r)'],['../structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#adc6a70772bfdc414024e43d6b1e1d776',1,'OurPaintDCM::Utils::FigureDescriptor::circle(ID centerId, double r)'],['../structOurPaintDCM_1_1Figures_1_1Circle.html#ab3f460bdec036407cbd7d3e8a181d507',1,'OurPaintDCM::Figures::Circle::Circle()']]],
   ['circlecount_1',['circleCount',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a0ad747894a11a0265b9ca37c665dab94',1,'OurPaintDCM::Figures::GeometryStorage']]],
   ['circleswithids_2',['circlesWithIds',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a86fdaf33645554fa756915cd74ad954e',1,'OurPaintDCM::Figures::GeometryStorage']]],
   ['circleupdatedescriptor_3',['CircleUpdateDescriptor',['../structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor.html#a24f68d4efbe012ec8d52f0865d11fc94',1,'OurPaintDCM::Utils::CircleUpdateDescriptor']]],

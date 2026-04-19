@@ -1,5 +1,6 @@
 <map id="OurPaintDCM::DCMManager::removeRequirement" name="OurPaintDCM::DCMManager::removeRequirement">
-<area shape="rect" id="Node000001" title="Remove a requirement by ID." alt="" coords="257,5,461,45"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#ac2f4c1cac07c5bc28426b2ceb50ad736" title="Remove a figure by ID." alt="" coords="5,5,209,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="244,28,210,28,210,23,244,23"/>
+<area shape="rect" id="Node000001" title="Remove a requirement by ID." alt="" coords="257,29,461,69"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#ac2f4c1cac07c5bc28426b2ceb50ad736" title="Remove a figure by ID." alt="" coords="5,29,209,69"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="244,52,210,52,210,47,244,47"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="150,18,135,11,107,8,83,10,68,15,63,21,66,28,61,30,58,20,65,10,82,5,107,3,136,6,152,13"/>
 </map>

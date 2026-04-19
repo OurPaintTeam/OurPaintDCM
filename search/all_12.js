@@ -8,8 +8,10 @@ var searchData=
   ['slot_5',['slot',['../structOurPaintDCM_1_1Figures_1_1FigureEntry.html#a39ba73a1c6fa42faa08a612054cdae03',1,'OurPaintDCM::Figures::FigureEntry']]],
   ['solve_6',['solve',['../classOurPaintDCM_1_1DCMManager.html#a3aae022d74fd7661797cd311f4ef9988',1,'OurPaintDCM::DCMManager']]],
   ['solvemode_7',['SolveMode',['../namespaceOurPaintDCM_1_1Utils.html#a6f2b4a61c8ed5b8b772f8424adf5af15',1,'OurPaintDCM::Utils']]],
-  ['splitcomponentsafterremoval_8',['splitComponentsAfterRemoval',['../classOurPaintDCM_1_1DCMManager.html#a0ad8ab5e8bc9d619751d6ef02d86372e',1,'OurPaintDCM::DCMManager']]],
-  ['std_9',['std',['../namespacestd.html',1,'']]],
-  ['storage_10',['storage',['../classOurPaintDCM_1_1DCMManager.html#ae301c50aee15145304ac0e1725c9bbe4',1,'OurPaintDCM::DCMManager']]],
-  ['systemstatus_11',['SystemStatus',['../namespaceOurPaintDCM_1_1Utils.html#ae51395db4b382114f464d061563658ca',1,'OurPaintDCM::Utils']]]
+  ['solvewithlockedvars_8',['solveWithLockedVars',['../classOurPaintDCM_1_1DCMManager.html#ab46e639ae14f7f2a533efc2572e2ef8f',1,'OurPaintDCM::DCMManager']]],
+  ['splitcomponentsafterremoval_9',['splitComponentsAfterRemoval',['../classOurPaintDCM_1_1DCMManager.html#a0ad8ab5e8bc9d619751d6ef02d86372e',1,'OurPaintDCM::DCMManager']]],
+  ['std_10',['std',['../namespacestd.html',1,'']]],
+  ['storage_11',['storage',['../classOurPaintDCM_1_1DCMManager.html#ae301c50aee15145304ac0e1725c9bbe4',1,'OurPaintDCM::DCMManager']]],
+  ['syncrequirementsystemifneeded_12',['syncRequirementSystemIfNeeded',['../classOurPaintDCM_1_1DCMManager.html#ab32b2e3d3e3d0b9ba4dedbf0b2df7012',1,'OurPaintDCM::DCMManager']]],
+  ['systemstatus_13',['SystemStatus',['../namespaceOurPaintDCM_1_1Utils.html#ae51395db4b382114f464d061563658ca',1,'OurPaintDCM::Utils']]]
 ];

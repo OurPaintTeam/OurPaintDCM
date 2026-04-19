@@ -161,6 +161,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a405c5ed3126ce6ecfbba87bdc92aa489" id="r_a405c5ed3126ce6ecfbba87bdc92aa489"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#a405c5ed3126ce6ecfbba87bdc92aa489">getVarCount</a> () const =0</td></tr>
 <tr class="memdesc:a405c5ed3126ce6ecfbba87bdc92aa489"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the number of variables used.  <br /></td></tr>
 <tr class="separator:a405c5ed3126ce6ecfbba87bdc92aa489"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada51a1d5de8cd32efa901664022ab1db" id="r_ada51a1d5de8cd32efa901664022ab1db"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#ada51a1d5de8cd32efa901664022ab1db">tryGetAssignment</a> (<a class="el" href="RequirementFunction_8h.html#abca8dfa78652bc61165262af4fade766">VAR</a> &amp;var, double &amp;value) const</td></tr>
+<tr class="memdesc:ada51a1d5de8cd32efa901664022ab1db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Try to expose this requirement as a direct assignment var = value.  <br /></td></tr>
+<tr class="separator:ada51a1d5de8cd32efa901664022ab1db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac852acc6432f3b5b49eaf3f8b13f4ccf" id="r_ac852acc6432f3b5b49eaf3f8b13f4ccf"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9">Utils::RequirementType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#ac852acc6432f3b5b49eaf3f8b13f4ccf">getType</a> () const</td></tr>
 <tr class="memdesc:ac852acc6432f3b5b49eaf3f8b13f4ccf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the type of this geometric requirement.  <br /></td></tr>
 <tr class="separator:ac852acc6432f3b5b49eaf3f8b13f4ccf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -446,6 +449,47 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set the weight for this function. </p>
+
+</div>
+</div>
+<a id="ada51a1d5de8cd32efa901664022ab1db" name="ada51a1d5de8cd32efa901664022ab1db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada51a1d5de8cd32efa901664022ab1db">&#9670;&#160;</a></span>tryGetAssignment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool OurPaintDCM::Function::RequirementFunction::tryGetAssignment </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="RequirementFunction_8h.html#abca8dfa78652bc61165262af4fade766">VAR</a> &amp;&#160;</td>
+          <td class="paramname"><em>var</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Try to expose this requirement as a direct assignment var = value. </p>
+<p>Default implementation returns false. <a class="el" href="namespaceOurPaintDCM_1_1Requirements.html">Requirements</a> like <a class="el" href="classOurPaintDCM_1_1Function_1_1FixCoordinateFunction.html" title="Fixes a single coordinate at a target value.">FixCoordinateFunction</a> override it to provide algebraic elimination metadata. </p>
+
+<p>Reimplemented in <a class="el" href="classOurPaintDCM_1_1Function_1_1FixCoordinateFunction.html#a50f2ed3d89d5b132d416bf594be9486b">OurPaintDCM::Function::FixCoordinateFunction</a>.</p>
 
 </div>
 </div>
