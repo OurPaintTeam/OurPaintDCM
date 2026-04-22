@@ -1,41 +1,29 @@
 #include "DCMManager.h"
+#include "ErrorFunction.h"
 #include "SparseLSMTask.h"
 #include "sparse/SparseLevenbergMarquardtSolver.h"
+#include <algorithm>
+#include <memory>
 #include <stdexcept>
 
 namespace {
 
-class RequirementDerivativeAdapter;
+void eraseRequirementId(std::vector<OurPaintDCM::Utils::ID>& ids, OurPaintDCM::Utils::ID id) {
+    ids.erase(std::remove(ids.begin(), ids.end(), id), ids.end());
+}
 
-class RequirementFunctionAdapter : public Function {
-    std::shared_ptr<OurPaintDCM::Function::RequirementFunction> _req;
-public:
-    explicit RequirementFunctionAdapter(std::shared_ptr<OurPaintDCM::Function::RequirementFunction> req)
-        : _req(std::move(req)) {}
-    double evaluate() const override { return _req->evaluate(); }
-    ::Function* derivative(Variable* var) const override;
-    ::Function* clone() const override { return new RequirementFunctionAdapter(_req); }
-    std::string to_string() const override { return "ReqFunc"; }
-};
-
-class RequirementDerivativeAdapter : public Function {
-    std::shared_ptr<OurPaintDCM::Function::RequirementFunction> _req;
-    double* _var;
-public:
-    RequirementDerivativeAdapter(std::shared_ptr<OurPaintDCM::Function::RequirementFunction> req, double* var)
-        : _req(std::move(req)), _var(var) {}
-    double evaluate() const override {
-        auto grad = _req->gradient();
-        auto it = grad.find(_var);
-        return (it != grad.end()) ? it->second : 0.0;
+std::vector<Variable*> makeMathVariables(std::initializer_list<double*> refs) {
+    std::vector<Variable*> vars;
+    vars.reserve(refs.size());
+    for (double* ref : refs) {
+        vars.push_back(new Variable(ref));
     }
-    ::Function* derivative(Variable*) const override { return new Constant(0.0); }
-    ::Function* clone() const override { return new RequirementDerivativeAdapter(_req, _var); }
-    std::string to_string() const override { return "ReqDeriv"; }
-};
+    return vars;
+}
 
-::Function* RequirementFunctionAdapter::derivative(Variable* var) const {
-    return new RequirementDerivativeAdapter(_req, var->value);
+std::unique_ptr<::Function> makeFixResidual(double* valueRef, double target) {
+    return std::unique_ptr<::Function>(
+        new Subtraction(new Variable(valueRef), new Constant(target)));
 }
 
 } // anonymous namespace
@@ -209,16 +197,33 @@ void DCMManager::removeFigure(Utils::ID figureId, bool forceCascade) {
 }
 
 void DCMManager::updatePoint(const Utils::PointUpdateDescriptor& descriptor) {
+    syncRequirementSystemIfNeeded();
+
     auto* point = _storage.get<Figures::Point2D>(descriptor.pointId);
     if (!point) {
         throw std::runtime_error("Point not found");
     }
 
-    auto pointHasFixConstraint = [&]() {
-        for (const auto& [_, req] : _requirementRecords) {
+    const Utils::ID solvePointId = _reqSystem.resolvePointRepresentative(descriptor.pointId);
+    auto* solvePoint = _storage.get<Figures::Point2D>(solvePointId);
+    if (solvePoint == nullptr) {
+        throw std::runtime_error("Point not found");
+    }
+
+    const auto coincidentPoints = _reqSystem.getCoincidentPoints(descriptor.pointId);
+    const std::unordered_set<Utils::ID> coincidentPointSet(coincidentPoints.begin(), coincidentPoints.end());
+
+    auto pointGroupHasFixConstraint = [&]() {
+        for (const auto& reqId : _requirementOrder) {
+            const auto it = _requirementRecords.find(reqId);
+            if (it == _requirementRecords.end()) {
+                continue;
+            }
+
+            const auto& req = it->second;
             switch (req.type) {
                 case Utils::RequirementType::ET_FIXPOINT: {
-                    if (!req.objectIds.empty() && req.objectIds[0] == descriptor.pointId) {
+                    if (!req.objectIds.empty() && coincidentPointSet.contains(req.objectIds[0])) {
                         return true;
                     }
                     break;
@@ -227,9 +232,11 @@ void DCMManager::updatePoint(const Utils::PointUpdateDescriptor& descriptor) {
                     if (req.objectIds.empty()) {
                         break;
                     }
-                    const auto* line = _storage.get<Figures::Line2D>(req.objectIds[0]);
-                    if (line != nullptr && (line->p1 == point || line->p2 == point)) {
-                        return true;
+                    const auto dependencies = _storage.getDependencies(req.objectIds[0]);
+                    for (const auto& pointId : dependencies) {
+                        if (coincidentPointSet.contains(pointId)) {
+                            return true;
+                        }
                     }
                     break;
                 }
@@ -237,8 +244,8 @@ void DCMManager::updatePoint(const Utils::PointUpdateDescriptor& descriptor) {
                     if (req.objectIds.empty()) {
                         break;
                     }
-                    const auto* circle = _storage.get<Figures::Circle2D>(req.objectIds[0]);
-                    if (circle != nullptr && circle->center == point) {
+                    const auto dependencies = _storage.getDependencies(req.objectIds[0]);
+                    if (!dependencies.empty() && coincidentPointSet.contains(dependencies[0])) {
                         return true;
                     }
                     break;
@@ -250,20 +257,22 @@ void DCMManager::updatePoint(const Utils::PointUpdateDescriptor& descriptor) {
         return false;
     };
 
-    if (pointHasFixConstraint()) {
+    if (pointGroupHasFixConstraint()) {
+        _reqSystem.synchronizeCoincidentPoints();
         return;
     }
 
     if (descriptor.newX.has_value()) {
-        point->x() = descriptor.newX.value();
+        solvePoint->x() = descriptor.newX.value();
     }
     if (descriptor.newY.has_value()) {
-        point->y() = descriptor.newY.value();
+        solvePoint->y() = descriptor.newY.value();
     }
 
+    _reqSystem.synchronizeCoincidentPoints();
+
     if (_solveMode == Utils::SolveMode::DRAG) {
-        std::unordered_set<double*> lockedVars;
-        lockedVars = {point->ptrX(), point->ptrY()};
+        std::unordered_set<double*> lockedVars = {solvePoint->ptrX(), solvePoint->ptrY()};
         auto comp = getComponentForFigure(descriptor.pointId);
         if (comp.has_value()) {
             solveWithLockedVars(comp.value(), lockedVars);
@@ -490,6 +499,46 @@ Utils::ID DCMManager::addRequirement(const Utils::RequirementDescriptor& descrip
     Utils::RequirementDescriptor storedDesc = descriptor;
     storedDesc.id = reqId;
     _requirementRecords[reqId] = storedDesc;
+    switch (storedDesc.type) {
+        case Utils::RequirementType::ET_FIXPOINT: {
+            auto* point = _storage.get<Figures::Point2D>(storedDesc.objectIds[0]);
+            if (point == nullptr) {
+                throw std::runtime_error("Point not found");
+            }
+            _fixedRequirementTargets[reqId] = {point->x(), point->y()};
+            break;
+        }
+        case Utils::RequirementType::ET_FIXLINE: {
+            const auto dependencies = _storage.getDependencies(storedDesc.objectIds[0]);
+            if (dependencies.size() != 2) {
+                throw std::runtime_error("Line dependencies are inconsistent");
+            }
+            auto* p1 = _storage.get<Figures::Point2D>(dependencies[0]);
+            auto* p2 = _storage.get<Figures::Point2D>(dependencies[1]);
+            if (p1 == nullptr || p2 == nullptr) {
+                throw std::runtime_error("Line point not found");
+            }
+            _fixedRequirementTargets[reqId] = {p1->x(), p1->y(), p2->x(), p2->y()};
+            break;
+        }
+        case Utils::RequirementType::ET_FIXCIRCLE: {
+            auto* circle = _storage.get<Figures::Circle2D>(storedDesc.objectIds[0]);
+            const auto dependencies = _storage.getDependencies(storedDesc.objectIds[0]);
+            if (circle == nullptr || dependencies.size() != 1) {
+                throw std::runtime_error("Circle dependencies are inconsistent");
+            }
+            auto* center = _storage.get<Figures::Point2D>(dependencies[0]);
+            if (center == nullptr) {
+                throw std::runtime_error("Circle center not found");
+            }
+            _fixedRequirementTargets[reqId] = {center->x(), center->y(), circle->radius};
+            break;
+        }
+        default:
+            _fixedRequirementTargets.erase(reqId);
+            break;
+    }
+    _requirementOrder.push_back(reqId);
 
     mergeComponents(descriptor.objectIds);
 
@@ -503,6 +552,8 @@ void DCMManager::removeRequirement(Utils::ID reqId) {
     }
 
     _requirementRecords.erase(it);
+    _fixedRequirementTargets.erase(reqId);
+    eraseRequirementId(_requirementOrder, reqId);
     _reqSystemSyncedWithRecords = false;
     rebuildComponents();
 }
@@ -536,8 +587,11 @@ bool DCMManager::hasRequirement(Utils::ID reqId) const noexcept {
 std::vector<Utils::RequirementDescriptor> DCMManager::getAllRequirements() const {
     std::vector<Utils::RequirementDescriptor> result;
     result.reserve(_requirementRecords.size());
-    for (const auto& entry : _requirementRecords) {
-        result.push_back(entry.second);
+    for (const auto& reqId : _requirementOrder) {
+        const auto it = _requirementRecords.find(reqId);
+        if (it != _requirementRecords.end()) {
+            result.push_back(it->second);
+        }
     }
     return result;
 }
@@ -569,7 +623,13 @@ std::vector<Utils::ID> DCMManager::getRequirementsInComponent(ComponentID compon
     std::vector<Utils::ID> result;
     const auto& compFigures = _components[componentId];
 
-    for (const auto& [reqId, desc] : _requirementRecords) {
+    for (const auto& reqId : _requirementOrder) {
+        const auto it = _requirementRecords.find(reqId);
+        if (it == _requirementRecords.end()) {
+            continue;
+        }
+
+        const auto& desc = it->second;
         for (const auto& objId : desc.objectIds) {
             if (compFigures.contains(objId)) {
                 result.push_back(reqId);
@@ -622,6 +682,8 @@ void DCMManager::clear() {
     _reqSystem.clear();
     _storage.clear();
     _requirementRecords.clear();
+    _fixedRequirementTargets.clear();
+    _requirementOrder.clear();
     _figureRecords.clear();
     _figureToComponent.clear();
     _components.clear();
@@ -649,7 +711,7 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
         return true;
     }
 
-    System::RequirementFunctionSystem* systemPtr = nullptr;
+    System::RequirementSystem* systemPtr = nullptr;
     std::unique_ptr<System::RequirementSystem> subsystem;
 
     switch (_solveMode) {
@@ -675,46 +737,327 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
     }
 
     auto& system = *systemPtr;
-    const auto& reqFuncs = system.getFunctions();
-    auto allVars = system.getAllVars();
-    if (reqFuncs.empty() || allVars.empty()) return true;
-
-    // Preprocess algebraic assignments (x = c): eliminate variable and drop this residual.
-    std::unordered_map<double*, double> eliminatedAssignments;
-    std::vector<std::shared_ptr<OurPaintDCM::Function::RequirementFunction>> activeReqFuncs;
-    activeReqFuncs.reserve(reqFuncs.size());
-    for (const auto& rf : reqFuncs) {
-        double* assignedVar = nullptr;
-        double assignedValue = 0.0;
-        if (rf->tryGetAssignment(assignedVar, assignedValue)) {
-            eliminatedAssignments[assignedVar] = assignedValue;
-            *assignedVar = assignedValue;
-            continue;
-        }
-        activeReqFuncs.push_back(rf);
-    }
-
-    if (activeReqFuncs.empty()) {
+    if (system.getRequirements().empty()) {
+        system.synchronizeCoincidentPoints();
         return true;
     }
 
-    std::vector<Variable*> mathVars;
-    mathVars.reserve(allVars.size());
-    if (lockedVars.empty()) {
-        for (auto* v : allVars) {
-            if (eliminatedAssignments.contains(v)) {
-                continue;
-            }
-            mathVars.push_back(new Variable(v));
+    std::vector<std::unique_ptr<::Function>> mathFunctionOwners;
+    std::vector<double*> mathVariableRefs;
+    std::unordered_set<double*> mathVariableRefSet;
+    std::unordered_map<double*, double> fixedAssignments;
+
+    const auto rememberVariable = [&](double* valueRef) {
+        if (valueRef != nullptr &&
+            !lockedVars.contains(valueRef) &&
+            !fixedAssignments.contains(valueRef) &&
+            mathVariableRefSet.insert(valueRef).second) {
+            mathVariableRefs.push_back(valueRef);
         }
-    } else {
-        for (auto* v : allVars) {
-            if (!lockedVars.contains(v) && !eliminatedAssignments.contains(v)) {
-                mathVars.push_back(new Variable(v));
+    };
+
+    const auto appendFunction = [&](std::unique_ptr<::Function> function, std::initializer_list<double*> refs) {
+        for (double* ref : refs) {
+            rememberVariable(ref);
+        }
+        mathFunctionOwners.push_back(std::move(function));
+    };
+
+    const auto resolveLinePoints = [&](Utils::ID lineId) {
+        const auto dependencies = _storage.getDependencies(lineId);
+        if (dependencies.size() != 2) {
+            throw std::runtime_error("Line dependencies are inconsistent");
+        }
+        return std::pair{system.resolvePoint(dependencies[0]), system.resolvePoint(dependencies[1])};
+    };
+
+    const auto resolveCircleData = [&](Utils::ID circleId) {
+        auto* circle = _storage.get<Figures::Circle2D>(circleId);
+        const auto dependencies = _storage.getDependencies(circleId);
+        if (circle == nullptr || dependencies.size() != 1) {
+            throw std::runtime_error("Circle dependencies are inconsistent");
+        }
+        return std::tuple{system.resolvePoint(dependencies[0]), circle->ptrRadius(), circle};
+    };
+
+    const auto resolveArcPoints = [&](Utils::ID arcId) {
+        const auto dependencies = _storage.getDependencies(arcId);
+        if (dependencies.size() != 3) {
+            throw std::runtime_error("Arc dependencies are inconsistent");
+        }
+        return std::tuple{
+            system.resolvePoint(dependencies[0]),
+            system.resolvePoint(dependencies[1]),
+            system.resolvePoint(dependencies[2])};
+    };
+
+    for (const auto& entry : system.getRequirements()) {
+        const auto& ids = entry.objectIds;
+        switch (entry.type) {
+            case Utils::RequirementType::ET_FIXPOINT: {
+                auto* point = system.resolvePoint(ids[0]);
+                std::vector<double> targets = {point->x(), point->y()};
+                const auto targetIt = _fixedRequirementTargets.find(entry.id);
+                if (targetIt != _fixedRequirementTargets.end() && targetIt->second.size() == 2) {
+                    targets = targetIt->second;
+                }
+                fixedAssignments[point->ptrX()] = targets[0];
+                fixedAssignments[point->ptrY()] = targets[1];
+                break;
+            }
+            case Utils::RequirementType::ET_FIXLINE: {
+                const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
+                std::vector<double> targets = {lineP1->x(), lineP1->y(), lineP2->x(), lineP2->y()};
+                const auto targetIt = _fixedRequirementTargets.find(entry.id);
+                if (targetIt != _fixedRequirementTargets.end() && targetIt->second.size() == 4) {
+                    targets = targetIt->second;
+                }
+                fixedAssignments[lineP1->ptrX()] = targets[0];
+                fixedAssignments[lineP1->ptrY()] = targets[1];
+                fixedAssignments[lineP2->ptrX()] = targets[2];
+                fixedAssignments[lineP2->ptrY()] = targets[3];
+                break;
+            }
+            case Utils::RequirementType::ET_FIXCIRCLE: {
+                const auto [center, radius, circle] = resolveCircleData(ids[0]);
+                (void)circle;
+                std::vector<double> targets = {center->x(), center->y(), *radius};
+                const auto targetIt = _fixedRequirementTargets.find(entry.id);
+                if (targetIt != _fixedRequirementTargets.end() && targetIt->second.size() == 3) {
+                    targets = targetIt->second;
+                }
+                fixedAssignments[center->ptrX()] = targets[0];
+                fixedAssignments[center->ptrY()] = targets[1];
+                fixedAssignments[radius] = targets[2];
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+    for (const auto& [valueRef, target] : fixedAssignments) {
+        *valueRef = target;
+    }
+
+    for (const auto& entry : system.getRequirements()) {
+        const auto& ids = entry.objectIds;
+
+        switch (entry.type) {
+            case Utils::RequirementType::ET_POINTLINEDIST: {
+                auto* point = system.resolvePoint(ids[0]);
+                const auto [lineP1, lineP2] = resolveLinePoints(ids[1]);
+                appendFunction(
+                    std::unique_ptr<::Function>(new PointSectionDistanceError(
+                        makeMathVariables({
+                            point->ptrX(), point->ptrY(),
+                            lineP1->ptrX(), lineP1->ptrY(),
+                            lineP2->ptrX(), lineP2->ptrY()}),
+                        entry.param.value())),
+                    {
+                        point->ptrX(), point->ptrY(),
+                        lineP1->ptrX(), lineP1->ptrY(),
+                        lineP2->ptrX(), lineP2->ptrY()});
+                break;
+            }
+            case Utils::RequirementType::ET_POINTONLINE: {
+                auto* point = system.resolvePoint(ids[0]);
+                const auto [lineP1, lineP2] = resolveLinePoints(ids[1]);
+                appendFunction(
+                    std::unique_ptr<::Function>(new PointOnSectionError(
+                        makeMathVariables({
+                            point->ptrX(), point->ptrY(),
+                            lineP1->ptrX(), lineP1->ptrY(),
+                            lineP2->ptrX(), lineP2->ptrY()}))),
+                    {
+                        point->ptrX(), point->ptrY(),
+                        lineP1->ptrX(), lineP1->ptrY(),
+                        lineP2->ptrX(), lineP2->ptrY()});
+                break;
+            }
+            case Utils::RequirementType::ET_POINTPOINTDIST: {
+                auto* p1 = system.resolvePoint(ids[0]);
+                auto* p2 = system.resolvePoint(ids[1]);
+                appendFunction(
+                    std::unique_ptr<::Function>(new PointPointDistanceError(
+                        makeMathVariables({p1->ptrX(), p1->ptrY(), p2->ptrX(), p2->ptrY()}),
+                        entry.param.value())),
+                    {p1->ptrX(), p1->ptrY(), p2->ptrX(), p2->ptrY()});
+                break;
+            }
+            case Utils::RequirementType::ET_POINTONPOINT:
+                // Coincident points are already merged by RequirementSystem aliasing.
+                // Adding a separate residual here double-counts the same constraint
+                // and can create stationary but inconsistent solve states.
+                break;
+            case Utils::RequirementType::ET_LINECIRCLEDIST: {
+                const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
+                const auto [center, radius, _circle] = resolveCircleData(ids[1]);
+                appendFunction(
+                    std::unique_ptr<::Function>(new SectionCircleDistanceError(
+                        makeMathVariables({
+                            lineP1->ptrX(), lineP1->ptrY(),
+                            lineP2->ptrX(), lineP2->ptrY(),
+                            center->ptrX(), center->ptrY(),
+                            radius}),
+                        entry.param.value())),
+                    {
+                        lineP1->ptrX(), lineP1->ptrY(),
+                        lineP2->ptrX(), lineP2->ptrY(),
+                        center->ptrX(), center->ptrY(),
+                        radius});
+                break;
+            }
+            case Utils::RequirementType::ET_LINEONCIRCLE: {
+                const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
+                const auto [center, radius, _circle] = resolveCircleData(ids[1]);
+                appendFunction(
+                    std::unique_ptr<::Function>(new SectionOnCircleError(
+                        makeMathVariables({
+                            lineP1->ptrX(), lineP1->ptrY(),
+                            lineP2->ptrX(), lineP2->ptrY(),
+                            center->ptrX(), center->ptrY(),
+                            radius}))),
+                    {
+                        lineP1->ptrX(), lineP1->ptrY(),
+                        lineP2->ptrX(), lineP2->ptrY(),
+                        center->ptrX(), center->ptrY(),
+                        radius});
+                break;
+            }
+            case Utils::RequirementType::ET_LINEINCIRCLE: {
+                const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
+                const auto [center, radius, _circle] = resolveCircleData(ids[1]);
+                appendFunction(
+                    std::unique_ptr<::Function>(new SectionInCircleError(
+                        makeMathVariables({
+                            lineP1->ptrX(), lineP1->ptrY(),
+                            lineP2->ptrX(), lineP2->ptrY(),
+                            center->ptrX(), center->ptrY(),
+                            radius}))),
+                    {
+                        lineP1->ptrX(), lineP1->ptrY(),
+                        lineP2->ptrX(), lineP2->ptrY(),
+                        center->ptrX(), center->ptrY(),
+                        radius});
+                break;
+            }
+            case Utils::RequirementType::ET_LINELINEPARALLEL: {
+                const auto [l1p1, l1p2] = resolveLinePoints(ids[0]);
+                const auto [l2p1, l2p2] = resolveLinePoints(ids[1]);
+                appendFunction(
+                    std::unique_ptr<::Function>(new SectionSectionParallelError(
+                        makeMathVariables({
+                            l1p1->ptrX(), l1p1->ptrY(), l1p2->ptrX(), l1p2->ptrY(),
+                            l2p1->ptrX(), l2p1->ptrY(), l2p2->ptrX(), l2p2->ptrY()}))),
+                    {
+                        l1p1->ptrX(), l1p1->ptrY(), l1p2->ptrX(), l1p2->ptrY(),
+                        l2p1->ptrX(), l2p1->ptrY(), l2p2->ptrX(), l2p2->ptrY()});
+                break;
+            }
+            case Utils::RequirementType::ET_LINELINEPERPENDICULAR: {
+                const auto [l1p1, l1p2] = resolveLinePoints(ids[0]);
+                const auto [l2p1, l2p2] = resolveLinePoints(ids[1]);
+                appendFunction(
+                    std::unique_ptr<::Function>(new SectionSectionPerpendicularError(
+                        makeMathVariables({
+                            l1p1->ptrX(), l1p1->ptrY(), l1p2->ptrX(), l1p2->ptrY(),
+                            l2p1->ptrX(), l2p1->ptrY(), l2p2->ptrX(), l2p2->ptrY()}))),
+                    {
+                        l1p1->ptrX(), l1p1->ptrY(), l1p2->ptrX(), l1p2->ptrY(),
+                        l2p1->ptrX(), l2p1->ptrY(), l2p2->ptrX(), l2p2->ptrY()});
+                break;
+            }
+            case Utils::RequirementType::ET_LINELINEANGLE: {
+                const auto [l1p1, l1p2] = resolveLinePoints(ids[0]);
+                const auto [l2p1, l2p2] = resolveLinePoints(ids[1]);
+                appendFunction(
+                    std::unique_ptr<::Function>(new SectionSectionAngleError(
+                        makeMathVariables({
+                            l1p1->ptrX(), l1p1->ptrY(), l1p2->ptrX(), l1p2->ptrY(),
+                            l2p1->ptrX(), l2p1->ptrY(), l2p2->ptrX(), l2p2->ptrY()}),
+                        entry.param.value())),
+                    {
+                        l1p1->ptrX(), l1p1->ptrY(), l1p2->ptrX(), l1p2->ptrY(),
+                        l2p1->ptrX(), l2p1->ptrY(), l2p2->ptrX(), l2p2->ptrY()});
+                break;
+            }
+            case Utils::RequirementType::ET_VERTICAL: {
+                const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
+                appendFunction(
+                    std::unique_ptr<::Function>(new VerticalError(
+                        makeMathVariables({lineP1->ptrX(), lineP1->ptrY(), lineP2->ptrX(), lineP2->ptrY()}))),
+                    {lineP1->ptrX(), lineP1->ptrY(), lineP2->ptrX(), lineP2->ptrY()});
+                break;
+            }
+            case Utils::RequirementType::ET_HORIZONTAL: {
+                const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
+                appendFunction(
+                    std::unique_ptr<::Function>(new HorizontalError(
+                        makeMathVariables({lineP1->ptrX(), lineP1->ptrY(), lineP2->ptrX(), lineP2->ptrY()}))),
+                    {lineP1->ptrX(), lineP1->ptrY(), lineP2->ptrX(), lineP2->ptrY()});
+                break;
+            }
+            case Utils::RequirementType::ET_ARCCENTERONPERPENDICULAR: {
+                const auto [arcP1, arcP2, center] = resolveArcPoints(ids[0]);
+                appendFunction(
+                    std::unique_ptr<::Function>(new ArcCenterOnPerpendicularError(
+                        makeMathVariables({
+                            arcP1->ptrX(), arcP1->ptrY(),
+                            arcP2->ptrX(), arcP2->ptrY(),
+                            center->ptrX(), center->ptrY()}))),
+                    {
+                        arcP1->ptrX(), arcP1->ptrY(),
+                        arcP2->ptrX(), arcP2->ptrY(),
+                        center->ptrX(), center->ptrY()});
+                break;
+            }
+            case Utils::RequirementType::ET_FIXPOINT: {
+                auto* point = system.resolvePoint(ids[0]);
+                std::vector<double> targets = {point->x(), point->y()};
+                const auto targetIt = _fixedRequirementTargets.find(entry.id);
+                if (targetIt != _fixedRequirementTargets.end() && targetIt->second.size() == 2) {
+                    targets = targetIt->second;
+                }
+                appendFunction(makeFixResidual(point->ptrX(), targets[0]), {point->ptrX()});
+                appendFunction(makeFixResidual(point->ptrY(), targets[1]), {point->ptrY()});
+                break;
+            }
+            case Utils::RequirementType::ET_FIXLINE: {
+                const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
+                std::vector<double> targets = {lineP1->x(), lineP1->y(), lineP2->x(), lineP2->y()};
+                const auto targetIt = _fixedRequirementTargets.find(entry.id);
+                if (targetIt != _fixedRequirementTargets.end() && targetIt->second.size() == 4) {
+                    targets = targetIt->second;
+                }
+                appendFunction(makeFixResidual(lineP1->ptrX(), targets[0]), {lineP1->ptrX()});
+                appendFunction(makeFixResidual(lineP1->ptrY(), targets[1]), {lineP1->ptrY()});
+                appendFunction(makeFixResidual(lineP2->ptrX(), targets[2]), {lineP2->ptrX()});
+                appendFunction(makeFixResidual(lineP2->ptrY(), targets[3]), {lineP2->ptrY()});
+                break;
+            }
+            case Utils::RequirementType::ET_FIXCIRCLE: {
+                const auto [center, radius, circle] = resolveCircleData(ids[0]);
+                (void)circle;
+                std::vector<double> targets = {center->x(), center->y(), *radius};
+                const auto targetIt = _fixedRequirementTargets.find(entry.id);
+                if (targetIt != _fixedRequirementTargets.end() && targetIt->second.size() == 3) {
+                    targets = targetIt->second;
+                }
+                appendFunction(makeFixResidual(center->ptrX(), targets[0]), {center->ptrX()});
+                appendFunction(makeFixResidual(center->ptrY(), targets[1]), {center->ptrY()});
+                appendFunction(makeFixResidual(radius, targets[2]), {radius});
+                break;
             }
         }
     }
-    if (mathVars.empty()) {
+
+    if (mathFunctionOwners.empty()) {
+        system.synchronizeCoincidentPoints();
+        return true;
+    }
+
+    if (mathVariableRefs.empty()) {
         // If temporary drag locks consume all remaining DOF, retry without locks.
         // This keeps fixed/eliminated vars constant, but allows the solver
         // to satisfy constraints by moving the dragged point to a feasible position.
@@ -722,23 +1065,35 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
             const std::unordered_set<double*> noLockedVars;
             return solveWithLockedVars(componentId, noLockedVars);
         }
+        system.synchronizeCoincidentPoints();
         return true;
     }
 
     std::vector<::Function*> mathFuncs;
-    mathFuncs.reserve(activeReqFuncs.size());
-    for (auto& rf : activeReqFuncs)
-        mathFuncs.push_back(new RequirementFunctionAdapter(rf));
+    mathFuncs.reserve(mathFunctionOwners.size());
+    for (auto& owner : mathFunctionOwners) {
+        mathFuncs.push_back(owner.release());
+    }
 
-    SparseLSMTask task(mathFuncs, mathVars);
+    std::vector<std::unique_ptr<Variable>> mathVarOwners;
+    std::vector<Variable*> mathVars;
+    mathVarOwners.reserve(mathVariableRefs.size());
+    mathVars.reserve(mathVariableRefs.size());
+    for (double* valueRef : mathVariableRefs) {
+        mathVarOwners.push_back(std::make_unique<Variable>(valueRef));
+        mathVars.push_back(mathVarOwners.back().get());
+    }
+
+    std::cout << "[Solver] System size before solve: equations=" << mathFuncs.size()
+              << ", variables=" << mathVars.size() << std::endl;
+
+    SparseLSMTask task(std::move(mathFuncs), std::move(mathVars));
     SparseLMSolver solver;
     solver.setTask(&task);
     solver.optimize();
     const bool converged = solver.isConverged();
+    system.synchronizeCoincidentPoints();
 
-    for (auto* v : mathVars) {
-        delete v;
-    }
     return converged;
 }
 
@@ -759,8 +1114,11 @@ std::unique_ptr<System::RequirementSystem> DCMManager::buildSubsystem(ComponentI
 
 void DCMManager::rebuildRequirementSystem() {
     _reqSystem.clear();
-    for (const auto& [id, desc] : _requirementRecords) {
-        _reqSystem.addRequirement(desc);
+    for (const auto& reqId : _requirementOrder) {
+        const auto it = _requirementRecords.find(reqId);
+        if (it != _requirementRecords.end()) {
+            _reqSystem.addRequirement(it->second);
+        }
     }
     _reqSystemSyncedWithRecords = true;
 }
@@ -774,6 +1132,7 @@ void DCMManager::syncRequirementSystemIfNeeded() {
 
 void DCMManager::pruneRequirementsWithMissingObjects() {
     bool changed = false;
+    std::vector<Utils::ID> staleRequirementIds;
     for (auto it = _requirementRecords.begin(); it != _requirementRecords.end();) {
         bool stale = false;
         for (const auto& oid : it->second.objectIds) {
@@ -783,11 +1142,16 @@ void DCMManager::pruneRequirementsWithMissingObjects() {
             }
         }
         if (stale) {
+            staleRequirementIds.push_back(it->first);
+            _fixedRequirementTargets.erase(it->first);
             it = _requirementRecords.erase(it);
             changed = true;
         } else {
             ++it;
         }
+    }
+    for (const auto& reqId : staleRequirementIds) {
+        eraseRequirementId(_requirementOrder, reqId);
     }
     if (changed) {
         _reqSystemSyncedWithRecords = false;
@@ -880,7 +1244,13 @@ void DCMManager::removeFigureFromComponent(Utils::ID figureId) {
 
 std::vector<Utils::ID> DCMManager::getRequirementsForFigure(Utils::ID figureId) const {
     std::vector<Utils::ID> result;
-    for (const auto& [reqId, desc] : _requirementRecords) {
+    for (const auto& reqId : _requirementOrder) {
+        const auto it = _requirementRecords.find(reqId);
+        if (it == _requirementRecords.end()) {
+            continue;
+        }
+
+        const auto& desc = it->second;
         for (const auto& objId : desc.objectIds) {
             if (objId == figureId) {
                 result.push_back(reqId);
