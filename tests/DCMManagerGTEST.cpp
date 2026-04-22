@@ -101,6 +101,103 @@ TEST_F(DCMManagerTest, UpdatePoint) {
     EXPECT_DOUBLE_EQ(desc->y.value(), 40.0);
 }
 
+TEST_F(DCMManagerTest, PointOnPointImmediatelySynchronizesPoints) {
+    auto p1 = manager.addFigure(FigureDescriptor::point(1.0, 2.0));
+    auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 20.0));
+
+    manager.addRequirement(RequirementDescriptor::pointOnPoint(p1, p2));
+
+    auto d1 = manager.getFigure(p1);
+    auto d2 = manager.getFigure(p2);
+    ASSERT_TRUE(d1.has_value());
+    ASSERT_TRUE(d2.has_value());
+    EXPECT_DOUBLE_EQ(d1->x.value(), d2->x.value());
+    EXPECT_DOUBLE_EQ(d1->y.value(), d2->y.value());
+    EXPECT_DOUBLE_EQ(d1->x.value(), 10.0);
+    EXPECT_DOUBLE_EQ(d1->y.value(), 20.0);
+}
+
+TEST_F(DCMManagerTest, RemovingPointOnPointRestoresIndependentUpdates) {
+    auto p1 = manager.addFigure(FigureDescriptor::point(1.0, 2.0));
+    auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 20.0));
+    auto reqId = manager.addRequirement(RequirementDescriptor::pointOnPoint(p1, p2));
+
+    manager.removeRequirement(reqId);
+    manager.updatePoint(PointUpdateDescriptor(p1, 30.0, 40.0));
+
+    auto d1 = manager.getFigure(p1);
+    auto d2 = manager.getFigure(p2);
+    ASSERT_TRUE(d1.has_value());
+    ASSERT_TRUE(d2.has_value());
+    EXPECT_DOUBLE_EQ(d1->x.value(), 30.0);
+    EXPECT_DOUBLE_EQ(d1->y.value(), 40.0);
+    EXPECT_DOUBLE_EQ(d2->x.value(), 10.0);
+    EXPECT_DOUBLE_EQ(d2->y.value(), 20.0);
+}
+
+TEST_F(DCMManagerTest, RemovingAliasedPointPrunesPointOnPointRequirement) {
+    auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    auto p2 = manager.addFigure(FigureDescriptor::point(5.0, 7.0));
+    auto reqId = manager.addRequirement(RequirementDescriptor::pointOnPoint(p1, p2));
+
+    manager.removeFigure(p2);
+
+    EXPECT_TRUE(manager.hasFigure(p1));
+    EXPECT_FALSE(manager.hasFigure(p2));
+    EXPECT_FALSE(manager.hasRequirement(reqId));
+}
+
+TEST_F(DCMManagerTest, FixPointOnAliasedPointPreventsUpdatingWholeGroup) {
+    auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 20.0));
+
+    manager.addRequirement(RequirementDescriptor::fixPoint(p1));
+    manager.addRequirement(RequirementDescriptor::pointOnPoint(p1, p2));
+    manager.updatePoint(PointUpdateDescriptor(p2, 100.0, 200.0));
+
+    auto d1 = manager.getFigure(p1);
+    auto d2 = manager.getFigure(p2);
+    ASSERT_TRUE(d1.has_value());
+    ASSERT_TRUE(d2.has_value());
+    EXPECT_DOUBLE_EQ(d1->x.value(), 0.0);
+    EXPECT_DOUBLE_EQ(d1->y.value(), 0.0);
+    EXPECT_DOUBLE_EQ(d2->x.value(), 0.0);
+    EXPECT_DOUBLE_EQ(d2->y.value(), 0.0);
+}
+
+TEST_F(DCMManagerTest, ChainedPointOnPointSplitsBackAfterRequirementRemoval) {
+    auto p1 = manager.addFigure(FigureDescriptor::point(1.0, 1.0));
+    auto p2 = manager.addFigure(FigureDescriptor::point(2.0, 2.0));
+    auto p3 = manager.addFigure(FigureDescriptor::point(3.0, 3.0));
+
+    auto req12 = manager.addRequirement(RequirementDescriptor::pointOnPoint(p1, p2));
+    auto req23 = manager.addRequirement(RequirementDescriptor::pointOnPoint(p2, p3));
+
+    auto d1Merged = manager.getFigure(p1);
+    auto d2Merged = manager.getFigure(p2);
+    auto d3Merged = manager.getFigure(p3);
+    ASSERT_TRUE(d1Merged.has_value() && d2Merged.has_value() && d3Merged.has_value());
+    EXPECT_DOUBLE_EQ(d1Merged->x.value(), 3.0);
+    EXPECT_DOUBLE_EQ(d2Merged->x.value(), 3.0);
+    EXPECT_DOUBLE_EQ(d3Merged->x.value(), 3.0);
+
+    manager.removeRequirement(req23);
+    manager.updatePoint(PointUpdateDescriptor(p1, 50.0, 60.0));
+
+    auto d1 = manager.getFigure(p1);
+    auto d2 = manager.getFigure(p2);
+    auto d3 = manager.getFigure(p3);
+    ASSERT_TRUE(d1.has_value() && d2.has_value() && d3.has_value());
+    EXPECT_DOUBLE_EQ(d1->x.value(), 50.0);
+    EXPECT_DOUBLE_EQ(d1->y.value(), 60.0);
+    EXPECT_DOUBLE_EQ(d2->x.value(), 50.0);
+    EXPECT_DOUBLE_EQ(d2->y.value(), 60.0);
+    EXPECT_DOUBLE_EQ(d3->x.value(), 3.0);
+    EXPECT_DOUBLE_EQ(d3->y.value(), 3.0);
+
+    EXPECT_TRUE(manager.hasRequirement(req12));
+}
+
 TEST_F(DCMManagerTest, UpdateCircle) {
     auto circleId = manager.addFigure(FigureDescriptor::circle(5.0, 5.0, 10.0));
 
