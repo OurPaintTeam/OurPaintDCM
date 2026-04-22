@@ -273,6 +273,8 @@ private:
 
     std::unordered_map<Utils::ID, Utils::FigureDescriptor> _figureRecords;
     std::unordered_map<Utils::ID, Utils::RequirementDescriptor> _requirementRecords;
+    std::unordered_map<Utils::ID, std::vector<double>> _fixedRequirementTargets;
+    std::vector<Utils::ID> _requirementOrder;
     std::unordered_map<Utils::ID, ComponentID> _figureToComponent;
     std::vector<std::unordered_set<Utils::ID>> _components;
     ComponentID _nextComponentId = 0;
