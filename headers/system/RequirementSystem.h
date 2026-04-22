@@ -7,6 +7,11 @@
 #include "Enums.h"
 #include "IDGenerator.h"
 #include "utils/RequirementDescriptor.h"
+#include <unordered_map>
+
+namespace OurPaintDCM {
+class DCMManager;
+}
 
 namespace OurPaintDCM::System {
 /**
@@ -39,6 +44,17 @@ class RequirementSystem : public RequirementFunctionSystem {
     };
 
     std::vector<RequirementEntry> _requirements;
+    std::unordered_map<Utils::ID, Utils::ID> _pointRepresentative;
+    std::unordered_map<Utils::ID, std::vector<Utils::ID>> _coincidentPointGroups;
+
+    void rebuildFunctionsAndAliases();
+    Utils::ID resolvePointRepresentative(Utils::ID pointId) const noexcept;
+    Figures::Point2D* resolvePoint(Utils::ID pointId) const;
+    std::vector<Utils::ID> getCoincidentPoints(Utils::ID pointId) const;
+    void applyDirectAssignments() const;
+    void synchronizeCoincidentPoints() const noexcept;
+
+    friend class ::OurPaintDCM::DCMManager;
 
 public:
     /**
