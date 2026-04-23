@@ -246,6 +246,62 @@ TEST_F(DCMManagerSolveTest, DragMode_FallbackWithoutLocksWhenNoDofLeft) {
     EXPECT_NEAR(std::sqrt(dx * dx + dy * dy), 10.0, 1e-6);
 }
 
+TEST_F(DCMManagerSolveTest, SolveUsesUpdatedRequirementParameterAfterCacheInvalidation) {
+    auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 0.0));
+    const auto req = manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 10.0));
+
+    manager.setSolveMode(SolveMode::DRAG);
+    manager.updatePoint(PointUpdateDescriptor(p1, 2.0, 0.0));
+
+    manager.updateRequirementParam(req, 20.0);
+    const auto component = manager.getComponentForFigure(p1);
+    ASSERT_TRUE(component.has_value());
+
+    manager.setSolveMode(SolveMode::LOCAL);
+    const bool converged = manager.solve(component.value());
+    EXPECT_TRUE(converged);
+
+    const auto d1 = manager.getFigure(p1);
+    const auto d2 = manager.getFigure(p2);
+    ASSERT_TRUE(d1.has_value() && d2.has_value());
+
+    const double dx = d2->x.value() - d1->x.value();
+    const double dy = d2->y.value() - d1->y.value();
+    EXPECT_NEAR(std::sqrt(dx * dx + dy * dy), 20.0, 1e-6);
+}
+
+TEST_F(DCMManagerSolveTest, DragMode_RemovedRequirementDoesNotAffectSeparatedComponent) {
+    auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 0.0));
+    auto p3 = manager.addFigure(FigureDescriptor::point(20.0, 0.0));
+
+    manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 10.0));
+    const auto req = manager.addRequirement(RequirementDescriptor::pointPointDist(p2, p3, 10.0));
+
+    manager.setSolveMode(SolveMode::DRAG);
+    manager.updatePoint(PointUpdateDescriptor(p2, 12.0, 0.0));
+
+    const auto beforeRemovalP3 = manager.getFigure(p3);
+    ASSERT_TRUE(beforeRemovalP3.has_value());
+
+    manager.removeRequirement(req);
+    EXPECT_EQ(manager.getComponentCount(), 2U);
+
+    manager.updatePoint(PointUpdateDescriptor(p2, 30.0, 0.0));
+
+    const auto d1 = manager.getFigure(p1);
+    const auto d2 = manager.getFigure(p2);
+    const auto d3 = manager.getFigure(p3);
+    ASSERT_TRUE(d1.has_value() && d2.has_value() && d3.has_value());
+
+    const double dx = d2->x.value() - d1->x.value();
+    const double dy = d2->y.value() - d1->y.value();
+    EXPECT_NEAR(std::sqrt(dx * dx + dy * dy), 10.0, 1e-6);
+    EXPECT_NEAR(d3->x.value(), beforeRemovalP3->x.value(), 1e-9);
+    EXPECT_NEAR(d3->y.value(), beforeRemovalP3->y.value(), 1e-9);
+}
+
 TEST_F(DCMManagerSolveTest, GlobalSolve_Rectangle) {
     auto l1 = manager.addFigure(FigureDescriptor::line(0.0, 0.0, 100.0, 2.0));
     auto l2 = manager.addFigure(FigureDescriptor::line(100.0, 2.0, 102.0, 52.0));

@@ -35,7 +35,7 @@ public:
      */
     DCMManager();
 
-    ~DCMManager() = default;
+    ~DCMManager();
 
     DCMManager(const DCMManager&) = delete;
     DCMManager& operator=(const DCMManager&) = delete;
@@ -265,8 +265,11 @@ public:
     bool solve(std::optional<ComponentID> componentId = std::nullopt);
 
 private:
+    struct SolveCache;
+
     bool solveWithLockedVars(std::optional<ComponentID> componentId,
                              const std::unordered_set<double*>& lockedVars);
+    void invalidateSolveCache() noexcept;
 
     Figures::GeometryStorage _storage;
     System::RequirementSystem _reqSystem;
@@ -280,6 +283,7 @@ private:
     ComponentID _nextComponentId = 0;
     std::size_t _activeComponentCount = 0;
     Utils::SolveMode _solveMode = Utils::SolveMode::GLOBAL;
+    std::unique_ptr<SolveCache> _solveCache;
 
     std::unique_ptr<System::RequirementSystem> buildSubsystem(ComponentID componentId) const;
 
