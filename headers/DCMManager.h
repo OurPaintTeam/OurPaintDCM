@@ -13,6 +13,7 @@
 #include <vector>
 #include <memory>
 #include <cmath>
+#include <initializer_list>
 
 namespace OurPaintDCM {
 
@@ -66,11 +67,71 @@ public:
     void updatePoint(const Utils::PointUpdateDescriptor& descriptor);
 
     /**
-     * @brief Update circle radius.
-     * @param descriptor CircleUpdateDescriptor with new radius.
+     * @brief Update multiple point coordinates in one batch.
+     *
+     * In DRAG mode all changed point representatives are locked, and each touched
+     * component is solved once after the whole batch is applied.
+     *
+     * @param descriptors Point updates.
+     * @throws std::runtime_error if any point is not found.
+     */
+    void updatePoints(const std::vector<Utils::PointUpdateDescriptor>& descriptors);
+
+    /**
+     * @brief Update line endpoint coordinates.
+     * @param descriptor LineUpdateDescriptor with endpoint values.
+     * @throws std::runtime_error if line not found.
+     */
+    void updateLine(const Utils::LineUpdateDescriptor& descriptor);
+
+    /**
+     * @brief Update multiple lines in one batch.
+     * @param descriptors Line updates.
+     * @throws std::runtime_error if any line is not found.
+     */
+    void updateLines(const std::vector<Utils::LineUpdateDescriptor>& descriptors);
+
+    /**
+     * @brief Update circle center and/or radius.
+     * @param descriptor CircleUpdateDescriptor with new values.
      * @throws std::runtime_error if circle not found.
      */
     void updateCircle(const Utils::CircleUpdateDescriptor& descriptor);
+
+    /**
+     * @brief Update multiple circles in one batch.
+     * @param descriptors Circle updates.
+     * @throws std::runtime_error if any circle is not found.
+     */
+    void updateCircles(const std::vector<Utils::CircleUpdateDescriptor>& descriptors);
+
+    /**
+     * @brief Update arc endpoint and center coordinates.
+     * @param descriptor ArcUpdateDescriptor with point values.
+     * @throws std::runtime_error if arc not found.
+     */
+    void updateArc(const Utils::ArcUpdateDescriptor& descriptor);
+
+    /**
+     * @brief Update multiple arcs in one batch.
+     * @param descriptors Arc updates.
+     * @throws std::runtime_error if any arc is not found.
+     */
+    void updateArcs(const std::vector<Utils::ArcUpdateDescriptor>& descriptors);
+
+    /**
+     * @brief Update any supported figure by unified update descriptor.
+     * @param descriptor Figure update.
+     * @throws std::runtime_error if figure not found or type does not match.
+     */
+    void updateFigure(const Utils::FigureUpdateDescriptor& descriptor);
+
+    /**
+     * @brief Update multiple figures of arbitrary types in one batch.
+     * @param descriptors Figure updates.
+     * @throws std::runtime_error if any figure is not found or type does not match.
+     */
+    void updateFigures(const std::vector<Utils::FigureUpdateDescriptor>& descriptors);
 
     /**
      * @brief Get figure descriptor with current state.
@@ -266,6 +327,8 @@ public:
 
 private:
     struct SolveCache;
+    struct BatchUpdateContext;
+    struct FixedGeometry;
 
     bool solveWithLockedVars(std::optional<ComponentID> componentId,
                              const std::unordered_set<double*>& lockedVars);
@@ -286,6 +349,35 @@ private:
     std::unique_ptr<SolveCache> _solveCache;
 
     std::unique_ptr<System::RequirementSystem> buildSubsystem(ComponentID componentId) const;
+
+    FixedGeometry collectFixedGeometry() const;
+    bool pointGroupHasFixConstraint(
+        Utils::ID pointId,
+        const std::unordered_set<Utils::ID>& fixedPointIds) const;
+    void addDragLocks(Utils::ID figureId,
+                      std::initializer_list<double*> vars,
+                      BatchUpdateContext& context);
+    void solveDragUpdates(const BatchUpdateContext& context);
+    void applyPointUpdateNoSolve(const Utils::PointUpdateDescriptor& descriptor,
+                                 const FixedGeometry& fixedGeometry,
+                                 BatchUpdateContext& context);
+    void applyLineUpdateNoSolve(const Utils::LineUpdateDescriptor& descriptor,
+                                const FixedGeometry& fixedGeometry,
+                                BatchUpdateContext& context);
+    void applyCircleUpdateNoSolve(const Utils::CircleUpdateDescriptor& descriptor,
+                                  const FixedGeometry& fixedGeometry,
+                                  BatchUpdateContext& context);
+    void applyArcUpdateNoSolve(const Utils::ArcUpdateDescriptor& descriptor,
+                               const FixedGeometry& fixedGeometry,
+                               BatchUpdateContext& context);
+    void applyFigureUpdateNoSolve(const Utils::FigureUpdateDescriptor& descriptor,
+                                  const FixedGeometry& fixedGeometry,
+                                  BatchUpdateContext& context);
+    void validatePointUpdate(const Utils::PointUpdateDescriptor& descriptor) const;
+    void validateLineUpdate(const Utils::LineUpdateDescriptor& descriptor) const;
+    void validateCircleUpdate(const Utils::CircleUpdateDescriptor& descriptor) const;
+    void validateArcUpdate(const Utils::ArcUpdateDescriptor& descriptor) const;
+    void validateFigureUpdate(const Utils::FigureUpdateDescriptor& descriptor) const;
 
     /// Rebuild _reqSystem from _requirementRecords and mark it in sync.
     void rebuildRequirementSystem();

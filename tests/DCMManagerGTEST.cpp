@@ -208,6 +208,93 @@ TEST_F(DCMManagerTest, UpdateCircle) {
     EXPECT_DOUBLE_EQ(desc->radius.value(), 25.0);
 }
 
+TEST_F(DCMManagerTest, UpdateLine) {
+    auto lineId = manager.addFigure(FigureDescriptor::line(0.0, 0.0, 10.0, 0.0));
+
+    manager.updateLine(LineUpdateDescriptor(lineId, 1.0, 2.0, 11.0, 12.0));
+
+    auto desc = manager.getFigure(lineId);
+    ASSERT_TRUE(desc.has_value());
+    ASSERT_EQ(desc->coords.size(), 4);
+    EXPECT_DOUBLE_EQ(desc->coords[0], 1.0);
+    EXPECT_DOUBLE_EQ(desc->coords[1], 2.0);
+    EXPECT_DOUBLE_EQ(desc->coords[2], 11.0);
+    EXPECT_DOUBLE_EQ(desc->coords[3], 12.0);
+}
+
+TEST_F(DCMManagerTest, UpdateCircleCenterAndRadius) {
+    auto circleId = manager.addFigure(FigureDescriptor::circle(5.0, 5.0, 10.0));
+
+    manager.updateCircle(CircleUpdateDescriptor(circleId, 7.0, 8.0, 25.0));
+
+    auto desc = manager.getFigure(circleId);
+    ASSERT_TRUE(desc.has_value());
+    ASSERT_EQ(desc->coords.size(), 2);
+    EXPECT_DOUBLE_EQ(desc->coords[0], 7.0);
+    EXPECT_DOUBLE_EQ(desc->coords[1], 8.0);
+    EXPECT_DOUBLE_EQ(desc->radius.value(), 25.0);
+}
+
+TEST_F(DCMManagerTest, UpdateArc) {
+    auto arcId = manager.addFigure(FigureDescriptor::arc(0.0, 0.0, 10.0, 0.0, 5.0, 5.0));
+
+    manager.updateArc(ArcUpdateDescriptor(arcId, 1.0, 2.0, 11.0, 12.0, 6.0, 7.0));
+
+    auto desc = manager.getFigure(arcId);
+    ASSERT_TRUE(desc.has_value());
+    ASSERT_EQ(desc->coords.size(), 6);
+    EXPECT_DOUBLE_EQ(desc->coords[0], 1.0);
+    EXPECT_DOUBLE_EQ(desc->coords[1], 2.0);
+    EXPECT_DOUBLE_EQ(desc->coords[2], 11.0);
+    EXPECT_DOUBLE_EQ(desc->coords[3], 12.0);
+    EXPECT_DOUBLE_EQ(desc->coords[4], 6.0);
+    EXPECT_DOUBLE_EQ(desc->coords[5], 7.0);
+}
+
+TEST_F(DCMManagerTest, UpdateFiguresMixedBatch) {
+    auto pointId = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    auto lineId = manager.addFigure(FigureDescriptor::line(0.0, 0.0, 10.0, 0.0));
+    auto circleId = manager.addFigure(FigureDescriptor::circle(5.0, 5.0, 10.0));
+
+    manager.updateFigures({
+        FigureUpdateDescriptor::point(pointId, 1.0, 2.0),
+        FigureUpdateDescriptor::line(lineId, 2.0, 3.0, 12.0, 13.0),
+        FigureUpdateDescriptor::circle(circleId, 7.0, 8.0, 20.0),
+    });
+
+    auto point = manager.getFigure(pointId);
+    auto line = manager.getFigure(lineId);
+    auto circle = manager.getFigure(circleId);
+    ASSERT_TRUE(point.has_value() && line.has_value() && circle.has_value());
+    EXPECT_DOUBLE_EQ(point->x.value(), 1.0);
+    EXPECT_DOUBLE_EQ(point->y.value(), 2.0);
+    ASSERT_EQ(line->coords.size(), 4);
+    EXPECT_DOUBLE_EQ(line->coords[0], 2.0);
+    EXPECT_DOUBLE_EQ(line->coords[3], 13.0);
+    ASSERT_EQ(circle->coords.size(), 2);
+    EXPECT_DOUBLE_EQ(circle->coords[0], 7.0);
+    EXPECT_DOUBLE_EQ(circle->radius.value(), 20.0);
+}
+
+TEST_F(DCMManagerTest, UpdatePointsBatchPreservesPointOnPointSemantics) {
+    auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 10.0));
+    manager.addRequirement(RequirementDescriptor::pointOnPoint(p1, p2));
+
+    manager.updatePoints({
+        PointUpdateDescriptor(p1, 1.0, 2.0),
+        PointUpdateDescriptor(p2, 3.0, 4.0),
+    });
+
+    auto d1 = manager.getFigure(p1);
+    auto d2 = manager.getFigure(p2);
+    ASSERT_TRUE(d1.has_value() && d2.has_value());
+    EXPECT_DOUBLE_EQ(d1->x.value(), 3.0);
+    EXPECT_DOUBLE_EQ(d1->y.value(), 4.0);
+    EXPECT_DOUBLE_EQ(d2->x.value(), 3.0);
+    EXPECT_DOUBLE_EQ(d2->y.value(), 4.0);
+}
+
 TEST_F(DCMManagerTest, GetAllFigures) {
     auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
     auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 0.0));

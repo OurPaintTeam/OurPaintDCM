@@ -136,6 +136,41 @@ TEST_F(DCMManagerSolveTest, DragMode_UpdateFixedCircleRadius_Ignored) {
     EXPECT_NEAR(c->radius.value(), 10.0, 1e-6);
 }
 
+TEST_F(DCMManagerSolveTest, DragMode_UpdateFixedCircleCenterAndRadius_Ignored) {
+    auto circle = manager.addFigure(FigureDescriptor::circle(0.0, 0.0, 10.0));
+    manager.addRequirement(RequirementDescriptor::fixCircle(circle));
+    manager.setSolveMode(SolveMode::DRAG);
+
+    manager.updateCircle(CircleUpdateDescriptor(circle, 20.0, 30.0, 25.0));
+
+    auto c = manager.getFigure(circle);
+    ASSERT_TRUE(c.has_value());
+    ASSERT_EQ(c->coords.size(), 2);
+    ASSERT_TRUE(c->radius.has_value());
+    EXPECT_NEAR(c->coords[0], 0.0, 1e-6);
+    EXPECT_NEAR(c->coords[1], 0.0, 1e-6);
+    EXPECT_NEAR(c->radius.value(), 10.0, 1e-6);
+}
+
+TEST_F(DCMManagerSolveTest, DragMode_UpdateLineLocksEndpointCoordinates) {
+    auto line = manager.addFigure(FigureDescriptor::line(0.0, 0.0, 10.0, 0.0));
+    auto point = manager.addFigure(FigureDescriptor::point(5.0, 20.0));
+    manager.addRequirement(RequirementDescriptor::pointOnLine(point, line));
+    manager.setSolveMode(SolveMode::DRAG);
+
+    manager.updateLine(LineUpdateDescriptor(line, 0.0, 10.0, 10.0, 10.0));
+
+    auto lineDesc = manager.getFigure(line);
+    auto pointDesc = manager.getFigure(point);
+    ASSERT_TRUE(lineDesc.has_value() && pointDesc.has_value());
+    ASSERT_EQ(lineDesc->coords.size(), 4);
+    EXPECT_NEAR(lineDesc->coords[0], 0.0, 1e-9);
+    EXPECT_NEAR(lineDesc->coords[1], 10.0, 1e-9);
+    EXPECT_NEAR(lineDesc->coords[2], 10.0, 1e-9);
+    EXPECT_NEAR(lineDesc->coords[3], 10.0, 1e-9);
+    EXPECT_NEAR(pointDesc->y.value(), 10.0, 1e-4);
+}
+
 TEST_F(DCMManagerSolveTest, FixPointUsesCoordinatesCapturedAtConstraintCreation) {
     auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
     auto p2 = manager.addFigure(FigureDescriptor::point(20.0, 0.0));
