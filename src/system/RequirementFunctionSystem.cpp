@@ -14,17 +14,7 @@ void RequirementFunctionSystem::addFunction(std::shared_ptr<RequirementFunction>
             _allVars.push_back(v);
         }
     }
-    size_t n = _allVars.size();
-    size_t m = _functions.size();
-    std::unordered_map<VAR, double> vars = func->gradient();
-    _jacobian.resize(m, n);
-    for (size_t i = 0; i < n; ++i) {
-        if (vars.contains(_allVars[i])) {
-            _jacobian.insert(m - 1, i) = vars[_allVars[i]];
-            break;
-        }
-        _jacobian.insert(m - 1, i) = 0;
-    }
+    _jacobianDirty = true;
 }
 
 void RequirementFunctionSystem::updateJ() {
@@ -45,14 +35,23 @@ void RequirementFunctionSystem::updateJ() {
 
     _jacobian.resize(m, n);
     _jacobian.setFromTriplets(triplets.begin(), triplets.end());
+    _jacobianDirty = false;
+}
+
+void RequirementFunctionSystem::ensureJacobian() const {
+    if (_jacobianDirty) {
+        const_cast<RequirementFunctionSystem*>(this)->updateJ();
+    }
 }
 
 
 Eigen::SparseMatrix<double> RequirementFunctionSystem::J() const {
+    ensureJacobian();
     return _jacobian;
 }
 
 Eigen::SparseMatrix<double> RequirementFunctionSystem::JTJ() const {
+    ensureJacobian();
     Eigen::SparseMatrix<double> JT = _jacobian.transpose();
     return JT * _jacobian;
 }
@@ -69,6 +68,7 @@ std::vector<VAR> RequirementFunctionSystem::getAllVars() const {
 }
 
 OurPaintDCM::Utils::SystemStatus RequirementFunctionSystem::diagnose() const {
+    ensureJacobian();
     if (_jacobian.rows() == 0 || _jacobian.cols() == 0)
         return Utils::SystemStatus::EMPTY;
 
@@ -94,4 +94,5 @@ void RequirementFunctionSystem::clear() {
     _allVars.clear();
     _allVarsSet.clear();
     _jacobian.resize(0, 0);
+    _jacobianDirty = false;
 }

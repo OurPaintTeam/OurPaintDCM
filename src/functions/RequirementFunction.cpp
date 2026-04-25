@@ -1,6 +1,72 @@
 #include "functions/RequirementFunction.h"
 #include <stdexcept>
 #include <cmath>
+
+namespace {
+
+constexpr double kGeometryEpsilon = 1e-12;
+
+std::unordered_map<VAR, double> makeZeroGradient(const std::vector<VAR>& vars) {
+    std::unordered_map<VAR, double> grad;
+    for (VAR var : vars) {
+        grad[var] = 0.0;
+    }
+    return grad;
+}
+
+double pointLineSignedDistance(const std::vector<VAR>& vars) {
+    const double px = *vars[0];
+    const double py = *vars[1];
+    const double x1 = *vars[2];
+    const double y1 = *vars[3];
+    const double x2 = *vars[4];
+    const double y2 = *vars[5];
+
+    const double dx = x2 - x1;
+    const double dy = y2 - y1;
+    const double lineLen = std::sqrt(dx * dx + dy * dy);
+    if (lineLen < kGeometryEpsilon) {
+        return 0.0;
+    }
+
+    const double wx = px - x1;
+    const double wy = py - y1;
+    const double cross = wx * dy - wy * dx;
+    return cross / lineLen;
+}
+
+std::unordered_map<VAR, double> pointLineSignedDistanceGradient(const std::vector<VAR>& vars) {
+    const double px = *vars[0];
+    const double py = *vars[1];
+    const double x1 = *vars[2];
+    const double y1 = *vars[3];
+    const double x2 = *vars[4];
+    const double y2 = *vars[5];
+
+    const double dx = x2 - x1;
+    const double dy = y2 - y1;
+    const double lineLen = std::sqrt(dx * dx + dy * dy);
+    if (lineLen < kGeometryEpsilon) {
+        return makeZeroGradient(vars);
+    }
+
+    const double wx = px - x1;
+    const double wy = py - y1;
+    const double cross = wx * dy - wy * dx;
+    const double lineLen3 = lineLen * lineLen * lineLen;
+
+    std::unordered_map<VAR, double> grad;
+    grad[vars[0]] = dy / lineLen;
+    grad[vars[1]] = -dx / lineLen;
+    grad[vars[2]] = (py - y2) / lineLen + cross * dx / lineLen3;
+    grad[vars[3]] = (x2 - px) / lineLen + cross * dy / lineLen3;
+    grad[vars[4]] = (y1 - py) / lineLen - cross * dx / lineLen3;
+    grad[vars[5]] = (px - x1) / lineLen - cross * dy / lineLen3;
+    return grad;
+}
+
+} // namespace
+
 //PointLineDistanceFunction Requirement
 OurPaintDCM::Function::PointLineDistanceFunction::PointLineDistanceFunction(
     const std::vector<VAR> &vars, double dist) : RequirementFunction(
@@ -12,52 +78,11 @@ OurPaintDCM::Function::PointLineDistanceFunction::PointLineDistanceFunction(
 }
 
 double OurPaintDCM::Function::PointLineDistanceFunction::evaluate() const {
-    double dx = *_vars[4] - *_vars[2];
-    double dy = *_vars[5] - *_vars[3];
-    double lineLen = std::sqrt(dx * dx + dy * dy);
-    if (lineLen < 1e-12) {
-        return 0.0;
-    }
-
-    double px = *_vars[0] - *_vars[2];
-    double py = *_vars[1] - *_vars[3];
-
-    double cross = px * dy - py * dx;
-    double dist = cross / lineLen;
-
-    return dist - _distance;
+    return pointLineSignedDistance(_vars) - _distance;
 }
 
 std::unordered_map<VAR, double> OurPaintDCM::Function::PointLineDistanceFunction::gradient() const {
-    std::unordered_map<VAR, double> grad;
-
-    double dx = *_vars[4] - *_vars[2];
-    double dy = *_vars[5] - *_vars[3];
-    double lineLen = std::sqrt(dx * dx + dy * dy);
-
-    if (lineLen < 1e-12) {
-        for (auto v : _vars) grad[v] = 0.0;
-        return grad;
-    }
-
-    double px = *_vars[0] - *_vars[2];
-    double py = *_vars[1] - *_vars[3];
-    double cross = px * dy - py * dx;
-    double lineLen2 = lineLen * lineLen;
-
-    // df/dPx, df/dPy
-    grad[_vars[0]] = dy / lineLen;
-    grad[_vars[1]] = -dx / lineLen;
-
-    // df/dX1, df/dY1
-    grad[_vars[2]] = (-dy - cross * dx / lineLen2) / lineLen;
-    grad[_vars[3]] = (dx - cross * dy / lineLen2) / lineLen;
-
-    // df/dX2, df/dY2
-    grad[_vars[4]] = (cross * dx / lineLen2) / lineLen;
-    grad[_vars[5]] = (cross * dy / lineLen2) / lineLen;
-
-    return grad;
+    return pointLineSignedDistanceGradient(_vars);
 }
 
 size_t OurPaintDCM::Function::PointLineDistanceFunction::getVarCount() const {
@@ -74,53 +99,11 @@ OurPaintDCM::Function::PointOnLineFunction::PointOnLineFunction(const std::vecto
 }
 
 double OurPaintDCM::Function::PointOnLineFunction::evaluate() const {
-    double dx = *_vars[4] - *_vars[2];
-    double dy = *_vars[5] - *_vars[3];
-    double lineLen = std::sqrt(dx * dx + dy * dy);
-    if (lineLen < 1e-12) {
-        return 0.0;
-    }
-    double num = (*_vars[0] - *_vars[2]) * dy - (*_vars[1] - *_vars[3]);
-    return num / lineLen;
+    return pointLineSignedDistance(_vars);
 }
 
 std::unordered_map<VAR, double> OurPaintDCM::Function::PointOnLineFunction::gradient() const {
-    std::unordered_map<VAR, double> grad;
-
-    double dx = *_vars[4] - *_vars[2];
-    double dy = *_vars[5] - *_vars[3];
-    double lineLen = std::sqrt(dx * dx + dy * dy);
-
-    if (lineLen < 1e-10) {
-        grad[_vars[0]] = 0.0;
-        grad[_vars[1]] = 0.0;
-        grad[_vars[2]] = 0.0;
-        grad[_vars[3]] = 0.0;
-        grad[_vars[4]] = 0.0;
-        grad[_vars[5]] = 0.0;
-        return grad;
-    }
-
-    double px = *_vars[0] - *_vars[2];
-    double py = *_vars[1] - *_vars[3];
-    double cross = px * dy - py * dx;
-    double sign = (cross >= 0.0) ? 1.0 : -1.0;
-
-    double lineLen2 = lineLen * lineLen;
-
-    // df/dPx, df/dPy
-    grad[_vars[0]] = sign * dy / lineLen;
-    grad[_vars[1]] = -sign * dx / lineLen;
-
-    // df/dX1, df/dY1
-    grad[_vars[2]] = sign * (-dy + (cross * dx) / lineLen2) / lineLen;
-    grad[_vars[3]] = sign * (dx + (cross * dy) / lineLen2) / lineLen;
-
-    // df/dX2, df/dY2
-    grad[_vars[4]] = -sign * ((-cross * dx) / lineLen2) / lineLen;
-    grad[_vars[5]] = -sign * ((-cross * dy) / lineLen2) / lineLen;
-
-    return grad;
+    return pointLineSignedDistanceGradient(_vars);
 }
 
 size_t OurPaintDCM::Function::PointOnLineFunction::getVarCount() const {
@@ -611,17 +594,19 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::LineLineAngleFunction::gr
     double len1_3 = len1 * len1 * len1;
     double len2_3 = len2 * len2 * len2;
 
-    // Gradient w.r.t v1 = (dx1, dy1)
-    grad[_vars[0]] = dx2 / (len1 * len2) - dx1 * dot / (len1_3 * len2); // A1x
-    grad[_vars[1]] = dy2 / (len1 * len2) - dy1 * dot / (len1_3 * len2); // A1y
-    grad[_vars[2]] = -grad[_vars[0]]; // A2x
-    grad[_vars[3]] = -grad[_vars[1]]; // A2y
+    const double dCosDdx1 = dx2 / (len1 * len2) - dx1 * dot / (len1_3 * len2);
+    const double dCosDdy1 = dy2 / (len1 * len2) - dy1 * dot / (len1_3 * len2);
+    const double dCosDdx2 = dx1 / (len1 * len2) - dx2 * dot / (len1 * len2_3);
+    const double dCosDdy2 = dy1 / (len1 * len2) - dy2 * dot / (len1 * len2_3);
 
-    // Gradient w.r.t v2 = (dx2, dy2)
-    grad[_vars[4]] = -(dx1 / (len1 * len2) - dx2 * dot / (len1 * len2_3)); // B1x
-    grad[_vars[5]] = -(dy1 / (len1 * len2) - dy2 * dot / (len1 * len2_3)); // B1y
-    grad[_vars[6]] = -grad[_vars[4]]; // B2x
-    grad[_vars[7]] = -grad[_vars[5]]; // B2y
+    grad[_vars[0]] = -dCosDdx1;
+    grad[_vars[1]] = -dCosDdy1;
+    grad[_vars[2]] = dCosDdx1;
+    grad[_vars[3]] = dCosDdy1;
+    grad[_vars[4]] = -dCosDdx2;
+    grad[_vars[5]] = -dCosDdy2;
+    grad[_vars[6]] = dCosDdx2;
+    grad[_vars[7]] = dCosDdy2;
 
     return grad;
 }

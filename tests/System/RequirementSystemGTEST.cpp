@@ -53,12 +53,39 @@ TEST_F(RequirementSystemTest, AddPointPointDist) {
     EXPECT_NEAR(residuals[0], 0.0, 1e-9);
 }
 
-TEST_F(RequirementSystemTest, AddPointOnPoint) {
+TEST_F(RequirementSystemTest, AddPointOnPointCreatesAliasWithoutResidual) {
     RequirementSystem system(&storage);
-    system.addPointOnPoint(p1Id, p1Id);
-    
-    auto residuals = system.residuals();
-    EXPECT_NEAR(residuals[0], 0.0, 1e-9);
+    system.addPointOnPoint(p1Id, p2Id);
+
+    EXPECT_TRUE(system.getFunctions().empty());
+    EXPECT_EQ(system.residuals().size(), 0);
+    EXPECT_TRUE(system.getAllVars().empty());
+
+    const auto* p1 = storage.get<Point2D>(p1Id);
+    const auto* p2 = storage.get<Point2D>(p2Id);
+    ASSERT_NE(p1, nullptr);
+    ASSERT_NE(p2, nullptr);
+    EXPECT_DOUBLE_EQ(p1->x(), p2->x());
+    EXPECT_DOUBLE_EQ(p1->y(), p2->y());
+}
+
+TEST_F(RequirementSystemTest, PointOnPointReusesRepresentativeVarsInOtherConstraints) {
+    RequirementSystem system(&storage);
+    system.addPointPointDist(p1Id, p3Id, 6.0);
+
+    EXPECT_EQ(system.getFunctions().size(), 1u);
+    EXPECT_EQ(system.getAllVars().size(), 4u);
+
+    system.addPointOnPoint(p1Id, p2Id);
+
+    EXPECT_EQ(system.getFunctions().size(), 1u);
+    EXPECT_EQ(system.residuals().size(), 1);
+    EXPECT_EQ(system.getAllVars().size(), 4u);
+
+    system.updateJ();
+    auto J = system.J();
+    EXPECT_EQ(J.rows(), 1);
+    EXPECT_EQ(J.cols(), 4);
 }
 
 TEST_F(RequirementSystemTest, AddPointLineDist) {

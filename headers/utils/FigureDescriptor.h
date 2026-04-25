@@ -6,6 +6,7 @@
 #include <vector>
 #include <optional>
 #include <stdexcept>
+#include <utility>
 
 namespace OurPaintDCM::Utils {
 
@@ -189,8 +190,147 @@ struct PointUpdateDescriptor {
 struct CircleUpdateDescriptor {
     ID circleId;
     double newRadius;
+    std::optional<double> newCenterX;
+    std::optional<double> newCenterY;
+    bool updateRadius;
 
-    CircleUpdateDescriptor(ID id, double r) : circleId(id), newRadius(r) {}
+    CircleUpdateDescriptor(ID id, double r)
+        : circleId(id), newRadius(r), updateRadius(true) {}
+
+    CircleUpdateDescriptor(ID id,
+                           std::optional<double> centerX,
+                           std::optional<double> centerY,
+                           std::optional<double> radius = std::nullopt)
+        : circleId(id),
+          newRadius(radius.value_or(0.0)),
+          newCenterX(centerX),
+          newCenterY(centerY),
+          updateRadius(radius.has_value()) {}
+
+    CircleUpdateDescriptor(ID id, double centerX, double centerY, double radius)
+        : circleId(id),
+          newRadius(radius),
+          newCenterX(centerX),
+          newCenterY(centerY),
+          updateRadius(true) {}
+
+    static CircleUpdateDescriptor center(ID id, double centerX, double centerY) {
+        return {id, std::optional<double>{centerX}, std::optional<double>{centerY}, std::nullopt};
+    }
+
+    [[nodiscard]] bool hasCenterUpdate() const noexcept {
+        return newCenterX.has_value() || newCenterY.has_value();
+    }
+
+    [[nodiscard]] bool hasRadiusUpdate() const noexcept {
+        return updateRadius;
+    }
+};
+
+/**
+ * @brief Descriptor for updating line endpoint coordinates.
+ */
+struct LineUpdateDescriptor {
+    ID lineId;
+    std::optional<double> newX1;
+    std::optional<double> newY1;
+    std::optional<double> newX2;
+    std::optional<double> newY2;
+
+    LineUpdateDescriptor(ID id,
+                         std::optional<double> x1 = std::nullopt,
+                         std::optional<double> y1 = std::nullopt,
+                         std::optional<double> x2 = std::nullopt,
+                         std::optional<double> y2 = std::nullopt)
+        : lineId(id), newX1(x1), newY1(y1), newX2(x2), newY2(y2) {}
+};
+
+/**
+ * @brief Descriptor for updating arc endpoint and center coordinates.
+ */
+struct ArcUpdateDescriptor {
+    ID arcId;
+    std::optional<double> newX1;
+    std::optional<double> newY1;
+    std::optional<double> newX2;
+    std::optional<double> newY2;
+    std::optional<double> newCenterX;
+    std::optional<double> newCenterY;
+
+    ArcUpdateDescriptor(ID id,
+                        std::optional<double> x1 = std::nullopt,
+                        std::optional<double> y1 = std::nullopt,
+                        std::optional<double> x2 = std::nullopt,
+                        std::optional<double> y2 = std::nullopt,
+                        std::optional<double> centerX = std::nullopt,
+                        std::optional<double> centerY = std::nullopt)
+        : arcId(id),
+          newX1(x1),
+          newY1(y1),
+          newX2(x2),
+          newY2(y2),
+          newCenterX(centerX),
+          newCenterY(centerY) {}
+};
+
+/**
+ * @brief Unified descriptor for updating any supported figure.
+ */
+struct FigureUpdateDescriptor {
+    ID figureId;
+    FigureType type;
+    std::vector<double> coords;
+    std::optional<double> x;
+    std::optional<double> y;
+    std::optional<double> radius;
+
+    FigureUpdateDescriptor(ID id, FigureType figureType)
+        : figureId(id), type(figureType) {}
+
+    static FigureUpdateDescriptor point(ID id, double xVal, double yVal) {
+        FigureUpdateDescriptor d{id, FigureType::ET_POINT2D};
+        d.coords = {xVal, yVal};
+        d.x = xVal;
+        d.y = yVal;
+        return d;
+    }
+
+    static FigureUpdateDescriptor line(ID id, double x1, double y1, double x2, double y2) {
+        FigureUpdateDescriptor d{id, FigureType::ET_LINE};
+        d.coords = {x1, y1, x2, y2};
+        return d;
+    }
+
+    static FigureUpdateDescriptor circle(ID id, double centerX, double centerY, double r) {
+        FigureUpdateDescriptor d{id, FigureType::ET_CIRCLE};
+        d.coords = {centerX, centerY};
+        d.radius = r;
+        return d;
+    }
+
+    static FigureUpdateDescriptor circleCenter(ID id, double centerX, double centerY) {
+        FigureUpdateDescriptor d{id, FigureType::ET_CIRCLE};
+        d.coords = {centerX, centerY};
+        return d;
+    }
+
+    static FigureUpdateDescriptor circleRadius(ID id, double r) {
+        FigureUpdateDescriptor d{id, FigureType::ET_CIRCLE};
+        d.radius = r;
+        return d;
+    }
+
+    static FigureUpdateDescriptor arc(ID id,
+                                      double x1,
+                                      double y1,
+                                      double x2,
+                                      double y2,
+                                      double centerX,
+                                      double centerY) {
+        FigureUpdateDescriptor d{id, FigureType::ET_ARC};
+        d.coords = {x1, y1, x2, y2, centerX, centerY};
+        return d;
+    }
 };
 
 } // namespace OurPaintDCM::Utils

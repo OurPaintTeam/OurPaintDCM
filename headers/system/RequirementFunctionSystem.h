@@ -22,7 +22,10 @@ namespace OurPaintDCM::System {
         std::vector<std::shared_ptr<Function::RequirementFunction>> _functions; ///< All constraint functions
         std::vector<VAR> _allVars;                                              ///< Unique variable pointers
         std::unordered_set<VAR> _allVarsSet;                                    ///< Fast lookup for uniqueness
-        Eigen::SparseMatrix<double> _jacobian;                                  ///< Cached Jacobian
+        mutable Eigen::SparseMatrix<double> _jacobian;                          ///< Cached Jacobian
+        mutable bool _jacobianDirty = false;
+
+        void ensureJacobian() const;
 
     public:
         /// @brief Default constructor
