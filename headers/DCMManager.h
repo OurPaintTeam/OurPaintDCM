@@ -13,12 +13,46 @@
 #include <vector>
 #include <memory>
 #include <cmath>
+#include <cstdint>
 #include <initializer_list>
 
 namespace OurPaintDCM {
 
 using ComponentID = std::size_t;
 using ComponentGraph = Graph<Utils::ID, Utils::ID, UndirectedPolicy, WeightedPolicy>;
+
+enum class RequirementGraphVertexKind : std::uint8_t {
+    Figure,
+    Requirement,
+};
+
+struct RequirementGraphVertex {
+    RequirementGraphVertexKind kind{};
+    Utils::ID id{};
+
+    bool operator==(const RequirementGraphVertex& other) const noexcept {
+        return kind == other.kind && id == other.id;
+    }
+};
+
+} // namespace OurPaintDCM
+
+namespace std {
+template <>
+struct hash<OurPaintDCM::RequirementGraphVertex> {
+    std::size_t operator()(const OurPaintDCM::RequirementGraphVertex& vertex) const noexcept {
+        const auto kind = static_cast<std::uint8_t>(vertex.kind);
+        std::size_t seed = std::hash<std::uint8_t>{}(kind);
+        seed ^= std::hash<OurPaintDCM::Utils::ID>{}(vertex.id) + 0x9e3779b9u + (seed << 6u) + (seed >> 2u);
+        return seed;
+    }
+};
+}
+
+namespace OurPaintDCM {
+
+using RequirementDependencyGraph =
+    Graph<RequirementGraphVertex, Utils::ID, UndirectedPolicy, WeightedPolicy>;
 
 /**
  * @brief Main manager class for the DCM (Dynamic Constraint Manager) system.
@@ -226,6 +260,18 @@ public:
     std::vector<Utils::RequirementDescriptor> getAllRequirements() const;
 
     /**
+     * @brief Get requirement IDs that directly reference a figure.
+     * @return IDs in requirement insertion order, or empty if the figure is unknown/unconstrained.
+     */
+    std::vector<Utils::ID> getFiguresRequirements(Utils::ID figureId) const;
+
+    /**
+     * @brief Get unique requirement IDs that directly reference any figure in @p figureIds.
+     * @return IDs in first-seen graph order, without duplicates.
+     */
+    std::vector<Utils::ID> getFiguresRequirements(const std::vector<Utils::ID>& figureIds) const;
+
+    /**
      * @brief Get total number of connected components.
      * @return Number of connected components.
      */
@@ -336,6 +382,7 @@ private:
 
     Figures::GeometryStorage _storage;
     System::RequirementSystem _reqSystem;
+    RequirementDependencyGraph _requirementGraph;
 
     std::unordered_map<Utils::ID, Utils::FigureDescriptor> _figureRecords;
     std::unordered_map<Utils::ID, Utils::RequirementDescriptor> _requirementRecords;
@@ -388,6 +435,9 @@ private:
     /** Drops requirement records whose objectIds reference IDs no longer in GeometryStorage; rebuilds the system if needed. */
     void pruneRequirementsWithMissingObjects();
     void rebuildComponents();
+    void linkRequirementInGraph(Utils::ID reqId, const std::vector<Utils::ID>& figureIds);
+    void unlinkRequirementFromGraph(Utils::ID reqId);
+    void unlinkFigureFromRequirementGraph(Utils::ID figureId);
     void mergeComponents(const std::vector<Utils::ID>& figureIds);
     void splitComponentsAfterRemoval();
     ComponentID createNewComponent();

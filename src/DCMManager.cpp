@@ -63,6 +63,14 @@ struct BuiltSolvePipeline {
     bool hasFreeVariables = false;
 };
 
+OurPaintDCM::RequirementGraphVertex figureRequirementVertex(OurPaintDCM::Utils::ID id) {
+    return {OurPaintDCM::RequirementGraphVertexKind::Figure, id};
+}
+
+OurPaintDCM::RequirementGraphVertex requirementGraphVertex(OurPaintDCM::Utils::ID id) {
+    return {OurPaintDCM::RequirementGraphVertexKind::Requirement, id};
+}
+
 } // anonymous namespace
 
 struct OurPaintDCM::DCMManager::SolveCache {
@@ -105,6 +113,33 @@ void DCMManager::invalidateSolveCache() noexcept {
     }
     ++_solveCache->version;
     _solveCache->entries.clear();
+}
+
+void DCMManager::linkRequirementInGraph(Utils::ID reqId, const std::vector<Utils::ID>& figureIds) {
+    const auto reqVertex = requirementGraphVertex(reqId);
+    _requirementGraph.addVertex(reqVertex);
+
+    for (Utils::ID figureId : figureIds) {
+        const auto figVertex = figureRequirementVertex(figureId);
+        _requirementGraph.addVertex(figVertex);
+        if (!_requirementGraph.hasEdge(figVertex, reqVertex)) {
+            _requirementGraph.addEdge(figVertex, reqVertex, reqId);
+        }
+    }
+}
+
+void DCMManager::unlinkRequirementFromGraph(Utils::ID reqId) {
+    const auto reqVertex = requirementGraphVertex(reqId);
+    if (_requirementGraph.hasVertex(reqVertex)) {
+        _requirementGraph.removeVertex(reqVertex);
+    }
+}
+
+void DCMManager::unlinkFigureFromRequirementGraph(Utils::ID figureId) {
+    const auto figVertex = figureRequirementVertex(figureId);
+    if (_requirementGraph.hasVertex(figVertex)) {
+        _requirementGraph.removeVertex(figVertex);
+    }
 }
 
 Utils::ID DCMManager::addFigure(const Utils::FigureDescriptor& descriptor) {
@@ -209,6 +244,10 @@ Utils::ID DCMManager::addFigure(const Utils::FigureDescriptor& descriptor) {
 
     storedDesc.id = figureId;
     _figureRecords[figureId] = storedDesc;
+    _requirementGraph.addVertex(figureRequirementVertex(figureId));
+    for (Utils::ID relatedFigure : relatedFigures) {
+        _requirementGraph.addVertex(figureRequirementVertex(relatedFigure));
+    }
 
     ComponentID compId = createNewComponent();
     addFigureToComponent(figureId, compId);
@@ -254,9 +293,11 @@ void DCMManager::removeFigure(Utils::ID figureId, bool forceCascade) {
 
     for (const auto& id : cascadedFigures) {
         _figureRecords.erase(id);
+        unlinkFigureFromRequirementGraph(id);
         removeFigureFromComponent(id);
     }
     _figureRecords.erase(figureId);
+    unlinkFigureFromRequirementGraph(figureId);
     removeFigureFromComponent(figureId);
 
     if (forceCascade) {
@@ -888,6 +929,7 @@ Utils::ID DCMManager::addRequirement(const Utils::RequirementDescriptor& descrip
     Utils::RequirementDescriptor storedDesc = descriptor;
     storedDesc.id = reqId;
     _requirementRecords[reqId] = storedDesc;
+    linkRequirementInGraph(reqId, storedDesc.objectIds);
     switch (storedDesc.type) {
         case Utils::RequirementType::ET_FIXPOINT: {
             auto* point = _storage.get<Figures::Point2D>(storedDesc.objectIds[0]);
@@ -942,6 +984,7 @@ void DCMManager::removeRequirement(Utils::ID reqId) {
     }
 
     _requirementRecords.erase(it);
+    unlinkRequirementFromGraph(reqId);
     _fixedRequirementTargets.erase(reqId);
     eraseRequirementId(_requirementOrder, reqId);
     _reqSystemSyncedWithRecords = false;
@@ -988,6 +1031,40 @@ std::vector<Utils::RequirementDescriptor> DCMManager::getAllRequirements() const
     return result;
 }
 
+std::vector<Utils::ID> DCMManager::getFiguresRequirements(Utils::ID figureId) const {
+    if (!_storage.contains(figureId)) {
+        return {};
+    }
+
+    const auto figVertex = figureRequirementVertex(figureId);
+    if (!_requirementGraph.hasVertex(figVertex)) {
+        return {};
+    }
+
+    std::vector<Utils::ID> result;
+    for (const auto& edge : _requirementGraph.getVertexEdges(figVertex)) {
+        if (edge.to.kind == RequirementGraphVertexKind::Requirement) {
+            result.push_back(edge.to.id);
+        }
+    }
+    return result;
+}
+
+std::vector<Utils::ID> DCMManager::getFiguresRequirements(const std::vector<Utils::ID>& figureIds) const {
+    std::vector<Utils::ID> result;
+    std::unordered_set<Utils::ID> seen;
+
+    for (Utils::ID figureId : figureIds) {
+        for (Utils::ID reqId : getFiguresRequirements(figureId)) {
+            if (seen.insert(reqId).second) {
+                result.push_back(reqId);
+            }
+        }
+    }
+
+    return result;
+}
+
 std::size_t DCMManager::getComponentCount() const noexcept {
     return _activeComponentCount;
 }
@@ -1012,25 +1089,13 @@ std::vector<Utils::ID> DCMManager::getRequirementsInComponent(ComponentID compon
         return {};
     }
 
-    std::vector<Utils::ID> result;
     const auto& compFigures = _components[componentId];
-
-    for (const auto& reqId : _requirementOrder) {
-        const auto it = _requirementRecords.find(reqId);
-        if (it == _requirementRecords.end()) {
-            continue;
-        }
-
-        const auto& desc = it->second;
-        for (const auto& objId : desc.objectIds) {
-            if (compFigures.contains(objId)) {
-                result.push_back(reqId);
-                break;
-            }
-        }
+    std::vector<Utils::ID> figureIds;
+    figureIds.reserve(compFigures.size());
+    for (Utils::ID figureId : compFigures) {
+        figureIds.push_back(figureId);
     }
-
-    return result;
+    return getFiguresRequirements(figureIds);
 }
 
 std::vector<std::vector<Utils::ID>> DCMManager::getAllComponents() const {
@@ -1074,6 +1139,7 @@ void DCMManager::clear() {
     _reqSystem.clear();
     _storage.clear();
     _requirementRecords.clear();
+    _requirementGraph = RequirementDependencyGraph{};
     _fixedRequirementTargets.clear();
     _requirementOrder.clear();
     _figureRecords.clear();
@@ -1574,6 +1640,7 @@ void DCMManager::pruneRequirementsWithMissingObjects() {
         if (stale) {
             staleRequirementIds.push_back(it->first);
             _fixedRequirementTargets.erase(it->first);
+            unlinkRequirementFromGraph(it->first);
             it = _requirementRecords.erase(it);
             changed = true;
         } else {
@@ -1673,22 +1740,7 @@ void DCMManager::removeFigureFromComponent(Utils::ID figureId) {
 }
 
 std::vector<Utils::ID> DCMManager::getRequirementsForFigure(Utils::ID figureId) const {
-    std::vector<Utils::ID> result;
-    for (const auto& reqId : _requirementOrder) {
-        const auto it = _requirementRecords.find(reqId);
-        if (it == _requirementRecords.end()) {
-            continue;
-        }
-
-        const auto& desc = it->second;
-        for (const auto& objId : desc.objectIds) {
-            if (objId == figureId) {
-                result.push_back(reqId);
-                break;
-            }
-        }
-    }
-    return result;
+    return getFiguresRequirements(figureId);
 }
 
 } // namespace OurPaintDCM

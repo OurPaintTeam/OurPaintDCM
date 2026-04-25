@@ -422,6 +422,47 @@ TEST_F(DCMManagerTest, GetAllRequirements) {
     EXPECT_EQ(reqs.size(), 3);
 }
 
+TEST_F(DCMManagerTest, GetFiguresRequirementsReturnsDirectRequirements) {
+    auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 0.0));
+    auto line = manager.addFigure(FigureDescriptor::line(p1, p2));
+
+    auto pointDist = manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 50.0));
+    auto pointOnLine = manager.addRequirement(RequirementDescriptor::pointOnLine(p1, line));
+    auto horizontal = manager.addRequirement(RequirementDescriptor::horizontal(line));
+
+    EXPECT_EQ(manager.getFiguresRequirements(p1), (std::vector<ID>{pointDist, pointOnLine}));
+    EXPECT_EQ(manager.getFiguresRequirements(p2), (std::vector<ID>{pointDist}));
+    EXPECT_EQ(manager.getFiguresRequirements(line), (std::vector<ID>{pointOnLine, horizontal}));
+    EXPECT_TRUE(manager.getFiguresRequirements(ID(999)).empty());
+}
+
+TEST_F(DCMManagerTest, GetFiguresRequirementsForManyFiguresDeduplicates) {
+    auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 0.0));
+    auto line = manager.addFigure(FigureDescriptor::line(p1, p2));
+
+    auto pointDist = manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 50.0));
+    auto pointOnLine = manager.addRequirement(RequirementDescriptor::pointOnLine(p1, line));
+    auto horizontal = manager.addRequirement(RequirementDescriptor::horizontal(line));
+
+    auto reqs = manager.getFiguresRequirements(std::vector<ID>{p1, line});
+    EXPECT_EQ(reqs, (std::vector<ID>{pointDist, pointOnLine, horizontal}));
+}
+
+TEST_F(DCMManagerTest, GetFiguresRequirementsUpdatesAfterRequirementRemoval) {
+    auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 0.0));
+
+    auto pointDist = manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 50.0));
+    auto pointOnPoint = manager.addRequirement(RequirementDescriptor::pointOnPoint(p1, p2));
+
+    manager.removeRequirement(pointDist);
+
+    EXPECT_EQ(manager.getFiguresRequirements(p1), (std::vector<ID>{pointOnPoint}));
+    EXPECT_EQ(manager.getFiguresRequirements(p2), (std::vector<ID>{pointOnPoint}));
+}
+
 TEST_F(DCMManagerTest, ComponentsInitialState) {
     auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
     auto p2 = manager.addFigure(FigureDescriptor::point(10.0, 0.0));
