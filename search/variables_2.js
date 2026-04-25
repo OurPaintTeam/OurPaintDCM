@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['figuretopoints_5f_0',['figureToPoints_',['../classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a520ee2934e2e297cbb1411d92bc4bcd0',1,'OurPaintDCM::Figures::GeometryDependencyIndex']]],
-  ['func_1',['func',['../structOurPaintDCM_1_1Requirements_1_1ComponentElement.html#a4ef67070d0cf14b063df90747c447324',1,'OurPaintDCM::Requirements::ComponentElement']]]
+  ['center_0',['center',['../structOurPaintDCM_1_1Figures_1_1Circle.html#a0f8a88431e8c474561ba33fb578a3e70',1,'OurPaintDCM::Figures::Circle::center'],['../structOurPaintDCM_1_1Figures_1_1FigureData.html#a5f2e99515df7ce22ed4948a96bb484c2',1,'OurPaintDCM::Figures::FigureData::center']]],
+  ['circleid_1',['circleId',['../structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor.html#a7b8393dd61456c937d9ea09283e70162',1,'OurPaintDCM::Utils::CircleUpdateDescriptor']]],
+  ['circleids_2',['circleIds',['../structOurPaintDCM_1_1DCMManager_1_1FixedGeometry.html#ac9e92709dc35950364e58a96bdf35460',1,'OurPaintDCM::DCMManager::FixedGeometry']]],
+  ['coords_3',['coords',['../structOurPaintDCM_1_1Figures_1_1PointBase.html#a840f39824aacf49d36766ee634958325',1,'OurPaintDCM::Figures::PointBase::coords'],['../structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#ac73faa0614a5b39fd0b155951bf96367',1,'OurPaintDCM::Utils::FigureDescriptor::coords'],['../structOurPaintDCM_1_1Utils_1_1FigureUpdateDescriptor.html#a1fee4c663d70ac589a5236019f00decf',1,'OurPaintDCM::Utils::FigureUpdateDescriptor::coords']]]
 ];

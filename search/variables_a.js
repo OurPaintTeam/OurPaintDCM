@@ -1,4 +1,13 @@
 var searchData=
 [
-  ['slot_0',['slot',['../structOurPaintDCM_1_1Figures_1_1FigureEntry.html#a39ba73a1c6fa42faa08a612054cdae03',1,'OurPaintDCM::Figures::FigureEntry']]]
+  ['needscoincidentsync_0',['needsCoincidentSync',['../structOurPaintDCM_1_1DCMManager_1_1BatchUpdateContext.html#adc23593672a9c397d0c402dc6c989621',1,'OurPaintDCM::DCMManager::BatchUpdateContext']]],
+  ['newcenterx_1',['newcenterx',['../structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor.html#a12fb549cbbb888f961401630feb6c42d',1,'OurPaintDCM::Utils::CircleUpdateDescriptor::newCenterX'],['../structOurPaintDCM_1_1Utils_1_1ArcUpdateDescriptor.html#a0310332aab9468716ec8678aa516ad2a',1,'OurPaintDCM::Utils::ArcUpdateDescriptor::newCenterX']]],
+  ['newcentery_2',['newcentery',['../structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor.html#af59ad343f143405268187b4a037dddf9',1,'OurPaintDCM::Utils::CircleUpdateDescriptor::newCenterY'],['../structOurPaintDCM_1_1Utils_1_1ArcUpdateDescriptor.html#ae67a8dc4af084afd7918b2dedf78c778',1,'OurPaintDCM::Utils::ArcUpdateDescriptor::newCenterY']]],
+  ['newradius_3',['newRadius',['../structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor.html#a2e88b93665e4f711176fdcd6695302b5',1,'OurPaintDCM::Utils::CircleUpdateDescriptor']]],
+  ['newx_4',['newX',['../structOurPaintDCM_1_1Utils_1_1PointUpdateDescriptor.html#afec9b24c75cad787debb7bd518029b98',1,'OurPaintDCM::Utils::PointUpdateDescriptor']]],
+  ['newx1_5',['newx1',['../structOurPaintDCM_1_1Utils_1_1LineUpdateDescriptor.html#a772142e2857c5ee96483f42d901f9da5',1,'OurPaintDCM::Utils::LineUpdateDescriptor::newX1'],['../structOurPaintDCM_1_1Utils_1_1ArcUpdateDescriptor.html#a7e3cec11dda533b1ae9d9e2acf8a9da1',1,'OurPaintDCM::Utils::ArcUpdateDescriptor::newX1']]],
+  ['newx2_6',['newx2',['../structOurPaintDCM_1_1Utils_1_1LineUpdateDescriptor.html#aec947f3c760e489b72bf6d8e63a8ffc1',1,'OurPaintDCM::Utils::LineUpdateDescriptor::newX2'],['../structOurPaintDCM_1_1Utils_1_1ArcUpdateDescriptor.html#a08620819a452d016a6f608663993b373',1,'OurPaintDCM::Utils::ArcUpdateDescriptor::newX2']]],
+  ['newy_7',['newY',['../structOurPaintDCM_1_1Utils_1_1PointUpdateDescriptor.html#a4dce4b6cd546a9220c1e0c1e8dead2c6',1,'OurPaintDCM::Utils::PointUpdateDescriptor']]],
+  ['newy1_8',['newy1',['../structOurPaintDCM_1_1Utils_1_1LineUpdateDescriptor.html#a1f2845cdaba6a03c72b587faa915b3ee',1,'OurPaintDCM::Utils::LineUpdateDescriptor::newY1'],['../structOurPaintDCM_1_1Utils_1_1ArcUpdateDescriptor.html#a949ca68d14bd48824eaf7ded737eac2d',1,'OurPaintDCM::Utils::ArcUpdateDescriptor::newY1']]],
+  ['newy2_9',['newy2',['../structOurPaintDCM_1_1Utils_1_1LineUpdateDescriptor.html#a20e63f9d1f469055e76533611e379132',1,'OurPaintDCM::Utils::LineUpdateDescriptor::newY2'],['../structOurPaintDCM_1_1Utils_1_1ArcUpdateDescriptor.html#a5ab3a337343dc249a35641cfe9c1efa6',1,'OurPaintDCM::Utils::ArcUpdateDescriptor::newY2']]]
 ];

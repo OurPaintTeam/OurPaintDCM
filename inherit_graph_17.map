@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$structOurPaintDCM_1_1Requirements_1_1ComponentElement.html" title="struct which describe one item of component" alt="" coords="5,5,212,45"/>
+<area shape="rect" id="Node000000" href="$structOurPaintDCM_1_1Figures_1_1PointBase.html" title=" " alt="" coords="5,5,168,45"/>
+<area shape="rect" id="Node000001" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html" title="2D point structure." alt="" coords="216,5,379,45"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="182,23,216,23,216,28,182,28"/>
 </map>

@@ -1,13 +1,15 @@
 <map id="OurPaintDCM::DCMManager::clear" name="OurPaintDCM::DCMManager::clear">
-<area shape="rect" id="Node000001" title="Clear all figures, requirements, and components." alt="" coords="5,55,209,95"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a9a71ab4b4c913f6a68d83c6b91368682" title="Clear all functions, variables, and requirement metadata." alt="" coords="267,9,433,64"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,56,253,49,254,55,210,62"/>
-<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a332b104c3627015ca1b46506684072ed" title="Removes every object, resets ID generator, clears all indices and free lists." alt="" coords="257,91,443,131"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="210,88,244,93,243,98,209,93"/>
-<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a1002c941f94acba8d202112f2b390eaf" title="Clear all stored functions and variables." alt="" coords="491,5,709,60"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="433,33,477,32,477,37,433,38"/>
-<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a2049c25cef51a442be4f363bfe836041" title="Clears both maps." alt="" coords="494,84,706,139"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="443,109,480,109,480,114,443,114"/>
-<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a70025ff26074369425935e60dcec77bc" title="Reset generator back to initial state (ID = 1)." alt="" coords="525,163,675,203"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="421,129,517,157,516,162,419,134"/>
+<area shape="rect" id="Node000001" title="Clear all figures, requirements, and components." alt="" coords="5,91,209,131"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a9a71ab4b4c913f6a68d83c6b91368682" title="Clear all functions, variables, and requirement metadata." alt="" coords="277,9,442,64"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="175,89,263,62,264,68,176,94"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a332b104c3627015ca1b46506684072ed" title="Removes every object, resets ID generator, clears all indices and free lists." alt="" coords="267,91,452,131"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="209,109,253,109,253,114,209,114"/>
+<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1DCMManager.html#a6967dc9a4f330d3aa420ae17a3488bf6" title=" " alt="" coords="257,155,461,195"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="188,129,268,149,266,155,186,134"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a1002c941f94acba8d202112f2b390eaf" title="Clear all stored functions and variables." alt="" coords="509,5,728,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="442,33,495,32,496,37,442,38"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a2049c25cef51a442be4f363bfe836041" title="Clears both maps." alt="" coords="513,84,725,139"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="452,109,499,109,499,114,452,114"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a70025ff26074369425935e60dcec77bc" title="Reset generator back to initial state (ID = 1)." alt="" coords="543,163,694,203"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="433,129,533,157,532,162,431,134"/>
 </map>

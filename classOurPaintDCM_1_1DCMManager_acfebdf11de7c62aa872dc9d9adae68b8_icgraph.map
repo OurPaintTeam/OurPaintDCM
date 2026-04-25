@@ -1,0 +1,20 @@
+<map id="OurPaintDCM::DCMManager::validateLineUpdate" name="OurPaintDCM::DCMManager::validateLineUpdate">
+<area shape="rect" id="Node000001" title=" " alt="" coords="1016,63,1220,103"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#aa7a1bb5abb711077f6ac260664265089" title=" " alt="" coords="764,63,968,103"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1002,85,968,85,968,80,1002,80"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1DCMManager.html#a3e02f1b7fff985283f802e7635db1aad" title="Update multiple lines in one batch." alt="" coords="511,5,715,45"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="1020,63,968,53,836,39,715,31,715,26,836,34,968,48,1021,57"/>
+<area shape="rect" id="Node000008" href="$classOurPaintDCM_1_1DCMManager.html#a2844669aaa96262f04def7e8738d4105" title=" " alt="" coords="764,127,968,167"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="1026,109,946,129,945,124,1025,104"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#a72eb2fceacf81daad2ec336d9e0c4c52" title=" " alt="" coords="509,69,716,109"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="750,88,716,89,716,84,750,83"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="763,62,701,48,702,43,764,57"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1DCMManager.html#ae6da1c7d293c4273cc9470828c92e065" title="Update multiple figures of arbitrary types in one batch." alt="" coords="257,97,461,137"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="496,105,462,109,461,103,495,100"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1DCMManager.html#aa41ec1f57e1fe720dba17d23345e6e47" title="Update any supported figure by unified update descriptor." alt="" coords="5,97,209,137"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="244,120,210,120,210,115,244,115"/>
+<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1DCMManager.html#ab8f79f1d7d895528b97ac66ebac996cc" title="Update line endpoint coordinates." alt="" coords="257,5,461,45"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="497,28,462,28,462,23,497,23"/>
+<area shape="poly" id="edge9_Node000008_Node000003" title=" " alt="" coords="763,126,701,112,702,107,764,121"/>
+<area shape="poly" id="edge10_Node000008_Node000004" title=" " alt="" coords="750,143,462,126,462,121,750,137"/>
+</map>

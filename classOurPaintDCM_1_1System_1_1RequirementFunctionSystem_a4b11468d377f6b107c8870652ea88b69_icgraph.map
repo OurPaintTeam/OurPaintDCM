@@ -1,0 +1,11 @@
+<map id="OurPaintDCM::System::RequirementFunctionSystem::updateJ" name="OurPaintDCM::System::RequirementFunctionSystem::updateJ">
+<area shape="rect" id="Node000001" title="Update the cached Jacobian matrix (sparse)." alt="" coords="563,77,781,132"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a90bc83a7ec794661f307723342c067dc" title=" " alt="" coords="296,77,515,132"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="549,107,515,107,515,102,549,102"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a9c472d3adb21533117334ff5e2257ab9" title="Diagnose the system&#39;s constraint state based on Jacobian rank." alt="" coords="17,5,236,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="285,76,232,63,234,57,286,71"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a74a7e3e23d2410b6df96dc36a6bcb883" title="Get the current sparse Jacobian matrix." alt="" coords="11,85,242,125"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="282,107,242,107,242,102,282,102"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a0db002634f1db61786fa9d0697321338" title="Compute the normal matrix JᵀJ used in LM and Dogleg solvers." alt="" coords="5,149,248,189"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="283,135,215,151,214,146,282,130"/>
+</map>

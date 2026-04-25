@@ -41,7 +41,8 @@ var NAVTREE =
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", "functions_func" ],
-        [ "Variables", "functions_vars.html", null ]
+        [ "Variables", "functions_vars.html", null ],
+        [ "Related Symbols", "functions_rela.html", null ]
       ] ]
     ] ],
     [ "Files", "files.html", [
@@ -57,11 +58,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Arc_8h.html",
-"classOurPaintDCM_1_1Figures_1_1GeometryGraphBuilder.html#a9c296000107e045b88f7249a28ee9a6f",
-"classOurPaintDCM_1_1Function_1_1PointLineDistanceFunction.html#a98522366384adf1352d0e3e009952292",
-"classOurPaintDCM_1_1Requirements_1_1PointPointDist.html#a7ce83c2ef7286c0cadcc6628c89d8b86",
-"namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9af30d762bd6f398baa0c59245237ef746",
-"structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html#a995879c4caa68f40ec11cca803b3aff0"
+"classOurPaintDCM_1_1DCMManager.html#ae6da1c7d293c4273cc9470828c92e065",
+"classOurPaintDCM_1_1Function_1_1LineCircleDistanceFunction.html#a7109d1363d2c85b48b9d67231257a7fb",
+"classOurPaintDCM_1_1Requirements_1_1LineOnCircle.html#a74e208986d1dd4c46b58de613800851c",
+"functions_func_i.html",
+"structOurPaintDCM_1_1Utils_1_1ArcUpdateDescriptor.html#a5ab3a337343dc249a35641cfe9c1efa6"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

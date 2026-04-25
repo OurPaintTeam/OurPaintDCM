@@ -1,5 +1,10 @@
 var searchData=
 [
-  ['hash_3c_20ourpaintdcm_3a_3autils_3a_3aid_20_3e_0',['hash&lt; OurPaintDCM::Utils::ID &gt;',['../structstd_1_1hash_3_01OurPaintDCM_1_1Utils_1_1ID_01_4.html',1,'std']]],
-  ['horizontalfunction_1',['HorizontalFunction',['../classOurPaintDCM_1_1Function_1_1HorizontalFunction.html',1,'OurPaintDCM::Function']]]
+  ['figuredata_0',['FigureData',['../structOurPaintDCM_1_1Figures_1_1FigureData.html',1,'OurPaintDCM::Figures']]],
+  ['figuredescriptor_1',['FigureDescriptor',['../structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html',1,'OurPaintDCM::Utils']]],
+  ['figureentry_2',['FigureEntry',['../structOurPaintDCM_1_1Figures_1_1FigureEntry.html',1,'OurPaintDCM::Figures']]],
+  ['figureref_3',['FigureRef',['../structOurPaintDCM_1_1Figures_1_1FigureRef.html',1,'OurPaintDCM::Figures']]],
+  ['figureupdatedescriptor_4',['FigureUpdateDescriptor',['../structOurPaintDCM_1_1Utils_1_1FigureUpdateDescriptor.html',1,'OurPaintDCM::Utils']]],
+  ['fixcoordinatefunction_5',['FixCoordinateFunction',['../classOurPaintDCM_1_1Function_1_1FixCoordinateFunction.html',1,'OurPaintDCM::Function']]],
+  ['fixedgeometry_6',['FixedGeometry',['../structOurPaintDCM_1_1DCMManager_1_1FixedGeometry.html',1,'OurPaintDCM::DCMManager']]]
 ];

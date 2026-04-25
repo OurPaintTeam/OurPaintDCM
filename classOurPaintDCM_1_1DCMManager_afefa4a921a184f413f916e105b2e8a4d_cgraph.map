@@ -1,74 +1,52 @@
 <map id="OurPaintDCM::DCMManager::rebuildRequirementSystem" name="OurPaintDCM::DCMManager::rebuildRequirementSystem">
-<area shape="rect" id="Node000001" title="Rebuild _reqSystem from _requirementRecords and mark it in sync." alt="" coords="5,1203,213,1243"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a83793b5b89f46cb835972736f83f02f2" title="Add a requirement using a descriptor (unified high&#45;level interface)." alt="" coords="261,803,427,858"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,1201,317,868,322,871,125,1204"/>
-<area shape="rect" id="Node000030" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a9a71ab4b4c913f6a68d83c6b91368682" title="Clear all functions, variables, and requirement metadata." alt="" coords="261,1234,427,1289"/>
-<area shape="poly" id="edge40_Node000001_Node000030" title=" " alt="" coords="214,1237,248,1243,248,1248,213,1242"/>
-<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#aecf2c9fa7cd06edf3b6c169cf75bb6f0" title="Add a new geometric constraint function to the system." alt="" coords="487,213,705,267"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="346,803,360,689,386,532,403,452,423,379,446,319,473,277,475,275,479,278,477,280,451,321,428,381,408,453,391,533,365,690,351,803"/>
-<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#a23a5dbe13ab37755c6ee7d69d0ede13a" title="Create arc center perpendicular&#45;bisector function." alt="" coords="475,291,717,346"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="342,803,344,717,350,660,360,598,376,533,400,469,431,409,473,356,475,353,479,357,477,359,436,412,404,471,381,535,365,599,355,661,350,718,347,803"/>
-<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#a12f468704ea548c1d02fd3c1bb9e6b77" title="Create fix&#45;circle functions (one per center coordinate + radius)." alt="" coords="488,370,704,425"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="344,803,350,730,370,631,386,578,408,526,437,477,473,434,476,431,480,435,477,438,441,480,413,529,391,580,375,633,356,731,349,803"/>
-<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#ad763ffa84c05c209d1a283ef2eac9dc8" title="Create fix&#45;line functions (one per endpoint coordinate)." alt="" coords="488,606,704,661"/>
-<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="359,801,405,736,436,700,473,670,480,665,483,670,476,674,440,704,409,739,363,805"/>
-<area shape="rect" id="Node000008" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#ad10fd64a8683df9eb12522b14f6d2ffa" title="Create fix&#45;point functions (one per coordinate)." alt="" coords="488,685,704,739"/>
-<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="383,801,425,774,474,748,488,742,490,747,476,753,428,778,386,805"/>
-<area shape="rect" id="Node000013" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#a5583bfb5b16100b61abe375edd0ee72b" title="Create horizontal&#45;line function." alt="" coords="488,1078,704,1133"/>
-<area shape="poly" id="edge12_Node000002_Node000013" title=" " alt="" coords="356,857,371,902,397,958,431,1014,453,1040,476,1063,483,1068,480,1072,473,1067,449,1044,427,1017,392,960,367,904,351,859"/>
-<area shape="rect" id="Node000014" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#af36e6332e5fea22565ca69d80c37dfa6" title="Create line&#45;circle distance function." alt="" coords="488,449,704,503"/>
-<area shape="poly" id="edge13_Node000002_Node000014" title=" " alt="" coords="346,803,357,743,380,665,397,624,417,584,443,546,473,513,476,510,480,514,477,517,447,549,422,586,402,626,385,667,363,744,351,804"/>
-<area shape="rect" id="Node000015" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#abf7899a196dcafd7ebcd57544e8f8a04" title="Create angle&#45;between&#45;lines function." alt="" coords="488,1157,704,1211"/>
-<area shape="poly" id="edge15_Node000002_Node000015" title=" " alt="" coords="352,858,363,916,386,993,402,1033,422,1073,447,1110,477,1142,482,1147,478,1151,473,1146,443,1113,418,1075,397,1035,381,994,358,918,346,859"/>
-<area shape="rect" id="Node000016" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#a9deb85917497096abbed051072fd0b0b" title="Create parallel&#45;lines function." alt="" coords="488,1235,704,1290"/>
-<area shape="poly" id="edge16_Node000002_Node000016" title=" " alt="" coords="349,858,356,930,376,1027,392,1079,414,1130,442,1178,477,1221,481,1225,477,1229,473,1224,437,1181,409,1133,387,1081,370,1029,351,931,344,858"/>
-<area shape="rect" id="Node000017" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#a6c8712ca958e877b705d85d85b27d086" title="Create perpendicular&#45;lines function." alt="" coords="488,1314,704,1369"/>
-<area shape="poly" id="edge17_Node000002_Node000017" title=" " alt="" coords="352,858,369,956,397,1089,433,1216,454,1266,477,1300,480,1303,477,1307,473,1303,450,1268,428,1218,391,1090,364,957,347,859"/>
-<area shape="rect" id="Node000018" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#ac1b88b74e90355f3b66788a9fa8b2b2d" title="Create line&#45;on&#45;circle function." alt="" coords="488,527,704,582"/>
-<area shape="poly" id="edge18_Node000002_Node000018" title=" " alt="" coords="350,802,366,757,391,700,427,642,448,615,473,591,478,587,481,592,476,595,452,619,431,645,396,702,371,759,355,804"/>
-<area shape="rect" id="Node000019" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#adba866e08c7fb5e600a856a5b3bd2c06" title="Create point&#45;line distance function." alt="" coords="488,763,704,818"/>
-<area shape="poly" id="edge20_Node000002_Node000019" title=" " alt="" coords="427,815,474,807,475,813,427,820"/>
-<area shape="rect" id="Node000020" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#a1d4d5b2d31fff9acffa7375693e56d1e" title="Create point&#45;on&#45;line function." alt="" coords="488,842,704,897"/>
-<area shape="poly" id="edge23_Node000002_Node000020" title=" " alt="" coords="427,841,475,848,474,853,427,846"/>
-<area shape="rect" id="Node000021" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#ab711e471f97b44a000fb1a0b47dff931" title="Create point&#45;on&#45;point function." alt="" coords="488,921,704,975"/>
-<area shape="poly" id="edge26_Node000002_Node000021" title=" " alt="" coords="387,856,429,881,476,906,494,913,492,918,474,910,427,886,385,860"/>
-<area shape="rect" id="Node000022" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#a155bd8cc1bad3b83dd13deab9ee791e6" title="Create point&#45;point distance function." alt="" coords="488,999,704,1054"/>
-<area shape="poly" id="edge29_Node000002_Node000022" title=" " alt="" coords="364,857,409,921,441,955,476,985,486,991,483,995,473,989,437,959,405,924,359,860"/>
-<area shape="rect" id="Node000023" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#aa51e210dd2bad7149ce788ab7560ebd7" title="Create vertical&#45;line function." alt="" coords="488,1393,704,1447"/>
-<area shape="poly" id="edge32_Node000002_Node000023" title=" " alt="" coords="354,858,417,1152,453,1305,468,1355,477,1379,480,1382,477,1386,472,1381,463,1357,448,1306,412,1153,348,859"/>
-<area shape="rect" id="Node000024" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a27dc8a968cc1fc86744675b55bee62c8" title="Get current ID without increment." alt="" coords="515,1472,677,1512"/>
-<area shape="poly" id="edge33_Node000002_Node000024" title=" " alt="" coords="354,858,429,1221,435,1258,436,1292,434,1350,436,1376,442,1402,455,1429,477,1457,503,1475,500,1480,473,1461,450,1432,437,1404,430,1377,429,1350,430,1292,429,1259,424,1222,348,859"/>
-<area shape="rect" id="Node000025" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a62a4b5b4374ad2df26dc8611111690a0" title="Mutable access to a figure by ID and expected type." alt="" coords="509,1560,683,1600"/>
-<area shape="poly" id="edge34_Node000002_Node000025" title=" " alt="" coords="354,857,388,1012,429,1221,435,1268,436,1310,432,1382,433,1415,439,1449,452,1484,477,1522,493,1539,512,1552,509,1556,489,1543,473,1526,448,1486,433,1450,427,1416,426,1382,430,1310,430,1269,424,1222,382,1013,349,859"/>
-<area shape="rect" id="Node000027" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a10d4994ee732333e277d12a1fa2d16cc" title="Generate and return the next unique ID." alt="" coords="516,5,676,45"/>
-<area shape="poly" id="edge37_Node000002_Node000027" title=" " alt="" coords="343,803,351,650,371,426,387,310,409,203,437,116,454,82,473,55,502,35,505,40,477,59,459,84,442,118,414,205,393,311,376,426,356,650,349,803"/>
-<area shape="rect" id="Node000028" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a18b2be9c90bf302faaff026cb4fad937" title="Set the generator state to a given ID." alt="" coords="523,69,669,109"/>
-<area shape="poly" id="edge38_Node000002_Node000028" title=" " alt="" coords="344,803,353,661,375,456,391,350,413,254,440,174,455,143,473,120,489,106,508,97,511,102,492,110,477,123,460,146,445,176,418,255,397,351,380,457,358,661,349,803"/>
-<area shape="rect" id="Node000029" href="$structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html#a99f0e928eebfacb51d696d0f76941b6e" title="Validate that descriptor has correct number of objects for its type." alt="" coords="505,134,687,189"/>
-<area shape="poly" id="edge39_Node000002_Node000029" title=" " alt="" coords="345,803,357,676,381,495,398,402,419,317,443,247,457,219,473,198,491,183,495,187,477,202,462,222,448,249,424,318,403,403,386,496,362,676,350,804"/>
-<area shape="rect" id="Node000006" href="$structOurPaintDCM_1_1Figures_1_1Circle.html#afeaf4ede849ebf501c7b13247e66a70b" title=" " alt="" coords="801,456,963,496"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="697,422,796,450,794,455,695,427"/>
-<area shape="rect" id="Node000009" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#ad4e6e2bae59f79ba39b367ca1bc6580f" title=" " alt="" coords="801,819,963,859"/>
-<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="689,737,718,748,833,810,831,815,716,753,687,742"/>
-<area shape="rect" id="Node000010" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#ae10b911d2116732ed615f9fc5d291e0d" title=" " alt="" coords="801,883,963,923"/>
-<area shape="poly" id="edge9_Node000008_Node000010" title=" " alt="" coords="704,737,719,749,732,764,739,780,744,811,748,840,755,855,767,869,790,883,787,888,764,873,750,858,743,842,738,811,734,781,727,767,715,753,701,742"/>
-<area shape="rect" id="Node000011" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a783b0f201624031dd0cd387bb6c52bf9" title="Get X coordinate." alt="" coords="801,660,963,700"/>
-<area shape="poly" id="edge10_Node000008_Node000011" title=" " alt="" coords="704,697,787,688,788,693,704,703"/>
-<area shape="rect" id="Node000012" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a7c02a5b6825f0d56942b49b68a6fd33c" title="Get Y coordinate." alt="" coords="801,724,963,764"/>
-<area shape="poly" id="edge11_Node000008_Node000012" title=" " alt="" coords="704,721,788,731,787,736,704,727"/>
-<area shape="poly" id="edge14_Node000014_Node000006" title=" " alt="" coords="704,473,787,473,787,479,704,479"/>
-<area shape="poly" id="edge19_Node000018_Node000006" title=" " alt="" coords="695,525,794,497,796,502,697,530"/>
-<area shape="poly" id="edge21_Node000019_Node000009" title=" " alt="" coords="704,806,788,820,787,825,704,811"/>
-<area shape="poly" id="edge22_Node000019_Node000010" title=" " alt="" coords="696,816,719,827,733,838,743,848,753,859,767,868,788,878,786,883,764,873,749,863,739,852,730,842,716,832,693,821"/>
-<area shape="poly" id="edge24_Node000020_Node000009" title=" " alt="" coords="704,855,787,846,788,851,704,860"/>
-<area shape="poly" id="edge25_Node000020_Node000010" title=" " alt="" coords="704,879,788,889,787,894,704,885"/>
-<area shape="poly" id="edge27_Node000021_Node000009" title=" " alt="" coords="689,918,716,906,740,887,764,868,786,859,788,864,767,873,743,891,719,910,692,923"/>
-<area shape="poly" id="edge28_Node000021_Node000010" title=" " alt="" coords="704,928,787,915,788,920,704,934"/>
-<area shape="poly" id="edge30_Node000022_Node000009" title=" " alt="" coords="699,997,715,985,727,971,734,957,738,928,743,898,751,883,764,869,786,854,789,858,767,873,755,886,748,900,744,929,739,958,732,974,719,989,703,1001"/>
-<area shape="poly" id="edge31_Node000022_Node000010" title=" " alt="" coords="684,997,716,984,832,927,835,932,718,989,686,1002"/>
-<area shape="poly" id="edge35_Node000025_Node000025" title=" " alt="" coords="549,1560,547,1550,554,1541,571,1535,596,1533,625,1536,641,1543,639,1548,624,1541,596,1539,572,1541,557,1545,552,1551,554,1559"/>
-<area shape="rect" id="Node000026" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Maps C++ figure type to FigureType enum." alt="" coords="765,1560,999,1600"/>
-<area shape="poly" id="edge36_Node000025_Node000026" title=" " alt="" coords="683,1577,752,1577,752,1583,683,1583"/>
-<area shape="rect" id="Node000031" href="$classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a1002c941f94acba8d202112f2b390eaf" title="Clear all stored functions and variables." alt="" coords="487,1625,705,1679"/>
-<area shape="poly" id="edge41_Node000030_Node000031" title=" " alt="" coords="350,1289,360,1354,381,1440,397,1486,418,1531,445,1573,477,1610,482,1615,478,1619,473,1614,440,1576,414,1533,392,1488,376,1441,354,1355,345,1289"/>
+<area shape="rect" id="Node000001" title="Rebuild _reqSystem from _requirementRecords and mark it in sync." alt="" coords="5,363,213,403"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a83793b5b89f46cb835972736f83f02f2" title="Add a requirement using a descriptor (unified high&#45;level interface)." alt="" coords="261,290,427,345"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="181,360,248,341,249,346,183,365"/>
+<area shape="rect" id="Node000023" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a9a71ab4b4c913f6a68d83c6b91368682" title="Clear all functions, variables, and requirement metadata." alt="" coords="261,394,427,449"/>
+<area shape="poly" id="edge26_Node000001_Node000023" title=" " alt="" coords="214,397,248,403,248,408,213,402"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a27dc8a968cc1fc86744675b55bee62c8" title="Get current ID without increment." alt="" coords="498,197,661,237"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="392,287,474,247,493,239,495,244,476,252,394,292"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a10d4994ee732333e277d12a1fa2d16cc" title="Generate and return the next unique ID." alt="" coords="499,261,659,301"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="426,302,485,293,486,298,427,307"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#adcc458843bdae6c64345d939b22106d1" title=" " alt="" coords="475,326,684,381"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="427,327,462,333,461,338,426,333"/>
+<area shape="rect" id="Node000021" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a18b2be9c90bf302faaff026cb4fad937" title="Set the generator state to a given ID." alt="" coords="506,405,653,445"/>
+<area shape="poly" id="edge24_Node000002_Node000021" title=" " alt="" coords="389,343,476,390,497,398,495,403,474,394,387,347"/>
+<area shape="rect" id="Node000022" href="$structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html#a99f0e928eebfacb51d696d0f76941b6e" title="Validate that descriptor has correct number of objects for its type." alt="" coords="489,118,670,173"/>
+<area shape="poly" id="edge25_Node000002_Node000022" title=" " alt="" coords="364,288,411,235,441,208,473,183,483,177,486,181,476,188,444,212,415,239,368,291"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#aecf2c9fa7cd06edf3b6c169cf75bb6f0" title="Add a new geometric constraint function to the system." alt="" coords="756,70,975,125"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="668,324,682,312,697,290,704,268,704,224,705,179,713,157,730,134,742,124,746,128,734,138,718,159,711,180,710,224,709,269,702,292,686,315,671,328"/>
+<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a1440a55b61d8d8cd9866d7d24b175546" title=" " alt="" coords="771,149,960,203"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="666,324,682,311,699,288,705,263,712,239,730,214,757,197,760,201,734,218,716,241,710,265,704,290,686,315,669,328"/>
+<area shape="rect" id="Node000009" href="$classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a1002c941f94acba8d202112f2b390eaf" title="Clear all stored functions and variables." alt="" coords="756,567,975,622"/>
+<area shape="poly" id="edge8_Node000005_Node000009" title=" " alt="" coords="671,379,686,392,701,413,708,434,710,475,712,514,719,533,734,553,746,563,743,567,730,557,715,536,707,515,705,475,703,435,696,415,682,395,668,383"/>
+<area shape="rect" id="Node000010" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a62a4b5b4374ad2df26dc8611111690a0" title="Mutable access to a figure by ID and expected type." alt="" coords="1069,396,1243,436"/>
+<area shape="poly" id="edge9_Node000005_Node000010" title=" " alt="" coords="685,362,1055,402,1054,408,684,367"/>
+<area shape="rect" id="Node000012" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac83fd7836f932567f54878c58ff58784" title="Point IDs this figure depends on (endpoints / center); empty for points." alt="" coords="732,228,999,268"/>
+<area shape="poly" id="edge12_Node000005_Node000012" title=" " alt="" coords="657,323,683,311,706,294,731,278,750,270,752,275,733,282,709,298,685,316,659,328"/>
+<area shape="rect" id="Node000014" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#ad4e6e2bae59f79ba39b367ca1bc6580f" title=" " alt="" coords="784,503,947,543"/>
+<area shape="poly" id="edge15_Node000005_Node000014" title=" " alt="" coords="669,379,686,391,704,417,710,441,716,465,723,476,734,487,752,499,772,508,770,512,749,504,730,491,719,480,711,467,705,443,699,419,682,395,666,383"/>
+<area shape="rect" id="Node000015" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#ae10b911d2116732ed615f9fc5d291e0d" title=" " alt="" coords="784,5,947,45"/>
+<area shape="poly" id="edge16_Node000005_Node000015" title=" " alt="" coords="669,324,682,312,702,279,709,247,708,216,703,184,699,152,699,120,708,88,730,56,749,41,770,31,772,36,751,45,734,59,713,90,704,121,704,152,709,183,713,215,714,248,707,281,686,315,672,328"/>
+<area shape="rect" id="Node000016" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#abbd4da221a3fad46df090b2f1e5bbe7f" title=" " alt="" coords="783,293,948,347"/>
+<area shape="poly" id="edge17_Node000005_Node000016" title=" " alt="" coords="684,339,769,329,769,334,684,344"/>
+<area shape="rect" id="Node000018" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a7e3877bfb65bd646430422cbb553b367" title=" " alt="" coords="757,423,974,478"/>
+<area shape="poly" id="edge20_Node000005_Node000018" title=" " alt="" coords="661,378,772,416,771,421,659,383"/>
+<area shape="rect" id="Node000008" href="$classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a3435b5336d06c8ccbcc617d0f46886dc" title="Get all constraint functions." alt="" coords="1047,83,1265,138"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="960,152,1033,136,1034,141,961,157"/>
+<area shape="poly" id="edge10_Node000010_Node000010" title=" " alt="" coords="1106,396,1103,386,1111,377,1129,371,1156,369,1187,372,1205,379,1203,384,1186,377,1156,375,1130,377,1114,382,1108,387,1111,395"/>
+<area shape="rect" id="Node000011" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Maps C++ figure type to FigureType enum." alt="" coords="1313,276,1547,316"/>
+<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="1202,393,1370,319,1372,324,1204,398"/>
+<area shape="poly" id="edge14_Node000012_Node000011" title=" " alt="" coords="947,225,998,212,1022,204,1046,199,1157,184,1205,186,1266,199,1302,211,1336,228,1394,265,1391,270,1334,233,1300,216,1265,204,1205,191,1157,190,1047,204,1023,210,999,217,948,231"/>
+<area shape="rect" id="Node000013" href="$classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a01ff193f0ac013d2e0e0356c14d4f026" title="Const reference to the stored point&#45;ID list for figureId (arity 1–3)." alt="" coords="1050,214,1262,269"/>
+<area shape="poly" id="edge13_Node000012_Node000013" title=" " alt="" coords="999,242,1036,241,1036,247,999,248"/>
+<area shape="poly" id="edge18_Node000016_Node000010" title=" " alt="" coords="949,345,1083,389,1081,394,947,350"/>
+<area shape="rect" id="Node000017" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#ac24bdbca3b9199cf6a2d13a89369e49b" title=" " alt="" coords="1051,293,1261,347"/>
+<area shape="poly" id="edge19_Node000016_Node000017" title=" " alt="" coords="948,317,1037,317,1037,323,948,323"/>
+<area shape="poly" id="edge21_Node000018_Node000010" title=" " alt="" coords="974,435,1055,425,1055,431,975,440"/>
+<area shape="rect" id="Node000019" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a783b0f201624031dd0cd387bb6c52bf9" title="Get X coordinate." alt="" coords="1075,524,1237,564"/>
+<area shape="poly" id="edge22_Node000018_Node000019" title=" " alt="" coords="963,476,1000,488,1048,510,1070,517,1068,522,1046,514,998,493,961,481"/>
+<area shape="rect" id="Node000020" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a7c02a5b6825f0d56942b49b68a6fd33c" title="Get Y coordinate." alt="" coords="1075,460,1237,500"/>
+<area shape="poly" id="edge23_Node000018_Node000020" title=" " alt="" coords="975,459,1061,468,1061,473,974,464"/>
+<area shape="poly" id="edge27_Node000023_Node000009" title=" " alt="" coords="423,446,733,552,759,561,758,566,731,557,421,451"/>
 </map>

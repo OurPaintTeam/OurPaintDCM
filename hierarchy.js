@@ -1,16 +1,21 @@
 var hierarchy =
 [
     [ "OurPaintDCM::Figures::Arc< PointT >", "structOurPaintDCM_1_1Figures_1_1Arc.html", null ],
+    [ "OurPaintDCM::Utils::ArcUpdateDescriptor", "structOurPaintDCM_1_1Utils_1_1ArcUpdateDescriptor.html", null ],
+    [ "OurPaintDCM::DCMManager::BatchUpdateContext", "structOurPaintDCM_1_1DCMManager_1_1BatchUpdateContext.html", null ],
     [ "OurPaintDCM::Figures::Circle< PointT >", "structOurPaintDCM_1_1Figures_1_1Circle.html", null ],
     [ "OurPaintDCM::Figures::Circle< OurPaintDCM::Figures::Point2D >", "structOurPaintDCM_1_1Figures_1_1Circle.html", null ],
     [ "OurPaintDCM::Utils::CircleUpdateDescriptor", "structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor.html", null ],
     [ "OurPaintDCM::Requirements::ComponentElement", "structOurPaintDCM_1_1Requirements_1_1ComponentElement.html", null ],
     [ "OurPaintDCM::Requirements::Components", "classOurPaintDCM_1_1Requirements_1_1Components.html", null ],
     [ "OurPaintDCM::DCMManager", "classOurPaintDCM_1_1DCMManager.html", null ],
+    [ "OurPaintDCM::DCMManager::SolveCache::Entry", "structOurPaintDCM_1_1DCMManager_1_1SolveCache_1_1Entry.html", null ],
     [ "OurPaintDCM::Figures::FigureData", "structOurPaintDCM_1_1Figures_1_1FigureData.html", null ],
     [ "OurPaintDCM::Utils::FigureDescriptor", "structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html", null ],
     [ "OurPaintDCM::Figures::FigureEntry", "structOurPaintDCM_1_1Figures_1_1FigureEntry.html", null ],
     [ "OurPaintDCM::Figures::FigureRef< T >", "structOurPaintDCM_1_1Figures_1_1FigureRef.html", null ],
+    [ "OurPaintDCM::Utils::FigureUpdateDescriptor", "structOurPaintDCM_1_1Utils_1_1FigureUpdateDescriptor.html", null ],
+    [ "OurPaintDCM::DCMManager::FixedGeometry", "structOurPaintDCM_1_1DCMManager_1_1FixedGeometry.html", null ],
     [ "OurPaintDCM::Figures::GeometryDependencyIndex", "classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html", null ],
     [ "OurPaintDCM::Figures::GeometryGraphBuilder", "classOurPaintDCM_1_1Figures_1_1GeometryGraphBuilder.html", null ],
     [ "OurPaintDCM::Figures::GeometryStorage", "classOurPaintDCM_1_1Figures_1_1GeometryStorage.html", null ],
@@ -19,6 +24,7 @@ var hierarchy =
     [ "OurPaintDCM::Utils::IDGenerator", "classOurPaintDCM_1_1Utils_1_1IDGenerator.html", null ],
     [ "OurPaintDCM::Figures::Line< PointT >", "structOurPaintDCM_1_1Figures_1_1Line.html", null ],
     [ "OurPaintDCM::Figures::Line< OurPaintDCM::Figures::Point2D >", "structOurPaintDCM_1_1Figures_1_1Line.html", null ],
+    [ "OurPaintDCM::Utils::LineUpdateDescriptor", "structOurPaintDCM_1_1Utils_1_1LineUpdateDescriptor.html", null ],
     [ "OurPaintDCM::Figures::PointBase< N >", "structOurPaintDCM_1_1Figures_1_1PointBase.html", null ],
     [ "OurPaintDCM::Figures::PointBase< 2 >", "structOurPaintDCM_1_1Figures_1_1PointBase.html", [
       [ "OurPaintDCM::Figures::Point2D", "structOurPaintDCM_1_1Figures_1_1Point2D.html", null ]
@@ -59,5 +65,6 @@ var hierarchy =
     [ "OurPaintDCM::Function::RequirementFunctionFactory", "classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html", null ],
     [ "OurPaintDCM::System::RequirementFunctionSystem", "classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html", [
       [ "OurPaintDCM::System::RequirementSystem", "classOurPaintDCM_1_1System_1_1RequirementSystem.html", null ]
-    ] ]
+    ] ],
+    [ "OurPaintDCM::DCMManager::SolveCache", "structOurPaintDCM_1_1DCMManager_1_1SolveCache.html", null ]
 ];

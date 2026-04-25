@@ -1,0 +1,30 @@
+<map id="OurPaintDCM::DCMManager::validateFigureUpdate" name="OurPaintDCM::DCMManager::validateFigureUpdate">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,133,209,173"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#aac18a1071e923751a1ef2b8ea057a627" title="Returns the stored FigureType for an ID, if present." alt="" coords="257,5,461,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="134,131,189,93,256,55,273,48,275,53,259,60,192,97,137,135"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#a91261c9d4a35170d7acfb7e6226043b1" title=" " alt="" coords="257,197,461,237"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="188,171,268,191,266,197,186,176"/>
+<area shape="rect" id="Node000008" href="$classOurPaintDCM_1_1DCMManager.html#ac5f54dee9e4c4d772df2263940482837" title=" " alt="" coords="257,261,461,301"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="137,171,192,209,259,247,275,254,273,259,256,252,189,214,134,176"/>
+<area shape="rect" id="Node000010" href="$classOurPaintDCM_1_1DCMManager.html#acfebdf11de7c62aa872dc9d9adae68b8" title=" " alt="" coords="257,133,461,173"/>
+<area shape="poly" id="edge13_Node000001_Node000010" title=" " alt="" coords="209,151,244,151,244,156,209,156"/>
+<area shape="rect" id="Node000011" href="$classOurPaintDCM_1_1DCMManager.html#a2ccdb87b1c341a121d142cbe7d5dc15e" title=" " alt="" coords="257,69,461,109"/>
+<area shape="poly" id="edge16_Node000001_Node000011" title=" " alt="" coords="186,131,266,110,268,115,188,136"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a62a4b5b4374ad2df26dc8611111690a0" title="Mutable access to a figure by ID and expected type." alt="" coords="555,133,730,173"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="448,195,541,173,542,179,449,200"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac83fd7836f932567f54878c58ff58784" title="Point IDs this figure depends on (endpoints / center); empty for points." alt="" coords="509,197,776,237"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="462,215,496,215,496,220,462,220"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="590,134,587,124,596,114,614,109,643,107,675,109,693,117,691,122,674,115,643,112,615,114,599,119,592,125,595,132"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Maps C++ figure type to FigureType enum." alt="" coords="824,133,1057,173"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="730,151,810,151,810,156,730,156"/>
+<area shape="poly" id="edge8_Node000006_Node000005" title=" " alt="" coords="736,195,833,174,834,179,737,200"/>
+<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a01ff193f0ac013d2e0e0356c14d4f026" title="Const reference to the stored point&#45;ID list for figureId (arity 1–3)." alt="" coords="835,198,1047,253"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="776,218,821,219,821,225,776,224"/>
+<area shape="poly" id="edge10_Node000008_Node000004" title=" " alt="" coords="439,259,460,247,475,232,483,216,491,199,508,183,541,167,543,172,511,188,496,202,487,218,479,235,463,251,442,264"/>
+<area shape="poly" id="edge11_Node000008_Node000006" title=" " alt="" coords="448,259,540,238,541,243,449,264"/>
+<area shape="rect" id="Node000009" href="$structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor.html#a4cf1b51469fad62229152cb70eb550c7" title=" " alt="" coords="552,262,733,317"/>
+<area shape="poly" id="edge12_Node000008_Node000009" title=" " alt="" coords="462,282,539,284,539,289,462,287"/>
+<area shape="poly" id="edge14_Node000010_Node000004" title=" " alt="" coords="462,151,542,151,542,156,462,156"/>
+<area shape="poly" id="edge15_Node000010_Node000006" title=" " alt="" coords="449,171,541,192,540,197,448,176"/>
+<area shape="poly" id="edge17_Node000011_Node000004" title=" " alt="" coords="449,107,542,128,541,133,448,112"/>
+</map>

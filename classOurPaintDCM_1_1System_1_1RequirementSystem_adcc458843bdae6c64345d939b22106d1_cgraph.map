@@ -1,0 +1,37 @@
+<map id="OurPaintDCM::System::RequirementSystem::rebuildFunctionsAndAliases" name="OurPaintDCM::System::RequirementSystem::rebuildFunctionsAndAliases">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,307,215,361"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#aecf2c9fa7cd06edf3b6c169cf75bb6f0" title="Add a new geometric constraint function to the system." alt="" coords="287,5,505,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,305,135,255,165,191,207,126,232,96,261,69,273,61,276,65,264,73,236,99,211,129,170,194,140,257,122,307"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a1440a55b61d8d8cd9866d7d24b175546" title=" " alt="" coords="301,84,491,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="124,305,147,269,178,227,217,184,261,148,287,134,290,139,264,152,220,188,182,230,151,272,129,308"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a1002c941f94acba8d202112f2b390eaf" title="Clear all stored functions and variables." alt="" coords="287,163,505,217"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="143,304,197,265,261,228,279,220,281,225,264,232,200,270,146,309"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a62a4b5b4374ad2df26dc8611111690a0" title="Mutable access to a figure by ID and expected type." alt="" coords="599,458,774,498"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="128,360,150,395,181,434,219,471,264,500,307,515,353,524,400,528,447,527,536,516,612,499,613,504,537,522,448,533,400,533,353,529,306,520,262,504,216,476,177,438,146,398,124,363"/>
+<area shape="rect" id="Node000008" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac83fd7836f932567f54878c58ff58784" title="Point IDs this figure depends on (endpoints / center); empty for points." alt="" coords="263,242,529,282"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="213,304,262,291,297,283,298,288,263,297,214,309"/>
+<area shape="rect" id="Node000010" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#ad4e6e2bae59f79ba39b367ca1bc6580f" title=" " alt="" coords="315,386,477,426"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="214,359,263,371,302,381,300,386,262,377,213,364"/>
+<area shape="rect" id="Node000011" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#ae10b911d2116732ed615f9fc5d291e0d" title=" " alt="" coords="315,450,477,490"/>
+<area shape="poly" id="edge12_Node000001_Node000011" title=" " alt="" coords="146,360,199,399,264,436,302,449,300,454,262,440,196,404,142,364"/>
+<area shape="rect" id="Node000012" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#abbd4da221a3fad46df090b2f1e5bbe7f" title=" " alt="" coords="313,307,479,361"/>
+<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="215,331,300,331,300,337,215,337"/>
+<area shape="rect" id="Node000014" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a7e3877bfb65bd646430422cbb553b367" title=" " alt="" coords="287,565,505,620"/>
+<area shape="poly" id="edge16_Node000001_Node000014" title=" " alt="" coords="126,360,148,401,179,450,218,500,264,544,285,557,282,561,261,548,214,504,174,453,143,404,122,363"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a3435b5336d06c8ccbcc617d0f46886dc" title="Get all constraint functions." alt="" coords="577,84,796,139"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="491,109,564,109,564,114,491,114"/>
+<area shape="poly" id="edge6_Node000006_Node000006" title=" " alt="" coords="636,458,633,448,641,439,659,433,687,431,718,434,735,441,733,446,717,439,687,437,660,439,644,444,638,449,641,457"/>
+<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Maps C++ figure type to FigureType enum." alt="" coords="844,369,1077,409"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="748,455,884,411,886,416,750,460"/>
+<area shape="poly" id="edge10_Node000008_Node000007" title=" " alt="" coords="530,272,660,291,797,321,853,339,906,361,904,366,852,344,795,326,659,296,529,277"/>
+<area shape="rect" id="Node000009" href="$classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a01ff193f0ac013d2e0e0356c14d4f026" title="Const reference to the stored point&#45;ID list for figureId (arity 1–3)." alt="" coords="581,205,793,260"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="529,246,567,242,567,247,530,251"/>
+<area shape="poly" id="edge14_Node000012_Node000006" title=" " alt="" coords="480,352,531,372,646,448,643,452,528,376,478,357"/>
+<area shape="rect" id="Node000013" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#ac24bdbca3b9199cf6a2d13a89369e49b" title=" " alt="" coords="581,336,792,391"/>
+<area shape="poly" id="edge15_Node000012_Node000013" title=" " alt="" coords="479,340,568,349,567,354,478,345"/>
+<area shape="poly" id="edge17_Node000014_Node000006" title=" " alt="" coords="477,563,528,544,628,501,631,506,530,548,479,568"/>
+<area shape="rect" id="Node000015" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a783b0f201624031dd0cd387bb6c52bf9" title="Get X coordinate." alt="" coords="605,605,768,645"/>
+<area shape="poly" id="edge18_Node000014_Node000015" title=" " alt="" coords="505,602,592,612,592,617,505,607"/>
+<area shape="rect" id="Node000016" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a7c02a5b6825f0d56942b49b68a6fd33c" title="Get Y coordinate." alt="" coords="605,541,768,581"/>
+<area shape="poly" id="edge19_Node000014_Node000016" title=" " alt="" coords="505,578,592,568,592,574,505,583"/>
+</map>

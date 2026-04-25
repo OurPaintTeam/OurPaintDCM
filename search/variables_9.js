@@ -1,4 +1,22 @@
 var searchData=
 [
-  ['radius_0',['radius',['../structOurPaintDCM_1_1Figures_1_1Circle.html#a257575c3decbe23a35ee725a7e3eb7f0',1,'OurPaintDCM::Figures::Circle::radius'],['../structOurPaintDCM_1_1Figures_1_1FigureData.html#a10412fdb5a7ebbaa6b85d7e984f59aca',1,'OurPaintDCM::Figures::FigureData::radius'],['../structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#a421e32cd0d08220f13fe3d903f64897f',1,'OurPaintDCM::Utils::FigureDescriptor::radius']]]
+  ['m_5farcfree_0',['m_arcFree',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6952a7ae053ccef167302a8b40108bac',1,'OurPaintDCM::Figures::GeometryStorage']]],
+  ['m_5farcslots_1',['m_arcSlots',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a42bd68a0e544d9e3ccaaa9ab242e4b06',1,'OurPaintDCM::Figures::GeometryStorage']]],
+  ['m_5farcswithids_2',['m_arcsWithIds',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1ff7693308d502892664f72f039a52b1',1,'OurPaintDCM::Figures::GeometryStorage']]],
+  ['m_5farcwithidpos_3',['m_arcWithIdPos',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ab8eb34d381e9404241c940f33a5000a2',1,'OurPaintDCM::Figures::GeometryStorage']]],
+  ['m_5fcirclefree_4',['m_circleFree',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a36063a30f930e835b2c493e85f9038df',1,'OurPaintDCM::Figures::GeometryStorage']]],
+  ['m_5fcircleslots_5',['m_circleSlots',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a03f7916d3ef4f5cc6bb19934ed9d62c7',1,'OurPaintDCM::Figures::GeometryStorage']]],
+  ['m_5fcircleswithids_6',['m_circlesWithIds',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ab5680c2446bbfd00574bdc5ecf3d5409',1,'OurPaintDCM::Figures::GeometryStorage']]],
+  ['m_5fcirclewithidpos_7',['m_circleWithIdPos',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a7d7835948f9c208696d8fc90afe2df69',1,'OurPaintDCM::Figures::GeometryStorage']]],
+  ['m_5fdeps_8',['m_deps',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a15f3a13569a9199970dd4ed29ad6ab9a',1,'OurPaintDCM::Figures::GeometryStorage']]],
+  ['m_5fidgen_9',['m_idGen',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac8b7dad07e7e65854a9e7f2dc3e38199',1,'OurPaintDCM::Figures::GeometryStorage']]],
+  ['m_5findex_10',['m_index',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a69b399ef2997d9362bff635f5619adc9',1,'OurPaintDCM::Figures::GeometryStorage']]],
+  ['m_5flinefree_11',['m_lineFree',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac654ae6b998e87fb6504a216295a137d',1,'OurPaintDCM::Figures::GeometryStorage']]],
+  ['m_5flineslots_12',['m_lineSlots',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af25e80299a27b38135b8d2ce78e80091',1,'OurPaintDCM::Figures::GeometryStorage']]],
+  ['m_5flineswithids_13',['m_linesWithIds',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a9a5ae7f788d1504b316d33032917162d',1,'OurPaintDCM::Figures::GeometryStorage']]],
+  ['m_5flinewithidpos_14',['m_lineWithIdPos',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a3e4ad03e6c55059c46f38725e6f45fd6',1,'OurPaintDCM::Figures::GeometryStorage']]],
+  ['m_5fpointfree_15',['m_pointFree',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a9ae4bb8d24e6da684567046f0780e66e',1,'OurPaintDCM::Figures::GeometryStorage']]],
+  ['m_5fpointslots_16',['m_pointSlots',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a2379ce26f834ae64537c0a8daecea6b9',1,'OurPaintDCM::Figures::GeometryStorage']]],
+  ['m_5fpointswithids_17',['m_pointsWithIds',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a8ebe1df413edc09b6c52b859a1d2a2e8',1,'OurPaintDCM::Figures::GeometryStorage']]],
+  ['m_5fpointwithidpos_18',['m_pointWithIdPos',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a60f1e6490cb61ccb49f877441ad8aafc',1,'OurPaintDCM::Figures::GeometryStorage']]]
 ];

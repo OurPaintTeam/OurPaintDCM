@@ -1,42 +1,45 @@
 <map id="OurPaintDCM::DCMManager::removeFigure" name="OurPaintDCM::DCMManager::removeFigure">
-<area shape="rect" id="Node000001" title="Remove a figure by ID." alt="" coords="5,371,209,411"/>
-<area shape="poly" id="edge13_Node000001_Node000001" title=" " alt="" coords="55,372,52,362,60,352,79,347,107,345,140,347,158,355,156,360,139,353,107,350,80,352,63,357,57,363,60,370"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#aeb74338ab2cf7a1651295af9349a55aa" title="True if id is currently a live object in this storage." alt="" coords="585,350,793,390"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,370,144,342,175,310,213,280,256,257,329,234,390,228,451,236,525,257,551,269,584,290,652,339,649,344,581,295,548,274,523,262,450,241,390,233,330,239,258,262,216,284,179,314,148,346,125,373"/>
-<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac83fd7836f932567f54878c58ff58784" title="Point IDs this figure depends on (endpoints / center); empty for points." alt="" coords="257,85,524,125"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="113,370,130,324,160,262,202,198,227,168,256,143,279,128,282,133,259,147,231,172,206,201,165,265,135,326,118,372"/>
-<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a73045b332c8507d45542e23cfdfb3436" title="Figures incident on a point (lines/circles/arcs that use this point)." alt="" coords="265,157,517,197"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="118,370,140,336,171,293,210,250,256,213,282,199,284,204,259,218,214,254,175,297,144,339,122,373"/>
-<area shape="rect" id="Node000009" href="$classOurPaintDCM_1_1DCMManager.html#a6292fcdc4a4e870d34019280fb2abc4b" title=" " alt="" coords="289,271,493,311"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="146,369,198,344,256,321,283,313,284,318,258,326,200,349,149,373"/>
-<area shape="rect" id="Node000010" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#aac18a1071e923751a1ef2b8ea057a627" title="Returns the stored FigureType for an ID, if present." alt="" coords="289,335,493,375"/>
-<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="209,376,275,367,275,373,210,381"/>
-<area shape="rect" id="Node000011" href="$classOurPaintDCM_1_1DCMManager.html#a85469ce207b21504c18b124ad33fec35" title=" " alt="" coords="271,400,510,455"/>
-<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="210,402,258,408,257,413,209,407"/>
-<area shape="rect" id="Node000012" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a43a2f7601279a4a0167b81828aec836d" title="Removes an object by ID without throwing." alt="" coords="289,479,492,519"/>
-<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="144,409,197,437,258,464,286,473,285,478,256,468,195,442,142,414"/>
-<area shape="rect" id="Node000013" href="$classOurPaintDCM_1_1DCMManager.html#a1c988b1f081fd8c975e63bc1ec69bf92" title=" " alt="" coords="277,543,505,583"/>
-<area shape="poly" id="edge14_Node000001_Node000013" title=" " alt="" coords="126,410,180,469,218,502,259,529,273,536,271,541,256,534,214,506,177,473,122,413"/>
-<area shape="rect" id="Node000014" href="$classOurPaintDCM_1_1DCMManager.html#a60344e1f42d0ac0aea28eed4f53f4215" title="Remove a requirement by ID." alt="" coords="289,607,493,647"/>
-<area shape="poly" id="edge15_Node000001_Node000014" title=" " alt="" coords="120,411,140,450,170,500,210,551,233,573,259,593,277,603,275,608,256,598,230,577,206,554,166,503,135,453,115,413"/>
-<area shape="rect" id="Node000019" href="$classOurPaintDCM_1_1DCMManager.html#a0ad8ab5e8bc9d619751d6ef02d86372e" title=" " alt="" coords="276,671,505,711"/>
-<area shape="poly" id="edge20_Node000001_Node000019" title=" " alt="" coords="116,411,132,461,161,528,203,598,229,630,259,657,266,662,263,667,256,661,225,634,198,601,156,531,127,463,111,412"/>
-<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a01ff193f0ac013d2e0e0356c14d4f026" title="Const reference to the stored point&#45;ID list for figureId (arity 1–3)." alt="" coords="583,5,795,60"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="474,82,569,59,570,64,475,87"/>
-<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Maps C++ figure type to FigureType enum." alt="" coords="572,85,805,125"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="524,102,558,102,558,107,524,107"/>
-<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a7745196f4951811fef1e7e4c6b1e8bc1" title="Copy of all figure IDs incident on pointId (lines/circles/arcs using this point)." alt="" coords="583,149,795,204"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="517,174,569,174,569,179,517,179"/>
-<area shape="rect" id="Node000008" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ae66902b25710423c263255bc7839cc5b" title="Returns id if it names a point; otherwise std::nullopt." alt="" coords="581,229,797,269"/>
-<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="475,194,592,223,591,228,474,199"/>
-<area shape="poly" id="edge11_Node000011_Node000002" title=" " alt="" coords="510,402,570,390,571,395,511,407"/>
-<area shape="rect" id="Node000015" href="$classOurPaintDCM_1_1DCMManager.html#a3cf8b2822f324e99bffd86e21bb6184d" title=" " alt="" coords="587,639,791,679"/>
-<area shape="poly" id="edge16_Node000014_Node000015" title=" " alt="" coords="493,636,573,644,573,650,493,641"/>
-<area shape="rect" id="Node000016" href="$classOurPaintDCM_1_1DCMManager.html#a8e564fbb0e6984c893dd8bb08c0e016e" title=" " alt="" coords="853,575,1057,615"/>
-<area shape="poly" id="edge17_Node000015_Node000016" title=" " alt="" coords="772,637,858,616,859,621,773,642"/>
-<area shape="rect" id="Node000017" href="$classOurPaintDCM_1_1DCMManager.html#a0246829d84bf9ba1ffba2553d04502c6" title=" " alt="" coords="853,639,1057,679"/>
-<area shape="poly" id="edge18_Node000015_Node000017" title=" " alt="" coords="791,657,840,657,840,662,791,662"/>
-<area shape="rect" id="Node000018" href="$classOurPaintDCM_1_1DCMManager.html#aafb28b69b6934cdc5ac4404adebea02a" title=" " alt="" coords="853,703,1057,743"/>
-<area shape="poly" id="edge19_Node000015_Node000018" title=" " alt="" coords="773,677,859,698,858,703,772,682"/>
-<area shape="poly" id="edge21_Node000019_Node000015" title=" " alt="" coords="505,676,572,669,573,674,506,682"/>
+<area shape="rect" id="Node000001" title="Remove a figure by ID." alt="" coords="5,400,209,440"/>
+<area shape="poly" id="edge14_Node000001_Node000001" title=" " alt="" coords="55,401,52,390,60,381,79,375,107,373,140,376,158,383,156,388,139,381,107,379,80,381,63,386,57,391,60,399"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#aeb74338ab2cf7a1651295af9349a55aa" title="True if id is currently a live object in this storage." alt="" coords="585,347,793,387"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,398,138,363,168,321,208,281,231,263,256,250,328,224,359,219,389,218,450,227,525,250,577,282,651,336,648,340,574,287,523,254,449,233,389,223,360,224,329,229,258,254,234,268,212,285,172,325,142,366,121,401"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac83fd7836f932567f54878c58ff58784" title="Point IDs this figure depends on (endpoints / center); empty for points." alt="" coords="257,77,524,117"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="111,399,127,346,155,275,197,200,224,166,256,135,277,121,280,125,259,139,228,169,202,203,160,278,132,348,116,401"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a73045b332c8507d45542e23cfdfb3436" title="Figures incident on a point (lines/circles/arcs that use this point)." alt="" coords="265,149,517,189"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="115,398,135,358,165,306,206,252,230,227,256,206,278,193,281,197,259,210,233,231,210,255,170,309,139,360,120,401"/>
+<area shape="rect" id="Node000009" href="$classOurPaintDCM_1_1DCMManager.html#a6292fcdc4a4e870d34019280fb2abc4b" title=" " alt="" coords="289,264,493,304"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="130,398,185,355,220,333,256,314,275,306,277,311,258,318,223,337,188,359,133,402"/>
+<area shape="rect" id="Node000010" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#aac18a1071e923751a1ef2b8ea057a627" title="Returns the stored FigureType for an ID, if present." alt="" coords="289,328,493,368"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="181,397,257,377,291,369,293,374,258,383,183,402"/>
+<area shape="rect" id="Node000011" href="$classOurPaintDCM_1_1DCMManager.html#a6967dc9a4f330d3aa420ae17a3488bf6" title=" " alt="" coords="587,541,791,581"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="183,437,258,456,391,481,450,491,525,508,616,534,614,540,523,513,449,496,390,486,257,461,182,443"/>
+<area shape="rect" id="Node000012" href="$classOurPaintDCM_1_1DCMManager.html#a85469ce207b21504c18b124ad33fec35" title=" " alt="" coords="271,393,510,447"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="210,417,258,417,258,423,210,423"/>
+<area shape="rect" id="Node000013" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a43a2f7601279a4a0167b81828aec836d" title="Removes an object by ID without throwing." alt="" coords="289,523,492,563"/>
+<area shape="poly" id="edge13_Node000001_Node000013" title=" " alt="" coords="141,438,195,470,258,502,298,516,296,521,256,506,192,475,138,442"/>
+<area shape="rect" id="Node000014" href="$classOurPaintDCM_1_1DCMManager.html#a1c988b1f081fd8c975e63bc1ec69bf92" title=" " alt="" coords="277,587,505,627"/>
+<area shape="poly" id="edge15_Node000001_Node000014" title=" " alt="" coords="124,438,178,505,216,542,259,572,271,579,269,584,256,577,212,546,174,509,120,442"/>
+<area shape="rect" id="Node000015" href="$classOurPaintDCM_1_1DCMManager.html#a60344e1f42d0ac0aea28eed4f53f4215" title="Remove a requirement by ID." alt="" coords="289,651,493,691"/>
+<area shape="poly" id="edge16_Node000001_Node000015" title=" " alt="" coords="119,440,138,482,168,535,208,590,232,615,259,636,277,647,275,652,256,641,229,619,204,594,163,538,133,484,114,442"/>
+<area shape="rect" id="Node000020" href="$classOurPaintDCM_1_1DCMManager.html#a0ad8ab5e8bc9d619751d6ef02d86372e" title=" " alt="" coords="276,715,505,755"/>
+<area shape="poly" id="edge22_Node000001_Node000020" title=" " alt="" coords="116,439,131,492,159,563,178,601,201,638,228,672,259,701,266,705,262,710,256,705,224,675,196,641,173,604,154,566,126,494,111,441"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a01ff193f0ac013d2e0e0356c14d4f026" title="Const reference to the stored point&#45;ID list for figureId (arity 1–3)." alt="" coords="583,70,795,125"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="524,95,569,95,569,100,524,100"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Maps C++ figure type to FigureType enum." alt="" coords="572,5,805,45"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="474,75,591,46,592,51,475,80"/>
+<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a7745196f4951811fef1e7e4c6b1e8bc1" title="Copy of all figure IDs incident on pointId (lines/circles/arcs using this point)." alt="" coords="583,214,795,269"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="475,187,570,210,569,215,474,192"/>
+<area shape="rect" id="Node000008" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ae66902b25710423c263255bc7839cc5b" title="Returns id if it names a point; otherwise std::nullopt." alt="" coords="581,149,797,189"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="517,167,567,167,567,172,517,172"/>
+<area shape="poly" id="edge12_Node000012_Node000002" title=" " alt="" coords="510,396,570,385,571,390,511,401"/>
+<area shape="poly" id="edge17_Node000015_Node000011" title=" " alt="" coords="484,648,523,636,583,612,637,585,640,590,585,616,525,641,486,653"/>
+<area shape="rect" id="Node000016" href="$classOurPaintDCM_1_1DCMManager.html#a3cf8b2822f324e99bffd86e21bb6184d" title=" " alt="" coords="587,683,791,723"/>
+<area shape="poly" id="edge18_Node000015_Node000016" title=" " alt="" coords="493,679,573,688,573,693,493,684"/>
+<area shape="rect" id="Node000017" href="$classOurPaintDCM_1_1DCMManager.html#a8e564fbb0e6984c893dd8bb08c0e016e" title=" " alt="" coords="853,619,1057,659"/>
+<area shape="poly" id="edge19_Node000016_Node000017" title=" " alt="" coords="772,680,858,659,859,664,773,685"/>
+<area shape="rect" id="Node000018" href="$classOurPaintDCM_1_1DCMManager.html#a0246829d84bf9ba1ffba2553d04502c6" title=" " alt="" coords="853,683,1057,723"/>
+<area shape="poly" id="edge20_Node000016_Node000018" title=" " alt="" coords="791,700,840,700,840,705,791,705"/>
+<area shape="rect" id="Node000019" href="$classOurPaintDCM_1_1DCMManager.html#aafb28b69b6934cdc5ac4404adebea02a" title=" " alt="" coords="853,747,1057,787"/>
+<area shape="poly" id="edge21_Node000016_Node000019" title=" " alt="" coords="773,720,859,741,858,746,772,725"/>
+<area shape="poly" id="edge23_Node000020_Node000016" title=" " alt="" coords="505,720,572,712,573,718,506,725"/>
 </map>

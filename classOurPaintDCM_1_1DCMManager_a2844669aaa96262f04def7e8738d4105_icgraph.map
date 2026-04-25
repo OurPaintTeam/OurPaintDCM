@@ -1,0 +1,10 @@
+<map id="OurPaintDCM::DCMManager::validateFigureUpdate" name="OurPaintDCM::DCMManager::validateFigureUpdate">
+<area shape="rect" id="Node000001" title=" " alt="" coords="764,35,968,75"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a72eb2fceacf81daad2ec336d9e0c4c52" title=" " alt="" coords="509,5,716,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="750,44,716,40,717,35,751,39"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#ae6da1c7d293c4273cc9470828c92e065" title="Update multiple figures of arbitrary types in one batch." alt="" coords="257,35,461,75"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="750,60,716,60,509,60,461,59,461,54,509,55,716,55,750,54"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="496,42,462,46,461,40,495,36"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1DCMManager.html#aa41ec1f57e1fe720dba17d23345e6e47" title="Update any supported figure by unified update descriptor." alt="" coords="5,35,209,75"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="244,57,210,57,210,52,244,52"/>
+</map>

@@ -1,9 +1,12 @@
 var namespaceOurPaintDCM_1_1Utils =
 [
+    [ "ArcUpdateDescriptor", "structOurPaintDCM_1_1Utils_1_1ArcUpdateDescriptor.html", "structOurPaintDCM_1_1Utils_1_1ArcUpdateDescriptor" ],
     [ "CircleUpdateDescriptor", "structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor.html", "structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor" ],
     [ "FigureDescriptor", "structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html", "structOurPaintDCM_1_1Utils_1_1FigureDescriptor" ],
+    [ "FigureUpdateDescriptor", "structOurPaintDCM_1_1Utils_1_1FigureUpdateDescriptor.html", "structOurPaintDCM_1_1Utils_1_1FigureUpdateDescriptor" ],
     [ "ID", "structOurPaintDCM_1_1Utils_1_1ID.html", "structOurPaintDCM_1_1Utils_1_1ID" ],
     [ "IDGenerator", "classOurPaintDCM_1_1Utils_1_1IDGenerator.html", "classOurPaintDCM_1_1Utils_1_1IDGenerator" ],
+    [ "LineUpdateDescriptor", "structOurPaintDCM_1_1Utils_1_1LineUpdateDescriptor.html", "structOurPaintDCM_1_1Utils_1_1LineUpdateDescriptor" ],
     [ "PointUpdateDescriptor", "structOurPaintDCM_1_1Utils_1_1PointUpdateDescriptor.html", "structOurPaintDCM_1_1Utils_1_1PointUpdateDescriptor" ],
     [ "RequirementDescriptor", "structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html", "structOurPaintDCM_1_1Utils_1_1RequirementDescriptor" ],
     [ "IDArithmetic", "conceptOurPaintDCM_1_1Utils_1_1IDArithmetic.html", null ],
