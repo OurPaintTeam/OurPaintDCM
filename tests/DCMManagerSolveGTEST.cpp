@@ -10,6 +10,74 @@ protected:
     DCMManager manager;
 };
 
+namespace {
+
+void addFullRankLineSolveSystem(DCMManager& manager) {
+    auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    auto p2 = manager.addFigure(FigureDescriptor::point(13.0, 4.0));
+    auto line = manager.addFigure(FigureDescriptor::line(p1, p2));
+
+    manager.addRequirement(RequirementDescriptor::fixPoint(p1));
+    manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 10.0));
+    manager.addRequirement(RequirementDescriptor::horizontal(line));
+    manager.setSolveMode(SolveMode::GLOBAL);
+}
+
+} // namespace
+
+TEST_F(DCMManagerSolveTest, DefaultSolverTypeIsAuto) {
+    EXPECT_EQ(manager.getSolverType(), SolverType::AUTO);
+    EXPECT_FALSE(manager.getLastSolveAnalysis().has_value());
+}
+
+TEST_F(DCMManagerSolveTest, AutoSolverUsesDogLegForFullRankSystem) {
+    addFullRankLineSolveSystem(manager);
+
+    EXPECT_TRUE(manager.solve());
+
+    auto analysis = manager.getLastSolveAnalysis();
+    ASSERT_TRUE(analysis.has_value());
+    EXPECT_EQ(analysis->requestedSolver, SolverType::AUTO);
+    EXPECT_EQ(analysis->selectedSolver, SolverType::SPARSE_DOGLEG);
+    EXPECT_TRUE(analysis->fullRank);
+    EXPECT_EQ(analysis->rank, analysis->variableCount);
+}
+
+TEST_F(DCMManagerSolveTest, AutoSolverUsesLMForRankDeficientSystem) {
+    auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    auto p2 = manager.addFigure(FigureDescriptor::point(3.0, 0.0));
+    manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 5.0));
+    manager.setSolveMode(SolveMode::GLOBAL);
+
+    EXPECT_TRUE(manager.solve());
+
+    auto analysis = manager.getLastSolveAnalysis();
+    ASSERT_TRUE(analysis.has_value());
+    EXPECT_EQ(analysis->requestedSolver, SolverType::AUTO);
+    EXPECT_EQ(analysis->selectedSolver, SolverType::SPARSE_LM);
+    EXPECT_FALSE(analysis->fullRank);
+    EXPECT_LT(analysis->rank, analysis->variableCount);
+}
+
+TEST_F(DCMManagerSolveTest, ManualSparseSolverSelectionIsReported) {
+    for (SolverType solverType : {
+             SolverType::SPARSE_LM,
+             SolverType::SPARSE_DOGLEG,
+             SolverType::SPARSE_NEWTON_GAUSS}) {
+        DCMManager localManager;
+        addFullRankLineSolveSystem(localManager);
+        localManager.setSolverType(solverType);
+
+        EXPECT_TRUE(localManager.solve()) << static_cast<int>(solverType);
+
+        auto analysis = localManager.getLastSolveAnalysis();
+        ASSERT_TRUE(analysis.has_value());
+        EXPECT_EQ(analysis->requestedSolver, solverType);
+        EXPECT_EQ(analysis->selectedSolver, solverType);
+        EXPECT_TRUE(analysis->fullRank);
+    }
+}
+
 TEST_F(DCMManagerSolveTest, GlobalSolve_PointPointDist) {
     auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
     auto p2 = manager.addFigure(FigureDescriptor::point(3.0, 0.0));

@@ -1,13 +1,18 @@
 #include "DCMManager.h"
 #include "ErrorFunction.h"
 #include "SparseLSMTask.h"
+#include "SparseQR.h"
+#include "sparse/SparseDogLegSolver.h"
 #include "sparse/SparseLevenbergMarquardtSolver.h"
+#include "sparse/SparseNewtonGaussSolver.h"
 #include <algorithm>
 #include <cstdint>
 #include <memory>
 #include <stdexcept>
 
 namespace {
+
+constexpr double kDragLockWeight = 1e3;
 
 void eraseRequirementId(std::vector<OurPaintDCM::Utils::ID>& ids, OurPaintDCM::Utils::ID id) {
     ids.erase(std::remove(ids.begin(), ids.end(), id), ids.end());
@@ -27,28 +32,42 @@ std::unique_ptr<::Function> makeFixResidual(double* valueRef, double target) {
         new Subtraction(new Variable(valueRef), new Constant(target)));
 }
 
+std::unique_ptr<::Function> makeWeightedTemporaryLockResidual(
+    double* valueRef,
+    double* targetRef,
+    double* weightRef) {
+    return std::unique_ptr<::Function>(
+        new Multiplication(
+            new Variable(weightRef),
+            new Subtraction(new Variable(valueRef), new Variable(targetRef))));
+}
+
+struct DragLockResidual {
+    double* valueRef = nullptr;
+    std::unique_ptr<double> target;
+    std::unique_ptr<double> weight;
+};
+
 void hashCombine(std::size_t& seed, std::size_t value) {
     seed ^= value + 0x9e3779b9u + (seed << 6u) + (seed >> 2u);
 }
 
 struct SolveCacheKey {
+    OurPaintDCM::Utils::SolveMode solveMode = OurPaintDCM::Utils::SolveMode::GLOBAL;
     std::optional<OurPaintDCM::ComponentID> componentId;
-    std::vector<double*> lockedVars;
 
     bool operator==(const SolveCacheKey& other) const noexcept {
-        return componentId == other.componentId && lockedVars == other.lockedVars;
+        return solveMode == other.solveMode && componentId == other.componentId;
     }
 };
 
 struct SolveCacheKeyHasher {
     std::size_t operator()(const SolveCacheKey& key) const noexcept {
         std::size_t seed = 0;
+        hashCombine(seed, std::hash<std::uint8_t>{}(static_cast<std::uint8_t>(key.solveMode)));
         hashCombine(seed,
                     std::hash<std::size_t>{}(
                         key.componentId.value_or(static_cast<OurPaintDCM::ComponentID>(-1))));
-        for (double* valueRef : key.lockedVars) {
-            hashCombine(seed, std::hash<std::uintptr_t>{}(reinterpret_cast<std::uintptr_t>(valueRef)));
-        }
         return seed;
     }
 };
@@ -58,6 +77,7 @@ using FixedAssignmentMap = std::unordered_map<double*, double>;
 struct BuiltSolvePipeline {
     FixedAssignmentMap fixedAssignments;
     std::vector<std::unique_ptr<Variable>> variableOwners;
+    std::vector<DragLockResidual> dragLocks;
     std::unique_ptr<SparseLSMTask> task;
     bool hasFunctions = false;
     bool hasFreeVariables = false;
@@ -79,8 +99,12 @@ struct OurPaintDCM::DCMManager::SolveCache {
         std::unique_ptr<System::RequirementSystem> subsystem;
         FixedAssignmentMap fixedAssignments;
         std::vector<std::unique_ptr<Variable>> variableOwners;
+        std::vector<DragLockResidual> dragLocks;
         std::unique_ptr<SparseLSMTask> task;
-        std::unique_ptr<SparseLMSolver> solver;
+        std::unique_ptr<SparseLMSolver> lmSolver;
+        std::unique_ptr<SparseDogLegSolver> dogLegSolver;
+        std::unique_ptr<SparseNewtonGaussSolver> newtonGaussSolver;
+        std::unique_ptr<SparseQR> rankAnalyzer;
         bool hasFunctions = false;
         bool hasFreeVariables = false;
     };
@@ -1159,6 +1183,21 @@ Utils::SolveMode DCMManager::getSolveMode() const noexcept {
     return _solveMode;
 }
 
+void DCMManager::setSolverType(Utils::SolverType type) noexcept {
+    if (_solverType == type) {
+        return;
+    }
+    _solverType = type;
+}
+
+Utils::SolverType DCMManager::getSolverType() const noexcept {
+    return _solverType;
+}
+
+std::optional<DCMManager::SolveAnalysis> DCMManager::getLastSolveAnalysis() const noexcept {
+    return _lastSolveAnalysis;
+}
+
 bool DCMManager::solve(std::optional<ComponentID> componentId) {
     const std::unordered_set<double*> noLockedVars;
     return solveWithLockedVars(componentId, noLockedVars);
@@ -1167,6 +1206,13 @@ bool DCMManager::solve(std::optional<ComponentID> componentId) {
 bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
                                      const std::unordered_set<double*>& lockedVars) {
     if (_requirementRecords.empty()) {
+        _lastSolveAnalysis = SolveAnalysis{
+            0,
+            0,
+            0,
+            true,
+            _solverType,
+            _solverType == Utils::SolverType::AUTO ? Utils::SolverType::SPARSE_DOGLEG : _solverType};
         return true;
     }
 
@@ -1175,6 +1221,7 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
     }
 
     SolveCacheKey cacheKey;
+    cacheKey.solveMode = _solveMode;
     switch (_solveMode) {
         case Utils::SolveMode::GLOBAL:
             cacheKey.componentId = std::nullopt;
@@ -1190,9 +1237,6 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
             break;
     }
 
-    cacheKey.lockedVars.assign(lockedVars.begin(), lockedVars.end());
-    std::sort(cacheKey.lockedVars.begin(), cacheKey.lockedVars.end());
-
     const auto buildPipeline = [&](System::RequirementSystem& system) {
         BuiltSolvePipeline pipeline;
         std::vector<std::unique_ptr<::Function>> mathFunctionOwners;
@@ -1201,7 +1245,6 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
 
         const auto rememberVariable = [&](double* valueRef) {
             if (valueRef != nullptr &&
-                !lockedVars.contains(valueRef) &&
                 !pipeline.fixedAssignments.contains(valueRef) &&
                 mathVariableRefSet.insert(valueRef).second) {
                 mathVariableRefs.push_back(valueRef);
@@ -1499,6 +1542,20 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
             }
         }
 
+        if (_solveMode == Utils::SolveMode::DRAG) {
+            pipeline.dragLocks.reserve(mathVariableRefs.size());
+            for (double* valueRef : mathVariableRefs) {
+                auto target = std::make_unique<double>(valueRef != nullptr ? *valueRef : 0.0);
+                auto weight = std::make_unique<double>(0.0);
+                double* targetRef = target.get();
+                double* weightRef = weight.get();
+                pipeline.dragLocks.push_back({valueRef, std::move(target), std::move(weight)});
+                appendFunction(
+                    makeWeightedTemporaryLockResidual(valueRef, targetRef, weightRef),
+                    {valueRef});
+            }
+        }
+
         pipeline.hasFunctions = !mathFunctionOwners.empty();
         if (!pipeline.hasFunctions) {
             return pipeline;
@@ -1544,12 +1601,10 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
         auto pipeline = buildPipeline(*buildSystem);
         entry.fixedAssignments = std::move(pipeline.fixedAssignments);
         entry.variableOwners = std::move(pipeline.variableOwners);
+        entry.dragLocks = std::move(pipeline.dragLocks);
         entry.task = std::move(pipeline.task);
         entry.hasFunctions = pipeline.hasFunctions;
         entry.hasFreeVariables = pipeline.hasFreeVariables;
-        if (entry.task != nullptr) {
-            entry.solver = std::make_unique<SparseLMSolver>();
-        }
 
         entryIt = _solveCache->entries.insert_or_assign(std::move(cacheKey), std::move(entry)).first;
     }
@@ -1565,6 +1620,13 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
 
     auto& system = *systemPtr;
     if (system.getRequirements().empty() || !entry.hasFunctions) {
+        _lastSolveAnalysis = SolveAnalysis{
+            0,
+            0,
+            0,
+            true,
+            _solverType,
+            _solverType == Utils::SolverType::AUTO ? Utils::SolverType::SPARSE_DOGLEG : _solverType};
         system.synchronizeCoincidentPoints();
         return true;
     }
@@ -1573,21 +1635,100 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
         *valueRef = target;
     }
 
+    const auto updateDragLocks = [&](bool enableLocks) {
+        for (auto& lock : entry.dragLocks) {
+            if (lock.valueRef == nullptr || lock.target == nullptr || lock.weight == nullptr) {
+                continue;
+            }
+            if (enableLocks && lockedVars.contains(lock.valueRef)) {
+                *lock.target = *lock.valueRef;
+                *lock.weight = kDragLockWeight;
+            } else {
+                *lock.weight = 0.0;
+            }
+        }
+
+        if (entry.task != nullptr && !entry.dragLocks.empty()) {
+            entry.task->setError(entry.task->getValues());
+        }
+    };
+
+    updateDragLocks(true);
+
     if (!entry.hasFreeVariables) {
-        // If temporary drag locks consume all remaining DOF, retry without locks.
-        // This keeps fixed/eliminated vars constant, but allows the solver
-        // to satisfy constraints by moving the dragged point to a feasible position.
         if (!lockedVars.empty()) {
             const std::unordered_set<double*> noLockedVars;
             return solveWithLockedVars(componentId, noLockedVars);
         }
+        _lastSolveAnalysis = SolveAnalysis{
+            0,
+            0,
+            0,
+            true,
+            _solverType,
+            _solverType == Utils::SolverType::AUTO ? Utils::SolverType::SPARSE_DOGLEG : _solverType};
         system.synchronizeCoincidentPoints();
         return true;
     }
 
-    entry.solver->setTask(entry.task.get());
-    entry.solver->optimize();
-    const bool converged = entry.solver->isConverged();
+    const auto analyzeTask = [&]() {
+        const auto& jacobian = entry.task->jacobianRef();
+        if (entry.rankAnalyzer == nullptr) {
+            entry.rankAnalyzer = std::make_unique<SparseQR>(jacobian);
+            entry.rankAnalyzer->qr();
+        } else {
+            entry.rankAnalyzer->factorize(jacobian);
+        }
+
+        SolveAnalysis analysis;
+        analysis.rank = entry.rankAnalyzer->rank();
+        analysis.residualCount = jacobian.rows_size();
+        analysis.variableCount = jacobian.cols_size();
+        analysis.fullRank = analysis.rank == analysis.variableCount;
+        analysis.requestedSolver = _solverType;
+        analysis.selectedSolver = _solverType;
+        if (_solverType == Utils::SolverType::AUTO) {
+            analysis.selectedSolver =
+                analysis.fullRank ? Utils::SolverType::SPARSE_DOGLEG : Utils::SolverType::SPARSE_LM;
+        }
+        return analysis;
+    };
+
+    const auto getSolver = [&](Utils::SolverType solverType) -> MatrixOptimizer* {
+        switch (solverType) {
+            case Utils::SolverType::SPARSE_DOGLEG:
+                if (entry.dogLegSolver == nullptr) {
+                    entry.dogLegSolver = std::make_unique<SparseDogLegSolver>();
+                }
+                return entry.dogLegSolver.get();
+            case Utils::SolverType::SPARSE_NEWTON_GAUSS:
+                if (entry.newtonGaussSolver == nullptr) {
+                    entry.newtonGaussSolver = std::make_unique<SparseNewtonGaussSolver>();
+                }
+                return entry.newtonGaussSolver.get();
+            case Utils::SolverType::SPARSE_LM:
+            case Utils::SolverType::AUTO:
+                if (entry.lmSolver == nullptr) {
+                    entry.lmSolver = std::make_unique<SparseLMSolver>();
+                }
+                return entry.lmSolver.get();
+        }
+        return nullptr;
+    };
+
+    _lastSolveAnalysis = analyzeTask();
+    MatrixOptimizer* solver = getSolver(_lastSolveAnalysis->selectedSolver);
+    if (solver == nullptr) {
+        throw std::runtime_error("Solver selection failed");
+    }
+
+    solver->setTask(entry.task.get());
+    solver->optimize();
+    const bool converged = solver->isConverged();
+    if (!converged && !lockedVars.empty()) {
+        const std::unordered_set<double*> noLockedVars;
+        return solveWithLockedVars(componentId, noLockedVars);
+    }
     system.synchronizeCoincidentPoints();
 
     return converged;
