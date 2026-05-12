@@ -85,6 +85,14 @@ enum class SolveMode {
     LOCAL,  ///< Solve only affected subgraphs/subsystems
     DRAG    ///< Interactive drag mode (tracking free DoF)
 };
+
+enum class SolverType {
+    AUTO,
+    SPARSE_LM,
+    SPARSE_DOGLEG,
+    SPARSE_NEWTON_GAUSS
+};
+
 enum class SystemStatus {
     WELL_CONSTRAINED,
     UNDER_CONSTRAINED,

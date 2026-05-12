@@ -15,6 +15,7 @@
 #include <cmath>
 #include <cstdint>
 #include <initializer_list>
+#include <optional>
 
 namespace OurPaintDCM {
 
@@ -65,6 +66,15 @@ using RequirementDependencyGraph =
  */
 class DCMManager {
 public:
+    struct SolveAnalysis {
+        std::size_t rank = 0;
+        std::size_t residualCount = 0;
+        std::size_t variableCount = 0;
+        bool fullRank = false;
+        Utils::SolverType requestedSolver = Utils::SolverType::AUTO;
+        Utils::SolverType selectedSolver = Utils::SolverType::SPARSE_LM;
+    };
+
     /**
      * @brief Default constructor.
      */
@@ -360,6 +370,20 @@ public:
     Utils::SolveMode getSolveMode() const noexcept;
 
     /**
+     * @brief Select sparse solver strategy used by solve().
+     *
+     * AUTO uses rank analysis: full-column-rank tasks use SparseDogLeg,
+     * rank-deficient tasks use SparseLMSolver.
+     */
+    void setSolverType(Utils::SolverType type) noexcept;
+
+    /// @brief Get current sparse solver strategy.
+    Utils::SolverType getSolverType() const noexcept;
+
+    /// @brief Rank and solver choice from the latest solve attempt, if any.
+    std::optional<SolveAnalysis> getLastSolveAnalysis() const noexcept;
+
+    /**
      * @brief Solve the constraint system according to the current mode.
      *
      * GLOBAL — solves all requirements at once (Levenberg-Marquardt).
@@ -393,6 +417,8 @@ private:
     ComponentID _nextComponentId = 0;
     std::size_t _activeComponentCount = 0;
     Utils::SolveMode _solveMode = Utils::SolveMode::GLOBAL;
+    Utils::SolverType _solverType = Utils::SolverType::AUTO;
+    std::optional<SolveAnalysis> _lastSolveAnalysis;
     std::unique_ptr<SolveCache> _solveCache;
 
     std::unique_ptr<System::RequirementSystem> buildSubsystem(ComponentID componentId) const;
