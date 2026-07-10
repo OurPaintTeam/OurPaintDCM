@@ -32,6 +32,7 @@ TEST(DCMManagerSnapshotTest, RestoresCascadeDeletedGeometryConstraintsAndIds) {
     EXPECT_TRUE(manager.hasFigure(lineId));
     EXPECT_TRUE(manager.hasRequirement(fixedPointRequirement));
     EXPECT_TRUE(manager.hasRequirement(horizontalRequirement));
+    EXPECT_EQ(manager.getRequirementSystem().getRequirementCount(), 2U);
 
     const auto restoredLine = manager.getFigure(lineId);
     ASSERT_TRUE(restoredLine.has_value());

@@ -48,6 +48,9 @@ class RequirementSystem : public RequirementFunctionSystem {
     std::unordered_map<Utils::ID, std::vector<Utils::ID>> _coincidentPointGroups;
 
     void rebuildFunctionsAndAliases();
+    /** Replaces all records and rebuilds function state once; used by DCM restoration. */
+    void replaceRequirements(const std::vector<Utils::RequirementDescriptor>& descriptors,
+                             Utils::ID nextRequirementId);
     Utils::ID resolvePointRepresentative(Utils::ID pointId) const noexcept;
     Figures::Point2D* resolvePoint(Utils::ID pointId) const;
     std::vector<Utils::ID> getCoincidentPoints(Utils::ID pointId) const;

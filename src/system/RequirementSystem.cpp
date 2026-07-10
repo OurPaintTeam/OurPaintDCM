@@ -57,6 +57,24 @@ namespace OurPaintDCM::System {
 RequirementSystem::RequirementSystem(Figures::GeometryStorage* storage)
     : _storage(storage) {}
 
+void RequirementSystem::replaceRequirements(
+    const std::vector<Utils::RequirementDescriptor>& descriptors,
+    Utils::ID nextRequirementId) {
+    _requirements.clear();
+    _requirements.reserve(descriptors.size());
+
+    for (const auto& descriptor : descriptors) {
+        descriptor.validate();
+        if (!descriptor.id.has_value() || descriptor.id->id == 0ULL) {
+            throw std::invalid_argument("Restored requirement must have a non-zero ID");
+        }
+        _requirements.push_back({*descriptor.id, descriptor.type, descriptor.objectIds, descriptor.param});
+    }
+
+    _reqIdGen.set(nextRequirementId);
+    rebuildFunctionsAndAliases();
+}
+
 Utils::ID RequirementSystem::addRequirement(const Utils::RequirementDescriptor& descriptor) {
     descriptor.validate();
 

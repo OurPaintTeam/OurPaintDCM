@@ -139,13 +139,15 @@ void DCMManager::restoreSnapshot(const Snapshot& state) {
         }
     }
     for (const auto& requirement : state._requirements) {
-        addRequirement(requirement);
+        _requirementRecords.emplace(*requirement.id, requirement);
+        _requirementOrder.push_back(*requirement.id);
     }
 
     _fixedRequirementTargets = state._fixedRequirementTargets;
     _storage.restoreNextID(state._nextFigureId);
     _reqSystem._reqIdGen.set(state._nextRequirementId);
     _solveMode = state._solveMode;
+    rebuildRequirementSystem();
     rebuildComponents();
     invalidateSolveCache();
 }
@@ -1609,13 +1611,15 @@ std::unique_ptr<System::RequirementSystem> DCMManager::buildSubsystem(ComponentI
 }
 
 void DCMManager::rebuildRequirementSystem() {
-    _reqSystem.clear();
+    std::vector<Utils::RequirementDescriptor> descriptors;
+    descriptors.reserve(_requirementOrder.size());
     for (const auto& reqId : _requirementOrder) {
         const auto it = _requirementRecords.find(reqId);
         if (it != _requirementRecords.end()) {
-            _reqSystem.addRequirement(it->second);
+            descriptors.push_back(it->second);
         }
     }
+    _reqSystem.replaceRequirements(descriptors, _reqSystem._reqIdGen.current());
     _reqSystemSyncedWithRecords = true;
 }
 
