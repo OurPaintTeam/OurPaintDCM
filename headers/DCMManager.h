@@ -32,6 +32,23 @@ using ComponentGraph = Graph<Utils::ID, Utils::ID, UndirectedPolicy, WeightedPol
 class DCMManager {
 public:
     /**
+     * @brief Opaque, copyable state of a DCM document.
+     *
+     * Desktop code may retain snapshots to implement undo/redo, while DCM
+     * remains unaware of interaction boundaries and history policy.
+     */
+    class Snapshot {
+        friend class DCMManager;
+
+        std::vector<Utils::FigureDescriptor> _figures;
+        std::vector<Utils::RequirementDescriptor> _requirements;
+        std::unordered_map<Utils::ID, std::vector<double>> _fixedRequirementTargets;
+        Utils::ID _nextFigureId;
+        Utils::ID _nextRequirementId;
+        Utils::SolveMode _solveMode = Utils::SolveMode::GLOBAL;
+    };
+
+    /**
      * @brief Default constructor.
      */
     DCMManager();
@@ -44,10 +61,28 @@ public:
     DCMManager& operator=(DCMManager&&) noexcept = default;
 
     /**
+     * @brief Capture all persistent DCM state for an externally managed edit transaction.
+     *
+     * A snapshot includes every figure (including owned points), requirements,
+     * fixed-geometry targets, and ID generator states. It contains no solver cache.
+     */
+    [[nodiscard]] Snapshot snapshot() const;
+
+    /**
+     * @brief Replace the current DCM state with a previously captured snapshot.
+     *
+     * Figure and requirement IDs are restored exactly. Components and the
+     * requirement system are rebuilt; solver caches are discarded.
+     */
+    void restoreSnapshot(const Snapshot& state);
+
+    /**
      * @brief Add a new geometric figure using descriptor.
      * @param descriptor FigureDescriptor containing figure data.
      * @return ID of the created figure.
-     * @throws std::invalid_argument if descriptor validation fails.
+     * @throws std::invalid_argument if descriptor validation fails. When an
+     * explicit descriptor.id is supplied for a non-point figure, pointIds
+     * must reference already existing points.
      */
     Utils::ID addFigure(const Utils::FigureDescriptor& descriptor);
 

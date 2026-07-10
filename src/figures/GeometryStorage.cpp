@@ -2,6 +2,7 @@
 #include "GeometryGraphBuilder.h"
 
 #include <algorithm>
+#include <limits>
 
 namespace OurPaintDCM::Figures {
 
@@ -113,15 +114,33 @@ std::optional<ID> GeometryStorage::tryPointId(ID id) const noexcept {
     return id;
 }
 
-ID GeometryStorage::createPoint(double x, double y) {
+ID GeometryStorage::acquireID(std::optional<ID> requestedId) {
+    if (!requestedId.has_value()) {
+        return m_idGen.nextID();
+    }
+
+    const ID id = *requestedId;
+    if (id.id == 0ULL || id.id == std::numeric_limits<unsigned long long>::max()) {
+        throw std::invalid_argument("Figure ID is outside the restorable range");
+    }
+    if (m_index.contains(id)) {
+        throw std::invalid_argument("Figure ID already exists");
+    }
+    if (id.id >= m_idGen.current().id) {
+        m_idGen.set(ID(id.id + 1ULL));
+    }
+    return id;
+}
+
+ID GeometryStorage::createPoint(double x, double y, std::optional<ID> requestedId) {
+    const ID id = acquireID(requestedId);
     const std::size_t slot = allocPoint(x, y);
-    const ID id = m_idGen.nextID();
     m_index.emplace(id, FigureEntry{FigureType::ET_POINT2D, static_cast<std::uint32_t>(slot)});
     registerPointCache(id, m_pointSlots[slot].get());
     return id;
 }
 
-std::optional<ID> GeometryStorage::createLine(ID p1, ID p2) {
+std::optional<ID> GeometryStorage::createLine(ID p1, ID p2, std::optional<ID> requestedId) {
     auto it1 = m_index.find(p1);
     auto it2 = m_index.find(p2);
     if (it1 == m_index.end() || it2 == m_index.end()) {
@@ -132,29 +151,34 @@ std::optional<ID> GeometryStorage::createLine(ID p1, ID p2) {
     }
     Point2D* a = m_pointSlots[it1->second.slot].get();
     Point2D* b = m_pointSlots[it2->second.slot].get();
+    const ID id = acquireID(requestedId);
     const std::size_t slot = allocLine(a, b);
-    const ID id = m_idGen.nextID();
     m_index.emplace(id, FigureEntry{FigureType::ET_LINE, static_cast<std::uint32_t>(slot)});
     m_deps.linkLine(id, p1, p2);
     registerLineCache(id, m_lineSlots[slot].get());
     return id;
 }
 
-std::optional<ID> GeometryStorage::createCircle(ID center, double radius) {
+std::optional<ID> GeometryStorage::createCircle(ID center,
+                                                 double radius,
+                                                 std::optional<ID> requestedId) {
     auto it = m_index.find(center);
     if (it == m_index.end() || it->second.type != FigureType::ET_POINT2D) {
         return std::nullopt;
     }
     Point2D* c = m_pointSlots[it->second.slot].get();
+    const ID id = acquireID(requestedId);
     const std::size_t slot = allocCircle(c, radius);
-    const ID id = m_idGen.nextID();
     m_index.emplace(id, FigureEntry{FigureType::ET_CIRCLE, static_cast<std::uint32_t>(slot)});
     m_deps.linkCircle(id, center);
     registerCircleCache(id, m_circleSlots[slot].get());
     return id;
 }
 
-std::optional<ID> GeometryStorage::createArc(ID p1, ID p2, ID center) {
+std::optional<ID> GeometryStorage::createArc(ID p1,
+                                              ID p2,
+                                              ID center,
+                                              std::optional<ID> requestedId) {
     auto it1 = m_index.find(p1);
     auto it2 = m_index.find(p2);
     auto itc = m_index.find(center);
@@ -169,8 +193,8 @@ std::optional<ID> GeometryStorage::createArc(ID p1, ID p2, ID center) {
     Point2D* a = m_pointSlots[it1->second.slot].get();
     Point2D* b = m_pointSlots[it2->second.slot].get();
     Point2D* c = m_pointSlots[itc->second.slot].get();
+    const ID id = acquireID(requestedId);
     const std::size_t slot = allocArc(a, b, c);
-    const ID id = m_idGen.nextID();
     m_index.emplace(id, FigureEntry{FigureType::ET_ARC, static_cast<std::uint32_t>(slot)});
     m_deps.linkArc(id, p1, p2, center);
     registerArcCache(id, m_arcSlots[slot].get());
@@ -392,6 +416,10 @@ bool GeometryStorage::empty() const noexcept {
 
 const ID& GeometryStorage::currentID() const noexcept {
     return m_idGen.current();
+}
+
+void GeometryStorage::restoreNextID(ID nextId) noexcept {
+    m_idGen.set(nextId);
 }
 
 std::vector<ID> GeometryStorage::getDependents(ID pointId) const {
