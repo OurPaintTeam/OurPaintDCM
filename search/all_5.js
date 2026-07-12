@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['dcmmanager_0',['dcmmanager',['../classOurPaintDCM_1_1DCMManager.html',1,'OurPaintDCM::DCMManager'],['../classOurPaintDCM_1_1DCMManager.html#aa22d5bb27718720e1e0a8f2977914eae',1,'OurPaintDCM::DCMManager::DCMManager()'],['../classOurPaintDCM_1_1DCMManager.html#afb5db4a6db36ed27523b3fd60ce9e2c9',1,'OurPaintDCM::DCMManager::DCMManager(const DCMManager &amp;)=delete'],['../classOurPaintDCM_1_1DCMManager.html#a61cc6a1dce17f3cd1c5f7991bf6c73e4',1,'OurPaintDCM::DCMManager::DCMManager(DCMManager &amp;&amp;) noexcept=default']]],
+  ['dcmmanager_0',['dcmmanager',['../classOurPaintDCM_1_1DCMManager.html',1,'OurPaintDCM::DCMManager'],['../classOurPaintDCM_1_1DCMManager_1_1Snapshot.html#ab76c9225acfe8520608fa334a378991f',1,'OurPaintDCM::DCMManager::Snapshot::DCMManager'],['../classOurPaintDCM_1_1DCMManager.html#aa22d5bb27718720e1e0a8f2977914eae',1,'OurPaintDCM::DCMManager::DCMManager()'],['../classOurPaintDCM_1_1DCMManager.html#afb5db4a6db36ed27523b3fd60ce9e2c9',1,'OurPaintDCM::DCMManager::DCMManager(const DCMManager &amp;)=delete'],['../classOurPaintDCM_1_1DCMManager.html#a61cc6a1dce17f3cd1c5f7991bf6c73e4',1,'OurPaintDCM::DCMManager::DCMManager(DCMManager &amp;&amp;) noexcept=default']]],
   ['dcmmanager_2ecpp_1',['DCMManager.cpp',['../DCMManager_8cpp.html',1,'']]],
   ['dcmmanager_2eh_2',['DCMManager.h',['../DCMManager_8h.html',1,'']]],
   ['debuglinepoolsize_3',['debugLinePoolSize',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#aa3ea6af212dba66074d4b5a3288195ad',1,'OurPaintDCM::Figures::GeometryStorage']]],

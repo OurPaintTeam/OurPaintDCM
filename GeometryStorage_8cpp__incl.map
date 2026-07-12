@@ -1,11 +1,13 @@
 <map id="src/figures/GeometryStorage.cpp" name="src/figures/GeometryStorage.cpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="591,5,825,31"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="661,5,896,31"/>
 <area shape="rect" id="Node000002" href="$GeometryStorage_8h.html" title=" " alt="" coords="633,79,783,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="711,31,711,65,705,65,705,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="769,33,731,71,727,67,765,29"/>
 <area shape="rect" id="Node000027" href="$GeometryGraphBuilder_8h.html" title=" " alt="" coords="19,79,202,104"/>
-<area shape="poly" id="edge37_Node000001_Node000027" title=" " alt="" coords="612,33,216,80,216,75,612,28"/>
+<area shape="poly" id="edge37_Node000001_Node000027" title=" " alt="" coords="672,33,216,82,216,76,671,28"/>
 <area shape="rect" id="Node000028" title=" " alt="" coords="807,79,892,104"/>
-<area shape="poly" id="edge41_Node000001_Node000028" title=" " alt="" coords="732,28,815,70,813,75,730,33"/>
+<area shape="poly" id="edge41_Node000001_Node000028" title=" " alt="" coords="792,29,830,67,826,71,788,33"/>
+<area shape="rect" id="Node000029" title=" " alt="" coords="916,79,975,104"/>
+<area shape="poly" id="edge42_Node000001_Node000029" title=" " alt="" coords="807,28,907,71,905,76,804,33"/>
 <area shape="rect" id="Node000003" href="$GeometryDependencyIndex_8h.html" title=" " alt="" coords="827,152,1043,177"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="745,101,886,145,884,150,744,107"/>
 <area shape="rect" id="Node000004" href="$ID_8h.html" title=" " alt="" coords="311,225,359,251"/>

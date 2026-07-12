@@ -1,5 +1,0 @@
-<map id="OurPaintDCM::DCMManager::pruneRequirementsWithMissingObjects" name="OurPaintDCM::DCMManager::pruneRequirementsWithMissingObjects">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,244,60"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#aeb74338ab2cf7a1651295af9349a55aa" title="True if id is currently a live object in this storage." alt="" coords="292,13,500,53"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="244,30,278,30,278,35,244,35"/>
-</map>

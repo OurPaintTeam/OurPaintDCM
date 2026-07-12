@@ -1,0 +1,11 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::acquireID" name="OurPaintDCM::Figures::GeometryStorage::acquireID">
+<area shape="rect" id="Node000001" title="Uses a requested ID or allocates the next automatic one." alt="" coords="5,101,220,141"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a27dc8a968cc1fc86744675b55bee62c8" title="Get current ID without increment." alt="" coords="303,5,466,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="158,99,267,55,292,47,294,52,269,60,160,104"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a10d4994ee732333e277d12a1fa2d16cc" title="Generate and return the next unique ID." alt="" coords="305,69,465,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="220,106,291,98,291,103,220,111"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a18b2be9c90bf302faaff026cb4fad937" title="Set the generator state to a given ID." alt="" coords="311,133,458,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="220,131,298,140,297,146,220,137"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Maps C++ figure type to FigureType enum." alt="" coords="268,197,501,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="160,139,269,183,294,191,292,196,267,188,158,144"/>
+</map>

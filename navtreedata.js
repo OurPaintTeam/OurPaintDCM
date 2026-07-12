@@ -58,11 +58,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Arc_8h.html",
-"classOurPaintDCM_1_1DCMManager.html#ae6da1c7d293c4273cc9470828c92e065",
-"classOurPaintDCM_1_1Function_1_1LineCircleDistanceFunction.html#a7109d1363d2c85b48b9d67231257a7fb",
-"classOurPaintDCM_1_1Requirements_1_1LineOnCircle.html#a74e208986d1dd4c46b58de613800851c",
-"functions_func_i.html",
-"structOurPaintDCM_1_1Utils_1_1ArcUpdateDescriptor.html#a5ab3a337343dc249a35641cfe9c1efa6"
+"classOurPaintDCM_1_1DCMManager.html#ae6a9d597b8fab7df762474f9c00d5490",
+"classOurPaintDCM_1_1Function_1_1FixCoordinateFunction.html#aa08873034098edb0baafe8f8247d8c33",
+"classOurPaintDCM_1_1Requirements_1_1LineLineAngle.html#afb22c9efb6e791e07ce6f29623a94682",
+"dir_7f57b1e41c5acd0e859ae5f3a2b075a9.html",
+"structOurPaintDCM_1_1Figures_1_1PointBase.html#aee9effa43c902ead55ccbf7a12707032"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

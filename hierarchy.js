@@ -66,5 +66,6 @@ var hierarchy =
     [ "OurPaintDCM::System::RequirementFunctionSystem", "classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html", [
       [ "OurPaintDCM::System::RequirementSystem", "classOurPaintDCM_1_1System_1_1RequirementSystem.html", null ]
     ] ],
+    [ "OurPaintDCM::DCMManager::Snapshot", "classOurPaintDCM_1_1DCMManager_1_1Snapshot.html", null ],
     [ "OurPaintDCM::DCMManager::SolveCache", "structOurPaintDCM_1_1DCMManager_1_1SolveCache.html", null ]
 ];

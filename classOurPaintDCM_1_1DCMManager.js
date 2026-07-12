@@ -2,6 +2,7 @@ var classOurPaintDCM_1_1DCMManager =
 [
     [ "BatchUpdateContext", "structOurPaintDCM_1_1DCMManager_1_1BatchUpdateContext.html", "structOurPaintDCM_1_1DCMManager_1_1BatchUpdateContext" ],
     [ "FixedGeometry", "structOurPaintDCM_1_1DCMManager_1_1FixedGeometry.html", "structOurPaintDCM_1_1DCMManager_1_1FixedGeometry" ],
+    [ "Snapshot", "classOurPaintDCM_1_1DCMManager_1_1Snapshot.html", "classOurPaintDCM_1_1DCMManager_1_1Snapshot" ],
     [ "SolveCache", "structOurPaintDCM_1_1DCMManager_1_1SolveCache.html", "structOurPaintDCM_1_1DCMManager_1_1SolveCache" ],
     [ "DCMManager", "classOurPaintDCM_1_1DCMManager.html#aa22d5bb27718720e1e0a8f2977914eae", null ],
     [ "~DCMManager", "classOurPaintDCM_1_1DCMManager.html#a95d8f0c3ccf61ddd1e6f2259aba782e3", null ],
@@ -53,7 +54,9 @@ var classOurPaintDCM_1_1DCMManager =
     [ "removeRequirement", "classOurPaintDCM_1_1DCMManager.html#a60344e1f42d0ac0aea28eed4f53f4215", null ],
     [ "requirementCount", "classOurPaintDCM_1_1DCMManager.html#af528adf800217d00f29a2bf4009d264b", null ],
     [ "requirementSystem", "classOurPaintDCM_1_1DCMManager.html#a29bddd7fc61f92c90d59470ca5a59f07", null ],
+    [ "restoreSnapshot", "classOurPaintDCM_1_1DCMManager.html#ab927b304894f43b72b120bcf7db9e0ca", null ],
     [ "setSolveMode", "classOurPaintDCM_1_1DCMManager.html#a6f0e705165183b668e6310984be685fd", null ],
+    [ "snapshot", "classOurPaintDCM_1_1DCMManager.html#ad5e73d84b7e35c0af0dc4d02c52083aa", null ],
     [ "solve", "classOurPaintDCM_1_1DCMManager.html#a3aae022d74fd7661797cd311f4ef9988", null ],
     [ "solveDragUpdates", "classOurPaintDCM_1_1DCMManager.html#a36681942f80a476db0141169275d476b", null ],
     [ "solveWithLockedVars", "classOurPaintDCM_1_1DCMManager.html#ab46e639ae14f7f2a533efc2572e2ef8f", null ],

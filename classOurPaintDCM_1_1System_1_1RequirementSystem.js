@@ -30,6 +30,7 @@ var classOurPaintDCM_1_1System_1_1RequirementSystem =
     [ "getRequirementType", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#a55fb76cb364781609274c51bad1e0f01", null ],
     [ "hasRequirement", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#a9c924dd813ed82127a047591c121a79b", null ],
     [ "rebuildFunctionsAndAliases", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#adcc458843bdae6c64345d939b22106d1", null ],
+    [ "replaceRequirements", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#a3307e21f7d18c5b85c5cfcd4441e1984", null ],
     [ "resolvePoint", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#abbd4da221a3fad46df090b2f1e5bbe7f", null ],
     [ "resolvePointRepresentative", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#ac24bdbca3b9199cf6a2d13a89369e49b", null ],
     [ "synchronizeCoincidentPoints", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#a7e3877bfb65bd646430422cbb553b367", null ],

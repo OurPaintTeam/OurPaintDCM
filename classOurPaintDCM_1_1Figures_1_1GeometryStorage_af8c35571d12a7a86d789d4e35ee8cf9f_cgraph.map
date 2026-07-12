@@ -1,0 +1,23 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::createPoint" name="OurPaintDCM::Figures::GeometryStorage::createPoint">
+<area shape="rect" id="Node000001" title="Creates a point at (x, y)." alt="" coords="5,197,232,237"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#acf3a3d6689ddfeff0c60d91941454860" title="Uses a requested ID or allocates the next automatic one." alt="" coords="281,83,496,123"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="158,195,279,139,315,125,317,130,281,144,161,200"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Maps C++ figure type to FigureType enum." alt="" coords="545,197,779,237"/>
+<area shape="poly" id="edge12_Node000001_Node000006" title=" " alt="" coords="204,195,280,183,389,176,498,183,561,192,561,197,497,188,389,181,280,188,205,200"/>
+<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a2ca116fd57028ea0d08e39deae492efc" title="Allocates or reuses a point slot; returns slot index." alt="" coords="280,197,497,237"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="232,215,266,215,266,220,232,220"/>
+<area shape="rect" id="Node000008" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a62a4b5b4374ad2df26dc8611111690a0" title="Mutable access to a figure by ID and expected type." alt="" coords="301,285,476,325"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="182,235,314,278,312,283,180,240"/>
+<area shape="rect" id="Node000009" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#aae5120f69b2f051f7279a16af3a06d55" title="Appends to per&#45;type iteration cache and position map." alt="" coords="287,350,490,405"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="144,235,204,284,281,335,295,342,292,347,279,340,201,288,141,240"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a27dc8a968cc1fc86744675b55bee62c8" title="Get current ID without increment." alt="" coords="581,5,743,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="457,80,545,55,573,47,575,52,546,60,459,85"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a10d4994ee732333e277d12a1fa2d16cc" title="Generate and return the next unique ID." alt="" coords="582,69,742,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="496,95,568,91,569,97,496,100"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a18b2be9c90bf302faaff026cb4fad937" title="Set the generator state to a given ID." alt="" coords="589,133,735,173"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="497,120,576,135,575,140,496,125"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="460,120,499,139,514,151,523,162,532,173,547,183,560,190,558,194,544,188,529,177,519,165,510,154,496,144,458,125"/>
+<area shape="poly" id="edge7_Node000007_Node000006" title=" " alt="" coords="497,215,532,215,532,220,497,220"/>
+<area shape="poly" id="edge10_Node000008_Node000006" title=" " alt="" coords="451,283,585,239,587,244,453,288"/>
+<area shape="poly" id="edge9_Node000008_Node000008" title=" " alt="" coords="339,286,336,276,344,266,362,261,389,259,420,261,437,269,435,274,419,267,389,264,363,266,347,271,341,277,344,284"/>
+</map>
