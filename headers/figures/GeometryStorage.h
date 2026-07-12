@@ -106,7 +106,7 @@ public:
      * @brief Creates a point at (x, y).
      * @return New unique ID for the point.
      */
-    [[nodiscard]] ID createPoint(double x, double y);
+    [[nodiscard]] ID createPoint(double x, double y, std::optional<ID> requestedId = std::nullopt);
 
     /**
      * @brief Creates a line through two existing points.
@@ -114,7 +114,7 @@ public:
      * @param p2 Second endpoint ID (must be ET_POINT2D).
      * @return Line ID, or std::nullopt if either ID is missing or not a point.
      */
-    [[nodiscard]] std::optional<ID> createLine(ID p1, ID p2);
+    [[nodiscard]] std::optional<ID> createLine(ID p1, ID p2, std::optional<ID> requestedId = std::nullopt);
 
     /**
      * @brief Creates a circle with given center and radius.
@@ -122,7 +122,9 @@ public:
      * @param radius Non-negative radius (semantics validated by Circle type).
      * @return Circle ID, or std::nullopt if center is invalid.
      */
-    [[nodiscard]] std::optional<ID> createCircle(ID center, double radius);
+    [[nodiscard]] std::optional<ID> createCircle(ID center,
+                                                 double radius,
+                                                 std::optional<ID> requestedId = std::nullopt);
 
     /**
      * @brief Creates an arc through two points with a center point.
@@ -131,7 +133,10 @@ public:
      * @param center Center point ID.
      * @return Arc ID, or std::nullopt if any ID is missing or not a point.
      */
-    [[nodiscard]] std::optional<ID> createArc(ID p1, ID p2, ID center);
+    [[nodiscard]] std::optional<ID> createArc(ID p1,
+                                              ID p2,
+                                              ID center,
+                                              std::optional<ID> requestedId = std::nullopt);
 
     /**
      * @brief Creates a figure from aggregated FigureData (may create nested points).
@@ -214,6 +219,15 @@ public:
     [[nodiscard]] const ID& currentID() const noexcept;
 
     /**
+     * @brief Restores the next generated ID after a state import.
+     *
+     * The caller must provide a non-zero value greater than every live ID.
+     * This is intended for DCM state restoration; normal creation should use
+     * the automatic generator.
+     */
+    void restoreNextID(ID nextId) noexcept;
+
+    /**
      * @brief Figures incident on a point (lines/circles/arcs that use this point).
      * @param pointId Must reference a point; otherwise returns empty vector.
      * @return Copy of the index list; cost O(degree) for allocation and copy.
@@ -260,6 +274,9 @@ public:
 #endif
 
 private:
+    /** @brief Uses a requested ID or allocates the next automatic one. */
+    ID acquireID(std::optional<ID> requestedId);
+
     /**
      * @brief Removes a line, circle, or arc by ID; does not delete points.
      * @return NotFound if id missing, is a point, or unknown type.
