@@ -89,6 +89,45 @@ TEST_F(DCMManagerSolveTest, LocalSolve_SingleComponent) {
     EXPECT_DOUBLE_EQ(d4after->y.value(), d4before->y.value());
 }
 
+TEST_F(DCMManagerSolveTest, LocalSolve_AfterRequirementRemovalIncludesLineAndPointConstraints) {
+    const auto line = manager.addFigure(FigureDescriptor::line(0.0, 0.0, 5.0, 3.0));
+    const auto lineDesc = manager.getFigure(line);
+    ASSERT_TRUE(lineDesc.has_value());
+    ASSERT_EQ(lineDesc->pointIds.size(), 2U);
+    const auto p1 = lineDesc->pointIds[0];
+    const auto p2 = lineDesc->pointIds[1];
+    const auto p3 = manager.addFigure(FigureDescriptor::point(100.0, 100.0));
+    const auto p4 = manager.addFigure(FigureDescriptor::point(103.0, 100.0));
+    const auto horizontal = manager.addRequirement(RequirementDescriptor::horizontal(line));
+    const auto fixedPoint = manager.addRequirement(RequirementDescriptor::fixPoint(p1));
+    manager.addRequirement(RequirementDescriptor::pointPointDist(p3, p4, 20.0));
+    const auto bridge = manager.addRequirement(RequirementDescriptor::pointPointDist(p2, p3, 100.0));
+    ASSERT_EQ(manager.getComponentCount(), 1U);
+
+    manager.removeRequirement(bridge);
+    manager.setSolveMode(SolveMode::LOCAL);
+    const auto component = manager.getComponentForFigure(p1);
+    ASSERT_TRUE(component.has_value());
+    EXPECT_TRUE(manager.solve(*component));
+
+    const auto d1 = manager.getFigure(p1);
+    const auto d2 = manager.getFigure(p2);
+    const auto d3 = manager.getFigure(p3);
+    const auto d4 = manager.getFigure(p4);
+    ASSERT_TRUE(d1.has_value() && d2.has_value() && d3.has_value() && d4.has_value());
+    EXPECT_NEAR(d1->x.value(), 0.0, 1e-6);
+    EXPECT_NEAR(d1->y.value(), 0.0, 1e-6);
+    EXPECT_NEAR(d2->y.value(), d1->y.value(), 1e-6);
+    EXPECT_DOUBLE_EQ(d3->x.value(), 100.0);
+    EXPECT_DOUBLE_EQ(d3->y.value(), 100.0);
+    EXPECT_DOUBLE_EQ(d4->x.value(), 103.0);
+    EXPECT_DOUBLE_EQ(d4->y.value(), 100.0);
+    EXPECT_EQ(manager.getComponentCount(), 2U);
+    EXPECT_EQ(manager.getComponentForFigure(line), component);
+    EXPECT_EQ(manager.getComponentForFigure(p2), component);
+    EXPECT_EQ(manager.getRequirementsInComponent(*component), (std::vector<ID>{horizontal, fixedPoint}));
+}
+
 TEST_F(DCMManagerSolveTest, DragMode_AutoSolveOnUpdate) {
     auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
     auto p2 = manager.addFigure(FigureDescriptor::point(5.0, 0.0));

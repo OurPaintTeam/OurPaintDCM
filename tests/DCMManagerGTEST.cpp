@@ -468,6 +468,109 @@ TEST_F(DCMManagerTest, ComponentsSplitOnRequirementRemoval) {
 
     manager.removeRequirement(reqId);
     EXPECT_EQ(manager.getComponentCount(), 2);
+    EXPECT_NE(manager.getComponentForFigure(p1), manager.getComponentForFigure(p2));
+}
+
+TEST_F(DCMManagerTest, ComponentsKeepFiguresWithTheirPointsAfterRebuild) {
+    const std::vector<ID> figureIds = {
+        manager.addFigure(FigureDescriptor::line(0.0, 0.0, 10.0, 0.0)),
+        manager.addFigure(FigureDescriptor::circle(20.0, 20.0, 5.0)),
+        manager.addFigure(FigureDescriptor::arc(30.0, 0.0, 40.0, 0.0, 35.0, 5.0))
+    };
+    ASSERT_EQ(manager.getComponentCount(), 3U);
+
+    // Snapshot restoration calls rebuildComponents() without any requirements.
+    const auto state = manager.snapshot();
+    manager.restoreSnapshot(state);
+
+    EXPECT_EQ(manager.getComponentCount(), 3U);
+    for (const auto figureId : figureIds) {
+        const auto figure = manager.getFigure(figureId);
+        ASSERT_TRUE(figure.has_value());
+        const auto component = manager.getComponentForFigure(figureId);
+        ASSERT_TRUE(component.has_value());
+        EXPECT_EQ(manager.getFiguresInComponent(*component).size(), figure->pointIds.size() + 1U);
+        for (const auto pointId : figure->pointIds) {
+            EXPECT_EQ(manager.getComponentForFigure(pointId), component);
+        }
+    }
+}
+
+TEST_F(DCMManagerTest, RemovingLineRequirementPreservesGeometryComponent) {
+    const auto line = manager.addFigure(FigureDescriptor::line(0.0, 0.0, 10.0, 0.0));
+    const auto lineDesc = manager.getFigure(line);
+    ASSERT_TRUE(lineDesc.has_value());
+    ASSERT_EQ(lineDesc->pointIds.size(), 2U);
+    const auto reqId = manager.addRequirement(RequirementDescriptor::horizontal(line));
+
+    manager.removeRequirement(reqId);
+
+    EXPECT_EQ(manager.requirementCount(), 0U);
+    EXPECT_EQ(manager.getComponentCount(), 1U);
+    const auto component = manager.getComponentForFigure(line);
+    ASSERT_TRUE(component.has_value());
+    EXPECT_EQ(manager.getFiguresInComponent(*component).size(), 3U);
+    for (const auto pointId : lineDesc->pointIds) {
+        EXPECT_EQ(manager.getComponentForFigure(pointId), component);
+    }
+}
+
+TEST_F(DCMManagerTest, ComponentsSplitOnlyAfterLastConnectingRequirementRemoval) {
+    const auto line1 = manager.addFigure(FigureDescriptor::line(0.0, 0.0, 10.0, 0.0));
+    const auto line2 = manager.addFigure(FigureDescriptor::line(0.0, 10.0, 10.0, 10.0));
+    const auto desc1 = manager.getFigure(line1);
+    const auto desc2 = manager.getFigure(line2);
+    ASSERT_TRUE(desc1.has_value() && desc2.has_value());
+    ASSERT_EQ(desc1->pointIds.size(), 2U);
+    ASSERT_EQ(desc2->pointIds.size(), 2U);
+    const auto parallel = manager.addRequirement(RequirementDescriptor::lineLineParallel(line1, line2));
+    const auto distance = manager.addRequirement(
+        RequirementDescriptor::pointPointDist(desc1->pointIds[0], desc2->pointIds[0], 10.0));
+    ASSERT_EQ(manager.getComponentCount(), 1U);
+
+    manager.removeRequirement(parallel);
+
+    EXPECT_EQ(manager.getComponentCount(), 1U);
+    const auto connectedComponent = manager.getComponentForFigure(line1);
+    ASSERT_TRUE(connectedComponent.has_value());
+    EXPECT_EQ(manager.getComponentForFigure(line2), connectedComponent);
+    EXPECT_EQ(manager.getFiguresInComponent(*connectedComponent).size(), 6U);
+    EXPECT_EQ(manager.getRequirementsInComponent(*connectedComponent), std::vector<ID>{distance});
+
+    manager.removeRequirement(distance);
+
+    EXPECT_EQ(manager.getComponentCount(), 2U);
+    const auto component1 = manager.getComponentForFigure(line1);
+    const auto component2 = manager.getComponentForFigure(line2);
+    ASSERT_TRUE(component1.has_value() && component2.has_value());
+    EXPECT_NE(component1, component2);
+    EXPECT_EQ(manager.getFiguresInComponent(*component1).size(), 3U);
+    EXPECT_EQ(manager.getFiguresInComponent(*component2).size(), 3U);
+    for (const auto pointId : desc1->pointIds) {
+        EXPECT_EQ(manager.getComponentForFigure(pointId), component1);
+    }
+    for (const auto pointId : desc2->pointIds) {
+        EXPECT_EQ(manager.getComponentForFigure(pointId), component2);
+    }
+}
+
+TEST_F(DCMManagerTest, SharedPointKeepsFiguresConnectedAfterRequirementRemoval) {
+    const auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    const auto sharedPoint = manager.addFigure(FigureDescriptor::point(10.0, 0.0));
+    const auto p2 = manager.addFigure(FigureDescriptor::point(20.0, 0.0));
+    const auto line1 = manager.addFigure(FigureDescriptor::line(p1, sharedPoint));
+    const auto line2 = manager.addFigure(FigureDescriptor::line(sharedPoint, p2));
+    const auto reqId = manager.addRequirement(RequirementDescriptor::lineLineParallel(line1, line2));
+
+    manager.removeRequirement(reqId);
+
+    EXPECT_EQ(manager.getComponentCount(), 1U);
+    const auto component = manager.getComponentForFigure(sharedPoint);
+    ASSERT_TRUE(component.has_value());
+    EXPECT_EQ(manager.getFiguresInComponent(*component).size(), 5U);
+    for (const auto figureId : {p1, p2, line1, line2}) {
+        EXPECT_EQ(manager.getComponentForFigure(figureId), component);
+    }
 }
 
 TEST_F(DCMManagerTest, GetFiguresInComponent) {

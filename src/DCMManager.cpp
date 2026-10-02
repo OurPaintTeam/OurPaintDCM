@@ -1669,6 +1669,15 @@ void DCMManager::rebuildComponents() {
         addFigureToComponent(entry.first, compId);
     }
 
+    // Geometry links remain even when no requirement connects the objects
+    for (const auto& entry : _figureRecords) {
+        auto relatedFigures = _storage.getDependencies(entry.first);
+        if (!relatedFigures.empty()) {
+            relatedFigures.push_back(entry.first);
+            mergeComponents(relatedFigures);
+        }
+    }
+
     for (const auto& entry : _requirementRecords) {
         mergeComponents(entry.second.objectIds);
     }
