@@ -99,6 +99,7 @@ struct RequirementDescriptor {
     }
 
     /// @brief Create angle between lines descriptor
+    /// @param angle Angle in radians.
     static RequirementDescriptor lineLineAngle(ID l1Id, ID l2Id, double angle) {
         return {RequirementType::ET_LINELINEANGLE, {l1Id, l2Id}, angle};
     }

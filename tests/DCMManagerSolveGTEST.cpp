@@ -1,7 +1,11 @@
 #include <gtest/gtest.h>
 #include "DCMManager.h"
+#include <algorithm>
 #include <cmath>
+#include <array>
 #include <limits>
+#include <optional>
+#include <utility>
 
 using namespace OurPaintDCM;
 using namespace OurPaintDCM::Utils;
@@ -10,6 +14,141 @@ class DCMManagerSolveTest : public ::testing::Test {
 protected:
     DCMManager manager;
 };
+
+TEST(DCMManagerSharedPointSolveTest, LineConstraintsSolveWithOneSharedEndpoint) {
+    enum class Constraint { Parallel, Perpendicular, Angle };
+    const double targetAngle = std::acos(-1.0) / 3.0;
+
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL}) {
+        for (const auto constraint : {Constraint::Parallel, Constraint::Perpendicular,
+                                      Constraint::Angle}) {
+            SCOPED_TRACE(static_cast<int>(mode));
+            SCOPED_TRACE(static_cast<int>(constraint));
+            DCMManager manager;
+            const auto a = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+            const auto shared = manager.addFigure(FigureDescriptor::point(10.0, 0.0));
+            const auto c = manager.addFigure(FigureDescriptor::point(13.0, 4.0));
+            const auto first = manager.addFigure(FigureDescriptor::line(a, shared));
+            const auto second = manager.addFigure(FigureDescriptor::line(shared, c));
+            manager.addRequirement(RequirementDescriptor::fixLine(first));
+            manager.addRequirement(RequirementDescriptor::pointPointDist(shared, c, 5.0));
+            switch (constraint) {
+                case Constraint::Parallel:
+                    manager.addRequirement(RequirementDescriptor::lineLineParallel(first, second));
+                    break;
+                case Constraint::Perpendicular:
+                    manager.addRequirement(RequirementDescriptor::lineLinePerpendicular(first, second));
+                    break;
+                case Constraint::Angle:
+                    manager.addRequirement(RequirementDescriptor::lineLineAngle(first, second, targetAngle));
+                    break;
+            }
+
+            manager.setSolveMode(mode);
+            const auto component = manager.getComponentForFigure(first);
+            ASSERT_TRUE(component.has_value());
+            EXPECT_EQ(component, manager.getComponentForFigure(second));
+            ASSERT_TRUE(manager.solve(*component));
+
+            const auto line1 = manager.getFigure(first);
+            const auto line2 = manager.getFigure(second);
+            const auto p = manager.getFigure(shared);
+            const auto end = manager.getFigure(c);
+            ASSERT_TRUE(line1 && line2 && p && end);
+            EXPECT_EQ(line1->pointIds[1], shared);
+            EXPECT_EQ(line2->pointIds[0], shared);
+            EXPECT_NEAR(p->x.value(), 10.0, 1e-8);
+            EXPECT_NEAR(p->y.value(), 0.0, 1e-8);
+            const double dx = end->x.value() - p->x.value();
+            const double dy = end->y.value() - p->y.value();
+            EXPECT_NEAR(std::hypot(dx, dy), 5.0, 1e-6);
+            if (constraint == Constraint::Parallel) {
+                EXPECT_NEAR(dy, 0.0, 1e-6);
+            } else if (constraint == Constraint::Perpendicular) {
+                EXPECT_NEAR(dx, 0.0, 1e-6);
+            } else {
+                EXPECT_NEAR(std::acos(dx / std::hypot(dx, dy)), targetAngle, 1e-6);
+            }
+        }
+    }
+}
+
+TEST(DCMManagerSharedPointSolveTest, SeveralLinesCanSatisfyDifferentConstraintsAtOnePoint) {
+    DCMManager manager;
+    const auto a = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    const auto shared = manager.addFigure(FigureDescriptor::point(10.0, 0.0));
+    const auto parallelEnd = manager.addFigure(FigureDescriptor::point(13.0, 4.0));
+    const auto perpendicularEnd = manager.addFigure(FigureDescriptor::point(12.0, 4.0));
+    const auto angleEnd = manager.addFigure(FigureDescriptor::point(14.0, 3.0));
+    const auto base = manager.addFigure(FigureDescriptor::line(a, shared));
+    const auto parallel = manager.addFigure(FigureDescriptor::line(shared, parallelEnd));
+    const auto perpendicular = manager.addFigure(FigureDescriptor::line(shared, perpendicularEnd));
+    const auto angle = manager.addFigure(FigureDescriptor::line(shared, angleEnd));
+    const double targetAngle = std::acos(-1.0) / 3.0;
+
+    manager.addRequirement(RequirementDescriptor::fixLine(base));
+    for (const auto endpoint : {parallelEnd, perpendicularEnd, angleEnd}) {
+        manager.addRequirement(RequirementDescriptor::pointPointDist(shared, endpoint, 5.0));
+    }
+    manager.addRequirement(RequirementDescriptor::lineLineParallel(base, parallel));
+    manager.addRequirement(RequirementDescriptor::lineLinePerpendicular(base, perpendicular));
+    manager.addRequirement(RequirementDescriptor::lineLineAngle(base, angle, targetAngle));
+
+    ASSERT_TRUE(manager.solve());
+    const auto origin = manager.getFigure(shared);
+    const auto p = manager.getFigure(parallelEnd);
+    const auto q = manager.getFigure(perpendicularEnd);
+    const auto r = manager.getFigure(angleEnd);
+    ASSERT_TRUE(origin && p && q && r);
+    const auto delta = [&](const std::optional<FigureDescriptor>& endpoint) {
+        return std::pair{endpoint->x.value() - origin->x.value(),
+                         endpoint->y.value() - origin->y.value()};
+    };
+    const auto [px, py] = delta(p);
+    const auto [qx, qy] = delta(q);
+    const auto [rx, ry] = delta(r);
+    EXPECT_NEAR(py, 0.0, 1e-6);
+    EXPECT_NEAR(qx, 0.0, 1e-6);
+    EXPECT_NEAR(std::acos(rx / std::hypot(rx, ry)), targetAngle, 1e-6);
+    for (const auto [dx, dy] : {std::pair{px, py}, std::pair{qx, qy}, std::pair{rx, ry}}) {
+        EXPECT_NEAR(std::hypot(dx, dy), 5.0, 1e-6);
+    }
+    EXPECT_NEAR(origin->x.value(), 10.0, 1e-8);
+    EXPECT_NEAR(origin->y.value(), 0.0, 1e-8);
+}
+
+TEST(DCMManagerSharedPointSolveTest, JacobianIncludesEveryUseOfSharedCoordinates) {
+    DCMManager manager;
+    const auto a = manager.addFigure(FigureDescriptor::point(1.0, 2.0));
+    const auto shared = manager.addFigure(FigureDescriptor::point(4.0, 3.0));
+    const auto c = manager.addFigure(FigureDescriptor::point(6.0, 7.0));
+    const auto first = manager.addFigure(FigureDescriptor::line(a, shared));
+    const auto second = manager.addFigure(FigureDescriptor::line(shared, c));
+    manager.addRequirement(RequirementDescriptor::lineLineParallel(first, second));
+    manager.addRequirement(RequirementDescriptor::lineLinePerpendicular(first, second));
+    manager.addRequirement(RequirementDescriptor::lineLineAngle(first, second, 0.75));
+
+    const auto& system = manager.getRequirementSystem();
+    const auto vars = system.getAllVars();
+    auto* point = manager.storage().get<Figures::Point2D>(shared);
+    ASSERT_NE(point, nullptr);
+    const auto jacobian = Eigen::MatrixXd(system.J());
+    ASSERT_EQ(jacobian.rows(), 3);
+    for (double* coordinate : {point->ptrX(), point->ptrY()}) {
+        const auto it = std::find(vars.begin(), vars.end(), coordinate);
+        ASSERT_NE(it, vars.end());
+        const auto column = static_cast<Eigen::Index>(std::distance(vars.begin(), it));
+        const double original = *coordinate;
+        *coordinate = original + 1e-6;
+        const auto forward = system.residuals();
+        *coordinate = original - 1e-6;
+        const auto backward = system.residuals();
+        *coordinate = original;
+        for (Eigen::Index row = 0; row < jacobian.rows(); ++row) {
+            EXPECT_NEAR(jacobian(row, column), (forward[row] - backward[row]) / 2e-6, 2e-5);
+        }
+    }
+}
 
 TEST_F(DCMManagerSolveTest, GlobalSolve_PointPointDist) {
     auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));

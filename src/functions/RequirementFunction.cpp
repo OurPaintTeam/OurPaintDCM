@@ -55,13 +55,14 @@ std::unordered_map<VAR, double> pointLineSignedDistanceGradient(const std::vecto
     const double cross = wx * dy - wy * dx;
     const double lineLen3 = lineLen * lineLen * lineLen;
 
+    // The same point may occupy multiple argument positions, so sum their derivatives.
     std::unordered_map<VAR, double> grad;
-    grad[vars[0]] = dy / lineLen;
-    grad[vars[1]] = -dx / lineLen;
-    grad[vars[2]] = (py - y2) / lineLen + cross * dx / lineLen3;
-    grad[vars[3]] = (x2 - px) / lineLen + cross * dy / lineLen3;
-    grad[vars[4]] = (y1 - py) / lineLen - cross * dx / lineLen3;
-    grad[vars[5]] = (px - x1) / lineLen - cross * dy / lineLen3;
+    grad[vars[0]] += dy / lineLen;
+    grad[vars[1]] += -dx / lineLen;
+    grad[vars[2]] += (py - y2) / lineLen + cross * dx / lineLen3;
+    grad[vars[3]] += (x2 - px) / lineLen + cross * dy / lineLen3;
+    grad[vars[4]] += (y1 - py) / lineLen - cross * dx / lineLen3;
+    grad[vars[5]] += (px - x1) / lineLen - cross * dy / lineLen3;
     return grad;
 }
 
@@ -154,13 +155,13 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::PointPointDistanceFunctio
     }
 
     // df/dx1 = -(x2 - x1)/dist
-    grad[_vars[0]] = -dx / dist;
+    grad[_vars[0]] += -dx / dist;
     // df/dy1 = -(y2 - y1)/dist
-    grad[_vars[1]] = -dy / dist;
+    grad[_vars[1]] += -dy / dist;
     // df/dx2 =  (x2 - x1)/dist
-    grad[_vars[2]] = dx / dist;
+    grad[_vars[2]] += dx / dist;
     // df/dy2 =  (y2 - y1)/dist
-    grad[_vars[3]] = dy / dist;
+    grad[_vars[3]] += dy / dist;
 
     return grad;
 }
@@ -203,13 +204,13 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::PointOnPointFunction::gra
     }
 
     // df/dx1 = -(x2 - x1)/dist
-    grad[_vars[0]] = -dx / dist;
+    grad[_vars[0]] += -dx / dist;
     // df/dy1 = -(y2 - y1)/dist
-    grad[_vars[1]] = -dy / dist;
+    grad[_vars[1]] += -dy / dist;
     // df/dx2 =  (x2 - x1)/dist
-    grad[_vars[2]] = dx / dist;
+    grad[_vars[2]] += dx / dist;
     // df/dy2 =  (y2 - y1)/dist
-    grad[_vars[3]] = dy / dist;
+    grad[_vars[3]] += dy / dist;
 
     return grad;
 }
@@ -321,15 +322,15 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::LineCircleDistanceFunctio
     double dpy_dx2 = dt_dx2 * dy;
     double dpy_dy2 = dt_dy2 * dy + t;
 
-    grad[_vars[0]] = dfdpx * dpx_dx1 + dfdpy * dpy_dx1; // L1x
-    grad[_vars[1]] = dfdpx * dpx_dy1 + dfdpy * dpy_dy1; // L1y
-    grad[_vars[2]] = dfdpx * dpx_dx2 + dfdpy * dpy_dx2; // L2x
-    grad[_vars[3]] = dfdpx * dpx_dy2 + dfdpy * dpy_dy2; // L2y
+    grad[_vars[0]] += dfdpx * dpx_dx1 + dfdpy * dpy_dx1; // L1x
+    grad[_vars[1]] += dfdpx * dpx_dy1 + dfdpy * dpy_dy1; // L1y
+    grad[_vars[2]] += dfdpx * dpx_dx2 + dfdpy * dpy_dx2; // L2x
+    grad[_vars[3]] += dfdpx * dpx_dy2 + dfdpy * dpy_dy2; // L2y
 
-    grad[_vars[4]] = -dfdpx; // Cx
-    grad[_vars[5]] = -dfdpy; // Cy
+    grad[_vars[4]] += -dfdpx; // Cx
+    grad[_vars[5]] += -dfdpy; // Cy
 
-    grad[_vars[6]] = -1.0; // df/dR = -1
+    grad[_vars[6]] += -1.0; // df/dR = -1
 
     return grad;
 }
@@ -389,16 +390,16 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::LineOnCircleFunction::gra
     if (dist1 < 1e-10) dist1 = 1e-10;
     if (dist2 < 1e-10) dist2 = 1e-10;
 
-    grad[_vars[0]] = dx1 / dist1; // d/dL1x
-    grad[_vars[1]] = dy1 / dist1; // d/dL1y
+    grad[_vars[0]] += dx1 / dist1; // d/dL1x
+    grad[_vars[1]] += dy1 / dist1; // d/dL1y
 
-    grad[_vars[2]] = dx2 / dist2; // d/dL2x
-    grad[_vars[3]] = dy2 / dist2; // d/dL2y
+    grad[_vars[2]] += dx2 / dist2; // d/dL2x
+    grad[_vars[3]] += dy2 / dist2; // d/dL2y
 
-    grad[_vars[4]] = -(dx1 / dist1 + dx2 / dist2); // d/dCx
-    grad[_vars[5]] = -(dy1 / dist1 + dy2 / dist2); // d/dCy
+    grad[_vars[4]] += -(dx1 / dist1 + dx2 / dist2); // d/dCx
+    grad[_vars[5]] += -(dy1 / dist1 + dy2 / dist2); // d/dCy
 
-    grad[_vars[6]] = -2.0;
+    grad[_vars[6]] += -2.0;
 
     return grad;
 }
@@ -453,15 +454,15 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::LineLineParallelFunction:
     double dx2 = x4 - x3;
     double dy2 = y4 - y3;
 
-    grad[_vars[0]] = -dy2;
-    grad[_vars[1]] = dx2;
-    grad[_vars[2]] = dy2;
-    grad[_vars[3]] = -dx2;
+    grad[_vars[0]] += -dy2;
+    grad[_vars[1]] += dx2;
+    grad[_vars[2]] += dy2;
+    grad[_vars[3]] += -dx2;
 
-    grad[_vars[4]] = dy1;
-    grad[_vars[5]] = -dx1;
-    grad[_vars[6]] = -dy1;
-    grad[_vars[7]] = dx1;
+    grad[_vars[4]] += dy1;
+    grad[_vars[5]] += -dx1;
+    grad[_vars[6]] += -dy1;
+    grad[_vars[7]] += dx1;
 
     return grad;
 }
@@ -514,15 +515,15 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::LineLinePerpendicularFunc
     double dx2 = x4 - x3;
     double dy2 = y4 - y3;
 
-    grad[_vars[0]] = -dx2; // A1x
-    grad[_vars[1]] = -dy2; // A1y
-    grad[_vars[2]] = dx2; // A2x
-    grad[_vars[3]] = dy2; // A2y
+    grad[_vars[0]] += -dx2; // A1x
+    grad[_vars[1]] += -dy2; // A1y
+    grad[_vars[2]] += dx2; // A2x
+    grad[_vars[3]] += dy2; // A2y
 
-    grad[_vars[4]] = -dx1; // B1x
-    grad[_vars[5]] = -dy1; // B1y
-    grad[_vars[6]] = dx1; // B2x
-    grad[_vars[7]] = dy1; // B2y
+    grad[_vars[4]] += -dx1; // B1x
+    grad[_vars[5]] += -dy1; // B1y
+    grad[_vars[6]] += dx1; // B2x
+    grad[_vars[7]] += dy1; // B2y
 
     return grad;
 }
@@ -599,14 +600,14 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::LineLineAngleFunction::gr
     const double dCosDdx2 = dx1 / (len1 * len2) - dx2 * dot / (len1 * len2_3);
     const double dCosDdy2 = dy1 / (len1 * len2) - dy2 * dot / (len1 * len2_3);
 
-    grad[_vars[0]] = -dCosDdx1;
-    grad[_vars[1]] = -dCosDdy1;
-    grad[_vars[2]] = dCosDdx1;
-    grad[_vars[3]] = dCosDdy1;
-    grad[_vars[4]] = -dCosDdx2;
-    grad[_vars[5]] = -dCosDdy2;
-    grad[_vars[6]] = dCosDdx2;
-    grad[_vars[7]] = dCosDdy2;
+    grad[_vars[0]] += -dCosDdx1;
+    grad[_vars[1]] += -dCosDdy1;
+    grad[_vars[2]] += dCosDdx1;
+    grad[_vars[3]] += dCosDdy1;
+    grad[_vars[4]] += -dCosDdx2;
+    grad[_vars[5]] += -dCosDdy2;
+    grad[_vars[6]] += dCosDdx2;
+    grad[_vars[7]] += dCosDdy2;
 
     return grad;
 }
@@ -657,10 +658,10 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::VerticalFunction::gradien
 
     double len3 = len2 * len;
 
-    grad[_vars[0]] = -1.0 / len + dx * dx / len3; // df/dx1
-    grad[_vars[1]] = dx * dy / len3; // df/dy1
-    grad[_vars[2]] = 1.0 / len - dx * dx / len3; // df/dx2
-    grad[_vars[3]] = -dx * dy / len3; // df/dy2
+    grad[_vars[0]] += -1.0 / len + dx * dx / len3; // df/dx1
+    grad[_vars[1]] += dx * dy / len3; // df/dy1
+    grad[_vars[2]] += 1.0 / len - dx * dx / len3; // df/dx2
+    grad[_vars[3]] += -dx * dy / len3; // df/dy2
 
     return grad;
 }
@@ -714,10 +715,10 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::HorizontalFunction::gradi
     double len3 = len2 * len;
 
     // f = dy / len
-    grad[_vars[0]] = dx * dy / len3; // df/dx1
-    grad[_vars[1]] = -1.0 / len + dy * dy / len3; // df/dy1
-    grad[_vars[2]] = -dx * dy / len3; // df/dx2
-    grad[_vars[3]] = 1.0 / len - dy * dy / len3; // df/dy2
+    grad[_vars[0]] += dx * dy / len3; // df/dx1
+    grad[_vars[1]] += -1.0 / len + dy * dy / len3; // df/dy1
+    grad[_vars[2]] += -dx * dy / len3; // df/dx2
+    grad[_vars[3]] += 1.0 / len - dy * dy / len3; // df/dy2
 
     return grad;
 }
@@ -777,12 +778,12 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::ArcCenterOnPerpendicularF
     double mx = Cx - 0.5 * (Ax + Bx);
     double my = Cy - 0.5 * (Ay + By);
 
-    grad[_vars[0]] = -mx - 0.5 * dx; // df/dAx
-    grad[_vars[1]] = -my - 0.5 * dy; // df/dAy
-    grad[_vars[2]] = mx - 0.5 * dx; // df/dBx
-    grad[_vars[3]] = my - 0.5 * dy; // df/dBy
-    grad[_vars[4]] = dx; // df/dCx
-    grad[_vars[5]] = dy; // df/dCy
+    grad[_vars[0]] += -mx - 0.5 * dx; // df/dAx
+    grad[_vars[1]] += -my - 0.5 * dy; // df/dAy
+    grad[_vars[2]] += mx - 0.5 * dx; // df/dBx
+    grad[_vars[3]] += my - 0.5 * dy; // df/dBy
+    grad[_vars[4]] += dx; // df/dCx
+    grad[_vars[5]] += dy; // df/dCy
 
     return grad;
 }

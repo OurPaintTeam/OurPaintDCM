@@ -1434,12 +1434,14 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
                 case Utils::RequirementType::ET_LINELINEANGLE: {
                     const auto [l1p1, l1p2] = resolveLinePoints(ids[0]);
                     const auto [l2p1, l2p2] = resolveLinePoints(ids[1]);
+                    // Requirement descriptors use radians; the math error function uses degrees.
+                    const double angleDegrees = entry.param.value() * 180.0 / std::acos(-1.0);
                     appendFunction(
                         std::unique_ptr<::Function>(new SectionSectionAngleError(
                             makeMathVariables({
                                 l1p1->ptrX(), l1p1->ptrY(), l1p2->ptrX(), l1p2->ptrY(),
                                 l2p1->ptrX(), l2p1->ptrY(), l2p2->ptrX(), l2p2->ptrY()}),
-                            entry.param.value())),
+                            angleDegrees)),
                         {
                             l1p1->ptrX(), l1p1->ptrY(), l1p2->ptrX(), l1p2->ptrY(),
                             l2p1->ptrX(), l2p1->ptrY(), l2p2->ptrX(), l2p2->ptrY()});

@@ -120,6 +120,32 @@ TEST(LineLineAngleFunctionTest, GradientMatchesFiniteDifference) {
     expectGradientsNear(f.gradient(), finiteDifferenceGradient(f, vars), vars, 2e-5);
 }
 
+TEST(SharedPointGradientTest, LineConstraintsAccumulateBothContributions) {
+    double ax = 1, ay = 2, bx = 4, by = 3, cx = 6, cy = 7;
+    const std::vector<VAR> vars = {&ax, &ay, &bx, &by, &bx, &by, &cx, &cy};
+
+    LineLineParallelFunction parallel(vars);
+    LineLinePerpendicularFunction perpendicular(vars);
+    LineLineAngleFunction angle(vars, 0.75);
+    expectGradientsNear(parallel.gradient(), finiteDifferenceGradient(parallel, vars), vars);
+    expectGradientsNear(perpendicular.gradient(), finiteDifferenceGradient(perpendicular, vars), vars);
+    expectGradientsNear(angle.gradient(), finiteDifferenceGradient(angle, vars), vars, 2e-5);
+}
+
+TEST(SharedPointGradientTest, PointOnLineAccumulatesEndpointContribution) {
+    double ax = 1, ay = 2, bx = 4, by = 3;
+    const std::vector<VAR> vars = {&ax, &ay, &ax, &ay, &bx, &by};
+    PointOnLineFunction onLine(vars);
+    expectGradientsNear(onLine.gradient(), finiteDifferenceGradient(onLine, vars), vars);
+}
+
+TEST(SharedPointGradientTest, ArcCenterAccumulatesEndpointContribution) {
+    double ax = 1, ay = 2, bx = 4, by = 3;
+    const std::vector<VAR> vars = {&ax, &ay, &bx, &by, &ax, &ay};
+    ArcCenterOnPerpendicularFunction center(vars);
+    expectGradientsNear(center.gradient(), finiteDifferenceGradient(center, vars), vars);
+}
+
 // ======== VerticalFunction ========
 TEST(VerticalFunctionTest, EvaluateVerticalLine) {
     double x1 = 2, y1 = 0, x2 = 2, y2 = 5;
