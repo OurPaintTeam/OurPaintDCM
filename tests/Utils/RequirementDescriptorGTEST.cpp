@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "RequirementDescriptor.h"
+#include <limits>
 
 using namespace OurPaintDCM::Utils;
 
@@ -9,6 +10,24 @@ TEST(RequirementDescriptorTest, DefaultConstructor) {
     RequirementDescriptor desc;
     EXPECT_TRUE(desc.objectIds.empty());
     EXPECT_FALSE(desc.param.has_value());
+    EXPECT_DOUBLE_EQ(desc.weight, 1.0);
+}
+
+TEST(RequirementDescriptorTest, ValidatesWeightAndHardConstraintSemantics) {
+    auto distance = RequirementDescriptor::pointPointDist(ID(1), ID(2), 5.0);
+    distance.weight = 0.0;
+    EXPECT_TRUE(distance.validate());
+    distance.weight = -1.0;
+    EXPECT_THROW(distance.validate(), std::invalid_argument);
+    distance.weight = std::numeric_limits<double>::infinity();
+    EXPECT_THROW(distance.validate(), std::invalid_argument);
+
+    auto fixed = RequirementDescriptor::fixPoint(ID(1));
+    fixed.weight = 2.0;
+    EXPECT_THROW(fixed.validate(), std::invalid_argument);
+    auto coincidence = RequirementDescriptor::pointOnPoint(ID(1), ID(2));
+    coincidence.weight = 0.0;
+    EXPECT_THROW(coincidence.validate(), std::invalid_argument);
 }
 
 // ==================== Full Constructor ====================
@@ -17,7 +36,8 @@ TEST(RequirementDescriptorTest, FullConstructor) {
     RequirementDescriptor desc(
         RequirementType::ET_POINTPOINTDIST,
         {ID(1), ID(2)},
-        50.0
+        50.0,
+        2.0
     );
     
     EXPECT_EQ(desc.type, RequirementType::ET_POINTPOINTDIST);
@@ -26,6 +46,7 @@ TEST(RequirementDescriptorTest, FullConstructor) {
     EXPECT_EQ(desc.objectIds[1], ID(2));
     EXPECT_TRUE(desc.param.has_value());
     EXPECT_DOUBLE_EQ(desc.param.value(), 50.0);
+    EXPECT_DOUBLE_EQ(desc.weight, 2.0);
 }
 
 TEST(RequirementDescriptorTest, FullConstructorWithoutParam) {

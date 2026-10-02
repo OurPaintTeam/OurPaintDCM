@@ -1,6 +1,6 @@
 #include "system/RequirementFunctionSystem.h"
+#include "SparseQR.h"
 #include <algorithm>
-#include <Eigen/SVD>
 
 using namespace OurPaintDCM::System;
 using namespace OurPaintDCM::Function;
@@ -25,9 +25,10 @@ void RequirementFunctionSystem::updateJ() {
 
     for (size_t i = 0; i < m; ++i) {
         auto grad = _functions[i]->gradient();
+        const double weight = _functions[i]->getWeight();
         for (size_t j = 0; j < n; ++j) {
             VAR v = _allVars[j];
-            double val = grad.contains(v) ? grad[v] : 0.0;
+            double val = grad.contains(v) ? weight * grad[v] : 0.0;
             if (val != 0.0)
                 triplets.emplace_back(i, j, val);
         }
@@ -40,13 +41,22 @@ void RequirementFunctionSystem::updateJ() {
     for (VAR variable : _allVars) {
         _jacobianVariableValues.push_back(*variable);
     }
+    _jacobianWeights.clear();
+    _jacobianWeights.reserve(m);
+    for (const auto& function : _functions) {
+        _jacobianWeights.push_back(function->getWeight());
+    }
     _jacobianDirty = false;
 }
 
 void RequirementFunctionSystem::ensureJacobian() const {
-    bool needsUpdate = _jacobianDirty || _jacobianVariableValues.size() != _allVars.size();
+    bool needsUpdate = _jacobianDirty || _jacobianVariableValues.size() != _allVars.size() ||
+                       _jacobianWeights.size() != _functions.size();
     for (size_t i = 0; !needsUpdate && i < _allVars.size(); ++i) {
         needsUpdate = *_allVars[i] != _jacobianVariableValues[i];
+    }
+    for (size_t i = 0; !needsUpdate && i < _functions.size(); ++i) {
+        needsUpdate = _functions[i]->getWeight() != _jacobianWeights[i];
     }
     if (needsUpdate) {
         const_cast<RequirementFunctionSystem*>(this)->updateJ();
@@ -78,14 +88,60 @@ std::vector<VAR> RequirementFunctionSystem::getAllVars() const {
 
 OurPaintDCM::Utils::SystemStatus RequirementFunctionSystem::diagnose() const {
     ensureJacobian();
-    if (_jacobian.rows() == 0 || _jacobian.cols() == 0)
+    std::vector<std::size_t> activeRows;
+    std::unordered_set<VAR> activeVars;
+    for (std::size_t i = 0; i < _functions.size(); ++i) {
+        if (_functions[i]->getWeight() == 0.0) {
+            continue;
+        }
+        activeRows.push_back(i);
+        for (VAR variable : _functions[i]->getVars()) {
+            activeVars.insert(variable);
+        }
+    }
+    if (activeRows.empty() || activeVars.empty()) {
         return Utils::SystemStatus::EMPTY;
+    }
 
-    Eigen::MatrixXd denseJ = Eigen::MatrixXd(_jacobian);
-    Eigen::JacobiSVD<Eigen::MatrixXd> svd(denseJ);
-    int rank = (svd.singularValues().array() > 1e-8).count();
-    int m = denseJ.rows();
-    int n = denseJ.cols();
+    std::vector<std::size_t> activeColumns;
+    for (std::size_t j = 0; j < _allVars.size(); ++j) {
+        if (activeVars.contains(_allVars[j])) {
+            activeColumns.push_back(j);
+        }
+    }
+
+    std::vector<std::size_t> rowMap(_functions.size(), _functions.size());
+    for (std::size_t i = 0; i < activeRows.size(); ++i) {
+        rowMap[activeRows[i]] = i;
+    }
+
+    std::vector<std::size_t> outer(activeColumns.size() + 1);
+    std::vector<std::size_t> inner;
+    std::vector<double> values;
+    inner.reserve(_jacobian.nonZeros());
+    values.reserve(_jacobian.nonZeros());
+    for (std::size_t j = 0; j < activeColumns.size(); ++j) {
+        outer[j] = values.size();
+        for (Eigen::SparseMatrix<double>::InnerIterator it(
+                 _jacobian, static_cast<Eigen::Index>(activeColumns[j])); it; ++it) {
+            const auto row = rowMap[static_cast<std::size_t>(it.row())];
+            if (row != _functions.size()) {
+                inner.push_back(row);
+                values.push_back(it.value());
+            }
+        }
+    }
+    outer.back() = values.size();
+
+    auto activeJ = ::SparseMatrix<>::fromCSC(
+        activeRows.size(), activeColumns.size(),
+        std::move(values), std::move(inner), std::move(outer));
+    SparseQR qr(activeJ);
+    qr.setPivotThreshold(1e-8);
+    qr.qr();
+    const auto rank = qr.rank();
+    const auto m = activeRows.size();
+    const auto n = activeColumns.size();
 
     if (m == n && rank == n)
         return Utils::SystemStatus::WELL_CONSTRAINED;
@@ -104,5 +160,6 @@ void RequirementFunctionSystem::clear() {
     _allVarsSet.clear();
     _jacobian.resize(0, 0);
     _jacobianVariableValues.clear();
+    _jacobianWeights.clear();
     _jacobianDirty = false;
 }

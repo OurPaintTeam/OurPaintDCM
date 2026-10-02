@@ -2,6 +2,9 @@
 #define OURPAINTDCM_FUNCTION_MATHFUNCTION_H
 #include <Eigen/Dense>
 #include <Eigen/Sparse>
+#include <cmath>
+#include <stdexcept>
+#include <unordered_map>
 #include <vector>
 #include "Enums.h"
 #include "ID.h"
@@ -70,6 +73,9 @@ namespace OurPaintDCM::Function {
 
         /// Set the weight for this function.
         void setWeight(double w) {
+            if (!std::isfinite(w) || w < 0.0) {
+                throw std::invalid_argument("Requirement weight must be finite and non-negative");
+            }
             _weight = w;
         }
     };

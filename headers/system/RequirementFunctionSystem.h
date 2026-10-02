@@ -25,6 +25,7 @@ namespace OurPaintDCM::System {
         mutable Eigen::SparseMatrix<double> _jacobian;                          ///< Cached Jacobian
         mutable bool _jacobianDirty = false;                                    ///< Function or variable set changed
         mutable std::vector<double> _jacobianVariableValues;                   ///< Coordinates at last Jacobian update
+        mutable std::vector<double> _jacobianWeights;                          ///< Weights at last Jacobian update
 
         void ensureJacobian() const;
 

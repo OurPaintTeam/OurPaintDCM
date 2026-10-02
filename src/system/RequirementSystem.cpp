@@ -68,7 +68,8 @@ void RequirementSystem::replaceRequirements(
         if (!descriptor.id.has_value() || descriptor.id->id == 0ULL) {
             throw std::invalid_argument("Restored requirement must have a non-zero ID");
         }
-        _requirements.push_back({*descriptor.id, descriptor.type, descriptor.objectIds, descriptor.param});
+        _requirements.push_back({*descriptor.id, descriptor.type, descriptor.objectIds,
+                                 descriptor.param, descriptor.weight});
     }
 
     _reqIdGen.set(nextRequirementId);
@@ -91,7 +92,8 @@ Utils::ID RequirementSystem::addRequirement(const Utils::RequirementDescriptor& 
         reqId = _reqIdGen.nextID();
     }
 
-    _requirements.push_back({reqId, descriptor.type, descriptor.objectIds, descriptor.param});
+    _requirements.push_back({reqId, descriptor.type, descriptor.objectIds,
+                             descriptor.param, descriptor.weight});
 
     try {
         rebuildFunctionsAndAliases();
@@ -197,6 +199,7 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
 
     for (const auto& entry : _requirements) {
         const auto& ids = entry.objectIds;
+        const std::size_t firstFunction = getFunctions().size();
 
         switch (entry.type) {
             case Utils::RequirementType::ET_POINTLINEDIST: {
@@ -346,6 +349,9 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                     circle->radius));
                 break;
             }
+        }
+        for (std::size_t i = firstFunction; i < getFunctions().size(); ++i) {
+            getFunctions()[i]->setWeight(entry.weight);
         }
     }
 

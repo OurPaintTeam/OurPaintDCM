@@ -170,6 +170,96 @@ TEST_F(DCMManagerSolveTest, GlobalSolve_PointPointDist) {
     EXPECT_NEAR(dist, 5.0, 0.1);
 }
 
+TEST_F(DCMManagerSolveTest, DifferentWeightsChooseWeightedDistanceCompromise) {
+    const auto fixed = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    const auto moving = manager.addFigure(FigureDescriptor::point(7.0, 0.0));
+    manager.addRequirement(RequirementDescriptor::fixPoint(fixed));
+    auto nearDistance = RequirementDescriptor::pointPointDist(fixed, moving, 5.0);
+    auto farDistance = RequirementDescriptor::pointPointDist(fixed, moving, 10.0);
+    nearDistance.weight = 3.0;
+    farDistance.weight = 1.0;
+    const auto nearId = manager.addRequirement(nearDistance);
+    const auto farId = manager.addRequirement(farDistance);
+
+    const auto& system = manager.getRequirementSystem();
+    EXPECT_NEAR(system.residuals()[2], 6.0, 1e-12);
+    EXPECT_NEAR(system.residuals()[3], -3.0, 1e-12);
+    const auto jacobian = Eigen::MatrixXd(system.J());
+    const auto vars = system.getAllVars();
+    auto* point = manager.storage().get<Figures::Point2D>(moving);
+    ASSERT_NE(point, nullptr);
+    const auto it = std::find(vars.begin(), vars.end(), point->ptrX());
+    ASSERT_NE(it, vars.end());
+    const auto column = static_cast<Eigen::Index>(std::distance(vars.begin(), it));
+    EXPECT_NEAR(jacobian(2, column), 3.0, 1e-12);
+    EXPECT_NEAR(jacobian(3, column), 1.0, 1e-12);
+
+    EXPECT_FALSE(manager.solve()); // The two target distances conflict.
+    EXPECT_NEAR(manager.getFigure(moving)->x.value(), 5.5, 1e-4);
+    EXPECT_NEAR(manager.getFigure(moving)->y.value(), 0.0, 1e-6);
+
+    manager.updateRequirementWeight(nearId, 1.0);
+    manager.updateRequirementWeight(farId, 3.0);
+    EXPECT_DOUBLE_EQ(manager.getRequirement(nearId)->weight, 1.0);
+    EXPECT_DOUBLE_EQ(manager.getRequirement(farId)->weight, 3.0);
+    EXPECT_FALSE(manager.solve());
+    EXPECT_NEAR(manager.getFigure(moving)->x.value(), 9.5, 1e-4);
+
+    manager.setSolveMode(SolveMode::LOCAL);
+    manager.updateRequirementWeight(nearId, 3.0);
+    manager.updateRequirementWeight(farId, 1.0);
+    const auto component = manager.getComponentForFigure(moving);
+    ASSERT_TRUE(component.has_value());
+    EXPECT_FALSE(manager.solve(*component));
+    EXPECT_NEAR(manager.getFigure(moving)->x.value(), 5.5, 1e-4);
+}
+
+TEST_F(DCMManagerSolveTest, CompatibleWeightedConstraintsStillSolve) {
+    const auto fixed = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    const auto moving = manager.addFigure(FigureDescriptor::point(7.0, 0.0));
+    manager.addRequirement(RequirementDescriptor::fixPoint(fixed));
+    auto first = RequirementDescriptor::pointPointDist(fixed, moving, 5.0);
+    auto second = RequirementDescriptor::pointPointDist(fixed, moving, 5.0);
+    first.weight = 2.0;
+    second.weight = 5.0;
+    manager.addRequirement(first);
+    manager.addRequirement(second);
+
+    EXPECT_TRUE(manager.solve());
+    EXPECT_NEAR(manager.getFigure(moving)->x.value(), 5.0, 1e-6);
+    EXPECT_LT(manager.getRequirementSystem().residuals().cwiseAbs().maxCoeff(), 1e-6);
+}
+
+TEST_F(DCMManagerSolveTest, ZeroWeightDisablesOrdinaryRequirement) {
+    const auto fixed = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    const auto moving = manager.addFigure(FigureDescriptor::point(7.0, 0.0));
+    manager.addRequirement(RequirementDescriptor::fixPoint(fixed));
+    auto active = RequirementDescriptor::pointPointDist(fixed, moving, 5.0);
+    auto inactive = RequirementDescriptor::pointPointDist(fixed, moving, 10.0);
+    active.weight = 2.0;
+    inactive.weight = 0.0;
+    manager.addRequirement(active);
+    manager.addRequirement(inactive);
+
+    EXPECT_EQ(manager.getRequirementSystem().diagnose(), SystemStatus::UNDER_CONSTRAINED);
+    EXPECT_TRUE(manager.solve());
+    EXPECT_NEAR(manager.getFigure(moving)->x.value(), 5.0, 1e-6);
+    const auto residuals = manager.getRequirementSystem().residuals();
+    EXPECT_NEAR(residuals[2], 0.0, 1e-6);
+    EXPECT_DOUBLE_EQ(residuals[3], 0.0);
+}
+
+TEST_F(DCMManagerSolveTest, AllZeroWeightRequirementsDiagnoseAsEmpty) {
+    const auto first = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    const auto second = manager.addFigure(FigureDescriptor::point(7.0, 0.0));
+    auto distance = RequirementDescriptor::pointPointDist(first, second, 5.0);
+    distance.weight = 0.0;
+    manager.addRequirement(distance);
+
+    EXPECT_EQ(manager.getRequirementSystem().diagnose(), SystemStatus::EMPTY);
+    EXPECT_TRUE(manager.solve());
+}
+
 TEST_F(DCMManagerSolveTest, RepeatedSolveUsesChangedPointCoordinates) {
     const auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
     const auto p2 = manager.addFigure(FigureDescriptor::point(5.0, 0.0));

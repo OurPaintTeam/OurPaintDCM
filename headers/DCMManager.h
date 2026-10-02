@@ -240,6 +240,9 @@ public:
      */
     void updateRequirementParam(Utils::ID reqId, double newParam);
 
+    /// Update a requirement's residual weight and invalidate cached solve state.
+    void updateRequirementWeight(Utils::ID reqId, double newWeight);
+
     /**
      * @brief Get requirement descriptor by ID.
      * @param reqId ID of the requirement.

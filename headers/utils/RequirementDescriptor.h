@@ -6,6 +6,7 @@
 #include <vector>
 #include <optional>
 #include <stdexcept>
+#include <cmath>
 
 namespace OurPaintDCM::Utils {
 
@@ -36,6 +37,8 @@ struct RequirementDescriptor {
     RequirementType type;              ///< Type of the requirement
     std::vector<ID> objectIds;         ///< IDs of objects involved
     std::optional<double> param;       ///< Optional parameter (distance, angle, etc.)
+    double weight = 1.0;               ///< Finite non-negative residual multiplier; objective uses (weight * residual)^2.
+                                       ///< Fixed and point-coincidence requirements are exact and require weight 1.
 
     /// @brief Default constructor
     RequirementDescriptor() = default;
@@ -45,11 +48,13 @@ struct RequirementDescriptor {
      * @param t Requirement type
      * @param ids Vector of object IDs
      * @param p Optional parameter value
+     * @param w Non-negative residual weight (default 1)
      */
     RequirementDescriptor(RequirementType t,
                           std::vector<ID> ids,
-                          std::optional<double> p = std::nullopt)
-        : type(t), objectIds(std::move(ids)), param(p) {}
+                          std::optional<double> p = std::nullopt,
+                          double w = 1.0)
+        : type(t), objectIds(std::move(ids)), param(p), weight(w) {}
 
     // ==================== Factory methods ====================
 
@@ -142,6 +147,16 @@ struct RequirementDescriptor {
      * @throws std::invalid_argument with description of the problem
      */
     bool validate() const {
+        if (!std::isfinite(weight) || weight < 0.0) {
+            throw std::invalid_argument("Requirement weight must be finite and non-negative");
+        }
+        if (weight != 1.0 &&
+            (type == RequirementType::ET_POINTONPOINT ||
+             type == RequirementType::ET_FIXPOINT ||
+             type == RequirementType::ET_FIXLINE ||
+             type == RequirementType::ET_FIXCIRCLE)) {
+            throw std::invalid_argument("Eliminated and fixed requirements must use weight 1");
+        }
         switch (type) {
             case RequirementType::ET_POINTLINEDIST:
             case RequirementType::ET_POINTONLINE:

@@ -74,3 +74,56 @@ TEST(RequirementFunctionSystemTest, ClearResetsSystem) {
     EXPECT_EQ(system.J().rows(), 0);
     EXPECT_EQ(system.J().cols(), 0);
 }
+
+TEST(RequirementFunctionSystemTest, WeightsScaleResidualsJacobianAndDiagnostics) {
+    RequirementFunctionSystem system;
+    double x = 2.0;
+    auto first = std::make_shared<FixCoordinateFunction>(
+        RequirementType::ET_FIXPOINT, std::vector<VAR>{&x}, 0.0);
+    auto second = std::make_shared<FixCoordinateFunction>(
+        RequirementType::ET_FIXPOINT, std::vector<VAR>{&x}, 4.0);
+    first->setWeight(2.0);
+    second->setWeight(3.0);
+    system.addFunction(first);
+    system.addFunction(second);
+
+    EXPECT_DOUBLE_EQ(system.residuals()[0], 4.0);
+    EXPECT_DOUBLE_EQ(system.residuals()[1], -6.0);
+    const Eigen::MatrixXd initialJ = Eigen::MatrixXd(system.J());
+    EXPECT_DOUBLE_EQ(initialJ(0, 0), 2.0);
+    EXPECT_DOUBLE_EQ(initialJ(1, 0), 3.0);
+    EXPECT_DOUBLE_EQ(Eigen::MatrixXd(system.JTJ())(0, 0), 13.0);
+    EXPECT_EQ(system.diagnose(), SystemStatus::OVER_CONSTRAINED);
+
+    first->setWeight(5.0);
+    EXPECT_DOUBLE_EQ(system.residuals()[0], 10.0);
+    EXPECT_DOUBLE_EQ(Eigen::MatrixXd(system.J())(0, 0), 5.0);
+    first->setWeight(0.0);
+    second->setWeight(0.0);
+    EXPECT_TRUE(system.residuals().isZero());
+    EXPECT_TRUE(Eigen::MatrixXd(system.J()).isZero());
+    EXPECT_EQ(system.diagnose(), SystemStatus::EMPTY);
+}
+
+TEST(RequirementFunctionSystemTest, DiagnoseIgnoresZeroWeightConstraintsAndTheirVariables) {
+    RequirementFunctionSystem system;
+    double x = 2.0;
+    double y = 3.0;
+    auto active = std::make_shared<FixCoordinateFunction>(
+        RequirementType::ET_FIXPOINT, std::vector<VAR>{&x}, 0.0);
+    auto disabledOnX = std::make_shared<FixCoordinateFunction>(
+        RequirementType::ET_FIXPOINT, std::vector<VAR>{&x}, 4.0);
+    disabledOnX->setWeight(0.0);
+    system.addFunction(active);
+    system.addFunction(disabledOnX);
+    EXPECT_EQ(system.diagnose(), SystemStatus::WELL_CONSTRAINED);
+
+    auto disabledOnY = std::make_shared<FixCoordinateFunction>(
+        RequirementType::ET_FIXPOINT, std::vector<VAR>{&y}, 5.0);
+    disabledOnY->setWeight(0.0);
+    system.addFunction(disabledOnY);
+    EXPECT_EQ(system.diagnose(), SystemStatus::WELL_CONSTRAINED);
+
+    active->setWeight(0.0);
+    EXPECT_EQ(system.diagnose(), SystemStatus::EMPTY);
+}

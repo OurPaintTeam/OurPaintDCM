@@ -41,6 +41,7 @@ class RequirementSystem : public RequirementFunctionSystem {
         Utils::RequirementType type;             ///< Type of the requirement
         std::vector<Utils::ID> objectIds;        ///< IDs of objects involved
         std::optional<double> param;             ///< Optional parameter (distance, angle)
+        double weight = 1.0;                     ///< Residual multiplier
     };
 
     std::vector<RequirementEntry> _requirements;
