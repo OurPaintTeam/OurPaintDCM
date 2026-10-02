@@ -23,7 +23,8 @@ namespace OurPaintDCM::System {
         std::vector<VAR> _allVars;                                              ///< Unique variable pointers
         std::unordered_set<VAR> _allVarsSet;                                    ///< Fast lookup for uniqueness
         mutable Eigen::SparseMatrix<double> _jacobian;                          ///< Cached Jacobian
-        mutable bool _jacobianDirty = false;
+        mutable bool _jacobianDirty = false;                                    ///< Function or variable set changed
+        mutable std::vector<double> _jacobianVariableValues;                   ///< Coordinates at last Jacobian update
 
         void ensureJacobian() const;
 
@@ -45,8 +46,8 @@ namespace OurPaintDCM::System {
         void updateJ();
 
         /**
-         * @brief Get the current sparse Jacobian matrix.
-         * @return The most recently computed Jacobian.
+         * @brief Get the sparse Jacobian at the current variable values.
+         * @return The current Jacobian, recomputed if variables changed.
          */
         Eigen::SparseMatrix<double> J() const;
 

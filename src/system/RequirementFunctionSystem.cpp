@@ -35,11 +35,20 @@ void RequirementFunctionSystem::updateJ() {
 
     _jacobian.resize(m, n);
     _jacobian.setFromTriplets(triplets.begin(), triplets.end());
+    _jacobianVariableValues.clear();
+    _jacobianVariableValues.reserve(n);
+    for (VAR variable : _allVars) {
+        _jacobianVariableValues.push_back(*variable);
+    }
     _jacobianDirty = false;
 }
 
 void RequirementFunctionSystem::ensureJacobian() const {
-    if (_jacobianDirty) {
+    bool needsUpdate = _jacobianDirty || _jacobianVariableValues.size() != _allVars.size();
+    for (size_t i = 0; !needsUpdate && i < _allVars.size(); ++i) {
+        needsUpdate = *_allVars[i] != _jacobianVariableValues[i];
+    }
+    if (needsUpdate) {
         const_cast<RequirementFunctionSystem*>(this)->updateJ();
     }
 }
@@ -94,5 +103,6 @@ void RequirementFunctionSystem::clear() {
     _allVars.clear();
     _allVarsSet.clear();
     _jacobian.resize(0, 0);
+    _jacobianVariableValues.clear();
     _jacobianDirty = false;
 }

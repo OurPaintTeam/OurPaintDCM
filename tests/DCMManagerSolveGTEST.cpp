@@ -31,6 +31,31 @@ TEST_F(DCMManagerSolveTest, GlobalSolve_PointPointDist) {
     EXPECT_NEAR(dist, 5.0, 0.1);
 }
 
+TEST_F(DCMManagerSolveTest, RepeatedSolveUsesChangedPointCoordinates) {
+    const auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    const auto p2 = manager.addFigure(FigureDescriptor::point(5.0, 0.0));
+    manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 5.0));
+    const auto& system = manager.getRequirementSystem();
+
+    EXPECT_TRUE(manager.solve());
+    const Eigen::MatrixXd initialJ = Eigen::MatrixXd(system.J());
+    EXPECT_NEAR(initialJ(0, 2), 1.0, 1e-12);
+
+    manager.updatePoint(PointUpdateDescriptor(p2, 0.0, 8.0));
+    EXPECT_NEAR(system.residuals()[0], 3.0, 1e-12);
+    const Eigen::MatrixXd movedJ = Eigen::MatrixXd(system.J());
+    EXPECT_FALSE(initialJ.isApprox(movedJ));
+    EXPECT_NEAR(movedJ(0, 3), 1.0, 1e-12);
+
+    EXPECT_TRUE(manager.solve());
+    EXPECT_NEAR(system.residuals()[0], 0.0, 1e-6);
+    const auto d1 = manager.getFigure(p1);
+    const auto d2 = manager.getFigure(p2);
+    ASSERT_TRUE(d1.has_value() && d2.has_value());
+    EXPECT_NEAR(std::hypot(d2->x.value() - d1->x.value(),
+                           d2->y.value() - d1->y.value()), 5.0, 1e-6);
+}
+
 TEST_F(DCMManagerSolveTest, SolveRejectsIncompatibleDistanceBetweenFixedPoints) {
     const auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
     const auto p2 = manager.addFigure(FigureDescriptor::point(5.0, 0.0));

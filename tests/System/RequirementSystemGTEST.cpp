@@ -169,6 +169,38 @@ TEST_F(RequirementSystemTest, UpdateJacobianAndGet) {
     EXPECT_EQ(J.cols(), 4);
 }
 
+TEST_F(RequirementSystemTest, JacobianResidualsAndDiagnosisFollowPointCoordinates) {
+    RequirementSystem system(&storage);
+    system.addPointPointDist(p1Id, p2Id, 5.0);
+
+    const Eigen::MatrixXd initialJ = Eigen::MatrixXd(system.J());
+    EXPECT_NEAR(initialJ(0, 0), -0.6, 1e-12);
+    EXPECT_NEAR(initialJ(0, 1), -0.8, 1e-12);
+    EXPECT_DOUBLE_EQ(system.residuals()[0], 0.0);
+    EXPECT_EQ(system.diagnose(), SystemStatus::UNDER_CONSTRAINED);
+
+    auto* p2 = storage.get<Point2D>(p2Id);
+    ASSERT_NE(p2, nullptr);
+    p2->x() = 0.0;
+    p2->y() = 0.0;
+
+    const Eigen::MatrixXd coincidentJ = Eigen::MatrixXd(system.J());
+    EXPECT_FALSE(initialJ.isApprox(coincidentJ));
+    EXPECT_TRUE(coincidentJ.isZero());
+    EXPECT_DOUBLE_EQ(system.residuals()[0], -5.0);
+    EXPECT_EQ(system.diagnose(), SystemStatus::SINGULAR_SYSTEM);
+    EXPECT_TRUE(Eigen::MatrixXd(system.JTJ()).isZero());
+
+    p2->x() = 5.0;
+    const Eigen::MatrixXd movedJ = Eigen::MatrixXd(system.J());
+    EXPECT_NEAR(movedJ(0, 0), -1.0, 1e-12);
+    EXPECT_NEAR(movedJ(0, 1), 0.0, 1e-12);
+    EXPECT_NEAR(movedJ(0, 2), 1.0, 1e-12);
+    EXPECT_NEAR(movedJ(0, 3), 0.0, 1e-12);
+    EXPECT_DOUBLE_EQ(system.residuals()[0], 0.0);
+    EXPECT_EQ(system.diagnose(), SystemStatus::UNDER_CONSTRAINED);
+}
+
 TEST_F(RequirementSystemTest, JTJComputation) {
     RequirementSystem system(&storage);
     system.addPointPointDist(p1Id, p2Id, 5.0);
