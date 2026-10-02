@@ -3,6 +3,7 @@
 #include "SparseLSMTask.h"
 #include "sparse/SparseLevenbergMarquardtSolver.h"
 #include <algorithm>
+#include <cmath>
 #include <cstdint>
 #include <memory>
 #include <stdexcept>
@@ -57,6 +58,7 @@ using FixedAssignmentMap = std::unordered_map<double*, double>;
 
 struct BuiltSolvePipeline {
     FixedAssignmentMap fixedAssignments;
+    std::vector<std::pair<double*, double>> fixedTargets;
     std::vector<std::unique_ptr<Variable>> variableOwners;
     std::unique_ptr<SparseLSMTask> task;
     bool hasFunctions = false;
@@ -70,6 +72,7 @@ struct OurPaintDCM::DCMManager::SolveCache {
         std::size_t version = 0;
         std::unique_ptr<System::RequirementSystem> subsystem;
         FixedAssignmentMap fixedAssignments;
+        std::vector<std::pair<double*, double>> fixedTargets;
         std::vector<std::unique_ptr<Variable>> variableOwners;
         std::unique_ptr<SparseLSMTask> task;
         std::unique_ptr<SparseLMSolver> solver;
@@ -1161,13 +1164,17 @@ Utils::SolveMode DCMManager::getSolveMode() const noexcept {
     return _solveMode;
 }
 
-bool DCMManager::solve(std::optional<ComponentID> componentId) {
+bool DCMManager::solve(std::optional<ComponentID> componentId, double residualTolerance) {
     const std::unordered_set<double*> noLockedVars;
-    return solveWithLockedVars(componentId, noLockedVars);
+    return solveWithLockedVars(componentId, noLockedVars, residualTolerance);
 }
 
 bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
-                                     const std::unordered_set<double*>& lockedVars) {
+                                     const std::unordered_set<double*>& lockedVars,
+                                     double residualTolerance) {
+    if (!std::isfinite(residualTolerance) || residualTolerance < 0.0) {
+        throw std::invalid_argument("Residual tolerance must be finite and non-negative");
+    }
     if (_requirementRecords.empty()) {
         return true;
     }
@@ -1200,6 +1207,12 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
         std::vector<std::unique_ptr<::Function>> mathFunctionOwners;
         std::vector<double*> mathVariableRefs;
         std::unordered_set<double*> mathVariableRefSet;
+
+        const auto assignFixedValue = [&](double* valueRef, double target) {
+            pipeline.fixedAssignments[valueRef] = target;
+            // Keep every target so conflicting fix constraints cannot overwrite each other silently.
+            pipeline.fixedTargets.emplace_back(valueRef, target);
+        };
 
         const auto rememberVariable = [&](double* valueRef) {
             if (valueRef != nullptr &&
@@ -1255,8 +1268,8 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
                     if (targetIt != _fixedRequirementTargets.end() && targetIt->second.size() == 2) {
                         targets = targetIt->second;
                     }
-                    pipeline.fixedAssignments[point->ptrX()] = targets[0];
-                    pipeline.fixedAssignments[point->ptrY()] = targets[1];
+                    assignFixedValue(point->ptrX(), targets[0]);
+                    assignFixedValue(point->ptrY(), targets[1]);
                     break;
                 }
                 case Utils::RequirementType::ET_FIXLINE: {
@@ -1266,10 +1279,10 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
                     if (targetIt != _fixedRequirementTargets.end() && targetIt->second.size() == 4) {
                         targets = targetIt->second;
                     }
-                    pipeline.fixedAssignments[lineP1->ptrX()] = targets[0];
-                    pipeline.fixedAssignments[lineP1->ptrY()] = targets[1];
-                    pipeline.fixedAssignments[lineP2->ptrX()] = targets[2];
-                    pipeline.fixedAssignments[lineP2->ptrY()] = targets[3];
+                    assignFixedValue(lineP1->ptrX(), targets[0]);
+                    assignFixedValue(lineP1->ptrY(), targets[1]);
+                    assignFixedValue(lineP2->ptrX(), targets[2]);
+                    assignFixedValue(lineP2->ptrY(), targets[3]);
                     break;
                 }
                 case Utils::RequirementType::ET_FIXCIRCLE: {
@@ -1279,9 +1292,9 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
                     if (targetIt != _fixedRequirementTargets.end() && targetIt->second.size() == 3) {
                         targets = targetIt->second;
                     }
-                    pipeline.fixedAssignments[center->ptrX()] = targets[0];
-                    pipeline.fixedAssignments[center->ptrY()] = targets[1];
-                    pipeline.fixedAssignments[radius] = targets[2];
+                    assignFixedValue(center->ptrX(), targets[0]);
+                    assignFixedValue(center->ptrY(), targets[1]);
+                    assignFixedValue(radius, targets[2]);
                     break;
                 }
                 default:
@@ -1545,6 +1558,7 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
 
         auto pipeline = buildPipeline(*buildSystem);
         entry.fixedAssignments = std::move(pipeline.fixedAssignments);
+        entry.fixedTargets = std::move(pipeline.fixedTargets);
         entry.variableOwners = std::move(pipeline.variableOwners);
         entry.task = std::move(pipeline.task);
         entry.hasFunctions = pipeline.hasFunctions;
@@ -1566,13 +1580,48 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
     }
 
     auto& system = *systemPtr;
-    if (system.getRequirements().empty() || !entry.hasFunctions) {
-        system.synchronizeCoincidentPoints();
+    const auto constraintsSatisfied = [&]() {
+        const auto residualSatisfied = [&](double residual) {
+            return std::isfinite(residual) && std::abs(residual) <= residualTolerance;
+        };
+
+        for (const auto& function : system.getFunctions()) {
+            const auto type = function->getType();
+            // RequirementSystem can recapture fix targets when rebuilt; use the saved targets below.
+            if (type == Utils::RequirementType::ET_FIXPOINT ||
+                type == Utils::RequirementType::ET_FIXLINE ||
+                type == Utils::RequirementType::ET_FIXCIRCLE) {
+                continue;
+            }
+            if (!residualSatisfied(function->evaluate())) {
+                return false;
+            }
+        }
+        for (const auto& [valueRef, target] : entry.fixedTargets) {
+            if (!residualSatisfied(*valueRef - target)) {
+                return false;
+            }
+        }
+        // Coincidence constraints are eliminated from the function system by point aliasing.
+        for (const auto& requirement : system.getRequirements()) {
+            if (requirement.type == Utils::RequirementType::ET_POINTONPOINT) {
+                const auto* p1 = _storage.get<Figures::Point2D>(requirement.objectIds[0]);
+                const auto* p2 = _storage.get<Figures::Point2D>(requirement.objectIds[1]);
+                if (!residualSatisfied(std::hypot(p1->x() - p2->x(), p1->y() - p2->y()))) {
+                    return false;
+                }
+            }
+        }
         return true;
-    }
+    };
 
     for (const auto& [valueRef, target] : entry.fixedAssignments) {
         *valueRef = target;
+    }
+
+    if (system.getRequirements().empty() || !entry.hasFunctions) {
+        system.synchronizeCoincidentPoints();
+        return constraintsSatisfied();
     }
 
     if (!entry.hasFreeVariables) {
@@ -1581,18 +1630,17 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
         // to satisfy constraints by moving the dragged point to a feasible position.
         if (!lockedVars.empty()) {
             const std::unordered_set<double*> noLockedVars;
-            return solveWithLockedVars(componentId, noLockedVars);
+            return solveWithLockedVars(componentId, noLockedVars, residualTolerance);
         }
         system.synchronizeCoincidentPoints();
-        return true;
+        return constraintsSatisfied();
     }
 
     entry.solver->setTask(entry.task.get());
     entry.solver->optimize();
-    const bool converged = entry.solver->isConverged();
     system.synchronizeCoincidentPoints();
 
-    return converged;
+    return constraintsSatisfied();
 }
 
 std::unique_ptr<System::RequirementSystem> DCMManager::buildSubsystem(ComponentID componentId) const {

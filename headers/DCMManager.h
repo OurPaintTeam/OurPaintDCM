@@ -356,9 +356,11 @@ public:
      * DRAG   — lightweight gradient descent, intended to be called from updatePoint/updateCircle.
      *
      * @param componentId Component to solve (used only in LOCAL mode).
-     * @return true if the solver converged.
+     * @param residualTolerance Maximum absolute residual per constraint; must be finite and non-negative.
+     * @return true if every selected constraint has a finite residual within residualTolerance.
      */
-    bool solve(std::optional<ComponentID> componentId = std::nullopt);
+    bool solve(std::optional<ComponentID> componentId = std::nullopt,
+               double residualTolerance = 1e-6);
 
 private:
     struct SolveCache;
@@ -366,7 +368,8 @@ private:
     struct FixedGeometry;
 
     bool solveWithLockedVars(std::optional<ComponentID> componentId,
-                             const std::unordered_set<double*>& lockedVars);
+                             const std::unordered_set<double*>& lockedVars,
+                             double residualTolerance = 1e-6);
     void invalidateSolveCache() noexcept;
 
     Figures::GeometryStorage _storage;

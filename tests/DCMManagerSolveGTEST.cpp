@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "DCMManager.h"
 #include <cmath>
+#include <limits>
 
 using namespace OurPaintDCM;
 using namespace OurPaintDCM::Utils;
@@ -28,6 +29,110 @@ TEST_F(DCMManagerSolveTest, GlobalSolve_PointPointDist) {
     double dy = d2->y.value() - d1->y.value();
     double dist = std::sqrt(dx * dx + dy * dy);
     EXPECT_NEAR(dist, 5.0, 0.1);
+}
+
+TEST_F(DCMManagerSolveTest, SolveRejectsIncompatibleDistanceBetweenFixedPoints) {
+    const auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    const auto p2 = manager.addFigure(FigureDescriptor::point(5.0, 0.0));
+    manager.addRequirement(RequirementDescriptor::fixPoint(p1));
+    manager.addRequirement(RequirementDescriptor::fixPoint(p2));
+    manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 10.0));
+    const auto component = manager.getComponentForFigure(p1);
+    ASSERT_TRUE(component.has_value());
+
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL, SolveMode::DRAG}) {
+        manager.setSolveMode(mode);
+        EXPECT_FALSE(manager.solve(*component));
+    }
+
+    const auto d1 = manager.getFigure(p1);
+    const auto d2 = manager.getFigure(p2);
+    ASSERT_TRUE(d1.has_value() && d2.has_value());
+    EXPECT_DOUBLE_EQ(d1->x.value(), 0.0);
+    EXPECT_DOUBLE_EQ(d1->y.value(), 0.0);
+    EXPECT_DOUBLE_EQ(d2->x.value(), 5.0);
+    EXPECT_DOUBLE_EQ(d2->y.value(), 0.0);
+}
+
+TEST_F(DCMManagerSolveTest, SolveRejectsNonzeroResidualAtZeroGradient) {
+    const auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    const auto p2 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 10.0));
+    const auto& system = manager.getRequirementSystem();
+    EXPECT_DOUBLE_EQ(system.residuals()[0], -10.0);
+    EXPECT_DOUBLE_EQ((system.J().transpose() * system.residuals()).norm(), 0.0);
+
+    EXPECT_FALSE(manager.solve());
+    EXPECT_DOUBLE_EQ(system.residuals()[0], -10.0);
+}
+
+TEST_F(DCMManagerSolveTest, SolveAcceptsSatisfiedDistanceBetweenFixedPoints) {
+    const auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    const auto p2 = manager.addFigure(FigureDescriptor::point(5.0, 0.0));
+    manager.addRequirement(RequirementDescriptor::fixPoint(p1));
+    manager.addRequirement(RequirementDescriptor::fixPoint(p2));
+    manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 5.0));
+
+    EXPECT_TRUE(manager.solve());
+}
+
+TEST_F(DCMManagerSolveTest, SolveChecksEachResidualAgainstSpecifiedTolerance) {
+    const auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    const auto p2 = manager.addFigure(FigureDescriptor::point(5.0, 0.0));
+    manager.addRequirement(RequirementDescriptor::fixPoint(p1));
+    manager.addRequirement(RequirementDescriptor::fixPoint(p2));
+    manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 5.00005));
+
+    EXPECT_FALSE(manager.solve());
+    EXPECT_TRUE(manager.solve(std::nullopt, 1e-4));
+    EXPECT_FALSE(manager.solve(std::nullopt, 1e-6));
+}
+
+TEST_F(DCMManagerSolveTest, SolveRejectsInvalidResidualTolerance) {
+    EXPECT_THROW(manager.solve(std::nullopt, -1.0), std::invalid_argument);
+    EXPECT_THROW(manager.solve(std::nullopt, std::numeric_limits<double>::infinity()), std::invalid_argument);
+    EXPECT_THROW(manager.solve(std::nullopt, std::numeric_limits<double>::quiet_NaN()), std::invalid_argument);
+}
+
+TEST_F(DCMManagerSolveTest, SolveRejectsNonfiniteResidual) {
+    const auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    const auto p2 = manager.addFigure(FigureDescriptor::point(5.0, 0.0));
+    manager.addRequirement(RequirementDescriptor::fixPoint(p1));
+    manager.addRequirement(RequirementDescriptor::fixPoint(p2));
+    const auto distance = manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 5.0));
+    manager.updateRequirementParam(distance, std::numeric_limits<double>::quiet_NaN());
+
+    EXPECT_FALSE(manager.solve());
+}
+
+TEST_F(DCMManagerSolveTest, SolveRejectsConflictingFixedTargetsOnAliasedPoints) {
+    const auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    const auto p2 = manager.addFigure(FigureDescriptor::point(5.0, 0.0));
+    manager.addRequirement(RequirementDescriptor::fixPoint(p1));
+    manager.addRequirement(RequirementDescriptor::fixPoint(p2));
+    manager.addRequirement(RequirementDescriptor::pointOnPoint(p1, p2));
+
+    EXPECT_FALSE(manager.solve());
+}
+
+TEST_F(DCMManagerSolveTest, LocalSolveOnlyChecksSelectedComponentResiduals) {
+    const auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    const auto p2 = manager.addFigure(FigureDescriptor::point(5.0, 0.0));
+    manager.addRequirement(RequirementDescriptor::fixPoint(p1));
+    manager.addRequirement(RequirementDescriptor::fixPoint(p2));
+    manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 10.0));
+    const auto p3 = manager.addFigure(FigureDescriptor::point(100.0, 100.0));
+    const auto p4 = manager.addFigure(FigureDescriptor::point(105.0, 100.0));
+    manager.addRequirement(RequirementDescriptor::fixPoint(p3));
+    manager.addRequirement(RequirementDescriptor::fixPoint(p4));
+    manager.addRequirement(RequirementDescriptor::pointPointDist(p3, p4, 5.0));
+    const auto component = manager.getComponentForFigure(p3);
+    ASSERT_TRUE(component.has_value());
+
+    manager.setSolveMode(SolveMode::LOCAL);
+    EXPECT_TRUE(manager.solve(*component));
+    manager.setSolveMode(SolveMode::GLOBAL);
+    EXPECT_FALSE(manager.solve());
 }
 
 TEST_F(DCMManagerSolveTest, GlobalSolve_Horizontal) {
