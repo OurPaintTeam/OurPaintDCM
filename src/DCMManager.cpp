@@ -109,6 +109,7 @@ struct OurPaintDCM::DCMManager::SolveCache {
         std::vector<std::unique_ptr<Variable>> variableOwners;
         std::unique_ptr<SparseLSMTask> task;
         std::unique_ptr<SparseLMSolver> solver;
+        double solverResidualTolerance = -1.0;
         bool hasFunctions = false;
         bool hasFreeVariables = false;
     };
@@ -1396,10 +1397,6 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
         entry.task = std::move(pipeline.task);
         entry.hasFunctions = pipeline.hasFunctions;
         entry.hasFreeVariables = pipeline.hasFreeVariables;
-        if (entry.task != nullptr) {
-            entry.solver = std::make_unique<SparseLMSolver>();
-        }
-
         entryIt = _solveCache->entries.insert_or_assign(std::move(cacheKey), std::move(entry)).first;
     }
 
@@ -1469,6 +1466,13 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
         return constraintsSatisfied();
     }
 
+    if (entry.solver == nullptr || entry.solverResidualTolerance != residualTolerance) {
+        const double tolerance = std::min(residualTolerance, 1e-4);
+        entry.solver = std::make_unique<SparseLMSolver>(
+            100, 1e-3, std::min(1e-8, tolerance * 0.01),
+            std::min(1e-8, tolerance * 0.01), tolerance * tolerance * 0.01);
+        entry.solverResidualTolerance = residualTolerance;
+    }
     entry.solver->setTask(entry.task.get());
     entry.solver->optimize();
     system.synchronizeCoincidentPoints();

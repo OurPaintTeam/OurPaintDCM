@@ -135,7 +135,7 @@ namespace OurPaintDCM::Function {
     };
 
     /**
-     * @brief Fixed distance between a line segment and a circle.
+     * @brief Fixed external clearance: distance(center, segment) - radius - target.
      *
      * Variables: [L1x, L1y, L2x, L2y, Cx, Cy, R]
      */
@@ -148,8 +148,18 @@ namespace OurPaintDCM::Function {
         size_t getVarCount() const override;
     };
 
+    /// One endpoint of a line must lie on its circle. Variables: [Px, Py, Cx, Cy, R].
+    class PointOnCircleFunction : public RequirementFunction {
+    public:
+        explicit PointOnCircleFunction(const std::vector<VAR>& vars);
+        double evaluate() const override;
+        std::unordered_map<VAR, double> gradient() const override;
+        size_t getVarCount() const override;
+    };
+
     /**
-     * @brief Both endpoints of a line must lie on a circle.
+     * @brief Norm of the two endpoint residuals; zero only when both lie on the circle.
+     * RequirementSystem uses two PointOnCircleFunction rows for solving and diagnostics.
      *
      * Variables: [L1x, L1y, L2x, L2y, Cx, Cy, R]
      */

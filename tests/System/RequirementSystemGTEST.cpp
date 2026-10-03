@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "RequirementSystem.h"
 #include "GeometryStorage.h"
+#include <algorithm>
 
 using namespace OurPaintDCM::System;
 using namespace OurPaintDCM::Figures;
@@ -115,6 +116,40 @@ TEST_F(RequirementSystemTest, AddLineOnCircle) {
     system.addLineOnCircle(line1Id, circleId);
     
     EXPECT_EQ(system.getAllVars().size(), 7);
+}
+
+TEST_F(RequirementSystemTest, LineOnCircleHasTwoIndependentWeightedRows) {
+    auto* first = storage.get<Point2D>(p1Id);
+    auto* second = storage.get<Point2D>(p2Id);
+    auto* center = storage.get<Point2D>(centerId);
+    auto* circle = storage.get<Circle2D>(circleId);
+    first->x() = 6; first->y() = 7;
+    second->x() = 10; second->y() = 7;
+    center->x() = 3; center->y() = 7;
+    circle->radius = 5;
+    RequirementSystem system(&storage);
+    auto descriptor = RequirementDescriptor::lineOnCircle(line1Id, circleId);
+    descriptor.weight = 2.0;
+    system.addRequirement(descriptor);
+    const auto residuals = system.residuals();
+    ASSERT_EQ(residuals.size(), 2);
+    EXPECT_DOUBLE_EQ(residuals[0], -4.0);
+    EXPECT_DOUBLE_EQ(residuals[1], 4.0);
+    const auto jacobian = system.J();
+    const auto vars = system.getAllVars();
+    const auto column = [&](VAR var) {
+        return std::distance(vars.begin(), std::find(vars.begin(), vars.end(), var));
+    };
+    EXPECT_DOUBLE_EQ(jacobian.coeff(0, column(first->ptrX())), 2.0);
+    EXPECT_DOUBLE_EQ(jacobian.coeff(0, column(second->ptrX())), 0.0);
+    EXPECT_DOUBLE_EQ(jacobian.coeff(1, column(first->ptrX())), 0.0);
+    EXPECT_DOUBLE_EQ(jacobian.coeff(1, column(second->ptrX())), 2.0);
+    EXPECT_DOUBLE_EQ(jacobian.coeff(0, column(circle->ptrRadius())), -2.0);
+    EXPECT_DOUBLE_EQ(jacobian.coeff(1, column(circle->ptrRadius())), -2.0);
+    // At the solution both independent rows must retain their rank.
+    first->x() = -2; second->x() = 8;
+    EXPECT_NEAR(system.residuals().norm(), 0.0, 1e-12);
+    EXPECT_EQ(system.diagnose(), SystemStatus::UNDER_CONSTRAINED);
 }
 
 TEST_F(RequirementSystemTest, AddLineLineParallel) {

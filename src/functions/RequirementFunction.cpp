@@ -1,6 +1,7 @@
 #include "functions/RequirementFunction.h"
 #include <stdexcept>
 #include <cmath>
+#include <algorithm>
 
 namespace {
 
@@ -231,107 +232,44 @@ OurPaintDCM::Function::LineCircleDistanceFunction::LineCircleDistanceFunction(
 }
 
 double OurPaintDCM::Function::LineCircleDistanceFunction::evaluate() const {
-    double x1 = *_vars[0];
-    double y1 = *_vars[1];
-    double x2 = *_vars[2];
-    double y2 = *_vars[3];
-    double cx = *_vars[4];
-    double cy = *_vars[5];
-    double r = *_vars[6];
-    double dx = x2 - x1;
-    double dy = y2 - y1;
-    double line_len2 = dx * dx + dy * dy;
-
-    if (line_len2 < 1e-10) {
-        double dist = std::sqrt((cx - x1) * (cx - x1) + (cy - y1) * (cy - y1));
-        return dist - r;
-    }
-
-    double t = ((cx - x1) * dx + (cy - y1) * dy) / line_len2;
-
-    t = std::max(0.0, std::min(1.0, t));
-
-    double px = x1 + t * dx;
-    double py = y1 + t * dy;
-
-    double dist = std::sqrt((cx - px) * (cx - px) + (cy - py) * (cy - py));
-
-    return dist - r;
+    const double dx = *_vars[2] - *_vars[0];
+    const double dy = *_vars[3] - *_vars[1];
+    const double lengthSquared = dx * dx + dy * dy;
+    const double t = lengthSquared > kGeometryEpsilon * kGeometryEpsilon
+        ? std::clamp(((*_vars[4] - *_vars[0]) * dx + (*_vars[5] - *_vars[1]) * dy)
+                         / lengthSquared, 0.0, 1.0)
+        : 0.0;
+    return std::hypot(*_vars[0] + t * dx - *_vars[4],
+                      *_vars[1] + t * dy - *_vars[5]) - *_vars[6] - _distance;
 }
 
-
 std::unordered_map<VAR, double> OurPaintDCM::Function::LineCircleDistanceFunction::gradient() const {
-    std::unordered_map<VAR, double> grad;
-
-    double x1 = *_vars[0];
-    double y1 = *_vars[1];
-    double x2 = *_vars[2];
-    double y2 = *_vars[3];
-    double cx = *_vars[4];
-    double cy = *_vars[5];
-    double r = *_vars[6];
-
-    double dx = x2 - x1;
-    double dy = y2 - y1;
-    double line_len2 = dx * dx + dy * dy;
-
-    double px, py;
-    double t;
-
-    if (line_len2 < 1e-10) {
-        px = x1;
-        py = y1;
-        t = 0.0;
-    } else {
-        t = ((cx - x1) * dx + (cy - y1) * dy) / line_len2;
-        t = std::max(0.0, std::min(1.0, t));
-        px = x1 + t * dx;
-        py = y1 + t * dy;
+    const double dx = *_vars[2] - *_vars[0];
+    const double dy = *_vars[3] - *_vars[1];
+    const double lengthSquared = dx * dx + dy * dy;
+    const double t = lengthSquared > kGeometryEpsilon * kGeometryEpsilon
+        ? std::clamp(((*_vars[4] - *_vars[0]) * dx + (*_vars[5] - *_vars[1]) * dy)
+                         / lengthSquared, 0.0, 1.0)
+        : 0.0;
+    const double diffX = *_vars[0] + t * dx - *_vars[4];
+    const double diffY = *_vars[1] + t * dy - *_vars[5];
+    const double distance = std::hypot(diffX, diffY);
+    auto grad = makeZeroGradient(_vars);
+    // At zero distance the position derivative is undefined; use the zero subgradient.
+    // The radius derivative is still -1, including at a collapsed segment.
+    if (distance > kGeometryEpsilon) {
+        const double nx = diffX / distance;
+        const double ny = diffY / distance;
+        // For an interior projection the normal is perpendicular to the segment,
+        // so derivatives of t cancel. At either endpoint t is clamped and constant.
+        grad[_vars[0]] += (1.0 - t) * nx;
+        grad[_vars[1]] += (1.0 - t) * ny;
+        grad[_vars[2]] += t * nx;
+        grad[_vars[3]] += t * ny;
+        grad[_vars[4]] -= nx;
+        grad[_vars[5]] -= ny;
     }
-
-    double diff_x = px - cx;
-    double diff_y = py - cy;
-    double dist = std::sqrt(diff_x * diff_x + diff_y * diff_y);
-
-    if (dist < 1e-10) {
-        grad[_vars[0]] = 0.0;
-        grad[_vars[1]] = 0.0;
-        grad[_vars[2]] = 0.0;
-        grad[_vars[3]] = 0.0;
-        grad[_vars[4]] = 0.0;
-        grad[_vars[5]] = 0.0;
-        grad[_vars[6]] = 0.0;
-        return grad;
-    }
-
-    double dfdpx = diff_x / dist;
-    double dfdpy = diff_y / dist;
-
-    double dt_dx1 = (t == 0.0) ? 0.0 : ((cx - x1) * (-1) - dx * t) / line_len2;
-    double dt_dy1 = (t == 0.0) ? 0.0 : ((cy - y1) * (-1) - dy * t) / line_len2;
-    double dt_dx2 = (t == 1.0) ? 0.0 : (dx * (1 - t)) / line_len2;
-    double dt_dy2 = (t == 1.0) ? 0.0 : (dy * (1 - t)) / line_len2;
-
-    double dpx_dx1 = (t < 1.0 && t > 0.0) ? 1.0 + dt_dx1 * dx - t : 1.0;
-    double dpx_dy1 = dt_dy1 * dx;
-    double dpx_dx2 = dt_dx2 * dx + t;
-    double dpx_dy2 = dt_dy2 * dx;
-
-    double dpy_dx1 = dt_dx1 * dy;
-    double dpy_dy1 = 1.0 + dt_dy1 * dy - t;
-    double dpy_dx2 = dt_dx2 * dy;
-    double dpy_dy2 = dt_dy2 * dy + t;
-
-    grad[_vars[0]] += dfdpx * dpx_dx1 + dfdpy * dpy_dx1; // L1x
-    grad[_vars[1]] += dfdpx * dpx_dy1 + dfdpy * dpy_dy1; // L1y
-    grad[_vars[2]] += dfdpx * dpx_dx2 + dfdpy * dpy_dx2; // L2x
-    grad[_vars[3]] += dfdpx * dpx_dy2 + dfdpy * dpy_dy2; // L2y
-
-    grad[_vars[4]] += -dfdpx; // Cx
-    grad[_vars[5]] += -dfdpy; // Cy
-
-    grad[_vars[6]] += -1.0; // df/dR = -1
-
+    grad[_vars[6]] -= 1.0;
     return grad;
 }
 
@@ -339,75 +277,71 @@ size_t OurPaintDCM::Function::LineCircleDistanceFunction::getVarCount() const {
     return 7;
 }
 
+OurPaintDCM::Function::PointOnCircleFunction::PointOnCircleFunction(const std::vector<VAR>& vars)
+    : RequirementFunction(Utils::RequirementType::ET_LINEONCIRCLE, vars) {
+    if (vars.size() != 5) {
+        throw std::invalid_argument("This function must have 5 variables");
+    }
+}
+
+double OurPaintDCM::Function::PointOnCircleFunction::evaluate() const {
+    return std::hypot(*_vars[0] - *_vars[2], *_vars[1] - *_vars[3]) - *_vars[4];
+}
+
+std::unordered_map<VAR, double> OurPaintDCM::Function::PointOnCircleFunction::gradient() const {
+    const double dx = *_vars[0] - *_vars[2];
+    const double dy = *_vars[1] - *_vars[3];
+    const double distance = std::hypot(dx, dy);
+    auto grad = makeZeroGradient(_vars);
+    if (distance > kGeometryEpsilon) {
+        grad[_vars[0]] += dx / distance;
+        grad[_vars[1]] += dy / distance;
+        grad[_vars[2]] -= dx / distance;
+        grad[_vars[3]] -= dy / distance;
+    }
+    grad[_vars[4]] -= 1.0;
+    return grad;
+}
+
+size_t OurPaintDCM::Function::PointOnCircleFunction::getVarCount() const {
+    return 5;
+}
+
 //LineOnCircleFunction Requirement
 OurPaintDCM::Function::LineOnCircleFunction::LineOnCircleFunction(
-    const std::vector<VAR> &vars) : RequirementFunction(
-    Utils::RequirementType::ET_LINEONCIRCLE, vars) {
+    const std::vector<VAR>& vars) : RequirementFunction(Utils::RequirementType::ET_LINEONCIRCLE, vars) {
     if (vars.size() != 7) {
         throw std::invalid_argument("This function must have 7 variables");
     }
 }
 
 double OurPaintDCM::Function::LineOnCircleFunction::evaluate() const {
-    double x1 = *_vars[0];
-    double y1 = *_vars[1];
-    double x2 = *_vars[2];
-    double y2 = *_vars[3];
-    double cx = *_vars[4];
-    double cy = *_vars[5];
-    double r = *_vars[6];
-
-    double dx1 = x1 - cx;
-    double dy1 = y1 - cy;
-    double dx2 = x2 - cx;
-    double dy2 = y2 - cy;
-
-    double dist1 = std::sqrt(dx1 * dx1 + dy1 * dy1);
-    double dist2 = std::sqrt(dx2 * dx2 + dy2 * dy2);
-
-    return (dist1 - r) + (dist2 - r);
+    const PointOnCircleFunction first({_vars[0], _vars[1], _vars[4], _vars[5], _vars[6]});
+    const PointOnCircleFunction second({_vars[2], _vars[3], _vars[4], _vars[5], _vars[6]});
+    return std::hypot(first.evaluate(), second.evaluate());
 }
 
 std::unordered_map<VAR, double> OurPaintDCM::Function::LineOnCircleFunction::gradient() const {
-    std::unordered_map<VAR, double> grad;
-
-    double x1 = *_vars[0];
-    double y1 = *_vars[1];
-    double x2 = *_vars[2];
-    double y2 = *_vars[3];
-    double cx = *_vars[4];
-    double cy = *_vars[5];
-    double r = *_vars[6];
-
-    double dx1 = x1 - cx;
-    double dy1 = y1 - cy;
-    double dist1 = std::sqrt(dx1 * dx1 + dy1 * dy1);
-
-    double dx2 = x2 - cx;
-    double dy2 = y2 - cy;
-    double dist2 = std::sqrt(dx2 * dx2 + dy2 * dy2);
-
-    if (dist1 < 1e-10) dist1 = 1e-10;
-    if (dist2 < 1e-10) dist2 = 1e-10;
-
-    grad[_vars[0]] += dx1 / dist1; // d/dL1x
-    grad[_vars[1]] += dy1 / dist1; // d/dL1y
-
-    grad[_vars[2]] += dx2 / dist2; // d/dL2x
-    grad[_vars[3]] += dy2 / dist2; // d/dL2y
-
-    grad[_vars[4]] += -(dx1 / dist1 + dx2 / dist2); // d/dCx
-    grad[_vars[5]] += -(dy1 / dist1 + dy2 / dist2); // d/dCy
-
-    grad[_vars[6]] += -2.0;
-
+    const PointOnCircleFunction first({_vars[0], _vars[1], _vars[4], _vars[5], _vars[6]});
+    const PointOnCircleFunction second({_vars[2], _vars[3], _vars[4], _vars[5], _vars[6]});
+    const double firstResidual = first.evaluate();
+    const double secondResidual = second.evaluate();
+    const double norm = std::hypot(firstResidual, secondResidual);
+    auto grad = makeZeroGradient(_vars);
+    if (norm > kGeometryEpsilon) {
+        for (const auto& [var, derivative] : first.gradient()) {
+            grad[var] += firstResidual / norm * derivative;
+        }
+        for (const auto& [var, derivative] : second.gradient()) {
+            grad[var] += secondResidual / norm * derivative;
+        }
+    }
     return grad;
 }
 
 size_t OurPaintDCM::Function::LineOnCircleFunction::getVarCount() const {
     return 7;
 }
-
 //LineLineParallelFunction Requirement
 OurPaintDCM::Function::LineLineParallelFunction::LineLineParallelFunction(
     const std::vector<VAR> &vars) : RequirementFunction(
