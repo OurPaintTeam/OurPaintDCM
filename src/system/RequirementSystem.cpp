@@ -238,8 +238,11 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
             case Utils::RequirementType::ET_LINEONCIRCLE: {
                 const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
                 const auto [center, radius] = resolveCircleData(ids[1]);
-                addFunction(std::make_shared<Function::LineOnCircleFunction>(
-                    makeLineCircleVars(lineP1, lineP2, center, radius)));
+                for (auto* endpoint : {lineP1, lineP2}) {
+                    addFunction(std::make_shared<Function::PointOnCircleFunction>(
+                        std::vector<VAR>{endpoint->ptrX(), endpoint->ptrY(),
+                                         center->ptrX(), center->ptrY(), radius}));
+                }
                 break;
             }
             case Utils::RequirementType::ET_LINEINCIRCLE:

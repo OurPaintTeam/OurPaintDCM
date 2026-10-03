@@ -94,6 +94,76 @@ TEST(PointOnLineFunctionTest, EvaluateAndGradientNonAxisAligned) {
 }
 
 // ======== LineLineParallelFunction ========
+TEST(LineCircleDistanceFunctionTest, UsesTargetAndClampsClosestPointToSegment) {
+    double x1 = 4, y1 = 3, x2 = 10, y2 = 6, cx = 0, cy = 0, r = 2;
+    const std::vector<VAR> vars = {&x1, &y1, &x2, &y2, &cx, &cy, &r};
+    LineCircleDistanceFunction f(vars, 3.0);
+    EQ(f.evaluate(), 0.0); // Closest point is the first endpoint, five units from center.
+    expectGradientsNear(f.gradient(), finiteDifferenceGradient(f, vars), vars);
+
+    cx = 14; cy = 9; // Closest point is the second endpoint.
+    EQ(f.evaluate(), 0.0);
+    expectGradientsNear(f.gradient(), finiteDifferenceGradient(f, vars), vars);
+
+    cx = 5; cy = 7; // Interior projection on a non-axis-aligned segment.
+    EQ(f.evaluate(), std::abs(6.0 * 4.0 - 3.0 * 1.0) / std::hypot(6.0, 3.0) - 5.0);
+    expectGradientsNear(f.gradient(), finiteDifferenceGradient(f, vars), vars);
+}
+
+TEST(LineCircleDistanceFunctionTest, DegenerateSegmentAndCenterOnSegmentKeepRadiusDerivative) {
+    double x1 = 4, y1 = 6, x2 = 4, y2 = 6, cx = 1, cy = 2, r = 2;
+    const std::vector<VAR> vars = {&x1, &y1, &x2, &y2, &cx, &cy, &r};
+    LineCircleDistanceFunction f(vars, 3.0);
+    EQ(f.evaluate(), 0.0);
+    auto gradient = f.gradient();
+    EQ(gradient[&x1], 0.6);
+    EQ(gradient[&y1], 0.8);
+    EQ(gradient[&x2], 0.0);
+    EQ(gradient[&y2], 0.0);
+    EQ(gradient[&r], -1.0);
+
+    x1 = 0; y1 = 2; x2 = 3; y2 = 2;
+    EQ(f.evaluate(), -5.0);
+    gradient = f.gradient();
+    EQ(gradient[&r], -1.0);
+    for (const auto& [variable, derivative] : gradient) {
+        EXPECT_TRUE(std::isfinite(derivative));
+    }
+}
+
+TEST(LineOnCircleFunctionTest, OppositeEndpointErrorsCannotCancel) {
+    double x1 = 6, y1 = 7, x2 = 10, y2 = 7, cx = 3, cy = 7, r = 5;
+    const std::vector<VAR> vars = {&x1, &y1, &x2, &y2, &cx, &cy, &r};
+    LineOnCircleFunction f(vars);
+    EQ(f.evaluate(), std::sqrt(8.0));
+    expectGradientsNear(f.gradient(), finiteDifferenceGradient(f, vars), vars);
+    x1 = -2; x2 = 8;
+    EQ(f.evaluate(), 0.0);
+}
+
+TEST(LineCircleDistanceFunctionTest, SharedCenterCoordinatesAccumulateGradient) {
+    double ax = 3, ay = 7, bx = 9, by = 11, radius = 2;
+    const std::vector<VAR> vars = {&ax, &ay, &bx, &by, &ax, &ay, &radius};
+    LineCircleDistanceFunction f(vars, 1.0);
+    EQ(f.evaluate(), -3.0);
+    expectGradientsNear(f.gradient(), finiteDifferenceGradient(f, vars), vars);
+    LineOnCircleFunction onCircle(vars);
+    expectGradientsNear(onCircle.gradient(), finiteDifferenceGradient(onCircle, vars), vars);
+}
+
+TEST(PointOnCircleFunctionTest, CenterRadiusAndSharedCoordinatesMatchFiniteDifferences) {
+    double px = 6, py = 11, cx = 3, cy = 7, radius = 5;
+    const std::vector<VAR> vars = {&px, &py, &cx, &cy, &radius};
+    PointOnCircleFunction f(vars);
+    EQ(f.evaluate(), 0.0);
+    expectGradientsNear(f.gradient(), finiteDifferenceGradient(f, vars), vars);
+    radius = 4;
+    EQ(f.evaluate(), 1.0);
+    const std::vector<VAR> sharedVars = {&cx, &cy, &cx, &cy, &radius};
+    PointOnCircleFunction shared(sharedVars);
+    expectGradientsNear(shared.gradient(), finiteDifferenceGradient(shared, sharedVars), sharedVars);
+}
+
 TEST(LineLineParallelFunctionTest, Evaluate) {
     double x1 = 0, y1 = 0, x2 = 1, y2 = 0;
     double x3 = 0, y3 = 1, x4 = 1, y4 = 1;

@@ -1,0 +1,21 @@
+# ninja log v7
+2	71	8124686459543660	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-mkdir	50b9ce18197abd35
+2	71	8124686459543660	C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-mkdir	50b9ce18197abd35
+71	4807	8124686506911782	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-download	80987aaa86f524b
+71	4807	8124686506911782	C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-download	80987aaa86f524b
+4808	4983	8124686506981352	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-update	51c8bd8eee147fea
+4808	4983	8124686506981352	C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-update	51c8bd8eee147fea
+4983	5046	8124686509303103	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-patch	94763806985eb16a
+4983	5046	8124686509303103	C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-patch	94763806985eb16a
+5046	5108	8124686509927014	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-configure	576e655b231fcb66
+5046	5108	8124686509927014	C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-configure	576e655b231fcb66
+5108	5172	8124686510565313	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-build	a7181382bccc9b7b
+5108	5172	8124686510565313	C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-build	a7181382bccc9b7b
+5173	5238	8124686511224658	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-install	e2dbfa2d6fd02b06
+5173	5238	8124686511224658	C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-install	e2dbfa2d6fd02b06
+5239	5304	8124686511879369	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-test	95160b11caf8f884
+5239	5304	8124686511879369	C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-test	95160b11caf8f884
+5305	5407	8124686512891758	CMakeFiles/googletest-populate-complete	867124ef0d8e2272
+5305	5407	8124686512891758	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-done	867124ef0d8e2272
+5305	5407	8124686512891758	C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/googletest-subbuild/CMakeFiles/googletest-populate-complete	867124ef0d8e2272
+5305	5407	8124686512891758	C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-done	867124ef0d8e2272

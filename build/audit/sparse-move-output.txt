@@ -1,0 +1,3 @@
+sparse.original.solution=1,1
+C:/msys64/ucrt64/include/c++/16.2.0/bits/stl_vector.h:1272: constexpr std::vector<_Tp, _Alloc>::const_reference std::vector<_Tp, _Alloc>::operator[](size_type) const [with _Tp = double; _Alloc = std::allocator<double>; const_reference = const double&; size_type = long long unsigned int]: Assertion '__n < this->size()' failed.
+exit_code=3221226505

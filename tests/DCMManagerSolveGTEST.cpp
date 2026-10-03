@@ -15,6 +15,134 @@ protected:
     DCMManager manager;
 };
 
+TEST(DCMManagerLineCircleSolveTest, SolvesRequestedGapWithClosestPointInEachRegion) {
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL}) {
+        for (const double centerX : {-5.0, 3.0, 12.0}) {
+            SCOPED_TRACE(static_cast<int>(mode));
+            SCOPED_TRACE(centerX);
+            DCMManager manager;
+            const auto line = manager.addFigure(FigureDescriptor::line(0.0, 0.0, 6.0, 0.0));
+            const auto center = manager.addFigure(FigureDescriptor::point(centerX, 4.0));
+            const auto circle = manager.addFigure(FigureDescriptor::circle(center, 1.0));
+            manager.addRequirement(RequirementDescriptor::fixLine(line));
+            manager.addRequirement(RequirementDescriptor::fixPoint(center));
+            manager.addRequirement(RequirementDescriptor::lineCircleDist(line, circle, 2.0));
+            manager.setSolveMode(mode);
+            const auto component = manager.getComponentForFigure(line);
+            ASSERT_TRUE(component);
+            const bool success = manager.solve(*component);
+            const auto solved = manager.getFigure(circle);
+            ASSERT_TRUE(solved && solved->radius);
+            EXPECT_TRUE(success) << "radius=" << *solved->radius;
+            const double nearestX = std::clamp(centerX, 0.0, 6.0);
+            EXPECT_NEAR(std::hypot(centerX - nearestX, 4.0) - *solved->radius, 2.0, 1e-6);
+            EXPECT_TRUE(manager.solve(*component));
+            EXPECT_TRUE(manager.solve(*component, 1e-10));
+            const auto refined = manager.getFigure(circle);
+            ASSERT_TRUE(refined && refined->radius);
+            EXPECT_NEAR(std::hypot(centerX - nearestX, 4.0) - *refined->radius, 2.0, 1e-10);
+        }
+    }
+}
+
+TEST(DCMManagerLineCircleSolveTest, BothEndpointsMustIndependentlyLieOnCircle) {
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL}) {
+        for (const bool fixLine : {false, true}) {
+            SCOPED_TRACE(static_cast<int>(mode));
+            SCOPED_TRACE(fixLine);
+            DCMManager manager;
+            const auto center = manager.addFigure(FigureDescriptor::point(3.0, 7.0));
+            const auto circle = manager.addFigure(FigureDescriptor::circle(center, 5.0));
+            const auto line = manager.addFigure(FigureDescriptor::line(6.0, 7.0, 10.0, 7.0));
+            manager.addRequirement(RequirementDescriptor::fixCircle(circle));
+            if (fixLine) manager.addRequirement(RequirementDescriptor::fixLine(line));
+            auto requirement = RequirementDescriptor::lineOnCircle(line, circle);
+            requirement.weight = 2.0;
+            manager.addRequirement(requirement);
+            manager.setSolveMode(mode);
+            const auto component = manager.getComponentForFigure(line);
+            ASSERT_TRUE(component);
+            EXPECT_EQ(manager.solve(*component), !fixLine);
+            if (!fixLine) {
+                const auto solvedLine = manager.getFigure(line);
+                ASSERT_TRUE(solvedLine);
+                for (const auto id : solvedLine->pointIds) {
+                    const auto point = manager.getFigure(id);
+                    ASSERT_TRUE(point);
+                    EXPECT_NEAR(std::hypot(*point->x - 3.0, *point->y - 7.0), 5.0, 1e-6);
+                }
+                EXPECT_TRUE(manager.solve(*component));
+            }
+        }
+    }
+}
+
+TEST(DCMManagerLineCircleSolveTest, MovesSegmentToRequestedGapFromFixedCircle) {
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL}) {
+        for (const double centerX : {-5.0, 3.0, 12.0}) {
+            SCOPED_TRACE(static_cast<int>(mode));
+            SCOPED_TRACE(centerX);
+            DCMManager manager;
+            const auto line = manager.addFigure(FigureDescriptor::line(0.0, 0.0, 6.0, 0.0));
+            const auto circle = manager.addFigure(FigureDescriptor::circle(centerX, 4.0, 1.0));
+            manager.addRequirement(RequirementDescriptor::fixCircle(circle));
+            manager.addRequirement(RequirementDescriptor::horizontal(line));
+            manager.addRequirement(RequirementDescriptor::lineCircleDist(line, circle, 2.0));
+            manager.setSolveMode(mode);
+            const auto component = manager.getComponentForFigure(line);
+            ASSERT_TRUE(component);
+            ASSERT_TRUE(manager.solve(*component));
+            const auto solved = manager.getFigure(line);
+            ASSERT_TRUE(solved);
+            const auto first = manager.getFigure(solved->pointIds[0]);
+            const auto second = manager.getFigure(solved->pointIds[1]);
+            ASSERT_TRUE(first && second);
+            const double dx = *second->x - *first->x;
+            const double dy = *second->y - *first->y;
+            const double lengthSquared = dx * dx + dy * dy;
+            ASSERT_GT(lengthSquared, 1e-12);
+            const double t = std::clamp(((centerX - *first->x) * dx + (4.0 - *first->y) * dy)
+                                           / lengthSquared, 0.0, 1.0);
+            EXPECT_NEAR(std::hypot(*first->x + t * dx - centerX, *first->y + t * dy - 4.0),
+                        3.0, 1e-6);
+            EXPECT_NEAR(dy, 0.0, 1e-6);
+        }
+    }
+}
+
+TEST_F(DCMManagerSolveTest, DragMode_RepeatedMovesAndAbruptJumpStayStable) {
+    const auto dragged = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    const auto following = manager.addFigure(FigureDescriptor::point(3.0, 4.0));
+    manager.addRequirement(RequirementDescriptor::pointPointDist(dragged, following, 5.0));
+    manager.setSolveMode(SolveMode::DRAG);
+
+    for (int event = 0; event < 150; ++event) {
+        SCOPED_TRACE(event);
+        const double offset = event < 120 ? 0.0 : 1000.0;
+        const double x = offset + 0.1 * event;
+        const double y = -offset + std::sin(0.1 * event);
+        ASSERT_NO_THROW(manager.updatePoint(PointUpdateDescriptor(dragged, x, y)));
+        const auto a = manager.getFigure(dragged);
+        const auto b = manager.getFigure(following);
+        ASSERT_TRUE(a && b);
+        EXPECT_NEAR(a->x.value(), x, 1e-9);
+        EXPECT_NEAR(a->y.value(), y, 1e-9);
+        EXPECT_TRUE(std::isfinite(b->x.value()));
+        EXPECT_TRUE(std::isfinite(b->y.value()));
+        EXPECT_NEAR(std::hypot(b->x.value() - x, b->y.value() - y), 5.0, 1e-6);
+    }
+}
+
+TEST_F(DCMManagerSolveTest, NonzeroResidualAtStationaryPointDoesNotReportSolved) {
+    const auto line = manager.addFigure(FigureDescriptor::line(0.0, 0.0, 0.0, 0.0));
+    // A zero-length line has a zero Jacobian here, but violates the distance.
+    const auto descriptor = manager.getFigure(line);
+    ASSERT_TRUE(descriptor);
+    manager.addRequirement(RequirementDescriptor::pointPointDist(
+        descriptor->pointIds[0], descriptor->pointIds[1], 5.0));
+    EXPECT_FALSE(manager.solve());
+}
+
 TEST(DCMManagerSharedPointSolveTest, LineConstraintsSolveWithOneSharedEndpoint) {
     enum class Constraint { Parallel, Perpendicular, Angle };
     const double targetAngle = std::acos(-1.0) / 3.0;

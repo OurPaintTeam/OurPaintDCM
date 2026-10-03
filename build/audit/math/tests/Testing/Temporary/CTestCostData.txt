@@ -1,0 +1,23 @@
+ErrorFunctionsTests 3 1.66459
+FunctionTest 3 1.21706
+SparseMatrixComparisonTests 2 3.04175
+SparseMatrixTests 2 1.39232
+TestsMatrix 2 1.70522
+SparseQRTests 3 0.130944
+SparseQrColamdTests 2 1.40907
+TestsQR 2 1.91046
+graphgtests 2 1.62618
+LSMTaskTest 0 0
+TaskTest 3 1.4848
+GradientOptimizerTest 2 1.67281
+LMTest 3 1.91712
+NewtonGaussSolverTests 2 1.97466
+NewtonOptimizerTest 2 1.75929
+OurLMTest 3 1.5627
+SparseLevenbergMarquardtSolverTest 3 0.994948
+AdamOptimizerTest 2 1.06181
+SGDOptimizerTest 2 0.807706
+QRPerformanceTests 1 2.07897
+SparseQRPerformanceTests 1 591.107
+SparseLMComparisonPerformanceTests 1 2.76299
+---

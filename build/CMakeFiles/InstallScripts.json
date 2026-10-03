@@ -1,0 +1,28 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/cmake_install.cmake",
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/math/cmake_install.cmake",
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/eigen-build/cmake_install.cmake",
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/eigen-build/doc/cmake_install.cmake",
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/eigen-build/doc/examples/cmake_install.cmake",
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/eigen-build/doc/special_examples/cmake_install.cmake",
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/eigen-build/doc/snippets/cmake_install.cmake",
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/eigen-build/blas/cmake_install.cmake",
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/eigen-build/lapack/cmake_install.cmake",
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/eigen-build/unsupported/cmake_install.cmake",
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/eigen-build/unsupported/Eigen/cmake_install.cmake",
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/eigen-build/unsupported/Eigen/CXX11/cmake_install.cmake",
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/eigen-build/unsupported/doc/cmake_install.cmake",
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/eigen-build/unsupported/doc/examples/cmake_install.cmake",
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/eigen-build/unsupported/doc/snippets/cmake_install.cmake",
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/eigen-build/demos/cmake_install.cmake",
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/eigen-build/scripts/cmake_install.cmake",
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/math/tests/cmake_install.cmake",
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/googletest-build/cmake_install.cmake",
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/googletest-build/googlemock/cmake_install.cmake",
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/_deps/googletest-build/googletest/cmake_install.cmake",
+		"C:/Users/Killu/Documents/Codex/2026-09-30/new-chat/work/ourpaintdcm/build/tests/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
