@@ -163,6 +163,11 @@ DCMManager::Snapshot DCMManager::snapshot() const {
 }
 
 void DCMManager::restoreSnapshot(const Snapshot& state) {
+    for (const auto& figure : state._figures) figure.validate();
+    for (const auto& requirement : state._requirements) requirement.validate();
+    for (const auto& [id, targets] : state._fixedRequirementTargets) {
+        Utils::requireFiniteValues(targets);
+    }
     clear();
 
     for (const auto& figure : state._figures) {
@@ -457,12 +462,17 @@ void DCMManager::solveDragUpdates(const BatchUpdateContext& context) {
 }
 
 void DCMManager::validatePointUpdate(const Utils::PointUpdateDescriptor& descriptor) const {
+    Utils::requireFinite(descriptor.newX);
+    Utils::requireFinite(descriptor.newY);
     if (_storage.get<Figures::Point2D>(descriptor.pointId) == nullptr) {
         throw std::runtime_error("Point not found");
     }
 }
 
 void DCMManager::validateLineUpdate(const Utils::LineUpdateDescriptor& descriptor) const {
+    for (const auto& value : {descriptor.newX1, descriptor.newY1, descriptor.newX2, descriptor.newY2}) {
+        Utils::requireFinite(value);
+    }
     if (_storage.get<Figures::Line2D>(descriptor.lineId) == nullptr) {
         throw std::runtime_error("Line not found");
     }
@@ -472,6 +482,10 @@ void DCMManager::validateLineUpdate(const Utils::LineUpdateDescriptor& descripto
 }
 
 void DCMManager::validateCircleUpdate(const Utils::CircleUpdateDescriptor& descriptor) const {
+    Utils::requireFinite(descriptor.newCenterX);
+    Utils::requireFinite(descriptor.newCenterY);
+    Utils::requireNonNegative(descriptor.newRadius);
+    if (descriptor.hasRadiusUpdate()) Utils::requirePositiveRadius(descriptor.newRadius);
     if (_storage.get<Figures::Circle2D>(descriptor.circleId) == nullptr) {
         throw std::runtime_error("Circle not found");
     }
@@ -481,6 +495,10 @@ void DCMManager::validateCircleUpdate(const Utils::CircleUpdateDescriptor& descr
 }
 
 void DCMManager::validateArcUpdate(const Utils::ArcUpdateDescriptor& descriptor) const {
+    for (const auto& value : {descriptor.newX1, descriptor.newY1, descriptor.newX2, descriptor.newY2,
+                              descriptor.newCenterX, descriptor.newCenterY}) {
+        Utils::requireFinite(value);
+    }
     if (_storage.get<Figures::Arc2D>(descriptor.arcId) == nullptr) {
         throw std::runtime_error("Arc not found");
     }
@@ -490,6 +508,10 @@ void DCMManager::validateArcUpdate(const Utils::ArcUpdateDescriptor& descriptor)
 }
 
 void DCMManager::validateFigureUpdate(const Utils::FigureUpdateDescriptor& descriptor) const {
+    Utils::requireFiniteValues(descriptor.coords);
+    Utils::requireFinite(descriptor.x);
+    Utils::requireFinite(descriptor.y);
+    if (descriptor.radius) Utils::requirePositiveRadius(*descriptor.radius);
     const auto storedType = _storage.getType(descriptor.figureId);
     if (!storedType.has_value()) {
         throw std::runtime_error("Figure not found");
@@ -1064,6 +1086,9 @@ void DCMManager::updateRequirementParam(Utils::ID reqId, double newParam) {
         throw std::runtime_error("Requirement has no parameter");
     }
 
+    auto updated = it->second;
+    updated.param = newParam;
+    updated.validate();
     it->second.param = newParam;
     _reqSystemSyncedWithRecords = false;
     invalidateSolveCache();

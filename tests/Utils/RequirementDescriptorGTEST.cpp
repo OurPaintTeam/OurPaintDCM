@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <numbers>
 #include "RequirementDescriptor.h"
 #include <limits>
 
@@ -139,11 +140,11 @@ TEST(RequirementDescriptorTest, LineLinePerpendicular) {
 }
 
 TEST(RequirementDescriptorTest, LineLineAngle) {
-    auto desc = RequirementDescriptor::lineLineAngle(ID(19), ID(20), 45.0);
+    auto desc = RequirementDescriptor::lineLineAngle(ID(19), ID(20), std::numbers::pi / 4.0);
     
     EXPECT_EQ(desc.type, RequirementType::ET_LINELINEANGLE);
     EXPECT_EQ(desc.objectIds.size(), 2);
-    EXPECT_DOUBLE_EQ(desc.param.value(), 45.0);
+    EXPECT_DOUBLE_EQ(desc.param.value(), std::numbers::pi / 4.0);
 }
 
 TEST(RequirementDescriptorTest, Vertical) {
@@ -195,7 +196,7 @@ TEST(RequirementDescriptorTest, ValidateTwoObjectTypes) {
     auto desc6 = RequirementDescriptor::lineLinePerpendicular(ID(1), ID(2));
     EXPECT_TRUE(desc6.validate());
     
-    auto desc7 = RequirementDescriptor::lineLineAngle(ID(1), ID(2), 90.0);
+    auto desc7 = RequirementDescriptor::lineLineAngle(ID(1), ID(2), std::numbers::pi / 2.0);
     EXPECT_TRUE(desc7.validate());
 }
 
@@ -299,9 +300,8 @@ TEST(RequirementDescriptorTest, ZeroDistance) {
 }
 
 TEST(RequirementDescriptorTest, NegativeDistance) {
-    // Note: validation doesn't check for negative distance
     auto desc = RequirementDescriptor::pointPointDist(ID(1), ID(2), -10.0);
-    EXPECT_TRUE(desc.validate());  // Still valid structurally
+    EXPECT_THROW(desc.validate(), std::invalid_argument);
     EXPECT_DOUBLE_EQ(desc.param.value(), -10.0);
 }
 

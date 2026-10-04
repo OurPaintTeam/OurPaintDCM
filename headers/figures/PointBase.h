@@ -2,6 +2,7 @@
 #define OURPAINTDCM_HEADERS_FIGURES_POINTBASE_H
 #include <array>
 #include <cstddef>
+#include "NumericValidation.h"
 namespace OurPaintDCM::Figures{
 	/**
 		 * @brief Generic base class for N-dimensional points.
@@ -35,7 +36,11 @@ namespace OurPaintDCM::Figures{
      		*
      		* @param values Array containing N coordinate values.
     		*/
-		constexpr PointBase(const std::array<double, N>& values) : coords(values) {}
+		constexpr PointBase(const std::array<double, N>& values) : coords(values) {
+            validate();
+        }
+
+        constexpr void validate() const { Utils::requireFiniteValues(coords); }
 		/**
 			 * @brief Access to coordinates by index with modify.
 			 * @param index Index of the coordinates

@@ -3,6 +3,7 @@
 
 #include "Enums.h"
 #include "ID.h"
+#include "NumericValidation.h"
 #include <vector>
 #include <optional>
 #include <stdexcept>
@@ -182,22 +183,10 @@ struct RequirementDescriptor {
                     throw std::invalid_argument("Requirement type requires exactly 1 object ID");
                 }
                 break;
-        }
-
-        // Check that param is provided for types that need it
-        switch (type) {
-            case RequirementType::ET_POINTLINEDIST:
-            case RequirementType::ET_POINTPOINTDIST:
-            case RequirementType::ET_LINECIRCLEDIST:
-            case RequirementType::ET_LINELINEANGLE:
-                if (!param.has_value()) {
-                    throw std::invalid_argument("Requirement type requires a parameter value");
-                }
-                break;
             default:
-                break;
+                throw std::invalid_argument("Unsupported requirement type");
         }
-
+        validateRequirementParameter(type, param);
         return true;
     }
 };

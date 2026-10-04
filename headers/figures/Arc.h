@@ -34,6 +34,12 @@ struct Arc {
         : p1(p1),
           p2(p2),
           p_center(p_center) {
+        if (p1 == nullptr || p2 == nullptr || p_center == nullptr) {
+            throw std::invalid_argument("Arc points must not be null");
+        }
+        p1->validate();
+        p2->validate();
+        p_center->validate();
     }
 };
 

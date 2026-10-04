@@ -76,6 +76,7 @@ OurPaintDCM::Function::PointLineDistanceFunction::PointLineDistanceFunction(
     if (vars.size() != 6) {
         throw std::invalid_argument("This function must have 6 variables");
     }
+    Utils::validateRequirementParameter(Utils::RequirementType::ET_POINTLINEDIST, dist);
     _distance = dist;
 }
 
@@ -119,6 +120,7 @@ OurPaintDCM::Function::PointPointDistanceFunction::PointPointDistanceFunction(
     if (vars.size() != 4) {
         throw std::invalid_argument("This function must have 4 variables");
     }
+    Utils::validateRequirementParameter(Utils::RequirementType::ET_POINTPOINTDIST, dist);
     _distance = dist;
 }
 
@@ -228,6 +230,7 @@ OurPaintDCM::Function::LineCircleDistanceFunction::LineCircleDistanceFunction(
     if (vars.size() != 7) {
         throw std::invalid_argument("This function must have 7 variables");
     }
+    Utils::validateRequirementParameter(Utils::RequirementType::ET_LINECIRCLEDIST, dist);
     _distance = dist;
 }
 
@@ -470,6 +473,7 @@ size_t OurPaintDCM::Function::LineLinePerpendicularFunction::getVarCount() const
 OurPaintDCM::Function::LineLineAngleFunction::LineLineAngleFunction(const std::vector<VAR> &vars,
                                                                     double angle) : RequirementFunction(
     Utils::RequirementType::ET_LINELINEANGLE, vars), _angle(angle) {
+    Utils::validateRequirementParameter(Utils::RequirementType::ET_LINELINEANGLE, angle);
     if (vars.size() != 8) {
         throw std::invalid_argument("This function must have 8 variables");
     }
@@ -729,6 +733,7 @@ size_t OurPaintDCM::Function::ArcCenterOnPerpendicularFunction::getVarCount() co
 OurPaintDCM::Function::FixCoordinateFunction::FixCoordinateFunction(
     Utils::RequirementType type, const std::vector<VAR>& vars, double target)
     : RequirementFunction(type, vars), _target(target) {
+    Utils::requireFinite(target);
     if (vars.size() != 1) {
         throw std::invalid_argument("This function must have 1 variable");
     }
