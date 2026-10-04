@@ -3,6 +3,7 @@
 
 #include "Enums.h"
 #include "ID.h"
+#include "NumericValidation.h"
 #include <vector>
 #include <optional>
 #include <stdexcept>
@@ -134,8 +135,15 @@ struct FigureDescriptor {
      * @throws std::invalid_argument if validation fails.
      */
     bool validate() const {
+        requireFiniteValues(coords);
+        requireFinite(x);
+        requireFinite(y);
+        if (radius) requirePositiveRadius(*radius);
         switch (type) {
             case FigureType::ET_POINT2D:
+                if (!coords.empty() && coords.size() != 2) {
+                    throw std::invalid_argument("Point requires exactly 2 coordinates");
+                }
                 if (coords.size() == 2) {
                     break;
                 }
@@ -144,6 +152,9 @@ struct FigureDescriptor {
                 }
                 break;
             case FigureType::ET_LINE:
+                if (!coords.empty() && coords.size() != 4) {
+                    throw std::invalid_argument("Line requires exactly 4 coordinates");
+                }
                 if (coords.size() == 4) {
                     break;
                 }
@@ -152,6 +163,9 @@ struct FigureDescriptor {
                 }
                 break;
             case FigureType::ET_CIRCLE:
+                if (!coords.empty() && coords.size() != 2) {
+                    throw std::invalid_argument("Circle requires exactly 2 center coordinates");
+                }
                 if (coords.size() != 2 && pointIds.size() != 1) {
                     throw std::invalid_argument("Circle requires center coordinates or exactly 1 center point ID");
                 }
@@ -160,6 +174,9 @@ struct FigureDescriptor {
                 }
                 break;
             case FigureType::ET_ARC:
+                if (!coords.empty() && coords.size() != 6) {
+                    throw std::invalid_argument("Arc requires exactly 6 coordinates");
+                }
                 if (coords.size() == 6) {
                     break;
                 }
@@ -167,6 +184,8 @@ struct FigureDescriptor {
                     throw std::invalid_argument("Arc requires coordinates or exactly 3 point IDs");
                 }
                 break;
+            default:
+                throw std::invalid_argument("Unsupported figure type");
         }
         return true;
     }

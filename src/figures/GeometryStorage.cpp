@@ -133,6 +133,8 @@ ID GeometryStorage::acquireID(std::optional<ID> requestedId) {
 }
 
 ID GeometryStorage::createPoint(double x, double y, std::optional<ID> requestedId) {
+    Utils::requireFinite(x);
+    Utils::requireFinite(y);
     const ID id = acquireID(requestedId);
     const std::size_t slot = allocPoint(x, y);
     m_index.emplace(id, FigureEntry{FigureType::ET_POINT2D, static_cast<std::uint32_t>(slot)});
@@ -151,6 +153,8 @@ std::optional<ID> GeometryStorage::createLine(ID p1, ID p2, std::optional<ID> re
     }
     Point2D* a = m_pointSlots[it1->second.slot].get();
     Point2D* b = m_pointSlots[it2->second.slot].get();
+    a->validate();
+    b->validate();
     const ID id = acquireID(requestedId);
     const std::size_t slot = allocLine(a, b);
     m_index.emplace(id, FigureEntry{FigureType::ET_LINE, static_cast<std::uint32_t>(slot)});
@@ -162,11 +166,13 @@ std::optional<ID> GeometryStorage::createLine(ID p1, ID p2, std::optional<ID> re
 std::optional<ID> GeometryStorage::createCircle(ID center,
                                                  double radius,
                                                  std::optional<ID> requestedId) {
+    Utils::requirePositiveRadius(radius);
     auto it = m_index.find(center);
     if (it == m_index.end() || it->second.type != FigureType::ET_POINT2D) {
         return std::nullopt;
     }
     Point2D* c = m_pointSlots[it->second.slot].get();
+    c->validate();
     const ID id = acquireID(requestedId);
     const std::size_t slot = allocCircle(c, radius);
     m_index.emplace(id, FigureEntry{FigureType::ET_CIRCLE, static_cast<std::uint32_t>(slot)});
@@ -193,6 +199,9 @@ std::optional<ID> GeometryStorage::createArc(ID p1,
     Point2D* a = m_pointSlots[it1->second.slot].get();
     Point2D* b = m_pointSlots[it2->second.slot].get();
     Point2D* c = m_pointSlots[itc->second.slot].get();
+    a->validate();
+    b->validate();
+    c->validate();
     const ID id = acquireID(requestedId);
     const std::size_t slot = allocArc(a, b, c);
     m_index.emplace(id, FigureEntry{FigureType::ET_ARC, static_cast<std::uint32_t>(slot)});
@@ -202,6 +211,15 @@ std::optional<ID> GeometryStorage::createArc(ID p1,
 }
 
 ID GeometryStorage::createFigure(FigureType type, const FigureData& data) {
+    // Validate all supplied numbers before creating any nested point or consuming an ID.
+    for (const auto& point : data.points) {
+        Utils::requireFinite(point.x);
+        Utils::requireFinite(point.y);
+    }
+    Utils::requireFinite(data.center.x);
+    Utils::requireFinite(data.center.y);
+    Utils::requireNonNegative(data.radius);
+    if (type == FigureType::ET_CIRCLE) Utils::requirePositiveRadius(data.radius);
     switch (type) {
         case FigureType::ET_POINT2D: {
             if (data.points.empty()) {

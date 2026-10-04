@@ -8,6 +8,7 @@
 #include <vector>
 #include "Enums.h"
 #include "ID.h"
+#include "NumericValidation.h"
 
 #define VAR double*
 
@@ -31,7 +32,16 @@ namespace OurPaintDCM::Function {
 
     public:
         RequirementFunction(Utils::RequirementType type, const std::vector<VAR>& vars)
-            : _t(type), _vars(vars) {}
+            : _t(type), _vars(vars) {
+            for (VAR variable : vars) {
+                if (variable == nullptr) throw std::invalid_argument("Constraint variable must not be null");
+                Utils::requireFinite(*variable);
+            }
+            if ((type == Utils::RequirementType::ET_LINECIRCLEDIST && vars.size() == 7) ||
+                (type == Utils::RequirementType::ET_LINEONCIRCLE && (vars.size() == 5 || vars.size() == 7))) {
+                Utils::requirePositiveRadius(*vars.back());
+            }
+        }
 
         virtual ~RequirementFunction() = default;
 

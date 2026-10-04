@@ -477,14 +477,26 @@ TEST_F(DCMManagerSolveTest, SolveRejectsInvalidResidualTolerance) {
 }
 
 TEST_F(DCMManagerSolveTest, SolveRejectsNonfiniteResidual) {
+    const auto p1 = manager.addFigure(FigureDescriptor::point(-1e200, 0.0));
+    const auto p2 = manager.addFigure(FigureDescriptor::point(1e200, 0.0));
+    manager.addRequirement(RequirementDescriptor::fixPoint(p1));
+    manager.addRequirement(RequirementDescriptor::fixPoint(p2));
+    manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 5.0));
+
+    EXPECT_FALSE(manager.solve());
+}
+
+TEST_F(DCMManagerSolveTest, RejectedNonfiniteParameterPreservesValidSolveState) {
     const auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
     const auto p2 = manager.addFigure(FigureDescriptor::point(5.0, 0.0));
     manager.addRequirement(RequirementDescriptor::fixPoint(p1));
     manager.addRequirement(RequirementDescriptor::fixPoint(p2));
     const auto distance = manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 5.0));
-    manager.updateRequirementParam(distance, std::numeric_limits<double>::quiet_NaN());
-
-    EXPECT_FALSE(manager.solve());
+    ASSERT_TRUE(manager.solve());
+    EXPECT_THROW(manager.updateRequirementParam(distance, std::numeric_limits<double>::quiet_NaN()),
+                 std::invalid_argument);
+    EXPECT_DOUBLE_EQ(*manager.getRequirement(distance)->param, 5.0);
+    EXPECT_TRUE(manager.solve());
 }
 
 TEST_F(DCMManagerSolveTest, SolveRejectsConflictingFixedTargetsOnAliasedPoints) {

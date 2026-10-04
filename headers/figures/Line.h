@@ -27,7 +27,11 @@ namespace OurPaintDCM::Figures{
             * @param p2 Pointer to the second point.
             */
         Line(PointT* p1, PointT* p2)
-            : p1(p1), p2(p2) {}
+            : p1(p1), p2(p2) {
+            if (p1 == nullptr || p2 == nullptr) throw std::invalid_argument("Line endpoints must not be null");
+            p1->validate();
+            p2->validate();
+        }
 
         /**
              * @brief Calculate the length of the line segment.
