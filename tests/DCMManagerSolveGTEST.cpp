@@ -15,6 +15,192 @@ protected:
     DCMManager manager;
 };
 
+TEST(DCMManagerSolveInvariantTest, NegativeRadiusIsRejectedAndOriginalGeometryIsRestored) {
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL, SolveMode::DRAG}) {
+        SCOPED_TRACE(static_cast<int>(mode));
+        DCMManager manager;
+        const auto line = manager.addFigure(FigureDescriptor::line(-2, 0, 2, 0));
+        const auto center = manager.addFigure(FigureDescriptor::point(0, 0));
+        const auto circle = manager.addFigure(FigureDescriptor::circle(center, 2));
+        const auto moving = manager.addFigure(FigureDescriptor::point(3, 0));
+        const auto alias = manager.addFigure(FigureDescriptor::point(3, 0));
+        manager.addRequirement(RequirementDescriptor::fixLine(line));
+        const auto fixedCenter = manager.addRequirement(RequirementDescriptor::fixPoint(center));
+        manager.addRequirement(RequirementDescriptor::lineCircleDist(line, circle, 1));
+        manager.addRequirement(RequirementDescriptor::pointPointDist(center, moving, 5));
+        manager.addRequirement(RequirementDescriptor::pointOnPoint(moving, alias));
+        const auto* originalCircle = manager.getStorage().get<Figures::Circle2D>(circle);
+        const auto figureCount = manager.figureCount();
+        manager.setSolveMode(mode);
+        const auto component = manager.getComponentForFigure(circle);
+        ASSERT_TRUE(component);
+
+        for (int attempt = 0; attempt < 2; ++attempt) {
+            EXPECT_FALSE(manager.solve(*component));
+            const auto restored = manager.getFigure(circle);
+            ASSERT_TRUE(restored && restored->radius);
+            EXPECT_DOUBLE_EQ(*restored->radius, 2.0);
+            EXPECT_EQ(manager.getStorage().get<Figures::Circle2D>(circle), originalCircle);
+            EXPECT_EQ(manager.figureCount(), figureCount);
+            const auto restoredCenter = manager.getFigure(center);
+            ASSERT_TRUE(restoredCenter);
+            EXPECT_DOUBLE_EQ(*restoredCenter->x, 0.0);
+            EXPECT_DOUBLE_EQ(*restoredCenter->y, 0.0);
+            for (const auto id : {moving, alias}) {
+                const auto restoredPoint = manager.getFigure(id);
+                ASSERT_TRUE(restoredPoint);
+                EXPECT_DOUBLE_EQ(*restoredPoint->x, 3.0);
+                EXPECT_DOUBLE_EQ(*restoredPoint->y, 0.0);
+            }
+            EXPECT_NO_THROW(manager.getRequirementSystem().J());
+            EXPECT_NO_THROW(manager.getRequirementSystem().diagnose());
+        }
+
+        manager.removeRequirement(fixedCenter);
+        manager.setSolveMode(SolveMode::GLOBAL);
+        manager.updatePoint({center, 0, 4});
+        manager.setSolveMode(mode);
+        const auto newComponent = manager.getComponentForFigure(circle);
+        ASSERT_TRUE(newComponent);
+        ASSERT_TRUE(manager.solve(*newComponent));
+        const auto validCircle = manager.getFigure(circle);
+        ASSERT_TRUE(validCircle && validCircle->radius);
+        EXPECT_GT(*validCircle->radius, 0.0);
+        EXPECT_TRUE(std::isfinite(*validCircle->radius));
+    }
+}
+
+namespace {
+
+// Exercise the transaction boundary with a constraint that simulates a numerical
+// failure while an optimizer candidate is applied to the shared geometry.
+class CorruptCandidateFunction final : public Function::RequirementFunction {
+    double _initial;
+    double _invalidValue;
+    bool _throw;
+public:
+    CorruptCandidateFunction(double* variable, double invalidValue, bool throwOnCandidate)
+        : RequirementFunction(RequirementType::ET_POINTPOINTDIST, {variable}),
+          _initial(*variable), _invalidValue(invalidValue), _throw(throwOnCandidate) {}
+    double evaluate() const override {
+        if (*_vars[0] != _initial) {
+            *_vars[0] = _invalidValue;
+            if (_throw) throw std::runtime_error("Injected optimizer evaluation failure");
+            return 0.0;
+        }
+        return -1.0;
+    }
+    std::unordered_map<VAR, double> gradient() const override { return {{_vars[0], 1.0}}; }
+    size_t getVarCount() const override { return 1; }
+};
+
+} // namespace
+
+TEST(DCMManagerSolveInvariantTest, NonfiniteCandidatesAndExceptionsRestoreAliasedPoints) {
+    for (const double invalid : {std::numeric_limits<double>::quiet_NaN(),
+                                 std::numeric_limits<double>::infinity(),
+                                 -std::numeric_limits<double>::infinity()}) {
+        for (const bool throwOnCandidate : {false, true}) {
+            SCOPED_TRACE(invalid);
+            SCOPED_TRACE(throwOnCandidate);
+            DCMManager manager;
+            const auto first = manager.addFigure(FigureDescriptor::point(1, 2));
+            const auto alias = manager.addFigure(FigureDescriptor::point(1, 2));
+            manager.addRequirement(RequirementDescriptor::pointOnPoint(first, alias));
+            auto* coordinate = manager.storage().get<Figures::Point2D>(first)->ptrX();
+            auto& system = const_cast<System::RequirementSystem&>(manager.getRequirementSystem());
+            system.addFunction(std::make_shared<CorruptCandidateFunction>(coordinate, invalid, throwOnCandidate));
+            if (throwOnCandidate) {
+                EXPECT_THROW(manager.solve(), std::runtime_error);
+            } else {
+                EXPECT_FALSE(manager.solve());
+            }
+            for (const auto pointId : {first, alias}) {
+                const auto point = manager.getFigure(pointId);
+                ASSERT_TRUE(point);
+                EXPECT_DOUBLE_EQ(*point->x, 1.0);
+                EXPECT_DOUBLE_EQ(*point->y, 2.0);
+            }
+        }
+    }
+}
+
+TEST(DCMManagerSolveInvariantTest, ZeroAndNonfiniteRadiusCandidatesAreRestored) {
+    for (const double invalid : {0.0, std::numeric_limits<double>::quiet_NaN(),
+                                 std::numeric_limits<double>::infinity()}) {
+        DCMManager manager;
+        const auto line = manager.addFigure(FigureDescriptor::line(-2, 0, 2, 0));
+        const auto circle = manager.addFigure(FigureDescriptor::circle(0, 4, 2));
+        auto disabled = RequirementDescriptor::lineCircleDist(line, circle, 2);
+        disabled.weight = 0;
+        manager.addRequirement(disabled);
+        auto* radius = manager.storage().get<Figures::Circle2D>(circle)->ptrRadius();
+        auto& system = const_cast<System::RequirementSystem&>(manager.getRequirementSystem());
+        system.addFunction(std::make_shared<CorruptCandidateFunction>(radius, invalid, false));
+        EXPECT_FALSE(manager.solve());
+        EXPECT_DOUBLE_EQ(*radius, 2.0);
+    }
+}
+
+TEST(DCMManagerSolveInvariantTest, EmptySystemChecksGeometryBeforeReportingSuccess) {
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL, SolveMode::DRAG}) {
+        SCOPED_TRACE(static_cast<int>(mode));
+        DCMManager manager;
+        manager.setSolveMode(mode);
+        EXPECT_TRUE(manager.solve()); // No figures and no constraints remains a valid empty system.
+        const auto circleId = manager.addFigure(FigureDescriptor::circle(1, 2, 3));
+        auto* circle = manager.storage().get<Figures::Circle2D>(circleId);
+        ASSERT_NE(circle, nullptr);
+        ASSERT_EQ(manager.requirementCount(), 0u);
+        const auto component = manager.getComponentForFigure(circleId);
+        ASSERT_TRUE(component);
+        EXPECT_TRUE(manager.solve());
+        for (const double invalid : {-1.0, 0.0, std::numeric_limits<double>::quiet_NaN(),
+                                     std::numeric_limits<double>::infinity(),
+                                     -std::numeric_limits<double>::infinity()}) {
+            // Simulate invalid stored data through the documented mutable escape hatch.
+            circle->radius = invalid;
+            EXPECT_FALSE(manager.solve());
+            EXPECT_FALSE(manager.solve(*component));
+        }
+        circle->radius = 3;
+        for (const double invalid : {std::numeric_limits<double>::quiet_NaN(),
+                                     std::numeric_limits<double>::infinity(),
+                                     -std::numeric_limits<double>::infinity()}) {
+            for (double* coordinate : {circle->center->ptrX(), circle->center->ptrY()}) {
+                const double original = *coordinate;
+                *coordinate = invalid;
+                EXPECT_FALSE(manager.solve());
+                EXPECT_FALSE(manager.solve(*component));
+                *coordinate = original;
+            }
+        }
+        EXPECT_TRUE(manager.solve());
+        EXPECT_TRUE(manager.solve(*component));
+    }
+}
+
+TEST(DCMManagerSolveInvariantTest, AutomaticDragSolveRestoresRadiusAfterFallbackWithoutLocks) {
+    DCMManager manager;
+    const auto line = manager.addFigure(FigureDescriptor::line(-2, 0, 2, 0));
+    const auto center = manager.addFigure(FigureDescriptor::point(0, 4));
+    const auto circle = manager.addFigure(FigureDescriptor::circle(center, 2));
+    manager.addRequirement(RequirementDescriptor::fixLine(line));
+    manager.addRequirement(RequirementDescriptor::fixPoint(center));
+    manager.addRequirement(RequirementDescriptor::lineCircleDist(line, circle, 5));
+    manager.setSolveMode(SolveMode::DRAG);
+    // Radius is the only free variable. Locking it forces the recursive fallback;
+    // its unconstrained optimum would be -1. Preserve the valid user update.
+    EXPECT_NO_THROW(manager.updateCircle({circle, 3}));
+    const auto restored = manager.getFigure(circle);
+    ASSERT_TRUE(restored && restored->radius);
+    EXPECT_DOUBLE_EQ(*restored->radius, 3.0);
+    const auto component = manager.getComponentForFigure(circle);
+    ASSERT_TRUE(component);
+    EXPECT_FALSE(manager.solve(*component));
+    EXPECT_DOUBLE_EQ(*manager.getFigure(circle)->radius, 3.0);
+}
+
 TEST(DCMManagerLineCircleSolveTest, SolvesRequestedGapWithClosestPointInEachRegion) {
     for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL}) {
         for (const double centerX : {-5.0, 3.0, 12.0}) {

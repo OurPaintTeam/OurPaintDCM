@@ -98,6 +98,39 @@ struct BuiltSolvePipeline {
     bool hasFreeVariables = false;
 };
 
+class GeometrySolveState {
+    struct Value {
+        double* variable;
+        double original;
+        bool radius;
+    };
+    std::vector<Value> _values;
+    bool _accepted = false;
+
+public:
+    void savePoint(OurPaintDCM::Figures::Point2D& point) {
+        _values.push_back({point.ptrX(), point.x(), false});
+        _values.push_back({point.ptrY(), point.y(), false});
+    }
+    void saveCircle(OurPaintDCM::Figures::Circle2D& circle) {
+        _values.push_back({circle.ptrRadius(), circle.radius, true});
+    }
+    bool valid() const noexcept {
+        for (const auto& value : _values) {
+            if (!std::isfinite(*value.variable) || (value.radius && *value.variable <= 0.0)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    void accept() noexcept { _accepted = true; }
+    ~GeometrySolveState() {
+        if (!_accepted) {
+            for (const auto& value : _values) *value.variable = value.original;
+        }
+    }
+};
+
 } // anonymous namespace
 
 struct OurPaintDCM::DCMManager::SolveCache {
@@ -1247,30 +1280,49 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
     if (!std::isfinite(residualTolerance) || residualTolerance < 0.0) {
         throw std::invalid_argument("Residual tolerance must be finite and non-negative");
     }
+    SolveCacheKey cacheKey;
+    // With no constraints, validate the whole document in every solve mode.
+    // Empty LOCAL systems retain the existing behavior of accepting no component ID.
+    if (!_requirementRecords.empty()) {
+        switch (_solveMode) {
+            case Utils::SolveMode::GLOBAL:
+                cacheKey.componentId = std::nullopt;
+                break;
+            case Utils::SolveMode::LOCAL:
+                if (!componentId.has_value()) {
+                    throw std::runtime_error("LOCAL mode requires a componentID");
+                }
+                cacheKey.componentId = componentId;
+                break;
+            case Utils::SolveMode::DRAG:
+                cacheKey.componentId = componentId;
+                break;
+        }
+    }
+
+    GeometrySolveState geometryState;
+    if (!cacheKey.componentId || !_reqSystemSyncedWithRecords) {
+        for (const auto& ref : _storage.pointsWithIds()) {
+            geometryState.savePoint(*_storage.get<Figures::Point2D>(ref.id));
+        }
+        for (const auto& ref : _storage.circlesWithIds()) {
+            geometryState.saveCircle(*_storage.get<Figures::Circle2D>(ref.id));
+        }
+    } else {
+        for (const auto id : getFiguresInComponent(*cacheKey.componentId)) {
+            if (auto* point = _storage.get<Figures::Point2D>(id)) geometryState.savePoint(*point);
+            if (auto* circle = _storage.get<Figures::Circle2D>(id)) geometryState.saveCircle(*circle);
+        }
+    }
+    if (!geometryState.valid()) return false;
     if (_requirementRecords.empty()) {
+        geometryState.accept();
         return true;
     }
 
     if (_solveCache == nullptr) {
         _solveCache = std::make_unique<SolveCache>();
     }
-
-    SolveCacheKey cacheKey;
-    switch (_solveMode) {
-        case Utils::SolveMode::GLOBAL:
-            cacheKey.componentId = std::nullopt;
-            break;
-        case Utils::SolveMode::LOCAL:
-            if (!componentId.has_value()) {
-                throw std::runtime_error("LOCAL mode requires a componentID");
-            }
-            cacheKey.componentId = componentId;
-            break;
-        case Utils::SolveMode::DRAG:
-            cacheKey.componentId = componentId;
-            break;
-    }
-
     cacheKey.lockedVars.assign(lockedVars.begin(), lockedVars.end());
     std::sort(cacheKey.lockedVars.begin(), cacheKey.lockedVars.end());
 
@@ -1470,13 +1522,21 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
         return true;
     };
 
+    const auto finishSolve = [&]() {
+        if (!geometryState.valid()) return false;
+        const bool solved = constraintsSatisfied();
+        if (!geometryState.valid()) return false;
+        geometryState.accept();
+        return solved;
+    };
+
     for (const auto& [valueRef, target] : entry.fixedAssignments) {
         *valueRef = target;
     }
 
     if (system.getRequirements().empty() || !entry.hasFunctions) {
         system.synchronizeCoincidentPoints();
-        return constraintsSatisfied();
+        return finishSolve();
     }
 
     if (!entry.hasFreeVariables) {
@@ -1485,10 +1545,13 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
         // to satisfy constraints by moving the dragged point to a feasible position.
         if (!lockedVars.empty()) {
             const std::unordered_set<double*> noLockedVars;
-            return solveWithLockedVars(componentId, noLockedVars, residualTolerance);
+            const bool solved = solveWithLockedVars(componentId, noLockedVars, residualTolerance);
+            if (!geometryState.valid()) return false;
+            geometryState.accept();
+            return solved;
         }
         system.synchronizeCoincidentPoints();
-        return constraintsSatisfied();
+        return finishSolve();
     }
 
     if (entry.solver == nullptr || entry.solverResidualTolerance != residualTolerance) {
@@ -1502,7 +1565,7 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
     entry.solver->optimize();
     system.synchronizeCoincidentPoints();
 
-    return constraintsSatisfied();
+    return finishSolve();
 }
 
 std::unique_ptr<System::RequirementSystem> DCMManager::buildSubsystem(ComponentID componentId) const {
