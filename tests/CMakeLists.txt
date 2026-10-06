@@ -1,5 +1,5 @@
 # Рекурсивно ищем все .cpp файлы в tests/ и подпапках
-file(GLOB_RECURSE TEST_SOURCES *.cpp)
+file(GLOB_RECURSE TEST_SOURCES CONFIGURE_DEPENDS *.cpp)
 # Исключаем перформанс-тест drag из автоподхвата
 list(FILTER TEST_SOURCES EXCLUDE REGEX ".*/DragOptimizersBenchmarkGTEST\\.cpp$")
 
@@ -16,4 +16,9 @@ foreach(TEST_SRC ${TEST_SOURCES})
 
     # Добавляем тест в CTest
     add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME})
+    if(TEST_NAME MATCHES "Benchmark$")
+        set_tests_properties(${TEST_NAME} PROPERTIES LABELS "perf")
+    else()
+        set_tests_properties(${TEST_NAME} PROPERTIES LABELS "unit;dcm" TIMEOUT 120)
+    endif()
 endforeach()

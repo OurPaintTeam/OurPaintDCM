@@ -10,55 +10,6 @@
 
 namespace {
 
-using ConstraintFunction = OurPaintDCM::Function::RequirementFunction;
-
-class ConstraintDerivative final : public ::Function {
-    std::shared_ptr<ConstraintFunction> _constraint;
-    double* _variable;
-
-public:
-    ConstraintDerivative(std::shared_ptr<ConstraintFunction> constraint, double* variable)
-        : _constraint(std::move(constraint)), _variable(variable) {}
-
-    double evaluate() const override {
-        if (_constraint->getWeight() == 0.0) return 0.0;
-        const auto gradient = _constraint->gradient();
-        const auto it = gradient.find(_variable);
-        return it == gradient.end() ? 0.0 : _constraint->getWeight() * it->second;
-    }
-
-    ::Function* derivative(Variable*) const override {
-        throw std::logic_error("Second derivatives are not available for constraint functions");
-    }
-
-    ::Function* clone() const override { return new ConstraintDerivative(*this); }
-    std::string to_string() const override { return "weighted constraint derivative"; }
-};
-
-class ConstraintResidual final : public ::Function {
-    std::shared_ptr<ConstraintFunction> _constraint;
-
-public:
-    explicit ConstraintResidual(std::shared_ptr<ConstraintFunction> constraint)
-        : _constraint(std::move(constraint)) {}
-
-    double evaluate() const override {
-        if (_constraint->getWeight() == 0.0) return 0.0;
-        return _constraint->getWeight() * _constraint->evaluate();
-    }
-
-    ::Function* derivative(Variable* variable) const override {
-        const auto vars = _constraint->getVars();
-        if (std::find(vars.begin(), vars.end(), variable->value) == vars.end()) {
-            return new Constant(0.0);
-        }
-        return new ConstraintDerivative(_constraint, variable->value);
-    }
-
-    ::Function* clone() const override { return new ConstraintResidual(*this); }
-    std::string to_string() const override { return "weighted constraint residual"; }
-};
-
 void eraseRequirementId(std::vector<OurPaintDCM::Utils::ID>& ids, OurPaintDCM::Utils::ID id) {
     ids.erase(std::remove(ids.begin(), ids.end(), id), ids.end());
 }
@@ -93,7 +44,6 @@ using FixedAssignmentMap = std::unordered_map<double*, double>;
 
 struct BuiltSolvePipeline {
     FixedAssignmentMap fixedAssignments;
-    std::vector<std::pair<double*, double>> fixedTargets;
     std::vector<std::unique_ptr<Variable>> variableOwners;
     std::unique_ptr<SparseLSMTask> task;
     bool hasFunctions = false;
@@ -140,8 +90,7 @@ struct OurPaintDCM::DCMManager::SolveCache {
         std::size_t version = 0;
         std::unique_ptr<System::RequirementSystem> subsystem;
         FixedAssignmentMap fixedAssignments;
-        std::vector<std::pair<double*, double>> fixedTargets;
-        std::vector<std::unique_ptr<Variable>> variableOwners;
+            std::vector<std::unique_ptr<Variable>> variableOwners;
         std::unique_ptr<SparseLSMTask> task;
         std::unique_ptr<SparseLMSolver> solver;
         double solverResidualTolerance = -1.0;
@@ -363,6 +312,7 @@ Utils::ID DCMManager::addFigure(const Utils::FigureDescriptor& descriptor) {
         mergeComponents(relatedFigures);
     }
 
+    _reqSystemSyncedWithRecords = false;
     invalidateSolveCache();
     return figureId;
 }
@@ -389,6 +339,9 @@ void DCMManager::removeFigure(Utils::ID figureId, bool forceCascade) {
         }
     }
 
+    invalidateSolveCache();
+    static_cast<System::RequirementFunctionSystem&>(_reqSystem).clear();
+    _reqSystemSyncedWithRecords = false;
     const auto removed = _storage.remove(figureId, forceCascade);
     if (removed == Figures::RemoveResult::NotFound) {
         throw std::runtime_error("Figure not found");
@@ -427,6 +380,7 @@ DCMManager::FixedGeometry DCMManager::collectFixedGeometry() const {
         }
 
         const auto& req = it->second;
+        if (req.weight == 0) continue;
         switch (req.type) {
             case Utils::RequirementType::ET_FIXPOINT:
                 fixed.pointIds.insert(req.objectIds[0]);
@@ -1249,6 +1203,7 @@ std::size_t DCMManager::requirementCount() const noexcept {
 }
 
 void DCMManager::clear() {
+    invalidateSolveCache();
     _reqSystem.clear();
     _storage.clear();
     _requirementRecords.clear();
@@ -1285,7 +1240,7 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
     SolveCacheKey cacheKey;
     // With no constraints, validate the whole document in every solve mode.
     // Empty LOCAL systems retain the existing behavior of accepting no component ID.
-    if (!_requirementRecords.empty()) {
+    if (!_requirementRecords.empty() || _storage.arcCount() != 0) {
         switch (_solveMode) {
             case Utils::SolveMode::GLOBAL:
                 cacheKey.componentId = std::nullopt;
@@ -1317,7 +1272,7 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
         }
     }
     if (!geometryState.valid()) return false;
-    if (_requirementRecords.empty()) {
+    if (_requirementRecords.empty() && _storage.arcCount() == 0) {
         geometryState.accept();
         return true;
     }
@@ -1334,80 +1289,15 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
         std::vector<double*> mathVariableRefs;
         std::unordered_set<double*> mathVariableRefSet;
 
-        const auto assignFixedValue = [&](double* valueRef, double target) {
-            pipeline.fixedAssignments[valueRef] = target;
-            // Keep every target so conflicting fix constraints cannot overwrite each other silently.
-            pipeline.fixedTargets.emplace_back(valueRef, target);
-        };
-
         const auto rememberVariable = [&](double* valueRef) {
-            if (valueRef != nullptr &&
-                !lockedVars.contains(valueRef) &&
+            if (!lockedVars.contains(valueRef) &&
                 !pipeline.fixedAssignments.contains(valueRef) &&
-                mathVariableRefSet.insert(valueRef).second) {
-                mathVariableRefs.push_back(valueRef);
-            }
+                mathVariableRefSet.insert(valueRef).second) mathVariableRefs.push_back(valueRef);
         };
-
-        const auto resolveLinePoints = [&](Utils::ID lineId) {
-            const auto dependencies = _storage.getDependencies(lineId);
-            if (dependencies.size() != 2) {
-                throw std::runtime_error("Line dependencies are inconsistent");
-            }
-            return std::pair{system.resolvePoint(dependencies[0]), system.resolvePoint(dependencies[1])};
-        };
-
-        const auto resolveCircleData = [&](Utils::ID circleId) {
-            auto* circle = _storage.get<Figures::Circle2D>(circleId);
-            const auto dependencies = _storage.getDependencies(circleId);
-            if (circle == nullptr || dependencies.size() != 1) {
-                throw std::runtime_error("Circle dependencies are inconsistent");
-            }
-            return std::pair{system.resolvePoint(dependencies[0]), circle->ptrRadius()};
-        };
-
-        for (const auto& entry : system.getRequirements()) {
-            const auto& ids = entry.objectIds;
-            switch (entry.type) {
-                case Utils::RequirementType::ET_FIXPOINT: {
-                    auto* point = system.resolvePoint(ids[0]);
-                    std::vector<double> targets = {point->x(), point->y()};
-                    const auto targetIt = _fixedRequirementTargets.find(entry.id);
-                    if (targetIt != _fixedRequirementTargets.end() && targetIt->second.size() == 2) {
-                        targets = targetIt->second;
-                    }
-                    assignFixedValue(point->ptrX(), targets[0]);
-                    assignFixedValue(point->ptrY(), targets[1]);
-                    break;
-                }
-                case Utils::RequirementType::ET_FIXLINE: {
-                    const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
-                    std::vector<double> targets = {lineP1->x(), lineP1->y(), lineP2->x(), lineP2->y()};
-                    const auto targetIt = _fixedRequirementTargets.find(entry.id);
-                    if (targetIt != _fixedRequirementTargets.end() && targetIt->second.size() == 4) {
-                        targets = targetIt->second;
-                    }
-                    assignFixedValue(lineP1->ptrX(), targets[0]);
-                    assignFixedValue(lineP1->ptrY(), targets[1]);
-                    assignFixedValue(lineP2->ptrX(), targets[2]);
-                    assignFixedValue(lineP2->ptrY(), targets[3]);
-                    break;
-                }
-                case Utils::RequirementType::ET_FIXCIRCLE: {
-                    const auto [center, radius] = resolveCircleData(ids[0]);
-                    std::vector<double> targets = {center->x(), center->y(), *radius};
-                    const auto targetIt = _fixedRequirementTargets.find(entry.id);
-                    if (targetIt != _fixedRequirementTargets.end() && targetIt->second.size() == 3) {
-                        targets = targetIt->second;
-                    }
-                    assignFixedValue(center->ptrX(), targets[0]);
-                    assignFixedValue(center->ptrY(), targets[1]);
-                    assignFixedValue(radius, targets[2]);
-                    break;
-                }
-                default:
-                    break;
-            }
+        for (const auto& binding : system.getFunctions()) {
+            double* variable = nullptr;
+            double target = 0;
+            if (binding->tryGetAssignment(variable,target)) pipeline.fixedAssignments[variable] = target;
         }
 
         for (const auto& [valueRef, target] : pipeline.fixedAssignments) {
@@ -1415,6 +1305,7 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
         }
 
         for (const auto& constraint : system.getFunctions()) {
+            if (constraint->getWeight() == 0) continue;
             const auto type = constraint->getType();
             if (type == Utils::RequirementType::ET_FIXPOINT ||
                 type == Utils::RequirementType::ET_FIXLINE ||
@@ -1424,7 +1315,7 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
             for (double* variable : constraint->getVars()) {
                 rememberVariable(variable);
             }
-            mathFunctionOwners.push_back(std::make_unique<ConstraintResidual>(constraint));
+            mathFunctionOwners.push_back(std::unique_ptr<::Function>(constraint->mathematical()->weightedFunction()));
         }
 
         pipeline.hasFunctions = !mathFunctionOwners.empty();
@@ -1437,18 +1328,18 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
             return pipeline;
         }
 
-        std::vector<::Function*> mathFuncs;
-        mathFuncs.reserve(mathFunctionOwners.size());
-        for (auto& owner : mathFunctionOwners) {
-            mathFuncs.push_back(owner.release());
-        }
-
         std::vector<Variable*> mathVars;
         pipeline.variableOwners.reserve(mathVariableRefs.size());
         mathVars.reserve(mathVariableRefs.size());
         for (double* valueRef : mathVariableRefs) {
             pipeline.variableOwners.push_back(std::make_unique<Variable>(valueRef));
             mathVars.push_back(pipeline.variableOwners.back().get());
+        }
+
+        std::vector<::Function*> mathFuncs;
+        mathFuncs.reserve(mathFunctionOwners.size());
+        for (auto& owner : mathFunctionOwners) {
+            mathFuncs.push_back(owner.release());
         }
 
         pipeline.task = std::make_unique<SparseLSMTask>(std::move(mathFuncs), std::move(mathVars));
@@ -1471,7 +1362,6 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
 
         auto pipeline = buildPipeline(*buildSystem);
         entry.fixedAssignments = std::move(pipeline.fixedAssignments);
-        entry.fixedTargets = std::move(pipeline.fixedTargets);
         entry.variableOwners = std::move(pipeline.variableOwners);
         entry.task = std::move(pipeline.task);
         entry.hasFunctions = pipeline.hasFunctions;
@@ -1489,35 +1379,23 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
     }
 
     auto& system = *systemPtr;
+    std::vector<std::size_t> invalidEvaluationCounts;
+    for (const auto& binding : system.getFunctions())
+        invalidEvaluationCounts.push_back(binding->mathematical()->invalidEvaluations());
     const auto constraintsSatisfied = [&]() {
-        const auto residualSatisfied = [&](double residual) {
-            return std::isfinite(residual) && std::abs(residual) <= residualTolerance;
-        };
-
-        for (const auto& function : system.getFunctions()) {
-            const auto type = function->getType();
-            // RequirementSystem can recapture fix targets when rebuilt; use the saved targets below.
-            if (type == Utils::RequirementType::ET_FIXPOINT ||
-                type == Utils::RequirementType::ET_FIXLINE ||
-                type == Utils::RequirementType::ET_FIXCIRCLE) {
-                continue;
-            }
-            if (function->getWeight() != 0.0 &&
-                !residualSatisfied(function->getWeight() * function->evaluate())) {
-                return false;
-            }
-        }
-        for (const auto& [valueRef, target] : entry.fixedTargets) {
-            if (!residualSatisfied(*valueRef - target)) {
-                return false;
-            }
+        for (const auto& binding : system.getFunctions()) {
+            if (!binding->mathematical()->satisfied(residualTolerance)) return false;
         }
         // Coincidence constraints are eliminated from the function system by point aliasing.
         for (const auto& requirement : system.getRequirements()) {
-            if (requirement.type == Utils::RequirementType::ET_POINTONPOINT) {
-                const auto* p1 = _storage.get<Figures::Point2D>(requirement.objectIds[0]);
-                const auto* p2 = _storage.get<Figures::Point2D>(requirement.objectIds[1]);
-                if (!residualSatisfied(std::hypot(p1->x() - p2->x(), p1->y() - p2->y()))) {
+            if (requirement.type == Utils::RequirementType::ET_POINTONPOINT && requirement.weight != 0) {
+                auto* p1 = _storage.get<Figures::Point2D>(requirement.objectIds[0]);
+                auto* p2 = _storage.get<Figures::Point2D>(requirement.objectIds[1]);
+                Math::Constraint coincidence(Math::ConstraintKind::PointOnPoint,
+                    {p1->ptrX(),p1->ptrY(),
+                     p2->ptrX(),p2->ptrY()});
+                coincidence.setWeight(requirement.weight);
+                if (!coincidence.satisfied(residualTolerance)) {
                     return false;
                 }
             }
@@ -1529,6 +1407,10 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
         if (!geometryState.valid()) return false;
         const bool solved = constraintsSatisfied();
         if (!geometryState.valid()) return false;
+        if (!solved) {
+            for (std::size_t i = 0; i < system.getFunctions().size(); ++i)
+                if (system.getFunctions()[i]->mathematical()->invalidEvaluations() != invalidEvaluationCounts[i]) return false;
+        }
         geometryState.accept();
         return solved;
     };
@@ -1540,12 +1422,12 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
     // Undefined geometry has no usable linearization. Reject it before sending
     // infinite residuals into LM, including when fixes or aliases collapse a line.
     for (const auto& function : system.getFunctions()) {
-        if (function->getWeight() != 0.0 && !std::isfinite(function->evaluate())) {
+        if (!std::isfinite(function->mathematical()->weightedValue())) {
             return false;
         }
     }
 
-    if (system.getRequirements().empty() || !entry.hasFunctions) {
+    if (!entry.hasFunctions) {
         system.synchronizeCoincidentPoints();
         return finishSolve();
     }
@@ -1581,16 +1463,18 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
 
 std::unique_ptr<System::RequirementSystem> DCMManager::buildSubsystem(ComponentID componentId) const {
     auto subsystem = std::make_unique<System::RequirementSystem>(
-        &const_cast<DCMManager*>(this)->_storage);
+        &const_cast<DCMManager*>(this)->_storage, getFiguresInComponent(componentId));
 
+    std::vector<Utils::RequirementDescriptor> descriptors;
     auto reqIds = getRequirementsInComponent(componentId);
     for (const auto& reqId : reqIds) {
         auto it = _requirementRecords.find(reqId);
         if (it != _requirementRecords.end()) {
-            subsystem->addRequirement(it->second);
+            descriptors.push_back(it->second);
         }
     }
 
+    subsystem->replaceRequirements(descriptors, _reqSystem._reqIdGen.current(), _fixedRequirementTargets);
     return subsystem;
 }
 
@@ -1603,7 +1487,7 @@ void DCMManager::rebuildRequirementSystem() {
             descriptors.push_back(it->second);
         }
     }
-    _reqSystem.replaceRequirements(descriptors, _reqSystem._reqIdGen.current());
+    _reqSystem.replaceRequirements(descriptors, _reqSystem._reqIdGen.current(), _fixedRequirementTargets);
     _reqSystemSyncedWithRecords = true;
 }
 

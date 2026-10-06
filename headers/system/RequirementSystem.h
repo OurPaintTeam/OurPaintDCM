@@ -41,9 +41,11 @@ class RequirementSystem : public RequirementFunctionSystem {
         Utils::RequirementType type;             ///< Type of the requirement
         std::vector<Utils::ID> objectIds;        ///< IDs of objects involved
         std::optional<double> param;             ///< Optional parameter (distance, angle)
+        std::vector<double> fixedTargets;
         double weight = 1.0;                     ///< Residual multiplier
     };
 
+    std::optional<std::vector<Utils::ID>> _figureScope;
     std::vector<RequirementEntry> _requirements;
     std::unordered_map<Utils::ID, Utils::ID> _pointRepresentative;
     std::unordered_map<Utils::ID, std::vector<Utils::ID>> _coincidentPointGroups;
@@ -51,7 +53,8 @@ class RequirementSystem : public RequirementFunctionSystem {
     void rebuildFunctionsAndAliases();
     /** Replaces all records and rebuilds function state once; used by DCM restoration. */
     void replaceRequirements(const std::vector<Utils::RequirementDescriptor>& descriptors,
-                             Utils::ID nextRequirementId);
+                             Utils::ID nextRequirementId,
+                             const std::unordered_map<Utils::ID,std::vector<double>>& fixedTargets);
     Utils::ID resolvePointRepresentative(Utils::ID pointId) const noexcept;
     Figures::Point2D* resolvePoint(Utils::ID pointId) const;
     std::vector<Utils::ID> getCoincidentPoints(Utils::ID pointId) const;
@@ -65,7 +68,8 @@ public:
      * @brief Construct system bound to a GeometryStorage.
      * @param storage Pointer to the storage (must outlive this object).
      */
-    explicit RequirementSystem(Figures::GeometryStorage* storage);
+    explicit RequirementSystem(Figures::GeometryStorage* storage,
+        std::optional<std::vector<Utils::ID>> figureScope = std::nullopt);
 
 
     /**

@@ -1,90 +1,26 @@
-#ifndef OURPAINTDCM_HEADERS_SYSTEM_REQUIREMENTFUNCTIONSYSTEM_H
-#define OURPAINTDCM_HEADERS_SYSTEM_REQUIREMENTFUNCTIONSYSTEM_H
+#pragma once
 #include "RequirementFunction.h"
-#include "Enums.h"
+#include "core/ConstraintSystem.h"
 #include <vector>
-#include <memory>
-#include <unordered_set>
-#include <Eigen/Dense>
-#include <Eigen/Sparse>
-
 
 namespace OurPaintDCM::System {
-    /**
-     * @brief System of geometric constraint functions.
-     *
-     * Collects multiple RequirementFunction objects and manages
-     * the set of unique variables involved in them.
-     * Provides interfaces for evaluating residuals, assembling
-     * Jacobian matrices, and performing diagnostics of the system.
-     */
-    class RequirementFunctionSystem {
-        std::vector<std::shared_ptr<Function::RequirementFunction>> _functions; ///< All constraint functions
-        std::vector<VAR> _allVars;                                              ///< Unique variable pointers
-        std::unordered_set<VAR> _allVarsSet;                                    ///< Fast lookup for uniqueness
-        mutable Eigen::SparseMatrix<double> _jacobian;                          ///< Cached Jacobian
-        mutable bool _jacobianDirty = false;                                    ///< Function or variable set changed
-        mutable std::vector<double> _jacobianVariableValues;                   ///< Coordinates at last Jacobian update
-        mutable std::vector<double> _jacobianWeights;                          ///< Weights at last Jacobian update
-
-        void ensureJacobian() const;
-
-    public:
-        /// @brief Default constructor
-        RequirementFunctionSystem();
-
-        /**
-         * @brief Add a new geometric constraint function to the system.
-         * @param function Shared pointer to a RequirementFunction.
-         */
-        void addFunction(std::shared_ptr<Function::RequirementFunction> function);
-
-        /**
-         * @brief Update the cached Jacobian matrix (sparse).
-         *
-         * Recomputes the full Jacobian from all active functions and their gradients.
-         */
-        void updateJ();
-
-        /**
-         * @brief Get the sparse Jacobian at the current variable values.
-         * @return The current Jacobian, recomputed if variables changed.
-         */
-        Eigen::SparseMatrix<double> J() const;
-
-        /**
-         * @brief Compute the normal matrix JᵀJ used in LM and Dogleg solvers.
-         * @return Sparse matrix JᵀJ.
-         */
-        Eigen::SparseMatrix<double> JTJ() const;
-
-        /**
-         * @brief Compute the full residual vector f(x) of all constraints.
-         * @return Dense Eigen vector of residuals.
-         */
-        Eigen::VectorXd residuals() const;
-
-        /**
-         * @brief Get the list of all unique variable pointers in the system.
-         * @return Vector of VAR (double*).
-         */
-        std::vector<VAR> getAllVars() const;
-
-        /**
-         * @brief Diagnose the system's constraint state based on Jacobian rank.
-         * @return One of: "Well-constrained", "Under-constrained", or "Over-constrained".
-         */
-        Utils::SystemStatus diagnose() const;
-
-        /// @brief Get all constraint functions.
-        const std::vector<std::shared_ptr<Function::RequirementFunction>>& getFunctions() const { return _functions; }
-
-        /**
-         * @brief Clear all stored functions and variables.
-         */
-        void clear();
-    };
+class RequirementFunctionSystem {
+    std::vector<std::shared_ptr<Function::RequirementFunction>> _functions;
+    Math::ConstraintSystem _math;
+public:
+    RequirementFunctionSystem() = default;
+    void addFunction(std::shared_ptr<Function::RequirementFunction> function) {
+        if (!function) throw std::invalid_argument("Null requirement binding");
+        _math.addFunction(function->mathematical());
+        _functions.push_back(std::move(function));
+    }
+    void updateJ() { _math.updateJ(); }
+    Eigen::SparseMatrix<double> J() const { return _math.J(); }
+    Eigen::SparseMatrix<double> JTJ() const { return _math.JTJ(); }
+    Eigen::VectorXd residuals() const { return _math.residuals(); }
+    std::vector<VAR> getAllVars() const { return _math.getAllVars(); }
+    Utils::SystemStatus diagnose() const;
+    const auto& getFunctions() const { return _functions; }
+    void clear() { _math.clear(); _functions.clear(); }
+};
 }
-
-
-#endif //OURPAINTDCM_HEADERS_SYSTEM_REQUIREMENTFUNCTIONSYSTEM_H
