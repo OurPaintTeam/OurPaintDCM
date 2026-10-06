@@ -20,91 +20,98 @@ namespace OurPaintDCM::Function {
  */
 class RequirementFunctionFactory {
 public:
+    template<class MathFunction>
+    static std::shared_ptr<RequirementFunction> bind(
+        Utils::RequirementType type,
+        const std::vector<VAR>& variables, double target = 0.0) {
+        return std::make_shared<RequirementFunction>(type,
+            std::make_shared<MathFunction>(variables,target));
+    }
     /// @brief Create point-line distance function.
-    static std::shared_ptr<PointLineDistanceFunction> createPointLineDist(
+    static std::shared_ptr<RequirementFunction> createPointLineDist(
         Figures::Point2D* point,
         Figures::Line<Figures::Point2D>* line,
         double distance
     );
 
     /// @brief Create point-on-line function.
-    static std::shared_ptr<PointOnLineFunction> createPointOnLine(
+    static std::shared_ptr<RequirementFunction> createPointOnLine(
         Figures::Point2D* point,
         Figures::Line<Figures::Point2D>* line
     );
 
     /// @brief Create point-point distance function.
-    static std::shared_ptr<PointPointDistanceFunction> createPointPointDist(
+    static std::shared_ptr<RequirementFunction> createPointPointDist(
         Figures::Point2D* p1,
         Figures::Point2D* p2,
         double distance
     );
 
     /// @brief Create point-on-point function.
-    static std::shared_ptr<PointOnPointFunction> createPointOnPoint(
+    static std::shared_ptr<RequirementFunction> createPointOnPoint(
         Figures::Point2D* p1,
         Figures::Point2D* p2
     );
 
     /// @brief Create line-circle distance function.
-    static std::shared_ptr<LineCircleDistanceFunction> createLineCircleDist(
+    static std::shared_ptr<RequirementFunction> createLineCircleDist(
         Figures::Line<Figures::Point2D>* line,
         Figures::Circle<Figures::Point2D>* circle,
         double distance
     );
 
     /// @brief Create line-on-circle function.
-    static std::shared_ptr<LineOnCircleFunction> createLineOnCircle(
+    static std::vector<std::shared_ptr<RequirementFunction>> createLineOnCircle(
         Figures::Line<Figures::Point2D>* line,
         Figures::Circle<Figures::Point2D>* circle
     );
 
     /// @brief Create parallel-lines function.
-    static std::shared_ptr<LineLineParallelFunction> createLineLineParallel(
+    static std::shared_ptr<RequirementFunction> createLineLineParallel(
         Figures::Line<Figures::Point2D>* l1,
         Figures::Line<Figures::Point2D>* l2
     );
 
     /// @brief Create perpendicular-lines function.
-    static std::shared_ptr<LineLinePerpendicularFunction> createLineLinePerpendicular(
+    static std::shared_ptr<RequirementFunction> createLineLinePerpendicular(
         Figures::Line<Figures::Point2D>* l1,
         Figures::Line<Figures::Point2D>* l2
     );
 
     /// @brief Create angle-between-lines function.
-    static std::shared_ptr<LineLineAngleFunction> createLineLineAngle(
+    static std::shared_ptr<RequirementFunction> createLineLineAngle(
         Figures::Line<Figures::Point2D>* l1,
         Figures::Line<Figures::Point2D>* l2,
         double angle
     );
 
     /// @brief Create vertical-line function.
-    static std::shared_ptr<VerticalFunction> createVertical(
+    static std::shared_ptr<RequirementFunction> createVertical(
         Figures::Line<Figures::Point2D>* line
     );
 
     /// @brief Create horizontal-line function.
-    static std::shared_ptr<HorizontalFunction> createHorizontal(
+    static std::shared_ptr<RequirementFunction> createHorizontal(
         Figures::Line<Figures::Point2D>* line
     );
 
     /// @brief Create arc center perpendicular-bisector function.
-    static std::shared_ptr<ArcCenterOnPerpendicularFunction> createArcCenterOnPerpendicular(
+    static std::shared_ptr<RequirementFunction> createArcCenterOnPerpendicular(
         Figures::Arc<Figures::Point2D>* arc
     );
 
     /// @brief Create fix-point functions (one per coordinate).
-    static std::vector<std::shared_ptr<FixCoordinateFunction>> createFixPoint(
+    static std::vector<std::shared_ptr<RequirementFunction>> createFixPoint(
         Figures::Point2D* point
     );
 
     /// @brief Create fix-line functions (one per endpoint coordinate).
-    static std::vector<std::shared_ptr<FixCoordinateFunction>> createFixLine(
+    static std::vector<std::shared_ptr<RequirementFunction>> createFixLine(
         Figures::Line<Figures::Point2D>* line
     );
 
     /// @brief Create fix-circle functions (one per center coordinate + radius).
-    static std::vector<std::shared_ptr<FixCoordinateFunction>> createFixCircle(
+    static std::vector<std::shared_ptr<RequirementFunction>> createFixCircle(
         Figures::Circle<Figures::Point2D>* circle
     );
 };

@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "DCMManager.h"
+#include "../math/tests/support/FaultInjectionConstraint.h"
 #include <algorithm>
 #include <cmath>
 #include <array>
@@ -318,32 +319,6 @@ TEST(DCMManagerSolveInvariantTest, NegativeRadiusIsRejectedAndOriginalGeometryIs
     }
 }
 
-namespace {
-
-// Exercise the transaction boundary with a constraint that simulates a numerical
-// failure while an optimizer candidate is applied to the shared geometry.
-class CorruptCandidateFunction final : public Function::RequirementFunction {
-    double _initial;
-    double _invalidValue;
-    bool _throw;
-public:
-    CorruptCandidateFunction(double* variable, double invalidValue, bool throwOnCandidate)
-        : RequirementFunction(RequirementType::ET_POINTPOINTDIST, {variable}),
-          _initial(*variable), _invalidValue(invalidValue), _throw(throwOnCandidate) {}
-    double evaluate() const override {
-        if (*_vars[0] != _initial) {
-            *_vars[0] = _invalidValue;
-            if (_throw) throw std::runtime_error("Injected optimizer evaluation failure");
-            return 0.0;
-        }
-        return -1.0;
-    }
-    std::unordered_map<VAR, double> gradient() const override { return {{_vars[0], 1.0}}; }
-    size_t getVarCount() const override { return 1; }
-};
-
-} // namespace
-
 TEST(DCMManagerSolveInvariantTest, NonfiniteCandidatesAndExceptionsRestoreAliasedPoints) {
     for (const double invalid : {std::numeric_limits<double>::quiet_NaN(),
                                  std::numeric_limits<double>::infinity(),
@@ -357,7 +332,8 @@ TEST(DCMManagerSolveInvariantTest, NonfiniteCandidatesAndExceptionsRestoreAliase
             manager.addRequirement(RequirementDescriptor::pointOnPoint(first, alias));
             auto* coordinate = manager.storage().get<Figures::Point2D>(first)->ptrX();
             auto& system = const_cast<System::RequirementSystem&>(manager.getRequirementSystem());
-            system.addFunction(std::make_shared<CorruptCandidateFunction>(coordinate, invalid, throwOnCandidate));
+            system.addFunction(std::make_shared<OurPaintDCM::Function::RequirementFunction>(RequirementType::ET_POINTPOINTDIST,
+                std::make_shared<FaultInjectionConstraint>(coordinate,invalid,throwOnCandidate)));
             if (throwOnCandidate) {
                 EXPECT_THROW(manager.solve(), std::runtime_error);
             } else {
@@ -384,7 +360,8 @@ TEST(DCMManagerSolveInvariantTest, ZeroAndNonfiniteRadiusCandidatesAreRestored) 
         manager.addRequirement(disabled);
         auto* radius = manager.storage().get<Figures::Circle2D>(circle)->ptrRadius();
         auto& system = const_cast<System::RequirementSystem&>(manager.getRequirementSystem());
-        system.addFunction(std::make_shared<CorruptCandidateFunction>(radius, invalid, false));
+        system.addFunction(std::make_shared<OurPaintDCM::Function::RequirementFunction>(RequirementType::ET_POINTPOINTDIST,
+            std::make_shared<FaultInjectionConstraint>(radius,invalid,false)));
         EXPECT_FALSE(manager.solve());
         EXPECT_DOUBLE_EQ(*radius, 2.0);
     }

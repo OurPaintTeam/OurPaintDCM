@@ -32,9 +32,6 @@ protected:
         ASSERT_TRUE(circOpt.has_value());
         circleId = *circOpt;
 
-        auto arcOpt = storage.createArc(p1Id, p3Id, centerId);
-        ASSERT_TRUE(arcOpt.has_value());
-        arcId = *arcOpt;
     }
 };
 
@@ -188,6 +185,7 @@ TEST_F(RequirementSystemTest, AddHorizontal) {
 }
 
 TEST_F(RequirementSystemTest, AddArcCenterOnPerpendicular) {
+    arcId = storage.createArc(p1Id,p3Id,centerId).value();
     RequirementSystem system(&storage);
     system.addArcCenterOnPerpendicular(arcId);
     
@@ -298,6 +296,7 @@ TEST_F(RequirementSystemTest, InvalidIdThrows) {
 }
 
 TEST_F(RequirementSystemTest, BuildDependencyGraphEmpty) {
+    arcId = storage.createArc(p1Id,p3Id,centerId).value();
     RequirementSystem system(&storage);
     
     auto graph = system.buildDependencyGraph();

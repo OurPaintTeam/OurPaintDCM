@@ -191,26 +191,13 @@ TEST(NumericValidationTest, StorageRejectsInvalidNumbersWithoutConsumingIdsOrCre
 }
 
 TEST(NumericValidationTest, DirectFunctionsAndFiguresRejectInvalidNumericConstruction) {
-    double x = 0, y = 0, x2 = 1, y2 = 1, cx = 2, cy = 2, radius = 1;
-    for (double invalid : {invalidNumbers[0], invalidNumbers[1], invalidNumbers[2], -1.0}) {
-        EXPECT_THROW(Function::PointPointDistanceFunction({&x, &y, &x2, &y2}, invalid), std::invalid_argument);
-        EXPECT_THROW(Function::PointLineDistanceFunction({&cx, &cy, &x, &y, &x2, &y2}, invalid), std::invalid_argument);
-        EXPECT_THROW(Function::LineCircleDistanceFunction({&x, &y, &x2, &y2, &cx, &cy, &radius}, invalid),
-                     std::invalid_argument);
-        EXPECT_THROW(Function::LineLineAngleFunction({&x, &y, &x2, &y2, &x, &y, &cx, &cy}, invalid),
-                     std::invalid_argument);
-    }
     Figures::Point2D center(0, 0);
     for (double invalid : invalidNumbers) {
         EXPECT_THROW(Figures::Point2D(invalid, 1), std::invalid_argument);
         EXPECT_THROW(Figures::Circle2D(&center, invalid), std::invalid_argument);
-        EXPECT_THROW(Function::FixCoordinateFunction(RequirementType::ET_FIXPOINT, {&x}, invalid),
-                     std::invalid_argument);
     }
     EXPECT_THROW(Figures::Circle2D(&center, -1), std::invalid_argument);
     EXPECT_THROW(Figures::Circle2D(&center, 0), std::invalid_argument);
-    x = invalidNumbers[0];
-    EXPECT_THROW(Function::PointPointDistanceFunction({&x, &y, &x2, &y2}, 1), std::invalid_argument);
     center.x() = invalidNumbers[0];
     EXPECT_THROW(Figures::Line2D(&center, &center), std::invalid_argument);
     EXPECT_THROW(Figures::Circle2D(&center, 1), std::invalid_argument);
