@@ -2,7 +2,7 @@
 
 namespace OurPaintDCM::Function {
 
-std::shared_ptr<PointLineDistanceFunction> RequirementFunctionFactory::createPointLineDist(
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointLineDist(
     Figures::Point2D* point,
     Figures::Line<Figures::Point2D>* line,
     double distance
@@ -12,10 +12,10 @@ std::shared_ptr<PointLineDistanceFunction> RequirementFunctionFactory::createPoi
         line->p1->ptrX(), line->p1->ptrY(),
         line->p2->ptrX(), line->p2->ptrY()
     };
-    return std::make_shared<PointLineDistanceFunction>(vars, distance);
+    return bind<PointSectionDistanceError>(Utils::RequirementType::ET_POINTLINEDIST, vars, distance);
 }
 
-std::shared_ptr<PointOnLineFunction> RequirementFunctionFactory::createPointOnLine(
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointOnLine(
     Figures::Point2D* point,
     Figures::Line<Figures::Point2D>* line
 ) {
@@ -24,10 +24,10 @@ std::shared_ptr<PointOnLineFunction> RequirementFunctionFactory::createPointOnLi
         line->p1->ptrX(), line->p1->ptrY(),
         line->p2->ptrX(), line->p2->ptrY()
     };
-    return std::make_shared<PointOnLineFunction>(vars);
+    return bind<PointOnSectionError>(Utils::RequirementType::ET_POINTONLINE, vars);
 }
 
-std::shared_ptr<PointPointDistanceFunction> RequirementFunctionFactory::createPointPointDist(
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointPointDist(
     Figures::Point2D* p1,
     Figures::Point2D* p2,
     double distance
@@ -36,10 +36,10 @@ std::shared_ptr<PointPointDistanceFunction> RequirementFunctionFactory::createPo
         p1->ptrX(), p1->ptrY(),
         p2->ptrX(), p2->ptrY()
     };
-    return std::make_shared<PointPointDistanceFunction>(vars, distance);
+    return bind<PointPointDistanceError>(Utils::RequirementType::ET_POINTPOINTDIST, vars, distance);
 }
 
-std::shared_ptr<PointOnPointFunction> RequirementFunctionFactory::createPointOnPoint(
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointOnPoint(
     Figures::Point2D* p1,
     Figures::Point2D* p2
 ) {
@@ -47,10 +47,10 @@ std::shared_ptr<PointOnPointFunction> RequirementFunctionFactory::createPointOnP
         p1->ptrX(), p1->ptrY(),
         p2->ptrX(), p2->ptrY()
     };
-    return std::make_shared<PointOnPointFunction>(vars);
+    return bind<PointOnPointError>(Utils::RequirementType::ET_POINTONPOINT, vars);
 }
 
-std::shared_ptr<LineCircleDistanceFunction> RequirementFunctionFactory::createLineCircleDist(
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createLineCircleDist(
     Figures::Line<Figures::Point2D>* line,
     Figures::Circle<Figures::Point2D>* circle,
     double distance
@@ -61,23 +61,22 @@ std::shared_ptr<LineCircleDistanceFunction> RequirementFunctionFactory::createLi
         circle->center->ptrX(), circle->center->ptrY(),
         circle->ptrRadius()
     };
-    return std::make_shared<LineCircleDistanceFunction>(vars, distance);
+    return bind<SectionCircleDistanceError>(Utils::RequirementType::ET_LINECIRCLEDIST, vars, distance);
 }
 
-std::shared_ptr<LineOnCircleFunction> RequirementFunctionFactory::createLineOnCircle(
+std::vector<std::shared_ptr<RequirementFunction>> RequirementFunctionFactory::createLineOnCircle(
     Figures::Line<Figures::Point2D>* line,
     Figures::Circle<Figures::Point2D>* circle
 ) {
-    std::vector<VAR> vars = {
-        line->p1->ptrX(), line->p1->ptrY(),
-        line->p2->ptrX(), line->p2->ptrY(),
-        circle->center->ptrX(), circle->center->ptrY(),
-        circle->ptrRadius()
-    };
-    return std::make_shared<LineOnCircleFunction>(vars);
+    std::vector<std::shared_ptr<RequirementFunction>> rows;
+    for (auto* endpoint : {line->p1,line->p2}) {
+        rows.push_back(bind<PointOnCircleError>(Utils::RequirementType::ET_LINEONCIRCLE,
+            {endpoint->ptrX(),endpoint->ptrY(),circle->center->ptrX(),circle->center->ptrY(),circle->ptrRadius()}));
+    }
+    return rows;
 }
 
-std::shared_ptr<LineLineParallelFunction> RequirementFunctionFactory::createLineLineParallel(
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createLineLineParallel(
     Figures::Line<Figures::Point2D>* l1,
     Figures::Line<Figures::Point2D>* l2
 ) {
@@ -87,10 +86,10 @@ std::shared_ptr<LineLineParallelFunction> RequirementFunctionFactory::createLine
         l2->p1->ptrX(), l2->p1->ptrY(),
         l2->p2->ptrX(), l2->p2->ptrY()
     };
-    return std::make_shared<LineLineParallelFunction>(vars);
+    return bind<SectionSectionParallelError>(Utils::RequirementType::ET_LINELINEPARALLEL, vars);
 }
 
-std::shared_ptr<LineLinePerpendicularFunction> RequirementFunctionFactory::createLineLinePerpendicular(
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createLineLinePerpendicular(
     Figures::Line<Figures::Point2D>* l1,
     Figures::Line<Figures::Point2D>* l2
 ) {
@@ -100,10 +99,10 @@ std::shared_ptr<LineLinePerpendicularFunction> RequirementFunctionFactory::creat
         l2->p1->ptrX(), l2->p1->ptrY(),
         l2->p2->ptrX(), l2->p2->ptrY()
     };
-    return std::make_shared<LineLinePerpendicularFunction>(vars);
+    return bind<SectionSectionPerpendicularError>(Utils::RequirementType::ET_LINELINEPERPENDICULAR, vars);
 }
 
-std::shared_ptr<LineLineAngleFunction> RequirementFunctionFactory::createLineLineAngle(
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createLineLineAngle(
     Figures::Line<Figures::Point2D>* l1,
     Figures::Line<Figures::Point2D>* l2,
     double angle
@@ -114,30 +113,30 @@ std::shared_ptr<LineLineAngleFunction> RequirementFunctionFactory::createLineLin
         l2->p1->ptrX(), l2->p1->ptrY(),
         l2->p2->ptrX(), l2->p2->ptrY()
     };
-    return std::make_shared<LineLineAngleFunction>(vars, angle);
+    return bind<SectionSectionAngleError>(Utils::RequirementType::ET_LINELINEANGLE, vars, angle);
 }
 
-std::shared_ptr<VerticalFunction> RequirementFunctionFactory::createVertical(
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createVertical(
     Figures::Line<Figures::Point2D>* line
 ) {
     std::vector<VAR> vars = {
         line->p1->ptrX(), line->p1->ptrY(),
         line->p2->ptrX(), line->p2->ptrY()
     };
-    return std::make_shared<VerticalFunction>(vars);
+    return bind<VerticalError>(Utils::RequirementType::ET_VERTICAL, vars);
 }
 
-std::shared_ptr<HorizontalFunction> RequirementFunctionFactory::createHorizontal(
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createHorizontal(
     Figures::Line<Figures::Point2D>* line
 ) {
     std::vector<VAR> vars = {
         line->p1->ptrX(), line->p1->ptrY(),
         line->p2->ptrX(), line->p2->ptrY()
     };
-    return std::make_shared<HorizontalFunction>(vars);
+    return bind<HorizontalError>(Utils::RequirementType::ET_HORIZONTAL, vars);
 }
 
-std::shared_ptr<ArcCenterOnPerpendicularFunction> RequirementFunctionFactory::createArcCenterOnPerpendicular(
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createArcCenterOnPerpendicular(
     Figures::Arc<Figures::Point2D>* arc
 ) {
     std::vector<VAR> vars = {
@@ -145,44 +144,35 @@ std::shared_ptr<ArcCenterOnPerpendicularFunction> RequirementFunctionFactory::cr
         arc->p2->ptrX(), arc->p2->ptrY(),
         arc->p_center->ptrX(), arc->p_center->ptrY()
     };
-    return std::make_shared<ArcCenterOnPerpendicularFunction>(vars);
+    return bind<ArcCenterOnPerpendicularError>(Utils::RequirementType::ET_ARCCENTERONPERPENDICULAR, vars);
 }
-std::vector<std::shared_ptr<FixCoordinateFunction>> RequirementFunctionFactory::createFixPoint(
+std::vector<std::shared_ptr<RequirementFunction>> RequirementFunctionFactory::createFixPoint(
     Figures::Point2D* point
 ) {
     return {
-        std::make_shared<FixCoordinateFunction>(
-            Utils::RequirementType::ET_FIXPOINT, std::vector<VAR>{point->ptrX()}, point->x()),
-        std::make_shared<FixCoordinateFunction>(
-            Utils::RequirementType::ET_FIXPOINT, std::vector<VAR>{point->ptrY()}, point->y())
+        bind<FixCoordinateError>(Utils::RequirementType::ET_FIXPOINT, std::vector<VAR>{point->ptrX()}, point->x()),
+        bind<FixCoordinateError>(Utils::RequirementType::ET_FIXPOINT, std::vector<VAR>{point->ptrY()}, point->y())
     };
 }
 
-std::vector<std::shared_ptr<FixCoordinateFunction>> RequirementFunctionFactory::createFixLine(
+std::vector<std::shared_ptr<RequirementFunction>> RequirementFunctionFactory::createFixLine(
     Figures::Line<Figures::Point2D>* line
 ) {
     return {
-        std::make_shared<FixCoordinateFunction>(
-            Utils::RequirementType::ET_FIXLINE, std::vector<VAR>{line->p1->ptrX()}, line->p1->x()),
-        std::make_shared<FixCoordinateFunction>(
-            Utils::RequirementType::ET_FIXLINE, std::vector<VAR>{line->p1->ptrY()}, line->p1->y()),
-        std::make_shared<FixCoordinateFunction>(
-            Utils::RequirementType::ET_FIXLINE, std::vector<VAR>{line->p2->ptrX()}, line->p2->x()),
-        std::make_shared<FixCoordinateFunction>(
-            Utils::RequirementType::ET_FIXLINE, std::vector<VAR>{line->p2->ptrY()}, line->p2->y())
+        bind<FixCoordinateError>(Utils::RequirementType::ET_FIXLINE, std::vector<VAR>{line->p1->ptrX()}, line->p1->x()),
+        bind<FixCoordinateError>(Utils::RequirementType::ET_FIXLINE, std::vector<VAR>{line->p1->ptrY()}, line->p1->y()),
+        bind<FixCoordinateError>(Utils::RequirementType::ET_FIXLINE, std::vector<VAR>{line->p2->ptrX()}, line->p2->x()),
+        bind<FixCoordinateError>(Utils::RequirementType::ET_FIXLINE, std::vector<VAR>{line->p2->ptrY()}, line->p2->y())
     };
 }
 
-std::vector<std::shared_ptr<FixCoordinateFunction>> RequirementFunctionFactory::createFixCircle(
+std::vector<std::shared_ptr<RequirementFunction>> RequirementFunctionFactory::createFixCircle(
     Figures::Circle<Figures::Point2D>* circle
 ) {
     return {
-        std::make_shared<FixCoordinateFunction>(
-            Utils::RequirementType::ET_FIXCIRCLE, std::vector<VAR>{circle->center->ptrX()}, circle->center->x()),
-        std::make_shared<FixCoordinateFunction>(
-            Utils::RequirementType::ET_FIXCIRCLE, std::vector<VAR>{circle->center->ptrY()}, circle->center->y()),
-        std::make_shared<FixCoordinateFunction>(
-            Utils::RequirementType::ET_FIXCIRCLE, std::vector<VAR>{circle->ptrRadius()}, circle->radius)
+        bind<FixCoordinateError>(Utils::RequirementType::ET_FIXCIRCLE, std::vector<VAR>{circle->center->ptrX()}, circle->center->x()),
+        bind<FixCoordinateError>(Utils::RequirementType::ET_FIXCIRCLE, std::vector<VAR>{circle->center->ptrY()}, circle->center->y()),
+        bind<FixCoordinateError>(Utils::RequirementType::ET_FIXCIRCLE, std::vector<VAR>{circle->ptrRadius()}, circle->radius)
     };
 }
 

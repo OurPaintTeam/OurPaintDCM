@@ -54,12 +54,16 @@ std::vector<VAR> makeLineCircleVars(OurPaintDCM::Figures::Point2D* l1,
 
 namespace OurPaintDCM::System {
 
-RequirementSystem::RequirementSystem(Figures::GeometryStorage* storage)
-    : _storage(storage) {}
+RequirementSystem::RequirementSystem(Figures::GeometryStorage* storage,
+    std::optional<std::vector<Utils::ID>> figureScope)
+    : _storage(storage), _figureScope(std::move(figureScope)) {
+    rebuildFunctionsAndAliases();
+}
 
 void RequirementSystem::replaceRequirements(
     const std::vector<Utils::RequirementDescriptor>& descriptors,
-    Utils::ID nextRequirementId) {
+    Utils::ID nextRequirementId,
+    const std::unordered_map<Utils::ID,std::vector<double>>& fixedTargets) {
     for (const auto& descriptor : descriptors) {
         descriptor.validate();
         if (!descriptor.id.has_value() || descriptor.id->id == 0ULL) {
@@ -70,9 +74,13 @@ void RequirementSystem::replaceRequirements(
     _requirements.reserve(descriptors.size());
     for (const auto& descriptor : descriptors) {
         _requirements.push_back({*descriptor.id, descriptor.type, descriptor.objectIds,
-                                 descriptor.param, descriptor.weight});
+                                 descriptor.param, {}, descriptor.weight});
     }
 
+    for (auto& entry : _requirements) {
+        const auto it = fixedTargets.find(entry.id);
+        if (it != fixedTargets.end()) entry.fixedTargets = it->second;
+    }
     _reqIdGen.set(nextRequirementId);
     rebuildFunctionsAndAliases();
 }
@@ -94,7 +102,7 @@ Utils::ID RequirementSystem::addRequirement(const Utils::RequirementDescriptor& 
     }
 
     _requirements.push_back({reqId, descriptor.type, descriptor.objectIds,
-                             descriptor.param, descriptor.weight});
+                             descriptor.param, {}, descriptor.weight});
 
     try {
         rebuildFunctionsAndAliases();
@@ -147,7 +155,7 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
     };
 
     for (const auto& entry : _requirements) {
-        if (entry.type != Utils::RequirementType::ET_POINTONPOINT) {
+        if (entry.type != Utils::RequirementType::ET_POINTONPOINT || entry.weight == 0) {
             continue;
         }
 
@@ -198,7 +206,7 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
             resolvePoint(dependencies[2])};
     };
 
-    for (const auto& entry : _requirements) {
+    for (auto& entry : _requirements) {
         const auto& ids = entry.objectIds;
         const std::size_t firstFunction = getFunctions().size();
 
@@ -206,7 +214,7 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
             case Utils::RequirementType::ET_POINTLINEDIST: {
                 auto* point = resolvePoint(ids[0]);
                 const auto [lineP1, lineP2] = resolveLinePoints(ids[1]);
-                addFunction(std::make_shared<Function::PointLineDistanceFunction>(
+                addFunction(Function::RequirementFunctionFactory::bind<PointSectionDistanceError>(Utils::RequirementType::ET_POINTLINEDIST,
                     makePointLineVars(point, lineP1, lineP2),
                     entry.param.value()));
                 break;
@@ -214,14 +222,14 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
             case Utils::RequirementType::ET_POINTONLINE: {
                 auto* point = resolvePoint(ids[0]);
                 const auto [lineP1, lineP2] = resolveLinePoints(ids[1]);
-                addFunction(std::make_shared<Function::PointOnLineFunction>(
+                addFunction(Function::RequirementFunctionFactory::bind<PointOnSectionError>(Utils::RequirementType::ET_POINTONLINE,
                     makePointLineVars(point, lineP1, lineP2)));
                 break;
             }
             case Utils::RequirementType::ET_POINTPOINTDIST: {
                 auto* p1 = resolvePoint(ids[0]);
                 auto* p2 = resolvePoint(ids[1]);
-                addFunction(std::make_shared<Function::PointPointDistanceFunction>(
+                addFunction(Function::RequirementFunctionFactory::bind<PointPointDistanceError>(Utils::RequirementType::ET_POINTPOINTDIST,
                     makeTwoPointVars(p1, p2),
                     entry.param.value()));
                 break;
@@ -231,7 +239,7 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
             case Utils::RequirementType::ET_LINECIRCLEDIST: {
                 const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
                 const auto [center, radius] = resolveCircleData(ids[1]);
-                addFunction(std::make_shared<Function::LineCircleDistanceFunction>(
+                addFunction(Function::RequirementFunctionFactory::bind<SectionCircleDistanceError>(Utils::RequirementType::ET_LINECIRCLEDIST,
                     makeLineCircleVars(lineP1, lineP2, center, radius),
                     entry.param.value()));
                 break;
@@ -240,7 +248,7 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                 const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
                 const auto [center, radius] = resolveCircleData(ids[1]);
                 for (auto* endpoint : {lineP1, lineP2}) {
-                    addFunction(std::make_shared<Function::PointOnCircleFunction>(
+                    addFunction(Function::RequirementFunctionFactory::bind<PointOnCircleError>(Utils::RequirementType::ET_LINEONCIRCLE,
                         std::vector<VAR>{endpoint->ptrX(), endpoint->ptrY(),
                                          center->ptrX(), center->ptrY(), radius}));
                 }
@@ -251,40 +259,40 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
             case Utils::RequirementType::ET_LINELINEPARALLEL: {
                 const auto [l1p1, l1p2] = resolveLinePoints(ids[0]);
                 const auto [l2p1, l2p2] = resolveLinePoints(ids[1]);
-                addFunction(std::make_shared<Function::LineLineParallelFunction>(
+                addFunction(Function::RequirementFunctionFactory::bind<SectionSectionParallelError>(Utils::RequirementType::ET_LINELINEPARALLEL,
                     makeLineLineVars(l1p1, l1p2, l2p1, l2p2)));
                 break;
             }
             case Utils::RequirementType::ET_LINELINEPERPENDICULAR: {
                 const auto [l1p1, l1p2] = resolveLinePoints(ids[0]);
                 const auto [l2p1, l2p2] = resolveLinePoints(ids[1]);
-                addFunction(std::make_shared<Function::LineLinePerpendicularFunction>(
+                addFunction(Function::RequirementFunctionFactory::bind<SectionSectionPerpendicularError>(Utils::RequirementType::ET_LINELINEPERPENDICULAR,
                     makeLineLineVars(l1p1, l1p2, l2p1, l2p2)));
                 break;
             }
             case Utils::RequirementType::ET_LINELINEANGLE: {
                 const auto [l1p1, l1p2] = resolveLinePoints(ids[0]);
                 const auto [l2p1, l2p2] = resolveLinePoints(ids[1]);
-                addFunction(std::make_shared<Function::LineLineAngleFunction>(
+                addFunction(Function::RequirementFunctionFactory::bind<SectionSectionAngleError>(Utils::RequirementType::ET_LINELINEANGLE,
                     makeLineLineVars(l1p1, l1p2, l2p1, l2p2),
                     entry.param.value()));
                 break;
             }
             case Utils::RequirementType::ET_VERTICAL: {
                 const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
-                addFunction(std::make_shared<Function::VerticalFunction>(
+                addFunction(Function::RequirementFunctionFactory::bind<VerticalError>(Utils::RequirementType::ET_VERTICAL,
                     makeTwoPointVars(lineP1, lineP2)));
                 break;
             }
             case Utils::RequirementType::ET_HORIZONTAL: {
                 const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
-                addFunction(std::make_shared<Function::HorizontalFunction>(
+                addFunction(Function::RequirementFunctionFactory::bind<HorizontalError>(Utils::RequirementType::ET_HORIZONTAL,
                     makeTwoPointVars(lineP1, lineP2)));
                 break;
             }
             case Utils::RequirementType::ET_ARCCENTERONPERPENDICULAR: {
                 const auto [arcP1, arcP2, center] = resolveArcPoints(ids[0]);
-                addFunction(std::make_shared<Function::ArcCenterOnPerpendicularFunction>(
+                addFunction(Function::RequirementFunctionFactory::bind<ArcCenterOnPerpendicularError>(Utils::RequirementType::ET_ARCCENTERONPERPENDICULAR,
                     std::vector<VAR>{
                         arcP1->ptrX(), arcP1->ptrY(),
                         arcP2->ptrX(), arcP2->ptrY(),
@@ -294,14 +302,13 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
             case Utils::RequirementType::ET_FIXPOINT: {
                 auto* originalPoint = requireGeometry(_storage->get<Figures::Point2D>(ids[0]));
                 auto* point = resolvePoint(ids[0]);
-                addFunction(std::make_shared<Function::FixCoordinateFunction>(
-                    Utils::RequirementType::ET_FIXPOINT,
+                if (entry.fixedTargets.empty()) entry.fixedTargets = {originalPoint->x(),originalPoint->y()};
+                addFunction(Function::RequirementFunctionFactory::bind<FixCoordinateError>(Utils::RequirementType::ET_FIXPOINT,
                     std::vector<VAR>{point->ptrX()},
-                    originalPoint->x()));
-                addFunction(std::make_shared<Function::FixCoordinateFunction>(
-                    Utils::RequirementType::ET_FIXPOINT,
+                    entry.fixedTargets.at(0)));
+                addFunction(Function::RequirementFunctionFactory::bind<FixCoordinateError>(Utils::RequirementType::ET_FIXPOINT,
                     std::vector<VAR>{point->ptrY()},
-                    originalPoint->y()));
+                    entry.fixedTargets.at(1)));
                 break;
             }
             case Utils::RequirementType::ET_FIXLINE: {
@@ -313,22 +320,19 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                 auto* originalP1 = requireGeometry(_storage->get<Figures::Point2D>(dependencies[0]));
                 auto* originalP2 = requireGeometry(_storage->get<Figures::Point2D>(dependencies[1]));
                 const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
-                addFunction(std::make_shared<Function::FixCoordinateFunction>(
-                    Utils::RequirementType::ET_FIXLINE,
+                if (entry.fixedTargets.empty()) entry.fixedTargets = {originalP1->x(),originalP1->y(),originalP2->x(),originalP2->y()};
+                addFunction(Function::RequirementFunctionFactory::bind<FixCoordinateError>(Utils::RequirementType::ET_FIXLINE,
                     std::vector<VAR>{lineP1->ptrX()},
-                    originalP1->x()));
-                addFunction(std::make_shared<Function::FixCoordinateFunction>(
-                    Utils::RequirementType::ET_FIXLINE,
+                    entry.fixedTargets.at(0)));
+                addFunction(Function::RequirementFunctionFactory::bind<FixCoordinateError>(Utils::RequirementType::ET_FIXLINE,
                     std::vector<VAR>{lineP1->ptrY()},
-                    originalP1->y()));
-                addFunction(std::make_shared<Function::FixCoordinateFunction>(
-                    Utils::RequirementType::ET_FIXLINE,
+                    entry.fixedTargets.at(1)));
+                addFunction(Function::RequirementFunctionFactory::bind<FixCoordinateError>(Utils::RequirementType::ET_FIXLINE,
                     std::vector<VAR>{lineP2->ptrX()},
-                    originalP2->x()));
-                addFunction(std::make_shared<Function::FixCoordinateFunction>(
-                    Utils::RequirementType::ET_FIXLINE,
+                    entry.fixedTargets.at(2)));
+                addFunction(Function::RequirementFunctionFactory::bind<FixCoordinateError>(Utils::RequirementType::ET_FIXLINE,
                     std::vector<VAR>{lineP2->ptrY()},
-                    originalP2->y()));
+                    entry.fixedTargets.at(3)));
                 break;
             }
             case Utils::RequirementType::ET_FIXCIRCLE: {
@@ -339,26 +343,38 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                     throw std::runtime_error("Circle dependencies are inconsistent");
                 }
                 auto* originalCenter = requireGeometry(_storage->get<Figures::Point2D>(dependencies[0]));
-                addFunction(std::make_shared<Function::FixCoordinateFunction>(
-                    Utils::RequirementType::ET_FIXCIRCLE,
+                if (entry.fixedTargets.empty()) entry.fixedTargets = {originalCenter->x(),originalCenter->y(),circle->radius};
+                addFunction(Function::RequirementFunctionFactory::bind<FixCoordinateError>(Utils::RequirementType::ET_FIXCIRCLE,
                     std::vector<VAR>{center->ptrX()},
-                    originalCenter->x()));
-                addFunction(std::make_shared<Function::FixCoordinateFunction>(
-                    Utils::RequirementType::ET_FIXCIRCLE,
+                    entry.fixedTargets.at(0)));
+                addFunction(Function::RequirementFunctionFactory::bind<FixCoordinateError>(Utils::RequirementType::ET_FIXCIRCLE,
                     std::vector<VAR>{center->ptrY()},
-                    originalCenter->y()));
-                addFunction(std::make_shared<Function::FixCoordinateFunction>(
-                    Utils::RequirementType::ET_FIXCIRCLE,
+                    entry.fixedTargets.at(1)));
+                addFunction(Function::RequirementFunctionFactory::bind<FixCoordinateError>(Utils::RequirementType::ET_FIXCIRCLE,
                     std::vector<VAR>{radius},
-                    circle->radius));
+                    entry.fixedTargets.at(2)));
                 break;
             }
         }
         for (std::size_t i = firstFunction; i < getFunctions().size(); ++i) {
-            getFunctions()[i]->setWeight(entry.weight);
+            getFunctions()[i]->setWeight(entry.type == Utils::RequirementType::ET_ARCCENTERONPERPENDICULAR && entry.weight > 0
+                ? std::max(1.0,entry.weight) : entry.weight);
+            getFunctions()[i]->setRequirementId(entry.id);
         }
     }
 
+    // Every arc requires a valid chord and equal endpoint radii, including arcs
+    // with no user requirement. Local systems attach only arcs in their scope.
+    for (const auto& ref : _storage->arcsWithIds()) {
+        if (_figureScope && std::find(_figureScope->begin(),_figureScope->end(),ref.id) == _figureScope->end()) continue;
+        const bool explicitlyActive = std::any_of(_requirements.begin(),_requirements.end(),[&](const auto& e) {
+            return e.type == Utils::RequirementType::ET_ARCCENTERONPERPENDICULAR && e.weight > 0 && e.objectIds[0] == ref.id;
+        });
+        if (explicitlyActive) continue;
+        const auto [a,b,c] = resolveArcPoints(ref.id);
+        addFunction(Function::RequirementFunctionFactory::bind<ArcCenterOnPerpendicularError>(Utils::RequirementType::ET_ARCCENTERONPERPENDICULAR,
+            {a->ptrX(),a->ptrY(),b->ptrX(),b->ptrY(),c->ptrX(),c->ptrY()}));
+    }
     applyDirectAssignments();
     synchronizeCoincidentPoints();
 }
