@@ -1,7 +1,7 @@
 #ifndef OURPAINTDCM_HEADERS_FIGURES_LINE_H
 #define OURPAINTDCM_HEADERS_FIGURES_LINE_H
 #include "PointBase.h"
-#include "cmath"
+#include "core/ErrorFunction.h"
 
 namespace OurPaintDCM::Figures{
     /**
@@ -39,12 +39,7 @@ namespace OurPaintDCM::Figures{
              * @return The distance between p1 and p2 points as a double.
              */
         double length() const {
-            double sum = 0.0;
-            for (std::size_t i = 0; i < PointT::dimension(); ++i) {
-                double diff = (*p2)[i] - (*p1)[i];
-                sum += diff * diff;
-            }
-            return std::sqrt(sum);
+            return PointPointDistanceError::distance(p1->coords,p2->coords);
         }
     };
 
