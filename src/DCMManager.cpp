@@ -1391,7 +1391,7 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
             if (requirement.type == Utils::RequirementType::ET_POINTONPOINT && requirement.weight != 0) {
                 auto* p1 = _storage.get<Figures::Point2D>(requirement.objectIds[0]);
                 auto* p2 = _storage.get<Figures::Point2D>(requirement.objectIds[1]);
-                Math::Constraint coincidence(Math::ConstraintKind::PointOnPoint,
+                PointOnPointError coincidence(std::vector<double*>
                     {p1->ptrX(),p1->ptrY(),
                      p2->ptrX(),p2->ptrY()});
                 coincidence.setWeight(requirement.weight);

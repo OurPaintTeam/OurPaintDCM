@@ -13,7 +13,7 @@ using namespace OurPaintDCM::Utils;
 TEST(RequirementBindingTest, PreservesFixType) {
     double x=0;
     for (const auto type : {RequirementType::ET_FIXPOINT,RequirementType::ET_FIXLINE,RequirementType::ET_FIXCIRCLE}) {
-        const auto binding=RequirementFunctionFactory::bind(type,Math::ConstraintKind::FixCoordinate,{&x},0);
+        const auto binding=RequirementFunctionFactory::bind<FixCoordinateError>(type,{&x},0);
         EXPECT_EQ(binding->getType(),type);
     }
 }

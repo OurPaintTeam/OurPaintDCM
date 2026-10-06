@@ -20,11 +20,12 @@ namespace OurPaintDCM::Function {
  */
 class RequirementFunctionFactory {
 public:
+    template<class MathFunction>
     static std::shared_ptr<RequirementFunction> bind(
-        Utils::RequirementType type, Math::ConstraintKind kind,
+        Utils::RequirementType type,
         const std::vector<VAR>& variables, double target = 0.0) {
         return std::make_shared<RequirementFunction>(type,
-            std::make_shared<Math::Constraint>(kind,variables,target));
+            std::make_shared<MathFunction>(variables,target));
     }
     /// @brief Create point-line distance function.
     static std::shared_ptr<RequirementFunction> createPointLineDist(
