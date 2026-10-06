@@ -12,7 +12,7 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointLine
         line->p1->ptrX(), line->p1->ptrY(),
         line->p2->ptrX(), line->p2->ptrY()
     };
-    return bind(Utils::RequirementType::ET_POINTLINEDIST, Math::ConstraintKind::PointLineDistance, vars, distance);
+    return bind<PointSectionDistanceError>(Utils::RequirementType::ET_POINTLINEDIST, vars, distance);
 }
 
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointOnLine(
@@ -24,7 +24,7 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointOnLi
         line->p1->ptrX(), line->p1->ptrY(),
         line->p2->ptrX(), line->p2->ptrY()
     };
-    return bind(Utils::RequirementType::ET_POINTONLINE, Math::ConstraintKind::PointOnLine, vars);
+    return bind<PointOnSectionError>(Utils::RequirementType::ET_POINTONLINE, vars);
 }
 
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointPointDist(
@@ -36,7 +36,7 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointPoin
         p1->ptrX(), p1->ptrY(),
         p2->ptrX(), p2->ptrY()
     };
-    return bind(Utils::RequirementType::ET_POINTPOINTDIST, Math::ConstraintKind::PointPointDistance, vars, distance);
+    return bind<PointPointDistanceError>(Utils::RequirementType::ET_POINTPOINTDIST, vars, distance);
 }
 
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointOnPoint(
@@ -47,7 +47,7 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointOnPo
         p1->ptrX(), p1->ptrY(),
         p2->ptrX(), p2->ptrY()
     };
-    return bind(Utils::RequirementType::ET_POINTONPOINT, Math::ConstraintKind::PointOnPoint, vars);
+    return bind<PointOnPointError>(Utils::RequirementType::ET_POINTONPOINT, vars);
 }
 
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createLineCircleDist(
@@ -61,7 +61,7 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createLineCircl
         circle->center->ptrX(), circle->center->ptrY(),
         circle->ptrRadius()
     };
-    return bind(Utils::RequirementType::ET_LINECIRCLEDIST, Math::ConstraintKind::SegmentCircleDistance, vars, distance);
+    return bind<SectionCircleDistanceError>(Utils::RequirementType::ET_LINECIRCLEDIST, vars, distance);
 }
 
 std::vector<std::shared_ptr<RequirementFunction>> RequirementFunctionFactory::createLineOnCircle(
@@ -70,7 +70,7 @@ std::vector<std::shared_ptr<RequirementFunction>> RequirementFunctionFactory::cr
 ) {
     std::vector<std::shared_ptr<RequirementFunction>> rows;
     for (auto* endpoint : {line->p1,line->p2}) {
-        rows.push_back(bind(Utils::RequirementType::ET_LINEONCIRCLE, Math::ConstraintKind::PointOnCircle,
+        rows.push_back(bind<PointOnCircleError>(Utils::RequirementType::ET_LINEONCIRCLE,
             {endpoint->ptrX(),endpoint->ptrY(),circle->center->ptrX(),circle->center->ptrY(),circle->ptrRadius()}));
     }
     return rows;
@@ -86,7 +86,7 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createLineLineP
         l2->p1->ptrX(), l2->p1->ptrY(),
         l2->p2->ptrX(), l2->p2->ptrY()
     };
-    return bind(Utils::RequirementType::ET_LINELINEPARALLEL, Math::ConstraintKind::Parallel, vars);
+    return bind<SectionSectionParallelError>(Utils::RequirementType::ET_LINELINEPARALLEL, vars);
 }
 
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createLineLinePerpendicular(
@@ -99,7 +99,7 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createLineLineP
         l2->p1->ptrX(), l2->p1->ptrY(),
         l2->p2->ptrX(), l2->p2->ptrY()
     };
-    return bind(Utils::RequirementType::ET_LINELINEPERPENDICULAR, Math::ConstraintKind::Perpendicular, vars);
+    return bind<SectionSectionPerpendicularError>(Utils::RequirementType::ET_LINELINEPERPENDICULAR, vars);
 }
 
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createLineLineAngle(
@@ -113,7 +113,7 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createLineLineA
         l2->p1->ptrX(), l2->p1->ptrY(),
         l2->p2->ptrX(), l2->p2->ptrY()
     };
-    return bind(Utils::RequirementType::ET_LINELINEANGLE, Math::ConstraintKind::Angle, vars, angle);
+    return bind<SectionSectionAngleError>(Utils::RequirementType::ET_LINELINEANGLE, vars, angle);
 }
 
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createVertical(
@@ -123,7 +123,7 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createVertical(
         line->p1->ptrX(), line->p1->ptrY(),
         line->p2->ptrX(), line->p2->ptrY()
     };
-    return bind(Utils::RequirementType::ET_VERTICAL, Math::ConstraintKind::Vertical, vars);
+    return bind<VerticalError>(Utils::RequirementType::ET_VERTICAL, vars);
 }
 
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createHorizontal(
@@ -133,7 +133,7 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createHorizonta
         line->p1->ptrX(), line->p1->ptrY(),
         line->p2->ptrX(), line->p2->ptrY()
     };
-    return bind(Utils::RequirementType::ET_HORIZONTAL, Math::ConstraintKind::Horizontal, vars);
+    return bind<HorizontalError>(Utils::RequirementType::ET_HORIZONTAL, vars);
 }
 
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createArcCenterOnPerpendicular(
@@ -144,14 +144,14 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createArcCenter
         arc->p2->ptrX(), arc->p2->ptrY(),
         arc->p_center->ptrX(), arc->p_center->ptrY()
     };
-    return bind(Utils::RequirementType::ET_ARCCENTERONPERPENDICULAR, Math::ConstraintKind::ArcBisector, vars);
+    return bind<ArcCenterOnPerpendicularError>(Utils::RequirementType::ET_ARCCENTERONPERPENDICULAR, vars);
 }
 std::vector<std::shared_ptr<RequirementFunction>> RequirementFunctionFactory::createFixPoint(
     Figures::Point2D* point
 ) {
     return {
-        bind(Utils::RequirementType::ET_FIXPOINT, Math::ConstraintKind::FixCoordinate, std::vector<VAR>{point->ptrX()}, point->x()),
-        bind(Utils::RequirementType::ET_FIXPOINT, Math::ConstraintKind::FixCoordinate, std::vector<VAR>{point->ptrY()}, point->y())
+        bind<FixCoordinateError>(Utils::RequirementType::ET_FIXPOINT, std::vector<VAR>{point->ptrX()}, point->x()),
+        bind<FixCoordinateError>(Utils::RequirementType::ET_FIXPOINT, std::vector<VAR>{point->ptrY()}, point->y())
     };
 }
 
@@ -159,10 +159,10 @@ std::vector<std::shared_ptr<RequirementFunction>> RequirementFunctionFactory::cr
     Figures::Line<Figures::Point2D>* line
 ) {
     return {
-        bind(Utils::RequirementType::ET_FIXLINE, Math::ConstraintKind::FixCoordinate, std::vector<VAR>{line->p1->ptrX()}, line->p1->x()),
-        bind(Utils::RequirementType::ET_FIXLINE, Math::ConstraintKind::FixCoordinate, std::vector<VAR>{line->p1->ptrY()}, line->p1->y()),
-        bind(Utils::RequirementType::ET_FIXLINE, Math::ConstraintKind::FixCoordinate, std::vector<VAR>{line->p2->ptrX()}, line->p2->x()),
-        bind(Utils::RequirementType::ET_FIXLINE, Math::ConstraintKind::FixCoordinate, std::vector<VAR>{line->p2->ptrY()}, line->p2->y())
+        bind<FixCoordinateError>(Utils::RequirementType::ET_FIXLINE, std::vector<VAR>{line->p1->ptrX()}, line->p1->x()),
+        bind<FixCoordinateError>(Utils::RequirementType::ET_FIXLINE, std::vector<VAR>{line->p1->ptrY()}, line->p1->y()),
+        bind<FixCoordinateError>(Utils::RequirementType::ET_FIXLINE, std::vector<VAR>{line->p2->ptrX()}, line->p2->x()),
+        bind<FixCoordinateError>(Utils::RequirementType::ET_FIXLINE, std::vector<VAR>{line->p2->ptrY()}, line->p2->y())
     };
 }
 
@@ -170,9 +170,9 @@ std::vector<std::shared_ptr<RequirementFunction>> RequirementFunctionFactory::cr
     Figures::Circle<Figures::Point2D>* circle
 ) {
     return {
-        bind(Utils::RequirementType::ET_FIXCIRCLE, Math::ConstraintKind::FixCoordinate, std::vector<VAR>{circle->center->ptrX()}, circle->center->x()),
-        bind(Utils::RequirementType::ET_FIXCIRCLE, Math::ConstraintKind::FixCoordinate, std::vector<VAR>{circle->center->ptrY()}, circle->center->y()),
-        bind(Utils::RequirementType::ET_FIXCIRCLE, Math::ConstraintKind::FixCoordinate, std::vector<VAR>{circle->ptrRadius()}, circle->radius)
+        bind<FixCoordinateError>(Utils::RequirementType::ET_FIXCIRCLE, std::vector<VAR>{circle->center->ptrX()}, circle->center->x()),
+        bind<FixCoordinateError>(Utils::RequirementType::ET_FIXCIRCLE, std::vector<VAR>{circle->center->ptrY()}, circle->center->y()),
+        bind<FixCoordinateError>(Utils::RequirementType::ET_FIXCIRCLE, std::vector<VAR>{circle->ptrRadius()}, circle->radius)
     };
 }
 

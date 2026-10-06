@@ -102,7 +102,7 @@ TEST_F(RequirementFunctionFactoryTest, CreateLineOnCircle) {
     EXPECT_EQ(rows[0]->getVars()[0],line1->p1->ptrX());
     EXPECT_EQ(rows[1]->getVars()[0],line1->p2->ptrX());
     for (const auto& row : rows) {
-        EXPECT_EQ(row->mathematical()->kind(),Math::ConstraintKind::PointOnCircle);
+        EXPECT_NE(dynamic_cast<PointOnCircleError*>(row->mathematical().get()),nullptr);
         EXPECT_EQ(row->getVarCount(),5);
     }
 }

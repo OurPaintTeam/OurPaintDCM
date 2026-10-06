@@ -214,7 +214,7 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
             case Utils::RequirementType::ET_POINTLINEDIST: {
                 auto* point = resolvePoint(ids[0]);
                 const auto [lineP1, lineP2] = resolveLinePoints(ids[1]);
-                addFunction(Function::RequirementFunctionFactory::bind(Utils::RequirementType::ET_POINTLINEDIST, Math::ConstraintKind::PointLineDistance,
+                addFunction(Function::RequirementFunctionFactory::bind<PointSectionDistanceError>(Utils::RequirementType::ET_POINTLINEDIST,
                     makePointLineVars(point, lineP1, lineP2),
                     entry.param.value()));
                 break;
@@ -222,14 +222,14 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
             case Utils::RequirementType::ET_POINTONLINE: {
                 auto* point = resolvePoint(ids[0]);
                 const auto [lineP1, lineP2] = resolveLinePoints(ids[1]);
-                addFunction(Function::RequirementFunctionFactory::bind(Utils::RequirementType::ET_POINTONLINE, Math::ConstraintKind::PointOnLine,
+                addFunction(Function::RequirementFunctionFactory::bind<PointOnSectionError>(Utils::RequirementType::ET_POINTONLINE,
                     makePointLineVars(point, lineP1, lineP2)));
                 break;
             }
             case Utils::RequirementType::ET_POINTPOINTDIST: {
                 auto* p1 = resolvePoint(ids[0]);
                 auto* p2 = resolvePoint(ids[1]);
-                addFunction(Function::RequirementFunctionFactory::bind(Utils::RequirementType::ET_POINTPOINTDIST, Math::ConstraintKind::PointPointDistance,
+                addFunction(Function::RequirementFunctionFactory::bind<PointPointDistanceError>(Utils::RequirementType::ET_POINTPOINTDIST,
                     makeTwoPointVars(p1, p2),
                     entry.param.value()));
                 break;
@@ -239,7 +239,7 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
             case Utils::RequirementType::ET_LINECIRCLEDIST: {
                 const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
                 const auto [center, radius] = resolveCircleData(ids[1]);
-                addFunction(Function::RequirementFunctionFactory::bind(Utils::RequirementType::ET_LINECIRCLEDIST, Math::ConstraintKind::SegmentCircleDistance,
+                addFunction(Function::RequirementFunctionFactory::bind<SectionCircleDistanceError>(Utils::RequirementType::ET_LINECIRCLEDIST,
                     makeLineCircleVars(lineP1, lineP2, center, radius),
                     entry.param.value()));
                 break;
@@ -248,7 +248,7 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                 const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
                 const auto [center, radius] = resolveCircleData(ids[1]);
                 for (auto* endpoint : {lineP1, lineP2}) {
-                    addFunction(Function::RequirementFunctionFactory::bind(Utils::RequirementType::ET_LINEONCIRCLE, Math::ConstraintKind::PointOnCircle,
+                    addFunction(Function::RequirementFunctionFactory::bind<PointOnCircleError>(Utils::RequirementType::ET_LINEONCIRCLE,
                         std::vector<VAR>{endpoint->ptrX(), endpoint->ptrY(),
                                          center->ptrX(), center->ptrY(), radius}));
                 }
@@ -259,40 +259,40 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
             case Utils::RequirementType::ET_LINELINEPARALLEL: {
                 const auto [l1p1, l1p2] = resolveLinePoints(ids[0]);
                 const auto [l2p1, l2p2] = resolveLinePoints(ids[1]);
-                addFunction(Function::RequirementFunctionFactory::bind(Utils::RequirementType::ET_LINELINEPARALLEL, Math::ConstraintKind::Parallel,
+                addFunction(Function::RequirementFunctionFactory::bind<SectionSectionParallelError>(Utils::RequirementType::ET_LINELINEPARALLEL,
                     makeLineLineVars(l1p1, l1p2, l2p1, l2p2)));
                 break;
             }
             case Utils::RequirementType::ET_LINELINEPERPENDICULAR: {
                 const auto [l1p1, l1p2] = resolveLinePoints(ids[0]);
                 const auto [l2p1, l2p2] = resolveLinePoints(ids[1]);
-                addFunction(Function::RequirementFunctionFactory::bind(Utils::RequirementType::ET_LINELINEPERPENDICULAR, Math::ConstraintKind::Perpendicular,
+                addFunction(Function::RequirementFunctionFactory::bind<SectionSectionPerpendicularError>(Utils::RequirementType::ET_LINELINEPERPENDICULAR,
                     makeLineLineVars(l1p1, l1p2, l2p1, l2p2)));
                 break;
             }
             case Utils::RequirementType::ET_LINELINEANGLE: {
                 const auto [l1p1, l1p2] = resolveLinePoints(ids[0]);
                 const auto [l2p1, l2p2] = resolveLinePoints(ids[1]);
-                addFunction(Function::RequirementFunctionFactory::bind(Utils::RequirementType::ET_LINELINEANGLE, Math::ConstraintKind::Angle,
+                addFunction(Function::RequirementFunctionFactory::bind<SectionSectionAngleError>(Utils::RequirementType::ET_LINELINEANGLE,
                     makeLineLineVars(l1p1, l1p2, l2p1, l2p2),
                     entry.param.value()));
                 break;
             }
             case Utils::RequirementType::ET_VERTICAL: {
                 const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
-                addFunction(Function::RequirementFunctionFactory::bind(Utils::RequirementType::ET_VERTICAL, Math::ConstraintKind::Vertical,
+                addFunction(Function::RequirementFunctionFactory::bind<VerticalError>(Utils::RequirementType::ET_VERTICAL,
                     makeTwoPointVars(lineP1, lineP2)));
                 break;
             }
             case Utils::RequirementType::ET_HORIZONTAL: {
                 const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
-                addFunction(Function::RequirementFunctionFactory::bind(Utils::RequirementType::ET_HORIZONTAL, Math::ConstraintKind::Horizontal,
+                addFunction(Function::RequirementFunctionFactory::bind<HorizontalError>(Utils::RequirementType::ET_HORIZONTAL,
                     makeTwoPointVars(lineP1, lineP2)));
                 break;
             }
             case Utils::RequirementType::ET_ARCCENTERONPERPENDICULAR: {
                 const auto [arcP1, arcP2, center] = resolveArcPoints(ids[0]);
-                addFunction(Function::RequirementFunctionFactory::bind(Utils::RequirementType::ET_ARCCENTERONPERPENDICULAR, Math::ConstraintKind::ArcBisector,
+                addFunction(Function::RequirementFunctionFactory::bind<ArcCenterOnPerpendicularError>(Utils::RequirementType::ET_ARCCENTERONPERPENDICULAR,
                     std::vector<VAR>{
                         arcP1->ptrX(), arcP1->ptrY(),
                         arcP2->ptrX(), arcP2->ptrY(),
@@ -303,10 +303,10 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                 auto* originalPoint = requireGeometry(_storage->get<Figures::Point2D>(ids[0]));
                 auto* point = resolvePoint(ids[0]);
                 if (entry.fixedTargets.empty()) entry.fixedTargets = {originalPoint->x(),originalPoint->y()};
-                addFunction(Function::RequirementFunctionFactory::bind(Utils::RequirementType::ET_FIXPOINT, Math::ConstraintKind::FixCoordinate,
+                addFunction(Function::RequirementFunctionFactory::bind<FixCoordinateError>(Utils::RequirementType::ET_FIXPOINT,
                     std::vector<VAR>{point->ptrX()},
                     entry.fixedTargets.at(0)));
-                addFunction(Function::RequirementFunctionFactory::bind(Utils::RequirementType::ET_FIXPOINT, Math::ConstraintKind::FixCoordinate,
+                addFunction(Function::RequirementFunctionFactory::bind<FixCoordinateError>(Utils::RequirementType::ET_FIXPOINT,
                     std::vector<VAR>{point->ptrY()},
                     entry.fixedTargets.at(1)));
                 break;
@@ -321,16 +321,16 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                 auto* originalP2 = requireGeometry(_storage->get<Figures::Point2D>(dependencies[1]));
                 const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
                 if (entry.fixedTargets.empty()) entry.fixedTargets = {originalP1->x(),originalP1->y(),originalP2->x(),originalP2->y()};
-                addFunction(Function::RequirementFunctionFactory::bind(Utils::RequirementType::ET_FIXLINE, Math::ConstraintKind::FixCoordinate,
+                addFunction(Function::RequirementFunctionFactory::bind<FixCoordinateError>(Utils::RequirementType::ET_FIXLINE,
                     std::vector<VAR>{lineP1->ptrX()},
                     entry.fixedTargets.at(0)));
-                addFunction(Function::RequirementFunctionFactory::bind(Utils::RequirementType::ET_FIXLINE, Math::ConstraintKind::FixCoordinate,
+                addFunction(Function::RequirementFunctionFactory::bind<FixCoordinateError>(Utils::RequirementType::ET_FIXLINE,
                     std::vector<VAR>{lineP1->ptrY()},
                     entry.fixedTargets.at(1)));
-                addFunction(Function::RequirementFunctionFactory::bind(Utils::RequirementType::ET_FIXLINE, Math::ConstraintKind::FixCoordinate,
+                addFunction(Function::RequirementFunctionFactory::bind<FixCoordinateError>(Utils::RequirementType::ET_FIXLINE,
                     std::vector<VAR>{lineP2->ptrX()},
                     entry.fixedTargets.at(2)));
-                addFunction(Function::RequirementFunctionFactory::bind(Utils::RequirementType::ET_FIXLINE, Math::ConstraintKind::FixCoordinate,
+                addFunction(Function::RequirementFunctionFactory::bind<FixCoordinateError>(Utils::RequirementType::ET_FIXLINE,
                     std::vector<VAR>{lineP2->ptrY()},
                     entry.fixedTargets.at(3)));
                 break;
@@ -344,13 +344,13 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                 }
                 auto* originalCenter = requireGeometry(_storage->get<Figures::Point2D>(dependencies[0]));
                 if (entry.fixedTargets.empty()) entry.fixedTargets = {originalCenter->x(),originalCenter->y(),circle->radius};
-                addFunction(Function::RequirementFunctionFactory::bind(Utils::RequirementType::ET_FIXCIRCLE, Math::ConstraintKind::FixCoordinate,
+                addFunction(Function::RequirementFunctionFactory::bind<FixCoordinateError>(Utils::RequirementType::ET_FIXCIRCLE,
                     std::vector<VAR>{center->ptrX()},
                     entry.fixedTargets.at(0)));
-                addFunction(Function::RequirementFunctionFactory::bind(Utils::RequirementType::ET_FIXCIRCLE, Math::ConstraintKind::FixCoordinate,
+                addFunction(Function::RequirementFunctionFactory::bind<FixCoordinateError>(Utils::RequirementType::ET_FIXCIRCLE,
                     std::vector<VAR>{center->ptrY()},
                     entry.fixedTargets.at(1)));
-                addFunction(Function::RequirementFunctionFactory::bind(Utils::RequirementType::ET_FIXCIRCLE, Math::ConstraintKind::FixCoordinate,
+                addFunction(Function::RequirementFunctionFactory::bind<FixCoordinateError>(Utils::RequirementType::ET_FIXCIRCLE,
                     std::vector<VAR>{radius},
                     entry.fixedTargets.at(2)));
                 break;
@@ -372,8 +372,8 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
         });
         if (explicitlyActive) continue;
         const auto [a,b,c] = resolveArcPoints(ref.id);
-        addFunction(Function::RequirementFunctionFactory::bind(Utils::RequirementType::ET_ARCCENTERONPERPENDICULAR,
-            Math::ConstraintKind::ArcBisector,{a->ptrX(),a->ptrY(),b->ptrX(),b->ptrY(),c->ptrX(),c->ptrY()}));
+        addFunction(Function::RequirementFunctionFactory::bind<ArcCenterOnPerpendicularError>(Utils::RequirementType::ET_ARCCENTERONPERPENDICULAR,
+            {a->ptrX(),a->ptrY(),b->ptrX(),b->ptrY(),c->ptrX(),c->ptrY()}));
     }
     applyDirectAssignments();
     synchronizeCoincidentPoints();

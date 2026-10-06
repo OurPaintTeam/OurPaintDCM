@@ -14,7 +14,7 @@ TEST(RequirementFunctionSystemTest, AddAndUpdateJacobian) {
     double x1 = 0, y1 = 0, x2 = 3, y2 = 4;
     std::vector<double*> vars = {&x1, &y1, &x2, &y2};
 
-    auto func = RequirementFunctionFactory::bind(RequirementType::ET_POINTPOINTDIST, Math::ConstraintKind::PointPointDistance, vars, 5.0);
+    auto func = RequirementFunctionFactory::bind<PointPointDistanceError>(RequirementType::ET_POINTPOINTDIST, vars, 5.0);
     system.addFunction(func);
 
     auto allVars = system.getAllVars();
@@ -36,7 +36,7 @@ TEST(RequirementFunctionSystemTest, ResidualComputation) {
     double x1 = 0, y1 = 0, x2 = 3, y2 = 4;
     std::vector<double*> vars = {&x1, &y1, &x2, &y2};
 
-    auto func = RequirementFunctionFactory::bind(RequirementType::ET_POINTPOINTDIST, Math::ConstraintKind::PointPointDistance, vars, 5.0);
+    auto func = RequirementFunctionFactory::bind<PointPointDistanceError>(RequirementType::ET_POINTPOINTDIST, vars, 5.0);
     system.addFunction(func);
 
     Eigen::VectorXd r = system.residuals();
@@ -49,7 +49,7 @@ TEST(RequirementFunctionSystemTest, DiagnoseWellConstrained) {
 
     double x1 = 0, y1 = 0, x2 = 1, y2 = 0;
     std::vector<double*> vars = {&x1, &y1, &x2, &y2};
-    auto func = RequirementFunctionFactory::bind(RequirementType::ET_HORIZONTAL, Math::ConstraintKind::Horizontal, vars);
+    auto func = RequirementFunctionFactory::bind<HorizontalError>(RequirementType::ET_HORIZONTAL, vars);
 
     system.addFunction(func);
     system.updateJ();
@@ -65,7 +65,7 @@ TEST(RequirementFunctionSystemTest, ClearResetsSystem) {
 
     double x1 = 0, y1 = 0, x2 = 1, y2 = 0;
     std::vector<double*> vars = {&x1, &y1, &x2, &y2};
-    auto func = RequirementFunctionFactory::bind(RequirementType::ET_HORIZONTAL, Math::ConstraintKind::Horizontal, vars);
+    auto func = RequirementFunctionFactory::bind<HorizontalError>(RequirementType::ET_HORIZONTAL, vars);
     system.addFunction(func);
     system.updateJ();
 
@@ -79,8 +79,8 @@ TEST(RequirementFunctionSystemTest, ClearResetsSystem) {
 TEST(RequirementFunctionSystemTest, WeightsScaleResidualsJacobianAndDiagnostics) {
     RequirementFunctionSystem system;
     double x = 2.0;
-    auto first = RequirementFunctionFactory::bind(RequirementType::ET_FIXPOINT, Math::ConstraintKind::FixCoordinate, std::vector<VAR>{&x}, 0.0);
-    auto second = RequirementFunctionFactory::bind(RequirementType::ET_FIXPOINT, Math::ConstraintKind::FixCoordinate, std::vector<VAR>{&x}, 4.0);
+    auto first = RequirementFunctionFactory::bind<FixCoordinateError>(RequirementType::ET_FIXPOINT, std::vector<VAR>{&x}, 0.0);
+    auto second = RequirementFunctionFactory::bind<FixCoordinateError>(RequirementType::ET_FIXPOINT, std::vector<VAR>{&x}, 4.0);
     first->setWeight(2.0);
     second->setWeight(3.0);
     system.addFunction(first);
@@ -108,14 +108,14 @@ TEST(RequirementFunctionSystemTest, DiagnoseIgnoresZeroWeightConstraintsAndTheir
     RequirementFunctionSystem system;
     double x = 2.0;
     double y = 3.0;
-    auto active = RequirementFunctionFactory::bind(RequirementType::ET_FIXPOINT, Math::ConstraintKind::FixCoordinate, std::vector<VAR>{&x}, 0.0);
-    auto disabledOnX = RequirementFunctionFactory::bind(RequirementType::ET_FIXPOINT, Math::ConstraintKind::FixCoordinate, std::vector<VAR>{&x}, 4.0);
+    auto active = RequirementFunctionFactory::bind<FixCoordinateError>(RequirementType::ET_FIXPOINT, std::vector<VAR>{&x}, 0.0);
+    auto disabledOnX = RequirementFunctionFactory::bind<FixCoordinateError>(RequirementType::ET_FIXPOINT, std::vector<VAR>{&x}, 4.0);
     disabledOnX->setWeight(0.0);
     system.addFunction(active);
     system.addFunction(disabledOnX);
     EXPECT_EQ(system.diagnose(), SystemStatus::WELL_CONSTRAINED);
 
-    auto disabledOnY = RequirementFunctionFactory::bind(RequirementType::ET_FIXPOINT, Math::ConstraintKind::FixCoordinate, std::vector<VAR>{&y}, 5.0);
+    auto disabledOnY = RequirementFunctionFactory::bind<FixCoordinateError>(RequirementType::ET_FIXPOINT, std::vector<VAR>{&y}, 5.0);
     disabledOnY->setWeight(0.0);
     system.addFunction(disabledOnY);
     EXPECT_EQ(system.diagnose(), SystemStatus::WELL_CONSTRAINED);

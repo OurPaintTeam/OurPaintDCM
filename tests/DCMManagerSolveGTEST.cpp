@@ -332,7 +332,7 @@ TEST(DCMManagerSolveInvariantTest, NonfiniteCandidatesAndExceptionsRestoreAliase
             manager.addRequirement(RequirementDescriptor::pointOnPoint(first, alias));
             auto* coordinate = manager.storage().get<Figures::Point2D>(first)->ptrX();
             auto& system = const_cast<System::RequirementSystem&>(manager.getRequirementSystem());
-            system.addFunction(std::make_shared<Function::RequirementFunction>(RequirementType::ET_POINTPOINTDIST,
+            system.addFunction(std::make_shared<OurPaintDCM::Function::RequirementFunction>(RequirementType::ET_POINTPOINTDIST,
                 std::make_shared<FaultInjectionConstraint>(coordinate,invalid,throwOnCandidate)));
             if (throwOnCandidate) {
                 EXPECT_THROW(manager.solve(), std::runtime_error);
@@ -360,7 +360,7 @@ TEST(DCMManagerSolveInvariantTest, ZeroAndNonfiniteRadiusCandidatesAreRestored) 
         manager.addRequirement(disabled);
         auto* radius = manager.storage().get<Figures::Circle2D>(circle)->ptrRadius();
         auto& system = const_cast<System::RequirementSystem&>(manager.getRequirementSystem());
-        system.addFunction(std::make_shared<Function::RequirementFunction>(RequirementType::ET_POINTPOINTDIST,
+        system.addFunction(std::make_shared<OurPaintDCM::Function::RequirementFunction>(RequirementType::ET_POINTPOINTDIST,
             std::make_shared<FaultInjectionConstraint>(radius,invalid,false)));
         EXPECT_FALSE(manager.solve());
         EXPECT_DOUBLE_EQ(*radius, 2.0);

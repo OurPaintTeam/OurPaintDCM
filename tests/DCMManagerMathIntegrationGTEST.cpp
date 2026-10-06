@@ -69,7 +69,7 @@ TEST(DCMManagerMathIntegration, BindingTracksRequirementRowsAndSavedFixTargetsAf
     ASSERT_EQ(system.getFunctions().size(),2u);
     for (const auto& row : system.getFunctions()) {
         EXPECT_EQ(row->requirementId(),id);
-        EXPECT_EQ(row->mathematical()->kind(),Math::ConstraintKind::PointOnCircle);
+        EXPECT_NE(dynamic_cast<PointOnCircleError*>(row->mathematical().get()),nullptr);
     }
     manager.removeRequirement(id);
     manager.removeFigure(circle,true);
