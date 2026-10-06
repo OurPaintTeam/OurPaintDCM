@@ -2,10 +2,12 @@
 #include <stdexcept>
 #include <cmath>
 #include <algorithm>
+#include <limits>
 
 namespace {
 
 constexpr double kGeometryEpsilon = 1e-12;
+constexpr double kUndefinedResidual = std::numeric_limits<double>::infinity();
 
 std::unordered_map<VAR, double> makeZeroGradient(const std::vector<VAR>& vars) {
     std::unordered_map<VAR, double> grad;
@@ -25,9 +27,10 @@ double pointLineSignedDistance(const std::vector<VAR>& vars) {
 
     const double dx = x2 - x1;
     const double dy = y2 - y1;
-    const double lineLen = std::sqrt(dx * dx + dy * dy);
-    if (lineLen < kGeometryEpsilon) {
-        return 0.0;
+    const double lineLen = std::hypot(dx, dy);
+    if (lineLen <= kGeometryEpsilon) {
+        // A collapsed segment is a point; it must not contain every point in the plane.
+        return std::hypot(px - x1, py - y1);
     }
 
     const double wx = px - x1;
@@ -46,9 +49,17 @@ std::unordered_map<VAR, double> pointLineSignedDistanceGradient(const std::vecto
 
     const double dx = x2 - x1;
     const double dy = y2 - y1;
-    const double lineLen = std::sqrt(dx * dx + dy * dy);
-    if (lineLen < kGeometryEpsilon) {
-        return makeZeroGradient(vars);
+    const double lineLen = std::hypot(dx, dy);
+    if (lineLen <= kGeometryEpsilon) {
+        auto grad = makeZeroGradient(vars);
+        const double distance = std::hypot(px - x1, py - y1);
+        if (distance > kGeometryEpsilon) {
+            grad[vars[0]] += (px - x1) / distance;
+            grad[vars[1]] += (py - y1) / distance;
+            grad[vars[2]] -= (px - x1) / distance;
+            grad[vars[3]] -= (py - y1) / distance;
+        }
+        return grad;
     }
 
     const double wx = px - x1;
@@ -64,6 +75,48 @@ std::unordered_map<VAR, double> pointLineSignedDistanceGradient(const std::vecto
     grad[vars[3]] += (x2 - px) / lineLen + cross * dy / lineLen3;
     grad[vars[4]] += (y1 - py) / lineLen - cross * dx / lineLen3;
     grad[vars[5]] += (px - x1) / lineLen - cross * dy / lineLen3;
+    return grad;
+}
+
+// Normalized cross/dot products test direction independently of segment length.
+// No direction exists at a collapsed segment; infinity cannot pass a residual tolerance.
+double lineDirectionResidual(const std::vector<VAR>& vars, bool cross) {
+    const double dx1 = *vars[2] - *vars[0];
+    const double dy1 = *vars[3] - *vars[1];
+    const double dx2 = *vars[6] - *vars[4];
+    const double dy2 = *vars[7] - *vars[5];
+    const double len1 = std::hypot(dx1, dy1);
+    const double len2 = std::hypot(dx2, dy2);
+    if (len1 <= kGeometryEpsilon || len2 <= kGeometryEpsilon) return kUndefinedResidual;
+    const double ux = dx1 / len1, uy = dy1 / len1;
+    const double vx = dx2 / len2, vy = dy2 / len2;
+    return cross ? ux * vy - uy * vx : ux * vx + uy * vy;
+}
+
+std::unordered_map<VAR, double> lineDirectionGradient(const std::vector<VAR>& vars, bool cross) {
+    auto grad = makeZeroGradient(vars);
+    const double dx1 = *vars[2] - *vars[0];
+    const double dy1 = *vars[3] - *vars[1];
+    const double dx2 = *vars[6] - *vars[4];
+    const double dy2 = *vars[7] - *vars[5];
+    const double len1 = std::hypot(dx1, dy1);
+    const double len2 = std::hypot(dx2, dy2);
+    if (len1 <= kGeometryEpsilon || len2 <= kGeometryEpsilon) return grad;
+    const double ux = dx1 / len1, uy = dy1 / len1;
+    const double vx = dx2 / len2, vy = dy2 / len2;
+    const double residual = lineDirectionResidual(vars, cross);
+    const double dax = ((cross ? vy : vx) - residual * ux) / len1;
+    const double day = ((cross ? -vx : vy) - residual * uy) / len1;
+    const double dbx = ((cross ? -uy : ux) - residual * vx) / len2;
+    const double dby = ((cross ? ux : uy) - residual * vy) / len2;
+    grad[vars[0]] -= dax;
+    grad[vars[1]] -= day;
+    grad[vars[2]] += dax;
+    grad[vars[3]] += day;
+    grad[vars[4]] -= dbx;
+    grad[vars[5]] -= dby;
+    grad[vars[6]] += dbx;
+    grad[vars[7]] += dby;
     return grad;
 }
 
@@ -355,53 +408,11 @@ OurPaintDCM::Function::LineLineParallelFunction::LineLineParallelFunction(
 }
 
 double OurPaintDCM::Function::LineLineParallelFunction::evaluate() const {
-    double x1 = *_vars[0];
-    double y1 = *_vars[1];
-    double x2 = *_vars[2];
-    double y2 = *_vars[3];
-    double x3 = *_vars[4];
-    double y3 = *_vars[5];
-    double x4 = *_vars[6];
-    double y4 = *_vars[7];
-
-    double dx1 = x2 - x1;
-    double dy1 = y2 - y1;
-    double dx2 = x4 - x3;
-    double dy2 = y4 - y3;
-
-    double cross = dx1 * dy2 - dy1 * dx2;
-
-    return cross;
+    return lineDirectionResidual(_vars, true);
 }
 
 std::unordered_map<VAR, double> OurPaintDCM::Function::LineLineParallelFunction::gradient() const {
-    std::unordered_map<VAR, double> grad;
-
-    double x1 = *_vars[0];
-    double y1 = *_vars[1];
-    double x2 = *_vars[2];
-    double y2 = *_vars[3];
-    double x3 = *_vars[4];
-    double y3 = *_vars[5];
-    double x4 = *_vars[6];
-    double y4 = *_vars[7];
-
-    double dx1 = x2 - x1;
-    double dy1 = y2 - y1;
-    double dx2 = x4 - x3;
-    double dy2 = y4 - y3;
-
-    grad[_vars[0]] += -dy2;
-    grad[_vars[1]] += dx2;
-    grad[_vars[2]] += dy2;
-    grad[_vars[3]] += -dx2;
-
-    grad[_vars[4]] += dy1;
-    grad[_vars[5]] += -dx1;
-    grad[_vars[6]] += -dy1;
-    grad[_vars[7]] += dx1;
-
-    return grad;
+    return lineDirectionGradient(_vars, true);
 }
 
 size_t OurPaintDCM::Function::LineLineParallelFunction::getVarCount() const {
@@ -418,51 +429,11 @@ OurPaintDCM::Function::LineLinePerpendicularFunction::LineLinePerpendicularFunct
 }
 
 double OurPaintDCM::Function::LineLinePerpendicularFunction::evaluate() const {
-    double x1 = *_vars[0];
-    double y1 = *_vars[1];
-    double x2 = *_vars[2];
-    double y2 = *_vars[3];
-    double x3 = *_vars[4];
-    double y3 = *_vars[5];
-    double x4 = *_vars[6];
-    double y4 = *_vars[7];
-
-    double dx1 = x2 - x1;
-    double dy1 = y2 - y1;
-    double dx2 = x4 - x3;
-    double dy2 = y4 - y3;
-
-    return dx1 * dx2 + dy1 * dy2;
+    return lineDirectionResidual(_vars, false);
 }
 
 std::unordered_map<VAR, double> OurPaintDCM::Function::LineLinePerpendicularFunction::gradient() const {
-    std::unordered_map<VAR, double> grad;
-
-    double x1 = *_vars[0];
-    double y1 = *_vars[1];
-    double x2 = *_vars[2];
-    double y2 = *_vars[3];
-    double x3 = *_vars[4];
-    double y3 = *_vars[5];
-    double x4 = *_vars[6];
-    double y4 = *_vars[7];
-
-    double dx1 = x2 - x1;
-    double dy1 = y2 - y1;
-    double dx2 = x4 - x3;
-    double dy2 = y4 - y3;
-
-    grad[_vars[0]] += -dx2; // A1x
-    grad[_vars[1]] += -dy2; // A1y
-    grad[_vars[2]] += dx2; // A2x
-    grad[_vars[3]] += dy2; // A2y
-
-    grad[_vars[4]] += -dx1; // B1x
-    grad[_vars[5]] += -dy1; // B1y
-    grad[_vars[6]] += dx1; // B2x
-    grad[_vars[7]] += dy1; // B2y
-
-    return grad;
+    return lineDirectionGradient(_vars, false);
 }
 
 size_t OurPaintDCM::Function::LineLinePerpendicularFunction::getVarCount() const {
@@ -480,74 +451,11 @@ OurPaintDCM::Function::LineLineAngleFunction::LineLineAngleFunction(const std::v
 }
 
 double OurPaintDCM::Function::LineLineAngleFunction::evaluate() const {
-    double x1 = *_vars[0];
-    double y1 = *_vars[1];
-    double x2 = *_vars[2];
-    double y2 = *_vars[3];
-    double x3 = *_vars[4];
-    double y3 = *_vars[5];
-    double x4 = *_vars[6];
-    double y4 = *_vars[7];
-
-    double dx1 = x2 - x1;
-    double dy1 = y2 - y1;
-    double dx2 = x4 - x3;
-    double dy2 = y4 - y3;
-
-    double dot = dx1 * dx2 + dy1 * dy2;
-    double len1 = std::sqrt(dx1 * dx1 + dy1 * dy1);
-    double len2 = std::sqrt(dx2 * dx2 + dy2 * dy2);
-
-    if (len1 < 1e-10 || len2 < 1e-10) return 0.0;
-
-    double cos_theta = dot / (len1 * len2);
-    return cos_theta - std::cos(_angle);
+    return lineDirectionResidual(_vars, false) - std::cos(_angle);
 }
 
 std::unordered_map<VAR, double> OurPaintDCM::Function::LineLineAngleFunction::gradient() const {
-    std::unordered_map<VAR, double> grad;
-
-    double x1 = *_vars[0];
-    double y1 = *_vars[1];
-    double x2 = *_vars[2];
-    double y2 = *_vars[3];
-    double x3 = *_vars[4];
-    double y3 = *_vars[5];
-    double x4 = *_vars[6];
-    double y4 = *_vars[7];
-
-    double dx1 = x2 - x1;
-    double dy1 = y2 - y1;
-    double dx2 = x4 - x3;
-    double dy2 = y4 - y3;
-
-    double len1 = std::sqrt(dx1 * dx1 + dy1 * dy1);
-    double len2 = std::sqrt(dx2 * dx2 + dy2 * dy2);
-
-    if (len1 < 1e-10 || len2 < 1e-10) {
-        for (VAR v: _vars) grad[v] = 0.0;
-        return grad;
-    }
-
-    double dot = dx1 * dx2 + dy1 * dy2;
-    double len1_3 = len1 * len1 * len1;
-    double len2_3 = len2 * len2 * len2;
-
-    const double dCosDdx1 = dx2 / (len1 * len2) - dx1 * dot / (len1_3 * len2);
-    const double dCosDdy1 = dy2 / (len1 * len2) - dy1 * dot / (len1_3 * len2);
-    const double dCosDdx2 = dx1 / (len1 * len2) - dx2 * dot / (len1 * len2_3);
-    const double dCosDdy2 = dy1 / (len1 * len2) - dy2 * dot / (len1 * len2_3);
-
-    grad[_vars[0]] += -dCosDdx1;
-    grad[_vars[1]] += -dCosDdy1;
-    grad[_vars[2]] += dCosDdx1;
-    grad[_vars[3]] += dCosDdy1;
-    grad[_vars[4]] += -dCosDdx2;
-    grad[_vars[5]] += -dCosDdy2;
-    grad[_vars[6]] += dCosDdx2;
-    grad[_vars[7]] += dCosDdy2;
-
-    return grad;
+    return lineDirectionGradient(_vars, false);
 }
 size_t OurPaintDCM::Function::LineLineAngleFunction::getVarCount() const {
     return 8;
@@ -568,10 +476,10 @@ double OurPaintDCM::Function::VerticalFunction::evaluate() const {
 
     double dx = x2 - x1;
     double dy = y2 - y1;
-    double len = std::sqrt(dx * dx + dy * dy); // normalize
+    double len = std::hypot(dx, dy); // normalize
 
-    if (len < 1e-10)
-        return 0.0;
+    if (len <= kGeometryEpsilon)
+        return kUndefinedResidual;
 
     return dx / len;
 }
@@ -589,7 +497,7 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::VerticalFunction::gradien
     double len2 = dx * dx + dy * dy;
     double len = std::sqrt(len2);
 
-    if (len < 1e-10) {
+    if (len <= kGeometryEpsilon) {
         for (auto v: _vars) grad[v] = 0.0;
         return grad;
     }
@@ -624,10 +532,10 @@ double OurPaintDCM::Function::HorizontalFunction::evaluate() const {
 
     double dx = x2 - x1;
     double dy = y2 - y1;
-    double len = std::sqrt(dx * dx + dy * dy); // normalize
+    double len = std::hypot(dx, dy); // normalize
 
-    if (len < 1e-10)
-        return 0.0;
+    if (len <= kGeometryEpsilon)
+        return kUndefinedResidual;
 
     return dy / len;
 }
@@ -645,7 +553,7 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::HorizontalFunction::gradi
     double len2 = dx * dx + dy * dy;
     double len = std::sqrt(len2);
 
-    if (len < 1e-10) {
+    if (len <= kGeometryEpsilon) {
         for (auto v: _vars) grad[v] = 0.0;
         return grad;
     }
@@ -690,13 +598,15 @@ double OurPaintDCM::Function::ArcCenterOnPerpendicularFunction::evaluate() const
     // AB vector
     double dx = Bx - Ax;
     double dy = By - Ay;
+    const double length = std::hypot(dx, dy);
+    if (length <= kGeometryEpsilon) return kUndefinedResidual;
 
     // MC vector
     double mx = Cx - Mx;
     double my = Cy - My;
 
-    // Perpendicular condition: (AB · MC) = 0
-    double dot = dx * mx + dy * my;
+    // Signed distance to the perpendicular bisector, independent of chord length.
+    double dot = (dx / length) * mx + (dy / length) * my;
 
     return dot;
 }
@@ -713,15 +623,22 @@ std::unordered_map<VAR, double> OurPaintDCM::Function::ArcCenterOnPerpendicularF
 
     double dx = Bx - Ax;
     double dy = By - Ay;
+    const double length = std::hypot(dx, dy);
+    if (length <= kGeometryEpsilon) return makeZeroGradient(_vars);
     double mx = Cx - 0.5 * (Ax + Bx);
     double my = Cy - 0.5 * (Ay + By);
+    const double ux = dx / length;
+    const double uy = dy / length;
+    const double residual = ux * mx + uy * my;
+    const double normalX = (mx - residual * ux) / length;
+    const double normalY = (my - residual * uy) / length;
 
-    grad[_vars[0]] += -mx - 0.5 * dx; // df/dAx
-    grad[_vars[1]] += -my - 0.5 * dy; // df/dAy
-    grad[_vars[2]] += mx - 0.5 * dx; // df/dBx
-    grad[_vars[3]] += my - 0.5 * dy; // df/dBy
-    grad[_vars[4]] += dx; // df/dCx
-    grad[_vars[5]] += dy; // df/dCy
+    grad[_vars[0]] += -normalX - 0.5 * ux; // df/dAx
+    grad[_vars[1]] += -normalY - 0.5 * uy; // df/dAy
+    grad[_vars[2]] += normalX - 0.5 * ux; // df/dBx
+    grad[_vars[3]] += normalY - 0.5 * uy; // df/dBy
+    grad[_vars[4]] += ux; // df/dCx
+    grad[_vars[5]] += uy; // df/dCy
 
     return grad;
 }

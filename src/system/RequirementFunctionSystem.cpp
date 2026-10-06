@@ -24,8 +24,9 @@ void RequirementFunctionSystem::updateJ() {
     triplets.reserve(m * 6);
 
     for (size_t i = 0; i < m; ++i) {
-        auto grad = _functions[i]->gradient();
         const double weight = _functions[i]->getWeight();
+        if (weight == 0.0) continue;
+        auto grad = _functions[i]->gradient();
         for (size_t j = 0; j < n; ++j) {
             VAR v = _allVars[j];
             double val = grad.contains(v) ? weight * grad[v] : 0.0;
@@ -78,7 +79,8 @@ Eigen::SparseMatrix<double> RequirementFunctionSystem::JTJ() const {
 Eigen::VectorXd RequirementFunctionSystem::residuals() const {
     Eigen::VectorXd r(_functions.size());
     for (size_t i = 0; i < _functions.size(); ++i)
-        r[i] = _functions[i]->evaluate() * _functions[i]->getWeight();
+        r[i] = _functions[i]->getWeight() == 0.0 ? 0.0
+            : _functions[i]->evaluate() * _functions[i]->getWeight();
     return r;
 }
 

@@ -15,6 +15,254 @@ protected:
     DCMManager manager;
 };
 
+TEST(DCMManagerDegenerateSolveTest, PointOnLineAndDistanceUseCollapsedPointInEveryMode) {
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL, SolveMode::DRAG}) {
+        for (const bool onLine : {false, true}) {
+            for (const auto position : {std::array<double, 2>{100, 100}, {0, 0}, {3, 4}}) {
+                SCOPED_TRACE(static_cast<int>(mode));
+                SCOPED_TRACE(onLine);
+                SCOPED_TRACE(position[0]);
+                DCMManager manager;
+                const auto line = manager.addFigure(FigureDescriptor::line(0, 0, 0, 0));
+                const auto point = manager.addFigure(FigureDescriptor::point(position[0], position[1]));
+                manager.addRequirement(RequirementDescriptor::fixLine(line));
+                manager.addRequirement(RequirementDescriptor::fixPoint(point));
+                manager.addRequirement(onLine ? RequirementDescriptor::pointOnLine(point, line)
+                                             : RequirementDescriptor::pointLineDist(point, line, 5));
+                manager.setSolveMode(mode);
+                const auto component = manager.getComponentForFigure(line);
+                ASSERT_TRUE(component);
+                const bool expected = onLine ? position[0] == 0 : position[0] == 3;
+                // Repeat to also exercise the cached pipeline.
+                EXPECT_EQ(manager.solve(*component), expected);
+                EXPECT_EQ(manager.solve(*component), expected);
+                const auto unchanged = manager.getFigure(point);
+                ASSERT_TRUE(unchanged);
+                EXPECT_DOUBLE_EQ(*unchanged->x, position[0]);
+                EXPECT_DOUBLE_EQ(*unchanged->y, position[1]);
+            }
+        }
+    }
+}
+
+TEST(DCMManagerDegenerateSolveTest, FreePointCanMoveOntoCollapsedFixedLine) {
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL, SolveMode::DRAG}) {
+        DCMManager manager;
+        const auto line = manager.addFigure(FigureDescriptor::line(0, 0, 0, 0));
+        const auto point = manager.addFigure(FigureDescriptor::point(100, 100));
+        manager.addRequirement(RequirementDescriptor::fixLine(line));
+        manager.addRequirement(RequirementDescriptor::pointOnLine(point, line));
+        manager.setSolveMode(mode);
+        const auto component = manager.getComponentForFigure(line);
+        ASSERT_TRUE(component);
+        ASSERT_TRUE(manager.solve(*component));
+        const auto result = manager.getFigure(point);
+        ASSERT_TRUE(result);
+        EXPECT_LE(std::hypot(*result->x, *result->y), 1e-4);
+        if (mode == SolveMode::DRAG) {
+            // Automatic solve uses temporary locks and then retries without locks.
+            manager.updatePoint({point, 100, 100});
+            const auto dragged = manager.getFigure(point);
+            ASSERT_TRUE(dragged);
+            EXPECT_LE(std::hypot(*dragged->x, *dragged->y), 1e-4);
+            EXPECT_TRUE(manager.solve(*component));
+        }
+    }
+}
+
+TEST(DCMManagerDegenerateSolveTest, UndefinedLineDirectionsFailWithFixedOrFreeVariables) {
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL, SolveMode::DRAG}) {
+        for (const auto type : {RequirementType::ET_LINELINEPARALLEL,
+                               RequirementType::ET_LINELINEPERPENDICULAR,
+                               RequirementType::ET_LINELINEANGLE,
+                               RequirementType::ET_HORIZONTAL, RequirementType::ET_VERTICAL}) {
+            for (int collapsed : {0, 1, 2}) {
+                if (collapsed == 1 && (type == RequirementType::ET_HORIZONTAL ||
+                                       type == RequirementType::ET_VERTICAL)) continue;
+                for (const bool fixed : {false, true}) {
+                    SCOPED_TRACE(static_cast<int>(mode));
+                    SCOPED_TRACE(static_cast<int>(type));
+                    SCOPED_TRACE(collapsed);
+                    SCOPED_TRACE(fixed);
+                    DCMManager manager;
+                    const auto first = manager.addFigure(FigureDescriptor::line(0, 0, collapsed == 1 ? 2 : 0, 0));
+                    const auto second = manager.addFigure(FigureDescriptor::line(0, 0, 0, collapsed == 0 ? 2 : 0));
+                    if (fixed) {
+                        manager.addRequirement(RequirementDescriptor::fixLine(first));
+                        manager.addRequirement(RequirementDescriptor::fixLine(second));
+                    }
+                    const bool unary = type == RequirementType::ET_HORIZONTAL || type == RequirementType::ET_VERTICAL;
+                    const auto requirement = manager.addRequirement(RequirementDescriptor(
+                        type, unary ? std::vector<ID>{first} : std::vector<ID>{first, second},
+                        type == RequirementType::ET_LINELINEANGLE ? std::optional<double>(1) : std::nullopt));
+                    manager.setSolveMode(mode);
+                    const auto component = manager.getComponentForFigure(first);
+                    ASSERT_TRUE(component);
+                    for (int attempt = 0; attempt < 2; ++attempt) {
+                        EXPECT_FALSE(manager.solve(*component));
+                        EXPECT_TRUE(manager.getRequirementSystem().J().toDense().allFinite());
+                    }
+                    // A disabled undefined requirement must not inject 0 * infinity into LM.
+                    manager.updateRequirementWeight(requirement, 0);
+                    EXPECT_TRUE(manager.solve(*component));
+                    EXPECT_TRUE(manager.getRequirementSystem().residuals().allFinite());
+                }
+            }
+        }
+    }
+}
+
+TEST(DCMManagerDegenerateSolveTest, ShortFixedLinesDoNotFalselySatisfyDirectionConstraints) {
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL, SolveMode::DRAG}) {
+        for (const auto type : {RequirementType::ET_LINELINEPARALLEL,
+                               RequirementType::ET_LINELINEPERPENDICULAR, RequirementType::ET_LINELINEANGLE}) {
+            DCMManager manager;
+            const auto first = manager.addFigure(FigureDescriptor::line(0, 0, 5e-11, 0));
+            const auto second = manager.addFigure(type == RequirementType::ET_LINELINEPARALLEL
+                ? FigureDescriptor::line(0, 0, 0, 5e-11) : FigureDescriptor::line(0, 0, 5e-11, 0));
+            manager.addRequirement(RequirementDescriptor::fixLine(first));
+            manager.addRequirement(RequirementDescriptor::fixLine(second));
+            manager.addRequirement(RequirementDescriptor(type, {first, second},
+                type == RequirementType::ET_LINELINEANGLE ? std::optional<double>(1) : std::nullopt));
+            manager.setSolveMode(mode);
+            const auto component = manager.getComponentForFigure(first);
+            ASSERT_TRUE(component);
+            EXPECT_FALSE(manager.solve(*component));
+        }
+    }
+}
+
+TEST(DCMManagerDegenerateSolveTest, AliasingCanCollapseLineAndGeometryUpdatesCanRestoreDirection) {
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL, SolveMode::DRAG}) {
+        DCMManager manager;
+        const auto a = manager.addFigure(FigureDescriptor::point(0, 0));
+        const auto b = manager.addFigure(FigureDescriptor::point(2, 0));
+        const auto line = manager.addFigure(FigureDescriptor::line(a, b));
+        manager.addRequirement(RequirementDescriptor::horizontal(line));
+        const auto coincidence = manager.addRequirement(RequirementDescriptor::pointOnPoint(a, b));
+        manager.setSolveMode(mode);
+        const auto component = manager.getComponentForFigure(line);
+        ASSERT_TRUE(component);
+        EXPECT_FALSE(manager.solve(*component));
+        manager.removeRequirement(coincidence);
+        manager.updatePoint({a, 0, 0}); // Aliasing may have copied the representative into a.
+        manager.updatePoint({b, 0, 0}); // Includes an automatic DRAG solve at zero length.
+        const auto refreshed = manager.getComponentForFigure(line);
+        ASSERT_TRUE(refreshed);
+        EXPECT_FALSE(manager.solve(*refreshed));
+        manager.updatePoint({b, 2, 0});
+        EXPECT_TRUE(manager.solve(*refreshed));
+        manager.updatePoint({b, 0, 0});
+        EXPECT_FALSE(manager.solve(*refreshed)); // Cached pipeline must reevaluate validity.
+    }
+}
+
+TEST(DCMManagerDegenerateSolveTest, ArcRejectsCollapsedChordAndOffBisectorCenter) {
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL, SolveMode::DRAG}) {
+        for (const double length : {0.0, 5e-13, 5e-11}) {
+            DCMManager manager;
+            const auto arc = manager.addFigure(FigureDescriptor::arc(0, 0, length, 0, 100, 2));
+            const auto descriptor = manager.getFigure(arc);
+            ASSERT_TRUE(descriptor);
+            for (const auto point : descriptor->pointIds) {
+                manager.addRequirement(RequirementDescriptor::fixPoint(point));
+            }
+            manager.addRequirement(RequirementDescriptor::arcCenterOnPerpendicular(arc));
+            manager.setSolveMode(mode);
+            const auto component = manager.getComponentForFigure(arc);
+            ASSERT_TRUE(component);
+            EXPECT_FALSE(manager.solve(*component));
+        }
+    }
+}
+
+TEST(DCMManagerDegenerateSolveTest, FixedAssignmentsCanCollapseLineAndRejectedSolveRestoresInput) {
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL, SolveMode::DRAG}) {
+        DCMManager manager;
+        const auto line = manager.addFigure(FigureDescriptor::line(0, 0, 0, 0));
+        manager.addRequirement(RequirementDescriptor::fixLine(line));
+        manager.addRequirement(RequirementDescriptor::horizontal(line));
+        const auto descriptor = manager.getFigure(line);
+        ASSERT_TRUE(descriptor);
+        const auto endpoint = descriptor->pointIds[1];
+        // Public updates respect fixation; the mutable storage API can bypass it.
+        *manager.storage().get<Figures::Point2D>(endpoint)->ptrX() = 2;
+        manager.setSolveMode(mode);
+        const auto component = manager.getComponentForFigure(line);
+        ASSERT_TRUE(component);
+        for (int attempt = 0; attempt < 2; ++attempt) {
+            EXPECT_FALSE(manager.solve(*component));
+            const auto restored = manager.getFigure(endpoint);
+            ASSERT_TRUE(restored);
+            EXPECT_DOUBLE_EQ(*restored->x, 2);
+            EXPECT_DOUBLE_EQ(*restored->y, 0);
+        }
+    }
+}
+
+TEST(DCMManagerDegenerateSolveTest, DefinedPointAndCircleConstraintsUseActualResidualInEveryMode) {
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL, SolveMode::DRAG}) {
+        for (const auto type : {RequirementType::ET_POINTPOINTDIST, RequirementType::ET_LINECIRCLEDIST,
+                               RequirementType::ET_LINEONCIRCLE}) {
+            for (const bool satisfied : {false, true}) {
+                SCOPED_TRACE(static_cast<int>(mode));
+                SCOPED_TRACE(static_cast<int>(type));
+                SCOPED_TRACE(satisfied);
+                DCMManager manager;
+                ID subject;
+                if (type == RequirementType::ET_POINTPOINTDIST) {
+                    const auto first = manager.addFigure(FigureDescriptor::point(0, 0));
+                    const auto second = manager.addFigure(FigureDescriptor::point(0, 0));
+                    subject = first;
+                    manager.addRequirement(RequirementDescriptor::fixPoint(first));
+                    manager.addRequirement(RequirementDescriptor::fixPoint(second));
+                    manager.addRequirement(RequirementDescriptor::pointPointDist(first, second, satisfied ? 0 : 1));
+                } else {
+                    const auto line = manager.addFigure(FigureDescriptor::line(3, 4, 3, 4));
+                    const auto circle = manager.addFigure(FigureDescriptor::circle(0, 0,
+                        type == RequirementType::ET_LINEONCIRCLE ? (satisfied ? 5 : 4) : 2));
+                    subject = line;
+                    manager.addRequirement(RequirementDescriptor::fixLine(line));
+                    manager.addRequirement(RequirementDescriptor::fixCircle(circle));
+                    manager.addRequirement(type == RequirementType::ET_LINEONCIRCLE
+                        ? RequirementDescriptor::lineOnCircle(line, circle)
+                        : RequirementDescriptor::lineCircleDist(line, circle, satisfied ? 3 : 4));
+                }
+                manager.setSolveMode(mode);
+                const auto component = manager.getComponentForFigure(subject);
+                ASSERT_TRUE(component);
+                EXPECT_EQ(manager.solve(*component), satisfied);
+            }
+        }
+        DCMManager manager;
+        const auto collapsed = manager.addFigure(FigureDescriptor::line(0, 0, 0, 0));
+        manager.addRequirement(RequirementDescriptor::fixLine(collapsed));
+        manager.setSolveMode(mode);
+        const auto component = manager.getComponentForFigure(collapsed);
+        ASSERT_TRUE(component);
+        EXPECT_TRUE(manager.solve(*component)); // Fixation alone needs no direction.
+    }
+}
+
+TEST(DCMManagerDegenerateSolveTest, LocalAndDragOnlyRejectUndefinedGeometryInSelectedComponent) {
+    DCMManager manager;
+    const auto invalid = manager.addFigure(FigureDescriptor::line(0, 0, 0, 0));
+    const auto valid = manager.addFigure(FigureDescriptor::line(10, 0, 20, 0));
+    manager.addRequirement(RequirementDescriptor::horizontal(invalid));
+    manager.addRequirement(RequirementDescriptor::horizontal(valid));
+    const auto invalidComponent = manager.getComponentForFigure(invalid);
+    const auto validComponent = manager.getComponentForFigure(valid);
+    ASSERT_TRUE(invalidComponent && validComponent);
+    ASSERT_NE(*invalidComponent, *validComponent);
+    for (const auto mode : {SolveMode::LOCAL, SolveMode::DRAG}) {
+        manager.setSolveMode(mode);
+        EXPECT_TRUE(manager.solve(*validComponent));
+        EXPECT_FALSE(manager.solve(*invalidComponent));
+    }
+    manager.setSolveMode(SolveMode::GLOBAL);
+    EXPECT_FALSE(manager.solve());
+}
+
 TEST(DCMManagerSolveInvariantTest, NegativeRadiusIsRejectedAndOriginalGeometryIsRestored) {
     for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL, SolveMode::DRAG}) {
         SCOPED_TRACE(static_cast<int>(mode));

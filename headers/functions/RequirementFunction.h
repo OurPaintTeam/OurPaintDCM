@@ -45,7 +45,9 @@ namespace OurPaintDCM::Function {
 
         virtual ~RequirementFunction() = default;
 
-        /// Compute the scalar value of the constraint (error).
+        /// Compute the scalar error. Direction constraints return +infinity when
+        /// a required line/chord has length <= 1e-12 (undefined geometry).
+        /// Their gradients are zero there; solvers must reject an active infinite residual.
         virtual double evaluate() const = 0;
 
         /// Compute the gradient (first-order derivatives) with respect to variables.
@@ -91,7 +93,8 @@ namespace OurPaintDCM::Function {
     };
 
     /**
-     * @brief Fixed distance between a point and a line segment.
+     * @brief Fixed signed distance to the supporting line of a nonzero segment.
+     * A segment of length <= 1e-12 is treated as its first endpoint, using Euclidean distance.
      *
      * Variables: [Px, Py, L1x, L1y, L2x, L2y]
      */
@@ -105,7 +108,8 @@ namespace OurPaintDCM::Function {
     };
 
     /**
-     * @brief Point must lie exactly on a line segment (distance == 0).
+     * @brief Point must lie on the supporting line of a nonzero segment.
+     * A segment of length <= 1e-12 contains only its first endpoint.
      *
      * Variables: [Px, Py, L1x, L1y, L2x, L2y]
      */
@@ -146,6 +150,7 @@ namespace OurPaintDCM::Function {
 
     /**
      * @brief Fixed external clearance: distance(center, segment) - radius - target.
+     * A collapsed segment is treated as its first endpoint.
      *
      * Variables: [L1x, L1y, L2x, L2y, Cx, Cy, R]
      */
@@ -169,6 +174,7 @@ namespace OurPaintDCM::Function {
 
     /**
      * @brief Norm of the two endpoint residuals; zero only when both lie on the circle.
+     * Coincident endpoints are allowed, provided their common point lies on the circle.
      * RequirementSystem uses two PointOnCircleFunction rows for solving and diagnostics.
      *
      * Variables: [L1x, L1y, L2x, L2y, Cx, Cy, R]
@@ -182,7 +188,7 @@ namespace OurPaintDCM::Function {
     };
 
     /**
-     * @brief Two line segments must be parallel.
+     * @brief Normalized cross product of two nonzero segments (parallel when zero).
      *
      * Variables: [A1x, A1y, A2x, A2y, B1x, B1y, B2x, B2y]
      */
@@ -195,7 +201,7 @@ namespace OurPaintDCM::Function {
     };
 
     /**
-     * @brief Two line segments must be perpendicular.
+     * @brief Normalized dot product of two nonzero segments (perpendicular when zero).
      *
      * Variables: [A1x, A1y, A2x, A2y, B1x, B1y, B2x, B2y]
      */
@@ -208,7 +214,7 @@ namespace OurPaintDCM::Function {
     };
 
     /**
-     * @brief Fixed angle between two line segments.
+     * @brief Fixed angle between two nonzero line segments.
      *
      * Variables: [A1x, A1y, A2x, A2y, B1x, B1y, B2x, B2y]
      */
@@ -222,7 +228,7 @@ namespace OurPaintDCM::Function {
     };
 
     /**
-     * @brief Line must be vertical (aligned with the Y-axis).
+     * @brief Nonzero line must be vertical (aligned with the Y-axis).
      *
      * Variables: [L1x, L1y, L2x, L2y]
      */
@@ -235,7 +241,7 @@ namespace OurPaintDCM::Function {
     };
 
     /**
-     * @brief Line must be horizontal (aligned with the X-axis).
+     * @brief Nonzero line must be horizontal (aligned with the X-axis).
      *
      * Variables: [L1x, L1y, L2x, L2y]
      */
@@ -249,6 +255,8 @@ namespace OurPaintDCM::Function {
 
     /**
      * @brief Default constraint used for arcs: the arc center lies on a perpendicular bisector.
+     * The chord must be nonzero; a center at its midpoint is allowed (a semicircle).
+     * The residual is signed distance to the bisector, independent of chord length.
      *
      * Variables: [P1x, P1y, P2x, P2y, Cx, Cy]
      */
