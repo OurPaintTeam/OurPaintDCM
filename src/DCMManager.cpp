@@ -21,6 +21,7 @@ public:
         : _constraint(std::move(constraint)), _variable(variable) {}
 
     double evaluate() const override {
+        if (_constraint->getWeight() == 0.0) return 0.0;
         const auto gradient = _constraint->gradient();
         const auto it = gradient.find(_variable);
         return it == gradient.end() ? 0.0 : _constraint->getWeight() * it->second;
@@ -42,6 +43,7 @@ public:
         : _constraint(std::move(constraint)) {}
 
     double evaluate() const override {
+        if (_constraint->getWeight() == 0.0) return 0.0;
         return _constraint->getWeight() * _constraint->evaluate();
     }
 
@@ -1500,7 +1502,8 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
                 type == Utils::RequirementType::ET_FIXCIRCLE) {
                 continue;
             }
-            if (!residualSatisfied(function->getWeight() * function->evaluate())) {
+            if (function->getWeight() != 0.0 &&
+                !residualSatisfied(function->getWeight() * function->evaluate())) {
                 return false;
             }
         }
@@ -1532,6 +1535,14 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
 
     for (const auto& [valueRef, target] : entry.fixedAssignments) {
         *valueRef = target;
+    }
+
+    // Undefined geometry has no usable linearization. Reject it before sending
+    // infinite residuals into LM, including when fixes or aliases collapse a line.
+    for (const auto& function : system.getFunctions()) {
+        if (function->getWeight() != 0.0 && !std::isfinite(function->evaluate())) {
+            return false;
+        }
     }
 
     if (system.getRequirements().empty() || !entry.hasFunctions) {
