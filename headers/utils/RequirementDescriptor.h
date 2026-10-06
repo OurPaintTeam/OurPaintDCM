@@ -39,7 +39,7 @@ struct RequirementDescriptor {
     std::vector<ID> objectIds;         ///< IDs of objects involved
     std::optional<double> param;       ///< Optional parameter (distance, angle, etc.)
     double weight = 1.0;               ///< Finite non-negative residual multiplier; objective uses (weight * residual)^2.
-                                       ///< Fixed and point-coincidence requirements are exact and require weight 1.
+                                       ///< Fixed and point-coincidence requirements use 1 (active) or 0 (disabled).
 
     /// @brief Default constructor
     RequirementDescriptor() = default;
@@ -151,12 +151,12 @@ struct RequirementDescriptor {
         if (!std::isfinite(weight) || weight < 0.0) {
             throw std::invalid_argument("Requirement weight must be finite and non-negative");
         }
-        if (weight != 1.0 &&
+        if (weight != 1.0 && weight != 0.0 &&
             (type == RequirementType::ET_POINTONPOINT ||
              type == RequirementType::ET_FIXPOINT ||
              type == RequirementType::ET_FIXLINE ||
              type == RequirementType::ET_FIXCIRCLE)) {
-            throw std::invalid_argument("Eliminated and fixed requirements must use weight 1");
+            throw std::invalid_argument("Eliminated and fixed requirements must use weight 0 or 1");
         }
         switch (type) {
             case RequirementType::ET_POINTLINEDIST:

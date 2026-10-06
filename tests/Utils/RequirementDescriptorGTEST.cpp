@@ -28,7 +28,7 @@ TEST(RequirementDescriptorTest, ValidatesWeightAndHardConstraintSemantics) {
     EXPECT_THROW(fixed.validate(), std::invalid_argument);
     auto coincidence = RequirementDescriptor::pointOnPoint(ID(1), ID(2));
     coincidence.weight = 0.0;
-    EXPECT_THROW(coincidence.validate(), std::invalid_argument);
+    EXPECT_TRUE(coincidence.validate());
 }
 
 // ==================== Full Constructor ====================

@@ -65,7 +65,7 @@ TEST_F(RequirementFunctionFactoryTest, CreatePointOnLine) {
     ASSERT_NE(func, nullptr);
     EXPECT_EQ(func->getVarCount(), 6);
     
-    double val = func->evaluate();
+    double val = func->mathematical()->evaluate();
     EXPECT_NEAR(val, 0.0, 1e-9);
 }
 
@@ -74,7 +74,7 @@ TEST_F(RequirementFunctionFactoryTest, CreatePointPointDist) {
     ASSERT_NE(func, nullptr);
     EXPECT_EQ(func->getVarCount(), 4);
     
-    double val = func->evaluate();
+    double val = func->mathematical()->evaluate();
     EXPECT_NEAR(val, 0.0, 1e-9);
 }
 
@@ -83,7 +83,7 @@ TEST_F(RequirementFunctionFactoryTest, CreatePointOnPoint) {
     ASSERT_NE(func, nullptr);
     EXPECT_EQ(func->getVarCount(), 4);
     
-    double val = func->evaluate();
+    double val = func->mathematical()->evaluate();
     EXPECT_NEAR(val, 0.0, 1e-9);
 }
 
@@ -97,9 +97,14 @@ TEST_F(RequirementFunctionFactoryTest, CreateLineCircleDist) {
 }
 
 TEST_F(RequirementFunctionFactoryTest, CreateLineOnCircle) {
-    auto func = RequirementFunctionFactory::createLineOnCircle(line1, circle);
-    ASSERT_NE(func, nullptr);
-    EXPECT_EQ(func->getVarCount(), 7);
+    auto rows = RequirementFunctionFactory::createLineOnCircle(line1, circle);
+    ASSERT_EQ(rows.size(), 2u);
+    EXPECT_EQ(rows[0]->getVars()[0],line1->p1->ptrX());
+    EXPECT_EQ(rows[1]->getVars()[0],line1->p2->ptrX());
+    for (const auto& row : rows) {
+        EXPECT_EQ(row->mathematical()->kind(),Math::ConstraintKind::PointOnCircle);
+        EXPECT_EQ(row->getVarCount(),5);
+    }
 }
 
 TEST_F(RequirementFunctionFactoryTest, CreateLineLineParallel) {
@@ -148,7 +153,7 @@ TEST_F(RequirementFunctionFactoryTest, CreateArcCenterOnPerpendicular) {
 
 TEST_F(RequirementFunctionFactoryTest, GradientNotEmpty) {
     auto func = RequirementFunctionFactory::createPointPointDist(p1, p2, 5.0);
-    auto grad = func->gradient();
+    auto grad = func->mathematical()->gradient();
     EXPECT_FALSE(grad.empty());
 }
 
