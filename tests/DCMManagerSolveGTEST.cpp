@@ -16,6 +16,231 @@ protected:
     DCMManager manager;
 };
 
+TEST(DCMManagerStationarySolveTest, ExactWrongDirectionsSolveWithEitherLineFixed) {
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL, SolveMode::DRAG}) {
+        for (const auto type : {RequirementType::ET_LINELINEPARALLEL, RequirementType::ET_LINELINEPERPENDICULAR}) {
+            for (const bool fixFirst : {false, true}) {
+                for (const double length : {0.001, 10.0, 1000.0}) {
+                    for (const double offset : {0.0, 1e6}) {
+                        SCOPED_TRACE(static_cast<int>(mode));
+                        SCOPED_TRACE(static_cast<int>(type));
+                        SCOPED_TRACE(fixFirst);
+                        SCOPED_TRACE(length);
+                        SCOPED_TRACE(offset);
+                        DCMManager manager;
+                        const auto first = manager.addFigure(FigureDescriptor::line(offset, -offset, offset + length, -offset));
+                        const auto second = manager.addFigure(type == RequirementType::ET_LINELINEPARALLEL
+                            ? FigureDescriptor::line(offset, offset, offset, offset + length)
+                            : FigureDescriptor::line(offset, offset, offset + length, offset));
+                        const auto fixed = fixFirst ? first : second;
+                        const auto fixedDescriptor = manager.getFigure(fixed);
+                        ASSERT_TRUE(fixedDescriptor);
+                        std::vector<FigureDescriptor> fixedPoints;
+                        for (const auto id : fixedDescriptor->pointIds) fixedPoints.push_back(*manager.getFigure(id));
+                        manager.addRequirement(RequirementDescriptor::fixLine(fixed));
+                        manager.addRequirement(RequirementDescriptor(type, {first, second}));
+                        manager.setSolveMode(mode);
+                        const auto component = manager.getComponentForFigure(first);
+                        ASSERT_TRUE(component);
+                        ASSERT_TRUE(manager.solve(*component, 1e-6));
+                        ASSERT_TRUE(manager.solve(*component, 1e-6)); // Cached task at the solved state.
+                        for (const auto& point : fixedPoints) {
+                            const auto result = manager.getFigure(*point.id);
+                            ASSERT_TRUE(result);
+                            EXPECT_EQ(result->x, point.x);
+                            EXPECT_EQ(result->y, point.y);
+                        }
+                        const auto& system = manager.getRequirementSystem();
+                        EXPECT_LE(system.residuals().cwiseAbs().maxCoeff(), 1e-6);
+                    }
+                }
+            }
+        }
+    }
+}
+
+TEST(DCMManagerStationarySolveTest, AnglesSolveFromExactlyParallelAndAntiparallelLines) {
+    const double pi = std::acos(-1.0);
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL, SolveMode::DRAG}) {
+        for (const double initialSign : {-1.0, 1.0}) {
+            for (const double target : {0.0, 1.0, pi / 2, pi}) {
+                for (const bool sharedEndpoint : {false, true}) {
+                    SCOPED_TRACE(static_cast<int>(mode));
+                    SCOPED_TRACE(initialSign);
+                    SCOPED_TRACE(target);
+                    SCOPED_TRACE(sharedEndpoint);
+                    DCMManager manager;
+                    const auto origin = manager.addFigure(FigureDescriptor::point(0, 0));
+                    const auto a = manager.addFigure(FigureDescriptor::point(10, 0));
+                    const auto b = manager.addFigure(FigureDescriptor::point(initialSign * 10, 0));
+                    const auto otherOrigin = sharedEndpoint ? origin : manager.addFigure(FigureDescriptor::point(0, 0));
+                    const auto fixed = manager.addFigure(FigureDescriptor::line(origin, a));
+                    const auto free = manager.addFigure(FigureDescriptor::line(otherOrigin, b));
+                    manager.addRequirement(RequirementDescriptor::fixLine(fixed));
+                    manager.addRequirement(RequirementDescriptor::lineLineAngle(fixed, free, target));
+                    manager.setSolveMode(mode);
+                    const auto component = manager.getComponentForFigure(free);
+                    ASSERT_TRUE(component);
+                    ASSERT_TRUE(manager.solve(*component, 1e-6));
+                    const auto start = manager.getFigure(otherOrigin);
+                    const auto end = manager.getFigure(b);
+                    ASSERT_TRUE(start && end);
+                    const double dx = *end->x - *start->x, dy = *end->y - *start->y;
+                    ASSERT_GT(std::hypot(dx, dy), 0);
+                    EXPECT_NEAR(dx / std::hypot(dx, dy), std::cos(target), 1e-6);
+                    EXPECT_NEAR(std::acos(std::clamp(dx / std::hypot(dx, dy), -1.0, 1.0)), target, 0.002);
+                    const auto unchanged = manager.getFigure(origin);
+                    ASSERT_TRUE(unchanged);
+                    EXPECT_DOUBLE_EQ(*unchanged->x, 0);
+                    EXPECT_DOUBLE_EQ(*unchanged->y, 0);
+                }
+            }
+        }
+    }
+}
+
+TEST(DCMManagerStationarySolveTest, CoincidentPointsSeparateWhileFixedPointStaysPut) {
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL, SolveMode::DRAG}) {
+        for (const double weight : {0.1, 1.0, 10.0}) {
+            DCMManager manager;
+            const auto fixed = manager.addFigure(FigureDescriptor::point(1234, -5678));
+            const auto free = manager.addFigure(FigureDescriptor::point(1234, -5678));
+            manager.addRequirement(RequirementDescriptor::fixPoint(fixed));
+            auto distance = RequirementDescriptor::pointPointDist(fixed, free, 5);
+            distance.weight = weight;
+            manager.addRequirement(distance);
+            manager.setSolveMode(mode);
+            const auto component = manager.getComponentForFigure(free);
+            ASSERT_TRUE(component);
+            ASSERT_TRUE(manager.solve(*component, 1e-6));
+            const auto result = manager.getFigure(free);
+            const auto unchanged = manager.getFigure(fixed);
+            ASSERT_TRUE(result && unchanged);
+            EXPECT_NEAR(std::hypot(*result->x - 1234, *result->y + 5678), 5, 1e-5);
+            EXPECT_DOUBLE_EQ(*unchanged->x, 1234);
+            EXPECT_DOUBLE_EQ(*unchanged->y, -5678);
+        }
+    }
+}
+
+TEST(DCMManagerStationarySolveTest, ImpossibleCoincidentDistanceStillFailsWithoutChangingGeometry) {
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL, SolveMode::DRAG}) {
+        for (const bool alias : {false, true}) {
+            DCMManager manager;
+            const auto a = manager.addFigure(FigureDescriptor::point(3, 4));
+            const auto b = manager.addFigure(FigureDescriptor::point(3, 4));
+            if (alias) manager.addRequirement(RequirementDescriptor::pointOnPoint(a, b));
+            else {
+                manager.addRequirement(RequirementDescriptor::fixPoint(a));
+                manager.addRequirement(RequirementDescriptor::fixPoint(b));
+            }
+            manager.addRequirement(RequirementDescriptor::pointPointDist(a, b, 5));
+            manager.setSolveMode(mode);
+            const auto component = manager.getComponentForFigure(a);
+            ASSERT_TRUE(component);
+            EXPECT_FALSE(manager.solve(*component));
+            for (const auto id : {a, b}) {
+                const auto unchanged = manager.getFigure(id);
+                ASSERT_TRUE(unchanged);
+                EXPECT_DOUBLE_EQ(*unchanged->x, 3);
+                EXPECT_DOUBLE_EQ(*unchanged->y, 4);
+            }
+        }
+    }
+}
+
+TEST(DCMManagerStationarySolveTest, AutomaticDragRecoversAfterMovingPointOntoFixedPoint) {
+    DCMManager manager;
+    const auto fixed = manager.addFigure(FigureDescriptor::point(0, 0));
+    const auto free = manager.addFigure(FigureDescriptor::point(5, 0));
+    manager.addRequirement(RequirementDescriptor::fixPoint(fixed));
+    manager.addRequirement(RequirementDescriptor::pointPointDist(fixed, free, 5));
+    manager.setSolveMode(SolveMode::DRAG);
+    manager.updatePoint({free, 0, 0});
+    const auto moved = manager.getFigure(free);
+    const auto unchanged = manager.getFigure(fixed);
+    ASSERT_TRUE(moved && unchanged);
+    EXPECT_NEAR(std::hypot(*moved->x, *moved->y), 5, 1e-6);
+    EXPECT_DOUBLE_EQ(*unchanged->x, 0);
+    EXPECT_DOUBLE_EQ(*unchanged->y, 0);
+}
+
+TEST(DCMManagerStationarySolveTest, AxisDirectionsAndLengthConstraintsSolveFromExtrema) {
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL, SolveMode::DRAG}) {
+        for (const bool horizontal : {false, true}) {
+            DCMManager manager;
+            const auto line = manager.addFigure(horizontal ? FigureDescriptor::line(0, 0, 0, 10)
+                                                          : FigureDescriptor::line(0, 0, 10, 0));
+            const auto descriptor = manager.getFigure(line);
+            ASSERT_TRUE(descriptor);
+            manager.addRequirement(horizontal ? RequirementDescriptor::horizontal(line) : RequirementDescriptor::vertical(line));
+            manager.addRequirement(RequirementDescriptor::pointPointDist(descriptor->pointIds[0], descriptor->pointIds[1], 10));
+            manager.setSolveMode(mode);
+            const auto component = manager.getComponentForFigure(line);
+            ASSERT_TRUE(component);
+            ASSERT_TRUE(manager.solve(*component, 1e-6));
+            EXPECT_LE(manager.getRequirementSystem().residuals().cwiseAbs().maxCoeff(), 1e-6);
+        }
+    }
+}
+
+TEST(DCMManagerStationarySolveTest, ProbeCannotSatisfyWrongDirectionsBetweenFixedLines) {
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL, SolveMode::DRAG}) {
+        for (const auto type : {RequirementType::ET_LINELINEPARALLEL,
+                               RequirementType::ET_LINELINEPERPENDICULAR, RequirementType::ET_LINELINEANGLE}) {
+            DCMManager manager;
+            const auto first = manager.addFigure(FigureDescriptor::line(0, 0, 10, 0));
+            const auto second = manager.addFigure(type == RequirementType::ET_LINELINEPARALLEL
+                ? FigureDescriptor::line(0, 0, 0, 10) : FigureDescriptor::line(0, 0, 10, 0));
+            manager.addRequirement(RequirementDescriptor::fixLine(first));
+            manager.addRequirement(RequirementDescriptor::fixLine(second));
+            manager.addRequirement(RequirementDescriptor(type, {first, second},
+                type == RequirementType::ET_LINELINEANGLE ? std::optional<double>(1) : std::nullopt));
+            manager.setSolveMode(mode);
+            const auto component = manager.getComponentForFigure(first);
+            ASSERT_TRUE(component);
+            EXPECT_FALSE(manager.solve(*component));
+        }
+    }
+}
+
+TEST(DCMManagerStationarySolveTest, PointAtCircleCenterCanReachFixedCircle) {
+    for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL, SolveMode::DRAG}) {
+        DCMManager manager;
+        const auto circle = manager.addFigure(FigureDescriptor::circle(0, 0, 5));
+        const auto line = manager.addFigure(FigureDescriptor::line(0, 0, 0, 0));
+        manager.addRequirement(RequirementDescriptor::fixCircle(circle));
+        manager.addRequirement(RequirementDescriptor::lineOnCircle(line, circle));
+        manager.setSolveMode(mode);
+        const auto component = manager.getComponentForFigure(line);
+        ASSERT_TRUE(component);
+        ASSERT_TRUE(manager.solve(*component, 1e-6));
+        const auto descriptor = manager.getFigure(line);
+        ASSERT_TRUE(descriptor);
+        for (const auto id : descriptor->pointIds) {
+            const auto endpoint = manager.getFigure(id);
+            ASSERT_TRUE(endpoint);
+            EXPECT_NEAR(std::hypot(*endpoint->x, *endpoint->y), 5, 1e-6);
+        }
+    }
+}
+
+TEST(DCMManagerStationarySolveTest, AutomaticDragRecoversWrongDirectionAfterUpdatingLine) {
+    for (const bool parallel : {false, true}) {
+        DCMManager manager;
+        const auto fixed = manager.addFigure(FigureDescriptor::line(0, 0, 10, 0));
+        const auto free = manager.addFigure(parallel ? FigureDescriptor::line(0, 0, 10, 0)
+                                                    : FigureDescriptor::line(0, 0, 0, 10));
+        manager.addRequirement(RequirementDescriptor::fixLine(fixed));
+        manager.addRequirement(parallel ? RequirementDescriptor::lineLineParallel(fixed, free)
+                                       : RequirementDescriptor::lineLinePerpendicular(fixed, free));
+        manager.setSolveMode(SolveMode::DRAG);
+        manager.updateLine(parallel ? LineUpdateDescriptor(free, 0, 0, 0, 10)
+                                    : LineUpdateDescriptor(free, 0, 0, 10, 0));
+        EXPECT_LE(manager.getRequirementSystem().residuals().cwiseAbs().maxCoeff(), 1e-4);
+    }
+}
+
 TEST(DCMManagerDegenerateSolveTest, PointOnLineAndDistanceUseCollapsedPointInEveryMode) {
     for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL, SolveMode::DRAG}) {
         for (const bool onLine : {false, true}) {
@@ -544,14 +769,18 @@ TEST_F(DCMManagerSolveTest, DragMode_RepeatedMovesAndAbruptJumpStayStable) {
     }
 }
 
-TEST_F(DCMManagerSolveTest, NonzeroResidualAtStationaryPointDoesNotReportSolved) {
+TEST_F(DCMManagerSolveTest, CoincidentLineEndpointsCanSeparateToSatisfyLength) {
     const auto line = manager.addFigure(FigureDescriptor::line(0.0, 0.0, 0.0, 0.0));
-    // A zero-length line has a zero Jacobian here, but violates the distance.
+    // Zero Jacobian at the norm cusp must not prevent a feasible length constraint.
     const auto descriptor = manager.getFigure(line);
     ASSERT_TRUE(descriptor);
     manager.addRequirement(RequirementDescriptor::pointPointDist(
         descriptor->pointIds[0], descriptor->pointIds[1], 5.0));
-    EXPECT_FALSE(manager.solve());
+    ASSERT_TRUE(manager.solve());
+    const auto a = manager.getFigure(descriptor->pointIds[0]);
+    const auto b = manager.getFigure(descriptor->pointIds[1]);
+    ASSERT_TRUE(a && b);
+    EXPECT_NEAR(std::hypot(*a->x - *b->x, *a->y - *b->y), 5, 1e-6);
 }
 
 TEST(DCMManagerSharedPointSolveTest, LineConstraintsSolveWithOneSharedEndpoint) {
@@ -847,7 +1076,7 @@ TEST_F(DCMManagerSolveTest, SolveRejectsIncompatibleDistanceBetweenFixedPoints) 
     EXPECT_DOUBLE_EQ(d2->y.value(), 0.0);
 }
 
-TEST_F(DCMManagerSolveTest, SolveRejectsNonzeroResidualAtZeroGradient) {
+TEST_F(DCMManagerSolveTest, CoincidentFreePointsCanSatisfyPositiveDistance) {
     const auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
     const auto p2 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
     manager.addRequirement(RequirementDescriptor::pointPointDist(p1, p2, 10.0));
@@ -855,8 +1084,8 @@ TEST_F(DCMManagerSolveTest, SolveRejectsNonzeroResidualAtZeroGradient) {
     EXPECT_DOUBLE_EQ(system.residuals()[0], -10.0);
     EXPECT_DOUBLE_EQ((system.J().transpose() * system.residuals()).norm(), 0.0);
 
-    EXPECT_FALSE(manager.solve());
-    EXPECT_DOUBLE_EQ(system.residuals()[0], -10.0);
+    ASSERT_TRUE(manager.solve());
+    EXPECT_NEAR(system.residuals()[0], 0, 1e-6);
 }
 
 TEST_F(DCMManagerSolveTest, SolveAcceptsSatisfiedDistanceBetweenFixedPoints) {
