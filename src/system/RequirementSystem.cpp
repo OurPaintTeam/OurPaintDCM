@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <tuple>
 #include <unordered_map>
+#include <unordered_set>
 #include <utility>
 
 namespace {
@@ -58,6 +59,36 @@ RequirementSystem::RequirementSystem(Figures::GeometryStorage* storage,
     std::optional<std::vector<Utils::ID>> figureScope)
     : _storage(storage), _figureScope(std::move(figureScope)) {
     rebuildFunctionsAndAliases();
+}
+
+RequirementFunctionSystem::Diagnosis RequirementSystem::diagnoseDetailed() const {
+    std::vector<VAR> coordinates;
+    std::unordered_set<VAR> seen;
+    const auto addCoordinate = [&](VAR coordinate) {
+        if (seen.insert(coordinate).second) coordinates.push_back(coordinate);
+    };
+    const auto addPoint = [&](Utils::ID id) {
+        auto* point = resolvePoint(id);
+        addCoordinate(point->ptrX());
+        addCoordinate(point->ptrY());
+    };
+    if (_storage) {
+        if (_figureScope) {
+            for (auto id : *_figureScope) {
+                const auto type = _storage->getType(id);
+                if (!type) continue;
+                if (*type == Utils::FigureType::ET_POINT2D) addPoint(id);
+                else for (auto pointId : _storage->getDependencies(id)) addPoint(pointId);
+                if (*type == Utils::FigureType::ET_CIRCLE)
+                    addCoordinate(_storage->get<Figures::Circle2D>(id)->ptrRadius());
+            }
+        } else {
+            for (const auto& point : _storage->pointsWithIds()) addPoint(point.id);
+            for (const auto& circle : _storage->circlesWithIds())
+                addCoordinate(_storage->get<Figures::Circle2D>(circle.id)->ptrRadius());
+        }
+    }
+    return diagnoseWithVariables(coordinates);
 }
 
 void RequirementSystem::replaceRequirements(

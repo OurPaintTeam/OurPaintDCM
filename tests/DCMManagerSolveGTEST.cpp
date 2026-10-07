@@ -1017,14 +1017,15 @@ TEST_F(DCMManagerSolveTest, ZeroWeightDisablesOrdinaryRequirement) {
     EXPECT_DOUBLE_EQ(residuals[3], 0.0);
 }
 
-TEST_F(DCMManagerSolveTest, AllZeroWeightRequirementsDiagnoseAsEmpty) {
+TEST_F(DCMManagerSolveTest, AllZeroWeightRequirementsLeaveGeometryUnderConstrained) {
     const auto first = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
     const auto second = manager.addFigure(FigureDescriptor::point(7.0, 0.0));
     auto distance = RequirementDescriptor::pointPointDist(first, second, 5.0);
     distance.weight = 0.0;
     manager.addRequirement(distance);
 
-    EXPECT_EQ(manager.getRequirementSystem().diagnose(), SystemStatus::EMPTY);
+    EXPECT_EQ(manager.getRequirementSystem().diagnose(), SystemStatus::UNDER_CONSTRAINED);
+    EXPECT_EQ(manager.getRequirementSystem().diagnoseDetailed().degreesOfFreedom, 4u);
     EXPECT_TRUE(manager.solve());
 }
 

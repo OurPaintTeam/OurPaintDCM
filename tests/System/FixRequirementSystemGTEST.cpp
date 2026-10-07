@@ -76,7 +76,8 @@ TEST_F(FixRequirementSystemTest, AddFixPointDiagnose) {
     system.updateJ();
 
     auto status = system.diagnose();
-    EXPECT_EQ(status, SystemStatus::WELL_CONSTRAINED);
+    EXPECT_EQ(status, SystemStatus::UNDER_CONSTRAINED);
+    EXPECT_EQ(system.diagnoseDetailed().degreesOfFreedom, 5u);
 }
 
 TEST_F(FixRequirementSystemTest, AddFixLineVars) {
@@ -125,7 +126,8 @@ TEST_F(FixRequirementSystemTest, AddFixLineDiagnose) {
     system.updateJ();
 
     auto status = system.diagnose();
-    EXPECT_EQ(status, SystemStatus::WELL_CONSTRAINED);
+    EXPECT_EQ(status, SystemStatus::UNDER_CONSTRAINED);
+    EXPECT_EQ(system.diagnoseDetailed().degreesOfFreedom, 3u);
 }
 
 TEST_F(FixRequirementSystemTest, AddFixCircleVars) {
@@ -176,7 +178,8 @@ TEST_F(FixRequirementSystemTest, AddFixCircleDiagnose) {
     system.updateJ();
 
     auto status = system.diagnose();
-    EXPECT_EQ(status, SystemStatus::WELL_CONSTRAINED);
+    EXPECT_EQ(status, SystemStatus::UNDER_CONSTRAINED);
+    EXPECT_EQ(system.diagnoseDetailed().degreesOfFreedom, 4u);
 }
 
 TEST_F(FixRequirementSystemTest, FixPointDependencyGraphNoExtraEdges) {
