@@ -71,6 +71,11 @@ public:
     explicit RequirementSystem(Figures::GeometryStorage* storage,
         std::optional<std::vector<Utils::ID>> figureScope = std::nullopt);
 
+    /** Rank and local degrees of freedom of all geometry in this system's scope.
+     * Coincident points share coordinates; mandatory arc conditions are included.
+     * rank/degreesOfFreedom are absent when the linearization is undefined.
+     */
+    Diagnosis diagnoseDetailed() const override;
 
     /**
      * @brief Add a requirement using a descriptor (unified high-level interface).

@@ -40,6 +40,19 @@ TEST_F(RequirementSystemTest, ConstructWithStorage) {
     EXPECT_TRUE(system.getAllVars().empty());
 }
 
+TEST_F(RequirementSystemTest, DiagnosisIncludesOnlyScopedGeometryAndItsDependencies) {
+    RequirementSystem whole(&storage);
+    EXPECT_EQ(whole.diagnoseDetailed().degreesOfFreedom, 9u);
+    RequirementSystem lineScope(&storage, std::vector<ID>{line1Id});
+    EXPECT_EQ(lineScope.diagnose(), SystemStatus::UNDER_CONSTRAINED);
+    EXPECT_EQ(lineScope.diagnoseDetailed().degreesOfFreedom, 4u);
+    RequirementSystem circleScope(&storage, std::vector<ID>{circleId, centerId});
+    EXPECT_EQ(circleScope.diagnoseDetailed().degreesOfFreedom, 3u);
+    RequirementSystem emptyScope(&storage, std::vector<ID>{});
+    EXPECT_EQ(emptyScope.diagnose(), SystemStatus::EMPTY);
+    EXPECT_EQ(emptyScope.diagnoseDetailed().degreesOfFreedom, 0u);
+}
+
 TEST_F(RequirementSystemTest, AddPointPointDist) {
     RequirementSystem system(&storage);
     system.addPointPointDist(p1Id, p2Id, 5.0);
