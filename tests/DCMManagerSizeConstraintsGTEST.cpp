@@ -120,3 +120,74 @@ TEST(DCMManagerSizeConstraints, PointOnCircleWeightsRemovalSnapshotsAndDragInval
         expectFreedom(manager, 2);
     }
 }
+
+TEST(DCMManagerSizeConstraints, RadiusOnlyConstrainRadiusInEveryMode) {
+    for (auto mode : modes) {
+        DCMManager manager;
+        auto circle = manager.addFigure(FigureDescriptor::circle(3, 4, 2));
+        auto size = manager.addRequirement(RequirementDescriptor::circleRadius(circle, 10));
+        manager.setSolveMode(mode);
+        ASSERT_TRUE(solve(manager, circle));
+        EXPECT_NEAR(*manager.getFigure(circle)->radius, 10, 1e-6);
+        EXPECT_DOUBLE_EQ(manager.getFigure(circle)->coords[0], 3);
+        EXPECT_DOUBLE_EQ(manager.getFigure(circle)->coords[1], 4);
+        expectFreedom(manager, 2);
+        const auto& row = manager.getRequirementSystem().getFunctions().front();
+        EXPECT_EQ(row->getVars().size(), 1u);
+        EXPECT_EQ(row->requirementId(), size);
+        EXPECT_NE(dynamic_cast<CircleRadiusError*>(row->mathematical().get()), nullptr);
+        manager.updateCircle(CircleUpdateDescriptor::center(circle, 6, 8));
+        ASSERT_TRUE(solve(manager, circle));
+        EXPECT_DOUBLE_EQ(manager.getFigure(circle)->coords[0], 6);
+        EXPECT_DOUBLE_EQ(manager.getFigure(circle)->coords[1], 8);
+        EXPECT_NEAR(*manager.getFigure(circle)->radius, 10, 1e-6);
+    }
+}
+
+TEST(DCMManagerSizeConstraints, RadiusParametersWeightsRemovalAndSnapshotsPreserveOriginalUnits) {
+    for (auto mode : modes) {
+        DCMManager manager;
+        auto circle = manager.addFigure(FigureDescriptor::circle(1, 2, 1));
+        auto size = manager.addRequirement(RequirementDescriptor::circleRadius(circle, 3));
+        manager.setSolveMode(mode);
+        ASSERT_TRUE(solve(manager, circle));
+        const auto saved = manager.snapshot();
+        manager.updateRequirementParam(size, 10);
+        ASSERT_TRUE(solve(manager, circle));
+        EXPECT_NEAR(*manager.getFigure(circle)->radius, 10, 1e-6);
+        EXPECT_DOUBLE_EQ(*manager.getRequirement(size)->param, 10);
+        manager.updateRequirementWeight(size, 0);
+        manager.updateCircle({circle, 7});
+        ASSERT_TRUE(solve(manager, circle));
+        EXPECT_DOUBLE_EQ(*manager.getFigure(circle)->radius, 7);
+        expectFreedom(manager, 3);
+        manager.updateRequirementWeight(size, 2);
+        ASSERT_TRUE(solve(manager, circle));
+        EXPECT_NEAR(*manager.getFigure(circle)->radius, 10, 1e-6);
+        manager.removeRequirement(size);
+        manager.updateCircle({circle, 8});
+        ASSERT_TRUE(solve(manager, circle));
+        EXPECT_DOUBLE_EQ(*manager.getFigure(circle)->radius, 8);
+        manager.restoreSnapshot(saved);
+        EXPECT_EQ(manager.getRequirement(size)->type, RequirementType::ET_CIRCLERADIUS);
+        EXPECT_DOUBLE_EQ(*manager.getRequirement(size)->param, 3);
+        ASSERT_TRUE(solve(manager, circle));
+        EXPECT_NEAR(*manager.getFigure(circle)->radius, 3, 1e-6);
+        expectFreedom(manager, 2);
+        manager.removeFigure(circle, true);
+        EXPECT_FALSE(manager.hasRequirement(size));
+        EXPECT_EQ(manager.getRequirementSystem().diagnose(), SystemStatus::EMPTY);
+    }
+}
+
+TEST(DCMManagerSizeConstraints, FixedCircleRejectsConflictingRadius) {
+    for (auto mode : modes) {
+        DCMManager fixed;
+        auto fixedCircle = fixed.addFigure(FigureDescriptor::circle(1, 2, 3));
+        fixed.addRequirement(RequirementDescriptor::fixCircle(fixedCircle));
+        fixed.addRequirement(RequirementDescriptor::circleRadius(fixedCircle, 10));
+        fixed.setSolveMode(mode);
+        EXPECT_FALSE(solve(fixed, fixedCircle));
+        EXPECT_DOUBLE_EQ(*fixed.getFigure(fixedCircle)->radius, 3);
+    }
+}

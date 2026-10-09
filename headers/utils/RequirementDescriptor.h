@@ -144,6 +144,10 @@ struct RequirementDescriptor {
         return {RequirementType::ET_POINTONCIRCLE, {pointId, circleId}};
     }
 
+    static RequirementDescriptor circleRadius(ID circleId, double radius) {
+        return {RequirementType::ET_CIRCLERADIUS, {circleId}, radius};
+    }
+
     // ==================== Validation ====================
 
     /**
@@ -184,6 +188,7 @@ struct RequirementDescriptor {
             case RequirementType::ET_FIXPOINT:
             case RequirementType::ET_FIXLINE:
             case RequirementType::ET_FIXCIRCLE:
+            case RequirementType::ET_CIRCLERADIUS:
                 if (objectIds.size() != 1) {
                     throw std::invalid_argument("Requirement type requires exactly 1 object ID");
                 }
