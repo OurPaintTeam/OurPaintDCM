@@ -74,6 +74,8 @@ public:
         Figures::Circle<Figures::Point2D>* circle, double diameter);
     static std::shared_ptr<RequirementFunction> createEqualLength(
         Figures::Line<Figures::Point2D>* first, Figures::Line<Figures::Point2D>* second);
+    static std::shared_ptr<RequirementFunction> createEqualRadius(
+        Figures::Circle<Figures::Point2D>* first, Figures::Circle<Figures::Point2D>* second);
 
     /// @brief Create parallel-lines function.
     static std::shared_ptr<RequirementFunction> createLineLineParallel(

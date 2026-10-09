@@ -290,6 +290,13 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                     makeLineLineVars(a, b, c, d)));
                 break;
             }
+            case Utils::RequirementType::ET_EQUALRADIUS: {
+                auto* first = requireGeometry(_storage->get<Figures::Circle2D>(ids[0]));
+                auto* second = requireGeometry(_storage->get<Figures::Circle2D>(ids[1]));
+                addFunction(Function::RequirementFunctionFactory::bind<EqualRadiusError>(entry.type,
+                    {first->ptrRadius(), second->ptrRadius()}));
+                break;
+            }
             case Utils::RequirementType::ET_LINECIRCLEDIST: {
                 const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
                 const auto [center, radius] = resolveCircleData(ids[1]);
@@ -508,6 +515,10 @@ void RequirementSystem::addCircleDiameter(Utils::ID circleId, double diameter) {
 
 void RequirementSystem::addEqualLength(Utils::ID line1Id, Utils::ID line2Id) {
     addRequirement(Utils::RequirementDescriptor::equalLength(line1Id, line2Id));
+}
+
+void RequirementSystem::addEqualRadius(Utils::ID circle1Id, Utils::ID circle2Id) {
+    addRequirement(Utils::RequirementDescriptor::equalRadius(circle1Id, circle2Id));
 }
 
 void RequirementSystem::addLineLineParallel(Utils::ID l1Id, Utils::ID l2Id) {

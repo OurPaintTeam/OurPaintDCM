@@ -292,3 +292,133 @@ TEST(DCMManagerSizeConstraints, EqualLengthsWeightsRemovalSnapshotsAndContradict
     zero.addRequirement(RequirementDescriptor::equalLength(first, second));
     EXPECT_TRUE(zero.solve());
 }
+
+TEST(DCMManagerSizeConstraints, EqualRadiiSolveTogetherOrFollowAPrescribedOrFixedRadius) {
+    for (auto mode : modes) for (int sizeMode : {0, 1, 2}) {
+        DCMManager manager;
+        auto first = manager.addFigure(FigureDescriptor::circle(1, 2, 3));
+        auto second = manager.addFigure(FigureDescriptor::circle(5, 6, 7));
+        manager.addRequirement(RequirementDescriptor::equalRadius(first, second));
+        if (sizeMode == 1) manager.addRequirement(RequirementDescriptor::circleRadius(first, 4));
+        if (sizeMode == 2) manager.addRequirement(RequirementDescriptor::fixCircle(first));
+        manager.setSolveMode(mode);
+        ASSERT_TRUE(solve(manager, second));
+        const auto a = manager.getFigure(first).value(), b = manager.getFigure(second).value();
+        EXPECT_NEAR(*a.radius, *b.radius, 1e-6);
+        if (sizeMode == 1) EXPECT_NEAR(*a.radius, 4, 1e-6);
+        if (sizeMode == 2) EXPECT_DOUBLE_EQ(*a.radius, 3);
+        EXPECT_EQ(a.coords, (std::vector<double>{1, 2}));
+        EXPECT_EQ(b.coords, (std::vector<double>{5, 6}));
+        expectFreedom(manager, sizeMode == 0 ? 5 : sizeMode == 1 ? 4 : 2);
+        const auto& row = manager.getRequirementSystem().getFunctions().front();
+        EXPECT_EQ(row->getVars().size(), 2u);
+    }
+}
+
+TEST(DCMManagerSizeConstraints, EqualRadiiWeightsRemovalSnapshotsDragAndConflicts) {
+    for (auto mode : modes) {
+        DCMManager manager;
+        auto first = manager.addFigure(FigureDescriptor::circle(1, 2, 3));
+        auto second = manager.addFigure(FigureDescriptor::circle(5, 6, 7));
+        manager.addRequirement(RequirementDescriptor::fixCircle(first));
+        auto equal = manager.addRequirement(RequirementDescriptor::equalRadius(first, second));
+        manager.setSolveMode(mode);
+        ASSERT_TRUE(solve(manager, second));
+        const auto saved = manager.snapshot();
+        manager.updateRequirementWeight(equal, 0);
+        manager.updateCircle({second, 8});
+        ASSERT_TRUE(solve(manager, second));
+        EXPECT_DOUBLE_EQ(*manager.getFigure(second)->radius, 8);
+        expectFreedom(manager, 3);
+        manager.updateRequirementWeight(equal, 2);
+        ASSERT_TRUE(solve(manager, second));
+        EXPECT_NEAR(*manager.getFigure(second)->radius, 3, 1e-6);
+        if (mode == SolveMode::DRAG) {
+            manager.updateCircle({second, 9});
+            EXPECT_NEAR(*manager.getFigure(second)->radius, 3, 1e-6);
+        }
+        manager.removeRequirement(equal);
+        EXPECT_NE(manager.getComponentForFigure(first), manager.getComponentForFigure(second));
+        manager.restoreSnapshot(saved);
+        ASSERT_TRUE(solve(manager, second));
+        manager.addRequirement(RequirementDescriptor::circleDiameter(second, 12));
+        EXPECT_FALSE(solve(manager, second));
+        EXPECT_DOUBLE_EQ(*manager.getFigure(first)->radius, 3);
+        EXPECT_GT(*manager.getFigure(second)->radius, 0);
+        manager.removeFigure(second, true);
+        EXPECT_FALSE(manager.hasRequirement(equal));
+    }
+}
+
+TEST(DCMManagerSizeConstraints, LocalSolvesDoNotApplySizesInOtherComponents) {
+    DCMManager manager;
+    auto first = manager.addFigure(FigureDescriptor::circle(0, 0, 2));
+    auto second = manager.addFigure(FigureDescriptor::circle(5, 5, 4));
+    auto other = manager.addFigure(FigureDescriptor::circle(100, 100, 1));
+    manager.addRequirement(RequirementDescriptor::circleRadius(first, 3));
+    auto equal = manager.addRequirement(RequirementDescriptor::equalRadius(first, second));
+    manager.addRequirement(RequirementDescriptor::circleDiameter(other, 20));
+    manager.setSolveMode(SolveMode::LOCAL);
+    ASSERT_TRUE(solve(manager, second));
+    EXPECT_NEAR(*manager.getFigure(first)->radius, 3, 1e-6);
+    EXPECT_NEAR(*manager.getFigure(second)->radius, 3, 1e-6);
+    EXPECT_DOUBLE_EQ(*manager.getFigure(other)->radius, 1);
+    manager.removeRequirement(equal);
+    EXPECT_NE(manager.getComponentForFigure(first), manager.getComponentForFigure(second));
+}
+
+TEST(DCMManagerSizeConstraints, DescriptorsValidateSizesArityTypesAndAtomicParameterEdits) {
+    // Existing serialized type values remain stable.
+    static_assert(static_cast<int>(RequirementType::ET_FIXCIRCLE) == 15);
+    for (double invalid : {0.0, -1.0, std::numeric_limits<double>::infinity(), std::numeric_limits<double>::quiet_NaN()}) {
+        EXPECT_THROW(RequirementDescriptor::circleRadius(ID(1), invalid).validate(), std::invalid_argument);
+        EXPECT_THROW(RequirementDescriptor::circleDiameter(ID(1), invalid).validate(), std::invalid_argument);
+    }
+    EXPECT_THROW(RequirementDescriptor::circleDiameter(ID(1), std::numeric_limits<double>::denorm_min()).validate(), std::invalid_argument);
+    EXPECT_NO_THROW(RequirementDescriptor::circleDiameter(ID(1), std::numeric_limits<double>::max()).validate());
+    for (auto type : {RequirementType::ET_CIRCLERADIUS, RequirementType::ET_CIRCLEDIAMETER}) {
+        EXPECT_THROW(RequirementDescriptor(type, {ID(1)}).validate(), std::invalid_argument);
+        EXPECT_THROW(RequirementDescriptor(type, {ID(1), ID(2)}, 3).validate(), std::invalid_argument);
+    }
+    for (auto type : {RequirementType::ET_POINTONCIRCLE, RequirementType::ET_EQUALLENGTH, RequirementType::ET_EQUALRADIUS}) {
+        EXPECT_THROW(RequirementDescriptor(type, {ID(1)}).validate(), std::invalid_argument);
+        EXPECT_THROW(RequirementDescriptor(type, {ID(1), ID(2)}, 3).validate(), std::invalid_argument);
+    }
+    DCMManager manager;
+    auto point = manager.addFigure(FigureDescriptor::point(0, 0));
+    auto line = manager.addFigure(FigureDescriptor::line(1, 1, 2, 2));
+    auto circle = manager.addFigure(FigureDescriptor::circle(3, 3, 2));
+    auto arc = manager.addFigure(FigureDescriptor::arc(0, 1, 2, 1, 1, 0));
+    for (auto bad : {RequirementDescriptor::pointOnCircle(circle, point), RequirementDescriptor::circleRadius(line, 2),
+                     RequirementDescriptor::circleDiameter(arc, 4), RequirementDescriptor::equalLength(line, circle),
+                     RequirementDescriptor::equalRadius(circle, arc), RequirementDescriptor::equalRadius(circle, ID(9999))}) {
+        EXPECT_THROW(manager.addRequirement(bad), std::runtime_error);
+        EXPECT_EQ(manager.requirementCount(), 0u);
+    }
+    auto size = manager.addRequirement(RequirementDescriptor::circleDiameter(circle, 6));
+    ASSERT_TRUE(manager.solve());
+    EXPECT_THROW(manager.updateRequirementParam(size, 0), std::invalid_argument);
+    EXPECT_DOUBLE_EQ(*manager.getRequirement(size)->param, 6);
+    EXPECT_NEAR(*manager.getFigure(circle)->radius, 3, 1e-6);
+    auto equal = manager.addRequirement(RequirementDescriptor::equalRadius(circle, circle));
+    EXPECT_THROW(manager.updateRequirementParam(equal, 2), std::runtime_error);
+}
+
+TEST(DCMManagerSizeConstraints, FactoryUsesMathRadiusUnitsAndSharedVariables) {
+    DCMManager manager;
+    auto circleId = manager.addFigure(FigureDescriptor::circle(0, 0, 3));
+    auto lineId = manager.addFigure(FigureDescriptor::line(0, 0, 3, 4));
+    auto pointId = manager.addFigure(FigureDescriptor::point(3, 4));
+    auto* circle = manager.storage().get<Figures::Circle2D>(circleId);
+    auto* line = manager.storage().get<Figures::Line2D>(lineId);
+    auto* point = manager.storage().get<Figures::Point2D>(pointId);
+    using Factory = Function::RequirementFunctionFactory;
+    auto radius = Factory::createCircleRadius(circle, 5);
+    auto diameter = Factory::createCircleDiameter(circle, 10);
+    EXPECT_DOUBLE_EQ(radius->mathematical()->evaluate(), diameter->mathematical()->evaluate());
+    EXPECT_EQ(radius->mathematical()->gradient(), diameter->mathematical()->gradient());
+    EXPECT_DOUBLE_EQ(Factory::createPointOnCircle(point, circle)->mathematical()->evaluate(), 2);
+    EXPECT_DOUBLE_EQ(Factory::createEqualLength(line, line)->mathematical()->evaluate(), 0);
+    EXPECT_DOUBLE_EQ(Factory::createEqualRadius(circle, circle)->mathematical()->evaluate(), 0);
+    EXPECT_THROW(Factory::createCircleDiameter(circle, 0), std::invalid_argument);
+}
