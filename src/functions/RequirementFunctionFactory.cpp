@@ -127,6 +127,11 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createEqualLeng
          second->p1->ptrX(), second->p1->ptrY(), second->p2->ptrX(), second->p2->ptrY()});
 }
 
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createEqualRadius(
+    Figures::Circle<Figures::Point2D>* first, Figures::Circle<Figures::Point2D>* second) {
+    return bind<EqualRadiusError>(Utils::RequirementType::ET_EQUALRADIUS, {first->ptrRadius(), second->ptrRadius()});
+}
+
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createLineLineAngle(
     Figures::Line<Figures::Point2D>* l1,
     Figures::Line<Figures::Point2D>* l2,

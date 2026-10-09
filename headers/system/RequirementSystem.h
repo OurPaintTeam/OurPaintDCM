@@ -175,6 +175,7 @@ public:
     void addCircleRadius(Utils::ID circleId, double radius);
     void addCircleDiameter(Utils::ID circleId, double diameter);
     void addEqualLength(Utils::ID line1Id, Utils::ID line2Id);
+    void addEqualRadius(Utils::ID circle1Id, Utils::ID circle2Id);
 
     /// @brief Add parallel-lines constraint by IDs.
     void addLineLineParallel(Utils::ID l1Id, Utils::ID l2Id);

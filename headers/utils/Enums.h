@@ -67,7 +67,9 @@ enum class RequirementType: uint8_t {
     /// Circle has a prescribed diameter; its center remains free.
     ET_CIRCLEDIAMETER,
     /// Two sections have equal lengths, including zero lengths.
-    ET_EQUALLENGTH
+    ET_EQUALLENGTH,
+    /// Two circles have equal positive radii.
+    ET_EQUALRADIUS
 };
 
 /**
