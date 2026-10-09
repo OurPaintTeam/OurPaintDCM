@@ -171,6 +171,8 @@ public:
     /// @brief Add line-on-circle constraint by IDs.
     void addLineOnCircle(Utils::ID lineId, Utils::ID circleId);
 
+    void addPointOnCircle(Utils::ID pointId, Utils::ID circleId);
+
     /// @brief Add parallel-lines constraint by IDs.
     void addLineLineParallel(Utils::ID l1Id, Utils::ID l2Id);
 

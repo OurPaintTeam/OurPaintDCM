@@ -58,7 +58,10 @@ enum class RequirementType: uint8_t {
     ET_FIXLINE,
 
     /// Fix a circle (center and radius) at its current position.
-    ET_FIXCIRCLE
+    ET_FIXCIRCLE,
+
+    /// Point lies on a circle.
+    ET_POINTONCIRCLE
 };
 
 /**
