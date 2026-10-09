@@ -267,6 +267,13 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
             }
             case Utils::RequirementType::ET_POINTONPOINT:
                 break;
+            case Utils::RequirementType::ET_POINTONCIRCLE: {
+                auto* point = resolvePoint(ids[0]);
+                const auto [center, radius] = resolveCircleData(ids[1]);
+                addFunction(Function::RequirementFunctionFactory::bind<PointOnCircleError>(entry.type,
+                    {point->ptrX(), point->ptrY(), center->ptrX(), center->ptrY(), radius}));
+                break;
+            }
             case Utils::RequirementType::ET_LINECIRCLEDIST: {
                 const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
                 const auto [center, radius] = resolveCircleData(ids[1]);
@@ -469,6 +476,10 @@ void RequirementSystem::addLineCircleDist(Utils::ID lineId, Utils::ID circleId, 
 
 void RequirementSystem::addLineOnCircle(Utils::ID lineId, Utils::ID circleId) {
     addRequirement(Utils::RequirementDescriptor::lineOnCircle(lineId, circleId));
+}
+
+void RequirementSystem::addPointOnCircle(Utils::ID pointId, Utils::ID circleId) {
+    addRequirement(Utils::RequirementDescriptor::pointOnCircle(pointId, circleId));
 }
 
 void RequirementSystem::addLineLineParallel(Utils::ID l1Id, Utils::ID l2Id) {

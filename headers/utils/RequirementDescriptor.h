@@ -140,6 +140,10 @@ struct RequirementDescriptor {
         return {RequirementType::ET_FIXCIRCLE, {circleId}};
     }
 
+    static RequirementDescriptor pointOnCircle(ID pointId, ID circleId) {
+        return {RequirementType::ET_POINTONCIRCLE, {pointId, circleId}};
+    }
+
     // ==================== Validation ====================
 
     /**
@@ -169,6 +173,7 @@ struct RequirementDescriptor {
             case RequirementType::ET_LINELINEPARALLEL:
             case RequirementType::ET_LINELINEPERPENDICULAR:
             case RequirementType::ET_LINELINEANGLE:
+            case RequirementType::ET_POINTONCIRCLE:
                 if (objectIds.size() != 2) {
                     throw std::invalid_argument("Requirement type requires exactly 2 object IDs");
                 }
