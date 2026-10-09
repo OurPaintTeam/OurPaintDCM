@@ -43,8 +43,10 @@ constexpr void requirePositiveRadius(double radius) {
 inline void validateRequirementParameter(RequirementType type, const std::optional<double>& param) {
     switch (type) {
         case RequirementType::ET_CIRCLERADIUS:
+        case RequirementType::ET_CIRCLEDIAMETER:
             if (!param) throw std::invalid_argument("Circle size requirement needs a parameter");
             requirePositiveRadius(*param);
+            if (type == RequirementType::ET_CIRCLEDIAMETER) requirePositiveRadius(*param / 2.0);
             break;
         case RequirementType::ET_POINTLINEDIST:
         case RequirementType::ET_POINTPOINTDIST:

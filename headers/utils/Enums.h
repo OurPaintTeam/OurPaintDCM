@@ -63,7 +63,9 @@ enum class RequirementType: uint8_t {
     /// Point lies on a circle.
     ET_POINTONCIRCLE,
     /// Circle has a prescribed radius; its center remains free.
-    ET_CIRCLERADIUS
+    ET_CIRCLERADIUS,
+    /// Circle has a prescribed diameter; its center remains free.
+    ET_CIRCLEDIAMETER
 };
 
 /**

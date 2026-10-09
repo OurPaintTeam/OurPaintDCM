@@ -121,11 +121,12 @@ TEST(DCMManagerSizeConstraints, PointOnCircleWeightsRemovalSnapshotsAndDragInval
     }
 }
 
-TEST(DCMManagerSizeConstraints, RadiusOnlyConstrainRadiusInEveryMode) {
-    for (auto mode : modes) {
+TEST(DCMManagerSizeConstraints, RadiusAndDiameterOnlyConstrainRadiusInEveryMode) {
+    for (auto mode : modes) for (bool diameter : {false, true}) {
         DCMManager manager;
         auto circle = manager.addFigure(FigureDescriptor::circle(3, 4, 2));
-        auto size = manager.addRequirement(RequirementDescriptor::circleRadius(circle, 10));
+        auto size = manager.addRequirement(diameter ? RequirementDescriptor::circleDiameter(circle, 20)
+                                                   : RequirementDescriptor::circleRadius(circle, 10));
         manager.setSolveMode(mode);
         ASSERT_TRUE(solve(manager, circle));
         EXPECT_NEAR(*manager.getFigure(circle)->radius, 10, 1e-6);
@@ -144,18 +145,19 @@ TEST(DCMManagerSizeConstraints, RadiusOnlyConstrainRadiusInEveryMode) {
     }
 }
 
-TEST(DCMManagerSizeConstraints, RadiusParametersWeightsRemovalAndSnapshotsPreserveOriginalUnits) {
-    for (auto mode : modes) {
+TEST(DCMManagerSizeConstraints, SizeParametersWeightsRemovalAndSnapshotsPreserveOriginalUnits) {
+    for (auto mode : modes) for (bool diameter : {false, true}) {
         DCMManager manager;
         auto circle = manager.addFigure(FigureDescriptor::circle(1, 2, 1));
-        auto size = manager.addRequirement(RequirementDescriptor::circleRadius(circle, 3));
+        auto size = manager.addRequirement(diameter ? RequirementDescriptor::circleDiameter(circle, 6)
+                                                   : RequirementDescriptor::circleRadius(circle, 3));
         manager.setSolveMode(mode);
         ASSERT_TRUE(solve(manager, circle));
         const auto saved = manager.snapshot();
-        manager.updateRequirementParam(size, 10);
+        manager.updateRequirementParam(size, diameter ? 20 : 10);
         ASSERT_TRUE(solve(manager, circle));
         EXPECT_NEAR(*manager.getFigure(circle)->radius, 10, 1e-6);
-        EXPECT_DOUBLE_EQ(*manager.getRequirement(size)->param, 10);
+        EXPECT_DOUBLE_EQ(*manager.getRequirement(size)->param, diameter ? 20 : 10);
         manager.updateRequirementWeight(size, 0);
         manager.updateCircle({circle, 7});
         ASSERT_TRUE(solve(manager, circle));
@@ -169,8 +171,8 @@ TEST(DCMManagerSizeConstraints, RadiusParametersWeightsRemovalAndSnapshotsPreser
         ASSERT_TRUE(solve(manager, circle));
         EXPECT_DOUBLE_EQ(*manager.getFigure(circle)->radius, 8);
         manager.restoreSnapshot(saved);
-        EXPECT_EQ(manager.getRequirement(size)->type, RequirementType::ET_CIRCLERADIUS);
-        EXPECT_DOUBLE_EQ(*manager.getRequirement(size)->param, 3);
+        EXPECT_EQ(manager.getRequirement(size)->type, diameter ? RequirementType::ET_CIRCLEDIAMETER : RequirementType::ET_CIRCLERADIUS);
+        EXPECT_DOUBLE_EQ(*manager.getRequirement(size)->param, diameter ? 6 : 3);
         ASSERT_TRUE(solve(manager, circle));
         EXPECT_NEAR(*manager.getFigure(circle)->radius, 3, 1e-6);
         expectFreedom(manager, 2);
@@ -180,8 +182,20 @@ TEST(DCMManagerSizeConstraints, RadiusParametersWeightsRemovalAndSnapshotsPreser
     }
 }
 
-TEST(DCMManagerSizeConstraints, FixedCircleRejectsConflictingRadius) {
+TEST(DCMManagerSizeConstraints, EquivalentSizesAgreeAndConflictingOrFixedSizesFail) {
     for (auto mode : modes) {
+        DCMManager manager;
+        auto circle = manager.addFigure(FigureDescriptor::circle(1, 2, 3));
+        manager.addRequirement(RequirementDescriptor::circleRadius(circle, 10));
+        auto diameter = manager.addRequirement(RequirementDescriptor::circleDiameter(circle, 20));
+        manager.setSolveMode(mode);
+        ASSERT_TRUE(solve(manager, circle));
+        EXPECT_NEAR(*manager.getFigure(circle)->radius, 10, 1e-6);
+        manager.updateRequirementParam(diameter, 30);
+        EXPECT_FALSE(solve(manager, circle));
+        EXPECT_GT(*manager.getFigure(circle)->radius, 0);
+        EXPECT_TRUE(std::isfinite(*manager.getFigure(circle)->radius));
+
         DCMManager fixed;
         auto fixedCircle = fixed.addFigure(FigureDescriptor::circle(1, 2, 3));
         fixed.addRequirement(RequirementDescriptor::fixCircle(fixedCircle));
