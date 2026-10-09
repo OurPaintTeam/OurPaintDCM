@@ -120,6 +120,13 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createCircleDia
     return bind<CircleRadiusError>(Utils::RequirementType::ET_CIRCLEDIAMETER, {circle->ptrRadius()}, diameter / 2.0);
 }
 
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createEqualLength(
+    Figures::Line<Figures::Point2D>* first, Figures::Line<Figures::Point2D>* second) {
+    return bind<EqualLengthError>(Utils::RequirementType::ET_EQUALLENGTH,
+        {first->p1->ptrX(), first->p1->ptrY(), first->p2->ptrX(), first->p2->ptrY(),
+         second->p1->ptrX(), second->p1->ptrY(), second->p2->ptrX(), second->p2->ptrY()});
+}
+
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createLineLineAngle(
     Figures::Line<Figures::Point2D>* l1,
     Figures::Line<Figures::Point2D>* l2,
