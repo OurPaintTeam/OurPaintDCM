@@ -283,6 +283,13 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                     {circle->ptrRadius()}, target));
                 break;
             }
+            case Utils::RequirementType::ET_EQUALLENGTH: {
+                const auto [a, b] = resolveLinePoints(ids[0]);
+                const auto [c, d] = resolveLinePoints(ids[1]);
+                addFunction(Function::RequirementFunctionFactory::bind<EqualLengthError>(entry.type,
+                    makeLineLineVars(a, b, c, d)));
+                break;
+            }
             case Utils::RequirementType::ET_LINECIRCLEDIST: {
                 const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
                 const auto [center, radius] = resolveCircleData(ids[1]);
@@ -497,6 +504,10 @@ void RequirementSystem::addCircleRadius(Utils::ID circleId, double radius) {
 
 void RequirementSystem::addCircleDiameter(Utils::ID circleId, double diameter) {
     addRequirement(Utils::RequirementDescriptor::circleDiameter(circleId, diameter));
+}
+
+void RequirementSystem::addEqualLength(Utils::ID line1Id, Utils::ID line2Id) {
+    addRequirement(Utils::RequirementDescriptor::equalLength(line1Id, line2Id));
 }
 
 void RequirementSystem::addLineLineParallel(Utils::ID l1Id, Utils::ID l2Id) {

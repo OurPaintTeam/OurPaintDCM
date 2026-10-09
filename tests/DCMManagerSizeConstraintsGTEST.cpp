@@ -205,3 +205,90 @@ TEST(DCMManagerSizeConstraints, EquivalentSizesAgreeAndConflictingOrFixedSizesFa
         EXPECT_DOUBLE_EQ(*fixed.getFigure(fixedCircle)->radius, 3);
     }
 }
+
+TEST(DCMManagerSizeConstraints, EqualLengthsSolveWithFixedSegmentAndZeroLengthSegment) {
+    for (auto mode : modes) for (bool collapsed : {false, true}) {
+        DCMManager manager;
+        auto first = manager.addFigure(FigureDescriptor::line(0, 0, 3, 4));
+        auto second = manager.addFigure(FigureDescriptor::line(10, 10, collapsed ? 10 : 12, 10));
+        manager.addRequirement(RequirementDescriptor::fixLine(first));
+        manager.addRequirement(RequirementDescriptor::equalLength(first, second));
+        manager.setSolveMode(mode);
+        ASSERT_TRUE(solve(manager, second));
+        EXPECT_NEAR(length(manager, second), 5, 1e-6);
+        EXPECT_EQ(manager.getFigure(first)->coords, (std::vector<double>{0, 0, 3, 4}));
+        expectFreedom(manager, 3);
+        ASSERT_TRUE(solve(manager, second));
+    }
+}
+
+TEST(DCMManagerSizeConstraints, EqualLengthsHaveNoAbsoluteTargetAndCombineSharedAliases) {
+    for (auto mode : modes) {
+        DCMManager manager;
+        auto first = manager.addFigure(FigureDescriptor::line(0, 0, 3, 4));
+        auto second = manager.addFigure(FigureDescriptor::line(10, 0, 12, 0));
+        manager.addRequirement(RequirementDescriptor::equalLength(first, second));
+        manager.setSolveMode(mode);
+        ASSERT_TRUE(solve(manager, first));
+        EXPECT_NEAR(length(manager, first), length(manager, second), 1e-6);
+        expectFreedom(manager, 7);
+
+        DCMManager shared;
+        auto a = shared.addFigure(FigureDescriptor::point(0, 0));
+        auto alias = shared.addFigure(FigureDescriptor::point(0, 0));
+        auto b = shared.addFigure(FigureDescriptor::point(3, 4));
+        auto c = shared.addFigure(FigureDescriptor::point(2, 0));
+        auto ab = shared.addFigure(FigureDescriptor::line(a, b));
+        auto ac = shared.addFigure(FigureDescriptor::line(alias, c));
+        shared.addRequirement(RequirementDescriptor::pointOnPoint(a, alias));
+        shared.addRequirement(RequirementDescriptor::fixLine(ab));
+        shared.addRequirement(RequirementDescriptor::equalLength(ab, ac));
+        shared.setSolveMode(mode);
+        ASSERT_TRUE(solve(shared, ac));
+        EXPECT_NEAR(length(shared, ac), 5, 1e-6);
+        expectPoint(shared, a, 0, 0);
+        expectPoint(shared, alias, 0, 0);
+        expectPoint(shared, b, 3, 4);
+        expectFreedom(shared, 1);
+    }
+}
+
+TEST(DCMManagerSizeConstraints, EqualLengthsWeightsRemovalSnapshotsAndContradictions) {
+    for (auto mode : modes) {
+        DCMManager manager;
+        auto first = manager.addFigure(FigureDescriptor::line(0, 0, 3, 4));
+        auto second = manager.addFigure(FigureDescriptor::line(10, 0, 12, 0));
+        manager.addRequirement(RequirementDescriptor::fixLine(first));
+        auto equal = manager.addRequirement(RequirementDescriptor::equalLength(first, second));
+        manager.setSolveMode(mode);
+        ASSERT_TRUE(solve(manager, second));
+        const auto saved = manager.snapshot();
+        manager.updateRequirementWeight(equal, 0);
+        manager.updateLine({second, 10, 0, 12, 0});
+        ASSERT_TRUE(solve(manager, second));
+        EXPECT_NEAR(length(manager, second), 2, 1e-12);
+        expectFreedom(manager, 4);
+        manager.updateRequirementWeight(equal, 2);
+        ASSERT_TRUE(solve(manager, second));
+        EXPECT_NEAR(length(manager, second), 5, 1e-6);
+        manager.removeRequirement(equal);
+        EXPECT_NE(manager.getComponentForFigure(first), manager.getComponentForFigure(second));
+        manager.restoreSnapshot(saved);
+        ASSERT_TRUE(solve(manager, second));
+        expectFreedom(manager, 3);
+        manager.updateRequirementWeight(equal, 0);
+        manager.updateLine({second, 10, 0, 12, 0});
+        manager.addRequirement(RequirementDescriptor::fixLine(second));
+        manager.updateRequirementWeight(equal, 1);
+        EXPECT_FALSE(solve(manager, second));
+        EXPECT_NEAR(length(manager, first), 5, 1e-12);
+        EXPECT_NEAR(length(manager, second), 2, 1e-12);
+        manager.removeFigure(second, true);
+        EXPECT_FALSE(manager.hasRequirement(equal));
+    }
+    DCMManager zero;
+    auto first = zero.addFigure(FigureDescriptor::line(0, 0, 0, 0));
+    auto second = zero.addFigure(FigureDescriptor::line(1, 1, 1, 1));
+    zero.addRequirement(RequirementDescriptor::equalLength(first, second));
+    EXPECT_TRUE(zero.solve());
+}

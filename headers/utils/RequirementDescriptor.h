@@ -153,6 +153,10 @@ struct RequirementDescriptor {
         return {RequirementType::ET_CIRCLEDIAMETER, {circleId}, diameter};
     }
 
+    static RequirementDescriptor equalLength(ID line1Id, ID line2Id) {
+        return {RequirementType::ET_EQUALLENGTH, {line1Id, line2Id}};
+    }
+
     // ==================== Validation ====================
 
     /**
@@ -183,6 +187,7 @@ struct RequirementDescriptor {
             case RequirementType::ET_LINELINEPERPENDICULAR:
             case RequirementType::ET_LINELINEANGLE:
             case RequirementType::ET_POINTONCIRCLE:
+            case RequirementType::ET_EQUALLENGTH:
                 if (objectIds.size() != 2) {
                     throw std::invalid_argument("Requirement type requires exactly 2 object IDs");
                 }
