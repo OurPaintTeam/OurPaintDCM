@@ -1,4 +1,5 @@
 #include "RequirementFunctionFactory.h"
+#include "NumericValidation.h"
 
 namespace OurPaintDCM::Function {
 
@@ -111,6 +112,12 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointOnCi
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createCircleRadius(
     Figures::Circle<Figures::Point2D>* circle, double radius) {
     return bind<CircleRadiusError>(Utils::RequirementType::ET_CIRCLERADIUS, {circle->ptrRadius()}, radius);
+}
+
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createCircleDiameter(
+    Figures::Circle<Figures::Point2D>* circle, double diameter) {
+    Utils::requirePositiveRadius(diameter);
+    return bind<CircleRadiusError>(Utils::RequirementType::ET_CIRCLEDIAMETER, {circle->ptrRadius()}, diameter / 2.0);
 }
 
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createLineLineAngle(
