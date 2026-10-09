@@ -108,6 +108,11 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointOnCi
         {point->ptrX(), point->ptrY(), circle->center->ptrX(), circle->center->ptrY(), circle->ptrRadius()});
 }
 
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createCircleRadius(
+    Figures::Circle<Figures::Point2D>* circle, double radius) {
+    return bind<CircleRadiusError>(Utils::RequirementType::ET_CIRCLERADIUS, {circle->ptrRadius()}, radius);
+}
+
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createLineLineAngle(
     Figures::Line<Figures::Point2D>* l1,
     Figures::Line<Figures::Point2D>* l2,

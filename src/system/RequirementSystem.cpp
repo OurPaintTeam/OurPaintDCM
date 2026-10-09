@@ -274,6 +274,14 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                     {point->ptrX(), point->ptrY(), center->ptrX(), center->ptrY(), radius}));
                 break;
             }
+            case Utils::RequirementType::ET_CIRCLERADIUS:
+            {
+                auto* circle = requireGeometry(_storage->get<Figures::Circle2D>(ids[0]));
+                const double target = entry.param.value();
+                addFunction(Function::RequirementFunctionFactory::bind<CircleRadiusError>(entry.type,
+                    {circle->ptrRadius()}, target));
+                break;
+            }
             case Utils::RequirementType::ET_LINECIRCLEDIST: {
                 const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
                 const auto [center, radius] = resolveCircleData(ids[1]);
@@ -480,6 +488,10 @@ void RequirementSystem::addLineOnCircle(Utils::ID lineId, Utils::ID circleId) {
 
 void RequirementSystem::addPointOnCircle(Utils::ID pointId, Utils::ID circleId) {
     addRequirement(Utils::RequirementDescriptor::pointOnCircle(pointId, circleId));
+}
+
+void RequirementSystem::addCircleRadius(Utils::ID circleId, double radius) {
+    addRequirement(Utils::RequirementDescriptor::circleRadius(circleId, radius));
 }
 
 void RequirementSystem::addLineLineParallel(Utils::ID l1Id, Utils::ID l2Id) {

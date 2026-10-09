@@ -172,6 +172,7 @@ public:
     void addLineOnCircle(Utils::ID lineId, Utils::ID circleId);
 
     void addPointOnCircle(Utils::ID pointId, Utils::ID circleId);
+    void addCircleRadius(Utils::ID circleId, double radius);
 
     /// @brief Add parallel-lines constraint by IDs.
     void addLineLineParallel(Utils::ID l1Id, Utils::ID l2Id);
