@@ -8,6 +8,7 @@
 #include "IDGenerator.h"
 #include "utils/RequirementDescriptor.h"
 #include <unordered_map>
+#include <utility>
 
 namespace OurPaintDCM {
 class DCMManager;
@@ -43,6 +44,8 @@ class RequirementSystem : public RequirementFunctionSystem {
         std::optional<double> param;             ///< Optional parameter (distance, angle)
         std::vector<double> fixedTargets;
         double weight = 1.0;                     ///< Residual multiplier
+        std::optional<Utils::Endpoint> firstEndpoint;
+        std::optional<Utils::Endpoint> secondEndpoint;
     };
 
     std::optional<std::vector<Utils::ID>> _figureScope;
@@ -60,6 +63,8 @@ class RequirementSystem : public RequirementFunctionSystem {
     std::vector<Utils::ID> getCoincidentPoints(Utils::ID pointId) const;
     void applyDirectAssignments() const;
     void synchronizeCoincidentPoints() const noexcept;
+    std::pair<Utils::ID,Utils::ID> contactEndpoints(const RequirementEntry& entry) const;
+    bool coincidencesSatisfied(double tolerance) const;
 
     friend class ::OurPaintDCM::DCMManager;
 
@@ -179,6 +184,8 @@ public:
     void addPointAtMidpoint(Utils::ID pointId, Utils::ID lineId);
     void addLineCircleTangent(Utils::ID line, Utils::ID circle, Utils::TangencySide side);
     void addCircleCircleTangent(Utils::ID first, Utils::ID second, Utils::CircleTangencyKind kind);
+    void addArcLineTangent(Utils::ID arc, Utils::Endpoint arcEnd, Utils::ID line, Utils::Endpoint lineEnd);
+    void addArcArcTangent(Utils::ID first, Utils::Endpoint firstEnd, Utils::ID second, Utils::Endpoint secondEnd);
     void addSymmetricAboutLine(Utils::ID p, Utils::ID q, Utils::ID axis);
     void addSymmetricAboutHorizontal(Utils::ID p, Utils::ID q, double y = 0);
     void addSymmetricAboutVertical(Utils::ID p, Utils::ID q, double x = 0);

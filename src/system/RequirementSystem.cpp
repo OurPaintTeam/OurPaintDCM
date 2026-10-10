@@ -105,7 +105,7 @@ void RequirementSystem::replaceRequirements(
     _requirements.reserve(descriptors.size());
     for (const auto& descriptor : descriptors) {
         _requirements.push_back({*descriptor.id, descriptor.type, descriptor.objectIds,
-                                 descriptor.param, {}, descriptor.weight});
+                                 descriptor.param, {}, descriptor.weight, descriptor.firstEndpoint, descriptor.secondEndpoint});
     }
 
     for (auto& entry : _requirements) {
@@ -133,7 +133,7 @@ Utils::ID RequirementSystem::addRequirement(const Utils::RequirementDescriptor& 
     }
 
     _requirements.push_back({reqId, descriptor.type, descriptor.objectIds,
-                             descriptor.param, {}, descriptor.weight});
+                             descriptor.param, {}, descriptor.weight, descriptor.firstEndpoint, descriptor.secondEndpoint});
 
     try {
         rebuildFunctionsAndAliases();
@@ -145,6 +145,31 @@ Utils::ID RequirementSystem::addRequirement(const Utils::RequirementDescriptor& 
     }
 
     return reqId;
+}
+
+std::pair<Utils::ID,Utils::ID> RequirementSystem::contactEndpoints(const RequirementEntry& entry) const {
+    requireGeometry(_storage->get<Figures::Arc2D>(entry.objectIds[0]));
+    const auto first=_storage->getDependencies(entry.objectIds[0]);
+    if (first.size() != 3) throw std::runtime_error("Arc dependencies are inconsistent");
+    const bool line=entry.type == Utils::RequirementType::ET_ARCLINETANGENT;
+    if (line) requireGeometry(_storage->get<Figures::Line2D>(entry.objectIds[1]));
+    else requireGeometry(_storage->get<Figures::Arc2D>(entry.objectIds[1]));
+    const auto second=_storage->getDependencies(entry.objectIds[1]);
+    if (second.size() != (line ? 2u : 3u)) throw std::runtime_error("Contact dependencies are inconsistent");
+    return {first[static_cast<std::size_t>(entry.firstEndpoint.value())],
+            second[static_cast<std::size_t>(entry.secondEndpoint.value())]};
+}
+
+bool RequirementSystem::coincidencesSatisfied(double tolerance) const {
+    for (const auto& [representative,group] : _coincidentPointGroups) {
+        auto* first=requireGeometry(_storage->get<Figures::Point2D>(representative));
+        for (auto id : group) {
+            auto* second=requireGeometry(_storage->get<Figures::Point2D>(id));
+            PointOnPointError coincidence(makeTwoPointVars(first,second));
+            if (!coincidence.satisfied(tolerance)) return false;
+        }
+    }
+    return true;
 }
 
 void RequirementSystem::rebuildFunctionsAndAliases() {
@@ -186,9 +211,13 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
     };
 
     for (const auto& entry : _requirements) {
-        if (entry.type != Utils::RequirementType::ET_POINTONPOINT || entry.weight == 0) {
+        if (entry.weight == 0) continue;
+        if (entry.type == Utils::RequirementType::ET_ARCLINETANGENT || entry.type == Utils::RequirementType::ET_ARCARCTANGENT) {
+            const auto [first,second]=contactEndpoints(entry);
+            unite(first,second);
             continue;
         }
+        if (entry.type != Utils::RequirementType::ET_POINTONPOINT) continue;
 
         requireGeometry(_storage->get<Figures::Point2D>(entry.objectIds[0]));
         requireGeometry(_storage->get<Figures::Point2D>(entry.objectIds[1]));
@@ -350,6 +379,25 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                 const auto [c2,r2]=resolveCircleData(ids[1]);
                 addFunction(Function::RequirementFunctionFactory::bind<CircleCircleTangentError>(entry.type,
                     {c1->ptrX(),c1->ptrY(),r1,c2->ptrX(),c2->ptrY(),r2},entry.param.value()));
+                break;
+            }
+            case Utils::RequirementType::ET_ARCLINETANGENT: {
+                const auto [first,second]=contactEndpoints(entry);
+                auto* contact=resolvePoint(first);
+                const auto [arcA,arcB,center]=resolveArcPoints(ids[0]);
+                const auto [a,b]=resolveLinePoints(ids[1]);
+                addFunction(Function::RequirementFunctionFactory::bind<ArcLineTangentError>(entry.type,
+                    {contact->ptrX(),contact->ptrY(),center->ptrX(),center->ptrY(),
+                     a->ptrX(),a->ptrY(),b->ptrX(),b->ptrY()}));
+                break;
+            }
+            case Utils::RequirementType::ET_ARCARCTANGENT: {
+                const auto [first,second]=contactEndpoints(entry);
+                auto* contact=resolvePoint(first);
+                const auto [a,b,c1]=resolveArcPoints(ids[0]);
+                const auto [c,d,c2]=resolveArcPoints(ids[1]);
+                addFunction(Function::RequirementFunctionFactory::bind<ArcArcTangentError>(entry.type,
+                    {contact->ptrX(),contact->ptrY(),c1->ptrX(),c1->ptrY(),c2->ptrX(),c2->ptrY()}));
                 break;
             }
             case Utils::RequirementType::ET_LINEONCIRCLE: {
@@ -576,6 +624,12 @@ void RequirementSystem::addLineCircleTangent(Utils::ID line, Utils::ID circle, U
 }
 void RequirementSystem::addCircleCircleTangent(Utils::ID first, Utils::ID second, Utils::CircleTangencyKind kind) {
     addRequirement(Utils::RequirementDescriptor::circleCircleTangent(first,second,kind));
+}
+void RequirementSystem::addArcLineTangent(Utils::ID arc, Utils::Endpoint arcEnd, Utils::ID line, Utils::Endpoint lineEnd) {
+    addRequirement(Utils::RequirementDescriptor::arcLineTangent(arc,arcEnd,line,lineEnd));
+}
+void RequirementSystem::addArcArcTangent(Utils::ID first, Utils::Endpoint firstEnd, Utils::ID second, Utils::Endpoint secondEnd) {
+    addRequirement(Utils::RequirementDescriptor::arcArcTangent(first,firstEnd,second,secondEnd));
 }
 void RequirementSystem::addSymmetricAboutLine(Utils::ID p, Utils::ID q, Utils::ID axis) {
     addRequirement(Utils::RequirementDescriptor::symmetricAboutLine(p,q,axis));

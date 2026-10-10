@@ -72,6 +72,11 @@ public:
         Figures::Line<Figures::Point2D>* line, Figures::Circle<Figures::Point2D>* circle, Utils::TangencySide side);
     static std::shared_ptr<RequirementFunction> createCircleCircleTangent(
         Figures::Circle<Figures::Point2D>* first, Figures::Circle<Figures::Point2D>* second, Utils::CircleTangencyKind kind);
+    /// Scalar tangency only; the caller must connect the selected endpoints separately.
+    static std::shared_ptr<RequirementFunction> createArcLineTangent(
+        Figures::Arc<Figures::Point2D>* arc, Utils::Endpoint arcEnd, Figures::Line<Figures::Point2D>* line);
+    static std::shared_ptr<RequirementFunction> createArcArcTangent(
+        Figures::Arc<Figures::Point2D>* first, Utils::Endpoint firstEnd, Figures::Arc<Figures::Point2D>* second);
     static std::shared_ptr<RequirementFunction> createCircleRadius(
         Figures::Circle<Figures::Point2D>* circle, double radius);
     static std::shared_ptr<RequirementFunction> createCircleDiameter(
