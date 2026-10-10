@@ -42,6 +42,10 @@ constexpr void requirePositiveRadius(double radius) {
 
 inline void validateRequirementParameter(RequirementType type, const std::optional<double>& param) {
     switch (type) {
+        case RequirementType::ET_CIRCLECIRCLETANGENT:
+            if (!param || (*param != 0 && *param != 1 && *param != 2))
+                throw std::invalid_argument("Circle tangency kind must be 0, 1 or 2");
+            break;
         case RequirementType::ET_LINECIRCLETANGENT:
             if (!param || (*param != -1 && *param != 1))
                 throw std::invalid_argument("Tangency side must be -1 or +1");

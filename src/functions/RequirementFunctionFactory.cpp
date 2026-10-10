@@ -110,6 +110,13 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createLineCircl
          circle->center->ptrX(),circle->center->ptrY(),circle->ptrRadius()},static_cast<double>(side));
 }
 
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createCircleCircleTangent(
+    Figures::Circle<Figures::Point2D>* first, Figures::Circle<Figures::Point2D>* second, Utils::CircleTangencyKind kind) {
+    return bind<CircleCircleTangentError>(Utils::RequirementType::ET_CIRCLECIRCLETANGENT,
+        {first->center->ptrX(),first->center->ptrY(),first->ptrRadius(),
+         second->center->ptrX(),second->center->ptrY(),second->ptrRadius()},static_cast<double>(kind));
+}
+
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointOnCircle(
     Figures::Point2D* point, Figures::Circle<Figures::Point2D>* circle) {
     return bind<PointOnCircleError>(Utils::RequirementType::ET_POINTONCIRCLE,

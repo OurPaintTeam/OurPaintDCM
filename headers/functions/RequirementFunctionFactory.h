@@ -70,6 +70,8 @@ public:
         Figures::Point2D* point, Figures::Circle<Figures::Point2D>* circle);
     static std::shared_ptr<RequirementFunction> createLineCircleTangent(
         Figures::Line<Figures::Point2D>* line, Figures::Circle<Figures::Point2D>* circle, Utils::TangencySide side);
+    static std::shared_ptr<RequirementFunction> createCircleCircleTangent(
+        Figures::Circle<Figures::Point2D>* first, Figures::Circle<Figures::Point2D>* second, Utils::CircleTangencyKind kind);
     static std::shared_ptr<RequirementFunction> createCircleRadius(
         Figures::Circle<Figures::Point2D>* circle, double radius);
     static std::shared_ptr<RequirementFunction> createCircleDiameter(
