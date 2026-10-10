@@ -117,6 +117,26 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createCircleCir
          second->center->ptrX(),second->center->ptrY(),second->ptrRadius()},static_cast<double>(kind));
 }
 
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createArcLineTangent(
+    Figures::Arc<Figures::Point2D>* arc, Utils::Endpoint arcEnd, Figures::Line<Figures::Point2D>* line) {
+    if (arcEnd != Utils::Endpoint::FIRST && arcEnd != Utils::Endpoint::SECOND)
+        throw std::invalid_argument("Invalid arc endpoint");
+    auto* t=arcEnd == Utils::Endpoint::FIRST ? arc->p1 : arc->p2;
+    auto* c=arc->p_center;
+    return bind<ArcLineTangentError>(Utils::RequirementType::ET_ARCLINETANGENT,
+        {t->ptrX(),t->ptrY(),c->ptrX(),c->ptrY(),
+         line->p1->ptrX(),line->p1->ptrY(),line->p2->ptrX(),line->p2->ptrY()});
+}
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createArcArcTangent(
+    Figures::Arc<Figures::Point2D>* first, Utils::Endpoint firstEnd, Figures::Arc<Figures::Point2D>* second) {
+    if (firstEnd != Utils::Endpoint::FIRST && firstEnd != Utils::Endpoint::SECOND)
+        throw std::invalid_argument("Invalid arc endpoint");
+    auto* t=firstEnd == Utils::Endpoint::FIRST ? first->p1 : first->p2;
+    auto* c1=first->p_center; auto* c2=second->p_center;
+    return bind<ArcArcTangentError>(Utils::RequirementType::ET_ARCARCTANGENT,
+        {t->ptrX(),t->ptrY(),c1->ptrX(),c1->ptrY(),c2->ptrX(),c2->ptrY()});
+}
+
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointOnCircle(
     Figures::Point2D* point, Figures::Circle<Figures::Point2D>* circle) {
     return bind<PointOnCircleError>(Utils::RequirementType::ET_POINTONCIRCLE,

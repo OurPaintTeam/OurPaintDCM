@@ -36,6 +36,20 @@ static const char* reqTypeName(RequirementType t) {
         case RequirementType::ET_FIXPOINT:              return "FixPoint";
         case RequirementType::ET_FIXLINE:               return "FixLine";
         case RequirementType::ET_FIXCIRCLE:             return "FixCircle";
+        case RequirementType::ET_POINTONCIRCLE:         return "PointOnCircle";
+        case RequirementType::ET_CIRCLERADIUS:          return "CircleRadius";
+        case RequirementType::ET_CIRCLEDIAMETER:        return "CircleDiameter";
+        case RequirementType::ET_EQUALLENGTH:           return "EqualLength";
+        case RequirementType::ET_EQUALRADIUS:           return "EqualRadius";
+        case RequirementType::ET_POINTATMIDPOINT:       return "PointAtMidpoint";
+        case RequirementType::ET_SYMMETRICABOUTLINE:     return "SymmetricAboutLine";
+        case RequirementType::ET_SYMMETRICABOUTHORIZONTAL: return "SymmetricAboutHorizontal";
+        case RequirementType::ET_SYMMETRICABOUTVERTICAL: return "SymmetricAboutVertical";
+        case RequirementType::ET_SYMMETRICABOUTPOINT:    return "SymmetricAboutPoint";
+        case RequirementType::ET_LINECIRCLETANGENT:      return "LineCircleTangent";
+        case RequirementType::ET_CIRCLECIRCLETANGENT:    return "CircleCircleTangent";
+        case RequirementType::ET_ARCLINETANGENT:        return "ArcLineTangent";
+        case RequirementType::ET_ARCARCTANGENT:          return "ArcArcTangent";
     }
     return "?";
 }

@@ -1097,6 +1097,18 @@ void DCMManager::updateCircleCircleTangencyKind(Utils::ID reqId, Utils::CircleTa
     updateRequirementParam(reqId,static_cast<double>(kind));
 }
 
+void DCMManager::updateArcTangencyEndpoints(Utils::ID reqId, Utils::Endpoint first, Utils::Endpoint second) {
+    auto it=_requirementRecords.find(reqId);
+    if (it == _requirementRecords.end() ||
+        (it->second.type != Utils::RequirementType::ET_ARCLINETANGENT && it->second.type != Utils::RequirementType::ET_ARCARCTANGENT))
+        throw std::invalid_argument("Requirement is not an arc endpoint tangency");
+    auto updated=it->second;
+    updated.firstEndpoint=first; updated.secondEndpoint=second; updated.validate();
+    it->second=std::move(updated);
+    _reqSystemSyncedWithRecords=false;
+    invalidateSolveCache();
+}
+
 void DCMManager::updateRequirementWeight(Utils::ID reqId, double newWeight) {
     auto it = _requirementRecords.find(reqId);
     if (it == _requirementRecords.end()) {
@@ -1400,21 +1412,8 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
         for (const auto& binding : system.getFunctions()) {
             if (!binding->mathematical()->satisfied(residualTolerance)) return false;
         }
-        // Coincidence constraints are eliminated from the function system by point aliasing.
-        for (const auto& requirement : system.getRequirements()) {
-            if (requirement.type == Utils::RequirementType::ET_POINTONPOINT && requirement.weight != 0) {
-                auto* p1 = _storage.get<Figures::Point2D>(requirement.objectIds[0]);
-                auto* p2 = _storage.get<Figures::Point2D>(requirement.objectIds[1]);
-                PointOnPointError coincidence(std::vector<double*>
-                    {p1->ptrX(),p1->ptrY(),
-                     p2->ptrX(),p2->ptrY()});
-                coincidence.setWeight(requirement.weight);
-                if (!coincidence.satisfied(residualTolerance)) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        // Explicit coincidences and arc contacts are eliminated by point aliasing.
+        return system.coincidencesSatisfied(residualTolerance);
     };
 
     const auto finishSolve = [&]() {

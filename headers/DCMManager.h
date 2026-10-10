@@ -242,6 +242,7 @@ public:
     /// Explicitly switch the saved side of a line/circle tangency.
     void updateLineCircleTangencySide(Utils::ID reqId, Utils::TangencySide side);
     void updateCircleCircleTangencyKind(Utils::ID reqId, Utils::CircleTangencyKind kind);
+    void updateArcTangencyEndpoints(Utils::ID reqId, Utils::Endpoint first, Utils::Endpoint second);
 
     /// Update a requirement's residual weight and invalidate cached solve state.
     void updateRequirementWeight(Utils::ID reqId, double newWeight);
