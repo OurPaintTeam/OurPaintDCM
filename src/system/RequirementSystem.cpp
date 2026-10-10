@@ -345,6 +345,13 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                     makeLineCircleVars(a,b,center,radius),entry.param.value()));
                 break;
             }
+            case Utils::RequirementType::ET_CIRCLECIRCLETANGENT: {
+                const auto [c1,r1]=resolveCircleData(ids[0]);
+                const auto [c2,r2]=resolveCircleData(ids[1]);
+                addFunction(Function::RequirementFunctionFactory::bind<CircleCircleTangentError>(entry.type,
+                    {c1->ptrX(),c1->ptrY(),r1,c2->ptrX(),c2->ptrY(),r2},entry.param.value()));
+                break;
+            }
             case Utils::RequirementType::ET_LINEONCIRCLE: {
                 const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
                 const auto [center, radius] = resolveCircleData(ids[1]);
@@ -566,6 +573,9 @@ void RequirementSystem::addPointAtMidpoint(Utils::ID pointId, Utils::ID lineId) 
 }
 void RequirementSystem::addLineCircleTangent(Utils::ID line, Utils::ID circle, Utils::TangencySide side) {
     addRequirement(Utils::RequirementDescriptor::lineCircleTangent(line,circle,side));
+}
+void RequirementSystem::addCircleCircleTangent(Utils::ID first, Utils::ID second, Utils::CircleTangencyKind kind) {
+    addRequirement(Utils::RequirementDescriptor::circleCircleTangent(first,second,kind));
 }
 void RequirementSystem::addSymmetricAboutLine(Utils::ID p, Utils::ID q, Utils::ID axis) {
     addRequirement(Utils::RequirementDescriptor::symmetricAboutLine(p,q,axis));

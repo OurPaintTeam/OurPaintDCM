@@ -76,11 +76,15 @@ enum class RequirementType: uint8_t {
     ET_SYMMETRICABOUTHORIZONTAL,
     ET_SYMMETRICABOUTVERTICAL,
     ET_SYMMETRICABOUTPOINT,
-    ET_LINECIRCLETANGENT
+    ET_LINECIRCLETANGENT,
+    ET_CIRCLECIRCLETANGENT
 };
 
 /// Signed normal of the supporting line directed from its first endpoint to its second.
 enum class TangencySide : int8_t { NEGATIVE = -1, POSITIVE = 1 };
+enum class CircleTangencyKind : uint8_t {
+    EXTERNAL = 0, FIRST_CONTAINS_SECOND = 1, SECOND_CONTAINS_FIRST = 2
+};
 
 /**
  * @brief Enum for all geometric figure types.

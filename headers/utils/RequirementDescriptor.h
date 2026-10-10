@@ -183,6 +183,10 @@ struct RequirementDescriptor {
         return {RequirementType::ET_LINECIRCLETANGENT, {line, circle}, static_cast<double>(side)};
     }
 
+    static RequirementDescriptor circleCircleTangent(ID first, ID second, CircleTangencyKind kind) {
+        return {RequirementType::ET_CIRCLECIRCLETANGENT, {first, second}, static_cast<double>(kind)};
+    }
+
     // ==================== Validation ====================
 
     /**
@@ -222,6 +226,7 @@ struct RequirementDescriptor {
             case RequirementType::ET_EQUALRADIUS:
             case RequirementType::ET_POINTATMIDPOINT:
             case RequirementType::ET_LINECIRCLETANGENT:
+            case RequirementType::ET_CIRCLECIRCLETANGENT:
             case RequirementType::ET_SYMMETRICABOUTHORIZONTAL:
             case RequirementType::ET_SYMMETRICABOUTVERTICAL:
                 if (objectIds.size() != 2) {
