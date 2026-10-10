@@ -77,6 +77,9 @@ public:
     static std::shared_ptr<RequirementFunction> createEqualRadius(
         Figures::Circle<Figures::Point2D>* first, Figures::Circle<Figures::Point2D>* second);
 
+    static std::vector<std::shared_ptr<RequirementFunction>> createPointAtMidpoint(
+        Figures::Point2D* point, Figures::Line<Figures::Point2D>* line);
+
     /// @brief Create parallel-lines function.
     static std::shared_ptr<RequirementFunction> createLineLineParallel(
         Figures::Line<Figures::Point2D>* l1,
