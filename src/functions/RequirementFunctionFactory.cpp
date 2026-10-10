@@ -103,6 +103,13 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createLineLineP
     return bind<SectionSectionPerpendicularError>(Utils::RequirementType::ET_LINELINEPERPENDICULAR, vars);
 }
 
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createLineCircleTangent(
+    Figures::Line<Figures::Point2D>* line, Figures::Circle<Figures::Point2D>* circle, Utils::TangencySide side) {
+    return bind<LineCircleTangentError>(Utils::RequirementType::ET_LINECIRCLETANGENT,
+        {line->p1->ptrX(),line->p1->ptrY(),line->p2->ptrX(),line->p2->ptrY(),
+         circle->center->ptrX(),circle->center->ptrY(),circle->ptrRadius()},static_cast<double>(side));
+}
+
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointOnCircle(
     Figures::Point2D* point, Figures::Circle<Figures::Point2D>* circle) {
     return bind<PointOnCircleError>(Utils::RequirementType::ET_POINTONCIRCLE,

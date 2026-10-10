@@ -1083,6 +1083,13 @@ void DCMManager::updateRequirementParam(Utils::ID reqId, double newParam) {
     invalidateSolveCache();
 }
 
+void DCMManager::updateLineCircleTangencySide(Utils::ID reqId, Utils::TangencySide side) {
+    const auto descriptor=getRequirement(reqId);
+    if (!descriptor || descriptor->type != Utils::RequirementType::ET_LINECIRCLETANGENT)
+        throw std::invalid_argument("Requirement is not a line/circle tangency");
+    updateRequirementParam(reqId,static_cast<double>(side));
+}
+
 void DCMManager::updateRequirementWeight(Utils::ID reqId, double newWeight) {
     auto it = _requirementRecords.find(reqId);
     if (it == _requirementRecords.end()) {
