@@ -69,7 +69,9 @@ enum class RequirementType: uint8_t {
     /// Two sections have equal lengths, including zero lengths.
     ET_EQUALLENGTH,
     /// Two circles have equal positive radii.
-    ET_EQUALRADIUS
+    ET_EQUALRADIUS,
+    /// Point is the midpoint of a section (two independent scalar equations).
+    ET_POINTATMIDPOINT
 };
 
 /**

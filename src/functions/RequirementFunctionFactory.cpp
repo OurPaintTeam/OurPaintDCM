@@ -132,6 +132,16 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createEqualRadi
     return bind<EqualRadiusError>(Utils::RequirementType::ET_EQUALRADIUS, {first->ptrRadius(), second->ptrRadius()});
 }
 
+std::vector<std::shared_ptr<RequirementFunction>> RequirementFunctionFactory::createPointAtMidpoint(
+    Figures::Point2D* point, Figures::Line<Figures::Point2D>* line) {
+    return {
+        bind<MidpointCoordinateError>(Utils::RequirementType::ET_POINTATMIDPOINT,
+            {point->ptrX(), line->p1->ptrX(), line->p2->ptrX()}),
+        bind<MidpointCoordinateError>(Utils::RequirementType::ET_POINTATMIDPOINT,
+            {point->ptrY(), line->p1->ptrY(), line->p2->ptrY()})
+    };
+}
+
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createLineLineAngle(
     Figures::Line<Figures::Point2D>* l1,
     Figures::Line<Figures::Point2D>* l2,

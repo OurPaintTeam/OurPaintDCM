@@ -161,6 +161,10 @@ struct RequirementDescriptor {
         return {RequirementType::ET_EQUALRADIUS, {circle1Id, circle2Id}};
     }
 
+    static RequirementDescriptor pointAtMidpoint(ID pointId, ID lineId) {
+        return {RequirementType::ET_POINTATMIDPOINT, {pointId, lineId}};
+    }
+
     // ==================== Validation ====================
 
     /**
@@ -193,6 +197,7 @@ struct RequirementDescriptor {
             case RequirementType::ET_POINTONCIRCLE:
             case RequirementType::ET_EQUALLENGTH:
             case RequirementType::ET_EQUALRADIUS:
+            case RequirementType::ET_POINTATMIDPOINT:
                 if (objectIds.size() != 2) {
                     throw std::invalid_argument("Requirement type requires exactly 2 object IDs");
                 }

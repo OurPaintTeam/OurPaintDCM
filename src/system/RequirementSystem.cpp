@@ -267,6 +267,15 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
             }
             case Utils::RequirementType::ET_POINTONPOINT:
                 break;
+            case Utils::RequirementType::ET_POINTATMIDPOINT: {
+                auto* point = resolvePoint(ids[0]);
+                const auto [a, b] = resolveLinePoints(ids[1]);
+                addFunction(Function::RequirementFunctionFactory::bind<MidpointCoordinateError>(entry.type,
+                    {point->ptrX(), a->ptrX(), b->ptrX()}));
+                addFunction(Function::RequirementFunctionFactory::bind<MidpointCoordinateError>(entry.type,
+                    {point->ptrY(), a->ptrY(), b->ptrY()}));
+                break;
+            }
             case Utils::RequirementType::ET_POINTONCIRCLE: {
                 auto* point = resolvePoint(ids[0]);
                 const auto [center, radius] = resolveCircleData(ids[1]);
@@ -519,6 +528,10 @@ void RequirementSystem::addEqualLength(Utils::ID line1Id, Utils::ID line2Id) {
 
 void RequirementSystem::addEqualRadius(Utils::ID circle1Id, Utils::ID circle2Id) {
     addRequirement(Utils::RequirementDescriptor::equalRadius(circle1Id, circle2Id));
+}
+
+void RequirementSystem::addPointAtMidpoint(Utils::ID pointId, Utils::ID lineId) {
+    addRequirement(Utils::RequirementDescriptor::pointAtMidpoint(pointId, lineId));
 }
 
 void RequirementSystem::addLineLineParallel(Utils::ID l1Id, Utils::ID l2Id) {
