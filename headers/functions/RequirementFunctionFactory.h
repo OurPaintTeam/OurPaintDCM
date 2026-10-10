@@ -79,6 +79,14 @@ public:
 
     static std::vector<std::shared_ptr<RequirementFunction>> createPointAtMidpoint(
         Figures::Point2D* point, Figures::Line<Figures::Point2D>* line);
+    static std::vector<std::shared_ptr<RequirementFunction>> createSymmetricAboutLine(
+        Figures::Point2D* p, Figures::Point2D* q, Figures::Line<Figures::Point2D>* axis);
+    static std::vector<std::shared_ptr<RequirementFunction>> createSymmetricAboutHorizontal(
+        Figures::Point2D* p, Figures::Point2D* q, double y = 0);
+    static std::vector<std::shared_ptr<RequirementFunction>> createSymmetricAboutVertical(
+        Figures::Point2D* p, Figures::Point2D* q, double x = 0);
+    static std::vector<std::shared_ptr<RequirementFunction>> createSymmetricAboutPoint(
+        Figures::Point2D* p, Figures::Point2D* q, Figures::Point2D* center);
 
     /// @brief Create parallel-lines function.
     static std::shared_ptr<RequirementFunction> createLineLineParallel(

@@ -42,6 +42,11 @@ constexpr void requirePositiveRadius(double radius) {
 
 inline void validateRequirementParameter(RequirementType type, const std::optional<double>& param) {
     switch (type) {
+        case RequirementType::ET_SYMMETRICABOUTHORIZONTAL:
+        case RequirementType::ET_SYMMETRICABOUTVERTICAL:
+            if (!param) throw std::invalid_argument("Axis symmetry needs an axis coordinate");
+            requireFinite(*param);
+            break;
         case RequirementType::ET_CIRCLERADIUS:
         case RequirementType::ET_CIRCLEDIAMETER:
             if (!param) throw std::invalid_argument("Circle size requirement needs a parameter");

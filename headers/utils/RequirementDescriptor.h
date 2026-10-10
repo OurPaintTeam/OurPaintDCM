@@ -165,6 +165,19 @@ struct RequirementDescriptor {
         return {RequirementType::ET_POINTATMIDPOINT, {pointId, lineId}};
     }
 
+    static RequirementDescriptor symmetricAboutLine(ID p, ID q, ID axis) {
+        return {RequirementType::ET_SYMMETRICABOUTLINE, {p, q, axis}};
+    }
+    static RequirementDescriptor symmetricAboutHorizontal(ID p, ID q, double y = 0) {
+        return {RequirementType::ET_SYMMETRICABOUTHORIZONTAL, {p, q}, y};
+    }
+    static RequirementDescriptor symmetricAboutVertical(ID p, ID q, double x = 0) {
+        return {RequirementType::ET_SYMMETRICABOUTVERTICAL, {p, q}, x};
+    }
+    static RequirementDescriptor symmetricAboutPoint(ID p, ID q, ID center) {
+        return {RequirementType::ET_SYMMETRICABOUTPOINT, {p, q, center}};
+    }
+
     // ==================== Validation ====================
 
     /**
@@ -184,6 +197,11 @@ struct RequirementDescriptor {
             throw std::invalid_argument("Eliminated and fixed requirements must use weight 0 or 1");
         }
         switch (type) {
+            case RequirementType::ET_SYMMETRICABOUTLINE:
+            case RequirementType::ET_SYMMETRICABOUTPOINT:
+                if (objectIds.size() != 3)
+                    throw std::invalid_argument("Symmetry requires exactly 3 object IDs");
+                break;
             case RequirementType::ET_POINTLINEDIST:
             case RequirementType::ET_POINTONLINE:
             case RequirementType::ET_POINTPOINTDIST:
@@ -198,6 +216,8 @@ struct RequirementDescriptor {
             case RequirementType::ET_EQUALLENGTH:
             case RequirementType::ET_EQUALRADIUS:
             case RequirementType::ET_POINTATMIDPOINT:
+            case RequirementType::ET_SYMMETRICABOUTHORIZONTAL:
+            case RequirementType::ET_SYMMETRICABOUTVERTICAL:
                 if (objectIds.size() != 2) {
                     throw std::invalid_argument("Requirement type requires exactly 2 object IDs");
                 }
