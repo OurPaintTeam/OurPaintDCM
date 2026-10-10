@@ -177,6 +177,7 @@ public:
     void addEqualLength(Utils::ID line1Id, Utils::ID line2Id);
     void addEqualRadius(Utils::ID circle1Id, Utils::ID circle2Id);
     void addPointAtMidpoint(Utils::ID pointId, Utils::ID lineId);
+    void addLineCircleTangent(Utils::ID line, Utils::ID circle, Utils::TangencySide side);
     void addSymmetricAboutLine(Utils::ID p, Utils::ID q, Utils::ID axis);
     void addSymmetricAboutHorizontal(Utils::ID p, Utils::ID q, double y = 0);
     void addSymmetricAboutVertical(Utils::ID p, Utils::ID q, double x = 0);

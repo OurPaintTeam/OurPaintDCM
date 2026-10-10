@@ -178,6 +178,11 @@ struct RequirementDescriptor {
         return {RequirementType::ET_SYMMETRICABOUTPOINT, {p, q, center}};
     }
 
+    /// Tangency to the infinite supporting line; side is preserved until explicitly edited.
+    static RequirementDescriptor lineCircleTangent(ID line, ID circle, TangencySide side) {
+        return {RequirementType::ET_LINECIRCLETANGENT, {line, circle}, static_cast<double>(side)};
+    }
+
     // ==================== Validation ====================
 
     /**
@@ -216,6 +221,7 @@ struct RequirementDescriptor {
             case RequirementType::ET_EQUALLENGTH:
             case RequirementType::ET_EQUALRADIUS:
             case RequirementType::ET_POINTATMIDPOINT:
+            case RequirementType::ET_LINECIRCLETANGENT:
             case RequirementType::ET_SYMMETRICABOUTHORIZONTAL:
             case RequirementType::ET_SYMMETRICABOUTVERTICAL:
                 if (objectIds.size() != 2) {

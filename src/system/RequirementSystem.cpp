@@ -338,6 +338,13 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                     entry.param.value()));
                 break;
             }
+            case Utils::RequirementType::ET_LINECIRCLETANGENT: {
+                const auto [a,b]=resolveLinePoints(ids[0]);
+                const auto [center,radius]=resolveCircleData(ids[1]);
+                addFunction(Function::RequirementFunctionFactory::bind<LineCircleTangentError>(entry.type,
+                    makeLineCircleVars(a,b,center,radius),entry.param.value()));
+                break;
+            }
             case Utils::RequirementType::ET_LINEONCIRCLE: {
                 const auto [lineP1, lineP2] = resolveLinePoints(ids[0]);
                 const auto [center, radius] = resolveCircleData(ids[1]);
@@ -556,6 +563,9 @@ void RequirementSystem::addEqualRadius(Utils::ID circle1Id, Utils::ID circle2Id)
 
 void RequirementSystem::addPointAtMidpoint(Utils::ID pointId, Utils::ID lineId) {
     addRequirement(Utils::RequirementDescriptor::pointAtMidpoint(pointId, lineId));
+}
+void RequirementSystem::addLineCircleTangent(Utils::ID line, Utils::ID circle, Utils::TangencySide side) {
+    addRequirement(Utils::RequirementDescriptor::lineCircleTangent(line,circle,side));
 }
 void RequirementSystem::addSymmetricAboutLine(Utils::ID p, Utils::ID q, Utils::ID axis) {
     addRequirement(Utils::RequirementDescriptor::symmetricAboutLine(p,q,axis));

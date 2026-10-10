@@ -42,6 +42,10 @@ constexpr void requirePositiveRadius(double radius) {
 
 inline void validateRequirementParameter(RequirementType type, const std::optional<double>& param) {
     switch (type) {
+        case RequirementType::ET_LINECIRCLETANGENT:
+            if (!param || (*param != -1 && *param != 1))
+                throw std::invalid_argument("Tangency side must be -1 or +1");
+            break;
         case RequirementType::ET_SYMMETRICABOUTHORIZONTAL:
         case RequirementType::ET_SYMMETRICABOUTVERTICAL:
             if (!param) throw std::invalid_argument("Axis symmetry needs an axis coordinate");
