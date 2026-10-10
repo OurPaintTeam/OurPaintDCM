@@ -219,6 +219,21 @@ dcm.addRequirement(RequirementDescriptor::equalRadius(circleId, otherCircleId));
 точка на закреплённой окружности — 1 DoF. Размеры и равные радиусы пока поддерживаются
 для окружностей; дуги в этих требованиях не принимаются.
 
+Середина и симметрия задаются двумя независимыми строками:
+
+```cpp
+dcm.addRequirement(RequirementDescriptor::pointAtMidpoint(pointId, lineId));
+dcm.addRequirement(RequirementDescriptor::symmetricAboutLine(p1, p2, axisLineId));
+dcm.addRequirement(RequirementDescriptor::symmetricAboutHorizontal(p1, p2, 5.0)); // y=5
+dcm.addRequirement(RequirementDescriptor::symmetricAboutVertical(p1, p2, -2.0)); // x=-2
+dcm.addRequirement(RequirementDescriptor::symmetricAboutPoint(p1, p2, centerId));
+```
+
+Ось-прямая может двигаться, но её концы должны различаться. Совпавшие симметричные
+точки допустимы на оси. При закреплённой оси у двух свободных точек остаётся 2 DoF.
+Центральная симметрия использует те же математические уравнения, что и середина.
+Координату горизонтальной/вертикальной оси можно менять через `updateRequirementParam()`.
+
 ### 3. Запустить решение
 
 ```cpp

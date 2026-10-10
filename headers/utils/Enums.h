@@ -71,7 +71,11 @@ enum class RequirementType: uint8_t {
     /// Two circles have equal positive radii.
     ET_EQUALRADIUS,
     /// Point is the midpoint of a section (two independent scalar equations).
-    ET_POINTATMIDPOINT
+    ET_POINTATMIDPOINT,
+    ET_SYMMETRICABOUTLINE,
+    ET_SYMMETRICABOUTHORIZONTAL,
+    ET_SYMMETRICABOUTVERTICAL,
+    ET_SYMMETRICABOUTPOINT
 };
 
 /**

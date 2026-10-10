@@ -177,6 +177,10 @@ public:
     void addEqualLength(Utils::ID line1Id, Utils::ID line2Id);
     void addEqualRadius(Utils::ID circle1Id, Utils::ID circle2Id);
     void addPointAtMidpoint(Utils::ID pointId, Utils::ID lineId);
+    void addSymmetricAboutLine(Utils::ID p, Utils::ID q, Utils::ID axis);
+    void addSymmetricAboutHorizontal(Utils::ID p, Utils::ID q, double y = 0);
+    void addSymmetricAboutVertical(Utils::ID p, Utils::ID q, double x = 0);
+    void addSymmetricAboutPoint(Utils::ID p, Utils::ID q, Utils::ID center);
 
     /// @brief Add parallel-lines constraint by IDs.
     void addLineLineParallel(Utils::ID l1Id, Utils::ID l2Id);

@@ -142,6 +142,32 @@ std::vector<std::shared_ptr<RequirementFunction>> RequirementFunctionFactory::cr
     };
 }
 
+std::vector<std::shared_ptr<RequirementFunction>> RequirementFunctionFactory::createSymmetricAboutLine(
+    Figures::Point2D* p, Figures::Point2D* q, Figures::Line<Figures::Point2D>* axis) {
+    const std::vector<VAR> vars{p->ptrX(),p->ptrY(),q->ptrX(),q->ptrY(),
+        axis->p1->ptrX(),axis->p1->ptrY(),axis->p2->ptrX(),axis->p2->ptrY()};
+    return {bind<SymmetryAlongError>(Utils::RequirementType::ET_SYMMETRICABOUTLINE,vars),
+            bind<SymmetryAcrossError>(Utils::RequirementType::ET_SYMMETRICABOUTLINE,vars)};
+}
+std::vector<std::shared_ptr<RequirementFunction>> RequirementFunctionFactory::createSymmetricAboutHorizontal(
+    Figures::Point2D* p, Figures::Point2D* q, double y) {
+    const auto type=Utils::RequirementType::ET_SYMMETRICABOUTHORIZONTAL;
+    return {bind<CoordinateDifferenceError>(type,{p->ptrX(),q->ptrX()}),
+            bind<CoordinateAverageError>(type,{p->ptrY(),q->ptrY()},y)};
+}
+std::vector<std::shared_ptr<RequirementFunction>> RequirementFunctionFactory::createSymmetricAboutVertical(
+    Figures::Point2D* p, Figures::Point2D* q, double x) {
+    const auto type=Utils::RequirementType::ET_SYMMETRICABOUTVERTICAL;
+    return {bind<CoordinateDifferenceError>(type,{p->ptrY(),q->ptrY()}),
+            bind<CoordinateAverageError>(type,{p->ptrX(),q->ptrX()},x)};
+}
+std::vector<std::shared_ptr<RequirementFunction>> RequirementFunctionFactory::createSymmetricAboutPoint(
+    Figures::Point2D* p, Figures::Point2D* q, Figures::Point2D* c) {
+    const auto type=Utils::RequirementType::ET_SYMMETRICABOUTPOINT;
+    return {bind<MidpointCoordinateError>(type,{c->ptrX(),p->ptrX(),q->ptrX()}),
+            bind<MidpointCoordinateError>(type,{c->ptrY(),p->ptrY(),q->ptrY()})};
+}
+
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createLineLineAngle(
     Figures::Line<Figures::Point2D>* l1,
     Figures::Line<Figures::Point2D>* l2,

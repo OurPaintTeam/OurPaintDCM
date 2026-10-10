@@ -276,6 +276,30 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                     {point->ptrY(), a->ptrY(), b->ptrY()}));
                 break;
             }
+            case Utils::RequirementType::ET_SYMMETRICABOUTLINE: {
+                auto* p=resolvePoint(ids[0]);
+                auto* q=resolvePoint(ids[1]);
+                const auto [a,b]=resolveLinePoints(ids[2]);
+                Figures::Line2D axis(a,b);
+                for (auto& row : Function::RequirementFunctionFactory::createSymmetricAboutLine(p,q,&axis))
+                    addFunction(row);
+                break;
+            }
+            case Utils::RequirementType::ET_SYMMETRICABOUTHORIZONTAL:
+            case Utils::RequirementType::ET_SYMMETRICABOUTVERTICAL: {
+                auto* p=resolvePoint(ids[0]);
+                auto* q=resolvePoint(ids[1]);
+                const auto rows=entry.type == Utils::RequirementType::ET_SYMMETRICABOUTHORIZONTAL
+                    ? Function::RequirementFunctionFactory::createSymmetricAboutHorizontal(p,q,entry.param.value())
+                    : Function::RequirementFunctionFactory::createSymmetricAboutVertical(p,q,entry.param.value());
+                for (const auto& row : rows) addFunction(row);
+                break;
+            }
+            case Utils::RequirementType::ET_SYMMETRICABOUTPOINT: {
+                for (auto& row : Function::RequirementFunctionFactory::createSymmetricAboutPoint(
+                    resolvePoint(ids[0]),resolvePoint(ids[1]),resolvePoint(ids[2]))) addFunction(row);
+                break;
+            }
             case Utils::RequirementType::ET_POINTONCIRCLE: {
                 auto* point = resolvePoint(ids[0]);
                 const auto [center, radius] = resolveCircleData(ids[1]);
@@ -532,6 +556,18 @@ void RequirementSystem::addEqualRadius(Utils::ID circle1Id, Utils::ID circle2Id)
 
 void RequirementSystem::addPointAtMidpoint(Utils::ID pointId, Utils::ID lineId) {
     addRequirement(Utils::RequirementDescriptor::pointAtMidpoint(pointId, lineId));
+}
+void RequirementSystem::addSymmetricAboutLine(Utils::ID p, Utils::ID q, Utils::ID axis) {
+    addRequirement(Utils::RequirementDescriptor::symmetricAboutLine(p,q,axis));
+}
+void RequirementSystem::addSymmetricAboutHorizontal(Utils::ID p, Utils::ID q, double y) {
+    addRequirement(Utils::RequirementDescriptor::symmetricAboutHorizontal(p,q,y));
+}
+void RequirementSystem::addSymmetricAboutVertical(Utils::ID p, Utils::ID q, double x) {
+    addRequirement(Utils::RequirementDescriptor::symmetricAboutVertical(p,q,x));
+}
+void RequirementSystem::addSymmetricAboutPoint(Utils::ID p, Utils::ID q, Utils::ID center) {
+    addRequirement(Utils::RequirementDescriptor::symmetricAboutPoint(p,q,center));
 }
 
 void RequirementSystem::addLineLineParallel(Utils::ID l1Id, Utils::ID l2Id) {
