@@ -167,3 +167,25 @@ TEST_F(RequirementFunctionFactoryTest, VarsPointToStorageData) {
     *vars[1] = 200.0;
     EXPECT_DOUBLE_EQ(p1->y(), 200.0);
 }
+
+TEST(RequirementFunctionFactoryTangency, ArcsUseCircleResidualsWithoutEndpointContact) {
+    using namespace OurPaintDCM::Utils;
+    Point2D c1(0,0),p1(3,4),q1(-3,4),c2(7,0),p2(7,2),q2(9,0);
+    Point2D l1(10,-5),l2(20,-5);
+    Arc2D first(&p1,&q1,&c1),second(&p2,&q2,&c2);
+    Circle2D circle1(&c1,5),circle2(&c2,2);
+    Line2D line(&l1,&l2);
+    for (auto side:{TangencySide::POSITIVE,TangencySide::NEGATIVE}) {
+        auto arc=RequirementFunctionFactory::createArcLineTangent(&first,&line,side);
+        auto circle=RequirementFunctionFactory::createLineCircleTangent(&line,&circle1,side);
+        EXPECT_DOUBLE_EQ(arc->mathematical()->evaluate(),circle->mathematical()->evaluate());
+    }
+    for (auto kind:{CircleTangencyKind::EXTERNAL,CircleTangencyKind::FIRST_CONTAINS_SECOND}) {
+        auto arcs=RequirementFunctionFactory::createArcArcTangent(&first,&second,kind);
+        auto circles=RequirementFunctionFactory::createCircleCircleTangent(&circle1,&circle2,kind);
+        EXPECT_DOUBLE_EQ(arcs->mathematical()->evaluate(),circles->mathematical()->evaluate());
+        auto reversed=RequirementFunctionFactory::createArcArcTangent(&second,&first,
+            kind==CircleTangencyKind::EXTERNAL ? kind : CircleTangencyKind::SECOND_CONTAINS_FIRST);
+        EXPECT_DOUBLE_EQ(reversed->mathematical()->evaluate(),circles->mathematical()->evaluate());
+    }
+}

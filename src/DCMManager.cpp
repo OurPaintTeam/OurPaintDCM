@@ -1085,28 +1085,18 @@ void DCMManager::updateRequirementParam(Utils::ID reqId, double newParam) {
 
 void DCMManager::updateLineCircleTangencySide(Utils::ID reqId, Utils::TangencySide side) {
     const auto descriptor=getRequirement(reqId);
-    if (!descriptor || descriptor->type != Utils::RequirementType::ET_LINECIRCLETANGENT)
+    if (!descriptor || (descriptor->type != Utils::RequirementType::ET_LINECIRCLETANGENT &&
+                        descriptor->type != Utils::RequirementType::ET_ARCLINETANGENT))
         throw std::invalid_argument("Requirement is not a line/circle tangency");
     updateRequirementParam(reqId,static_cast<double>(side));
 }
 
 void DCMManager::updateCircleCircleTangencyKind(Utils::ID reqId, Utils::CircleTangencyKind kind) {
     const auto descriptor=getRequirement(reqId);
-    if (!descriptor || descriptor->type != Utils::RequirementType::ET_CIRCLECIRCLETANGENT)
+    if (!descriptor || (descriptor->type != Utils::RequirementType::ET_CIRCLECIRCLETANGENT &&
+                        descriptor->type != Utils::RequirementType::ET_ARCARCTANGENT))
         throw std::invalid_argument("Requirement is not a circle/circle tangency");
     updateRequirementParam(reqId,static_cast<double>(kind));
-}
-
-void DCMManager::updateArcTangencyEndpoints(Utils::ID reqId, Utils::Endpoint first, Utils::Endpoint second) {
-    auto it=_requirementRecords.find(reqId);
-    if (it == _requirementRecords.end() ||
-        (it->second.type != Utils::RequirementType::ET_ARCLINETANGENT && it->second.type != Utils::RequirementType::ET_ARCARCTANGENT))
-        throw std::invalid_argument("Requirement is not an arc endpoint tangency");
-    auto updated=it->second;
-    updated.firstEndpoint=first; updated.secondEndpoint=second; updated.validate();
-    it->second=std::move(updated);
-    _reqSystemSyncedWithRecords=false;
-    invalidateSolveCache();
 }
 
 void DCMManager::updateRequirementWeight(Utils::ID reqId, double newWeight) {

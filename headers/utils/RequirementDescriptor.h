@@ -40,8 +40,6 @@ struct RequirementDescriptor {
     std::optional<double> param;       ///< Optional parameter (distance, angle, etc.)
     double weight = 1.0;               ///< Finite non-negative residual multiplier; objective uses (weight * residual)^2.
                                        ///< Fixed and point-coincidence requirements use 1 (active) or 0 (disabled).
-    std::optional<Endpoint> firstEndpoint;  ///< Selected end of objectIds[0] for arc tangency.
-    std::optional<Endpoint> secondEndpoint; ///< Selected end of objectIds[1] for arc tangency.
 
     /// @brief Default constructor
     RequirementDescriptor() = default;
@@ -180,24 +178,28 @@ struct RequirementDescriptor {
         return {RequirementType::ET_SYMMETRICABOUTPOINT, {p, q, center}};
     }
 
-    /// Tangency to the infinite supporting line; side is preserved until explicitly edited.
+    /// Tangency to the infinite supporting line; circle may also be an arc.
+    /// Side is preserved until explicitly edited.
     static RequirementDescriptor lineCircleTangent(ID line, ID circle, TangencySide side) {
         return {RequirementType::ET_LINECIRCLETANGENT, {line, circle}, static_cast<double>(side)};
     }
 
+    /// Either object may be a circle or an arc; containment follows object order.
     static RequirementDescriptor circleCircleTangent(ID first, ID second, CircleTangencyKind kind) {
         return {RequirementType::ET_CIRCLECIRCLETANGENT, {first, second}, static_cast<double>(kind)};
     }
 
-    /// Connect the selected arc and line endpoints and impose geometric tangency.
-    static RequirementDescriptor arcLineTangent(ID arc, Endpoint arcEnd, ID line, Endpoint lineEnd) {
-        RequirementDescriptor d{RequirementType::ET_ARCLINETANGENT,{arc,line}};
-        d.firstEndpoint=arcEnd; d.secondEndpoint=lineEnd; return d;
+    /// Either object may be a circle or an arc; arc spans do not restrict contact.
+    static RequirementDescriptor circleArcTangent(ID first, ID second, CircleTangencyKind kind) {
+        return circleCircleTangent(first,second,kind);
     }
-    /// Connect the selected endpoints without selecting a traversal direction.
-    static RequirementDescriptor arcArcTangent(ID first, Endpoint firstEnd, ID second, Endpoint secondEnd) {
-        RequirementDescriptor d{RequirementType::ET_ARCARCTANGENT,{first,second}};
-        d.firstEndpoint=firstEnd; d.secondEndpoint=secondEnd; return d;
+
+    /// Tangency of the arc's supporting circle to the infinite line.
+    static RequirementDescriptor arcLineTangent(ID arc, ID line, TangencySide side) {
+        return {RequirementType::ET_ARCLINETANGENT,{arc,line},static_cast<double>(side)};
+    }
+    static RequirementDescriptor arcArcTangent(ID first, ID second, CircleTangencyKind kind) {
+        return {RequirementType::ET_ARCARCTANGENT,{first,second},static_cast<double>(kind)};
     }
 
     // ==================== Validation ====================
@@ -208,13 +210,6 @@ struct RequirementDescriptor {
      * @throws std::invalid_argument with description of the problem
      */
     bool validate() const {
-        const bool arcTangency=type == RequirementType::ET_ARCLINETANGENT || type == RequirementType::ET_ARCARCTANGENT;
-        const auto validEnd=[](const std::optional<Endpoint>& e) {
-            return e && (*e == Endpoint::FIRST || *e == Endpoint::SECOND);
-        };
-        if (arcTangency ? (!validEnd(firstEndpoint) || !validEnd(secondEndpoint))
-                        : (firstEndpoint.has_value() || secondEndpoint.has_value()))
-            throw std::invalid_argument("Endpoint selection is required only for arc tangency");
         if (!std::isfinite(weight) || weight < 0.0) {
             throw std::invalid_argument("Requirement weight must be finite and non-negative");
         }

@@ -239,10 +239,10 @@ public:
      * @throws std::runtime_error if requirement not found or has no parameter.
      */
     void updateRequirementParam(Utils::ID reqId, double newParam);
-    /// Explicitly switch the saved side of a line/circle tangency.
+    /// Explicitly switch the saved side of a line/circle or arc/line tangency.
     void updateLineCircleTangencySide(Utils::ID reqId, Utils::TangencySide side);
+    /// Switch containment/external contact for any circle/arc pair.
     void updateCircleCircleTangencyKind(Utils::ID reqId, Utils::CircleTangencyKind kind);
-    void updateArcTangencyEndpoints(Utils::ID reqId, Utils::Endpoint first, Utils::Endpoint second);
 
     /// Update a requirement's residual weight and invalidate cached solve state.
     void updateRequirementWeight(Utils::ID reqId, double newWeight);
