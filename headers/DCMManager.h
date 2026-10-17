@@ -99,74 +99,74 @@ public:
      * @param descriptor PointUpdateDescriptor with new values.
      * @throws std::runtime_error if point not found.
      */
-    void updatePoint(const Utils::PointUpdateDescriptor& descriptor);
+    bool updatePoint(const Utils::PointUpdateDescriptor& descriptor);
 
     /**
      * @brief Update multiple point coordinates in one batch.
      *
      * In DRAG mode all changed point representatives are locked, and each touched
-     * component is solved once after the whole batch is applied.
+     * component is solved after the whole batch is applied.
      *
      * @param descriptors Point updates.
      * @throws std::runtime_error if any point is not found.
      */
-    void updatePoints(const std::vector<Utils::PointUpdateDescriptor>& descriptors);
+    bool updatePoints(const std::vector<Utils::PointUpdateDescriptor>& descriptors);
 
     /**
      * @brief Update line endpoint coordinates.
      * @param descriptor LineUpdateDescriptor with endpoint values.
      * @throws std::runtime_error if line not found.
      */
-    void updateLine(const Utils::LineUpdateDescriptor& descriptor);
+    bool updateLine(const Utils::LineUpdateDescriptor& descriptor);
 
     /**
      * @brief Update multiple lines in one batch.
      * @param descriptors Line updates.
      * @throws std::runtime_error if any line is not found.
      */
-    void updateLines(const std::vector<Utils::LineUpdateDescriptor>& descriptors);
+    bool updateLines(const std::vector<Utils::LineUpdateDescriptor>& descriptors);
 
     /**
      * @brief Update circle center and/or radius.
      * @param descriptor CircleUpdateDescriptor with new values.
      * @throws std::runtime_error if circle not found.
      */
-    void updateCircle(const Utils::CircleUpdateDescriptor& descriptor);
+    bool updateCircle(const Utils::CircleUpdateDescriptor& descriptor);
 
     /**
      * @brief Update multiple circles in one batch.
      * @param descriptors Circle updates.
      * @throws std::runtime_error if any circle is not found.
      */
-    void updateCircles(const std::vector<Utils::CircleUpdateDescriptor>& descriptors);
+    bool updateCircles(const std::vector<Utils::CircleUpdateDescriptor>& descriptors);
 
     /**
      * @brief Update arc endpoint and center coordinates.
      * @param descriptor ArcUpdateDescriptor with point values.
      * @throws std::runtime_error if arc not found.
      */
-    void updateArc(const Utils::ArcUpdateDescriptor& descriptor);
+    bool updateArc(const Utils::ArcUpdateDescriptor& descriptor);
 
     /**
      * @brief Update multiple arcs in one batch.
      * @param descriptors Arc updates.
      * @throws std::runtime_error if any arc is not found.
      */
-    void updateArcs(const std::vector<Utils::ArcUpdateDescriptor>& descriptors);
+    bool updateArcs(const std::vector<Utils::ArcUpdateDescriptor>& descriptors);
 
     /**
      * @brief Update any supported figure by unified update descriptor.
      * @param descriptor Figure update.
      * @throws std::runtime_error if figure not found or type does not match.
      */
-    void updateFigure(const Utils::FigureUpdateDescriptor& descriptor);
+    bool updateFigure(const Utils::FigureUpdateDescriptor& descriptor);
 
     /**
      * @brief Update multiple figures of arbitrary types in one batch.
      * @param descriptors Figure updates.
      * @throws std::runtime_error if any figure is not found or type does not match.
      */
-    void updateFigures(const std::vector<Utils::FigureUpdateDescriptor>& descriptors);
+    bool updateFigures(const std::vector<Utils::FigureUpdateDescriptor>& descriptors);
 
     /**
      * @brief Get figure descriptor with current state.
@@ -360,7 +360,7 @@ public:
      *
      * GLOBAL — solves all requirements at once (Levenberg-Marquardt).
      * LOCAL  — solves only the specified component (Levenberg-Marquardt).
-     * DRAG   — lightweight gradient descent, intended to be called from updatePoint/updateCircle.
+     * DRAG   — solves touched components automatically from geometry update methods.
      *
      * @param componentId Component to solve (used only in LOCAL mode).
      * @param residualTolerance Maximum absolute residual per constraint; must be finite and non-negative.
@@ -402,7 +402,7 @@ private:
     void addDragLocks(Utils::ID figureId,
                       std::initializer_list<double*> vars,
                       BatchUpdateContext& context);
-    void solveDragUpdates(const BatchUpdateContext& context);
+    bool solveDragUpdates(BatchUpdateContext& context);
     void applyPointUpdateNoSolve(const Utils::PointUpdateDescriptor& descriptor,
                                  const FixedGeometry& fixedGeometry,
                                  BatchUpdateContext& context);

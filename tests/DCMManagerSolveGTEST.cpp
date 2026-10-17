@@ -375,11 +375,13 @@ TEST(DCMManagerDegenerateSolveTest, AliasingCanCollapseLineAndGeometryUpdatesCan
         manager.updatePoint({b, 0, 0}); // Includes an automatic DRAG solve at zero length.
         const auto refreshed = manager.getComponentForFigure(line);
         ASSERT_TRUE(refreshed);
-        EXPECT_FALSE(manager.solve(*refreshed));
+        EXPECT_EQ(manager.solve(*refreshed), mode == SolveMode::DRAG);
         manager.updatePoint({b, 2, 0});
         EXPECT_TRUE(manager.solve(*refreshed));
-        manager.updatePoint({b, 0, 0});
-        EXPECT_FALSE(manager.solve(*refreshed)); // Cached pipeline must reevaluate validity.
+        const bool updated = manager.updatePoint({b, 0, 0});
+        EXPECT_EQ(updated, mode != SolveMode::DRAG);
+        // DRAG rejects the collapse; manual modes retain it for solve() to reject.
+        EXPECT_EQ(manager.solve(*refreshed), mode == SolveMode::DRAG);
     }
 }
 
@@ -639,16 +641,15 @@ TEST(DCMManagerSolveInvariantTest, AutomaticDragSolveRestoresRadiusAfterFallback
     manager.addRequirement(RequirementDescriptor::fixPoint(center));
     manager.addRequirement(RequirementDescriptor::lineCircleDist(line, circle, 5));
     manager.setSolveMode(SolveMode::DRAG);
-    // Radius is the only free variable. Locking it forces the recursive fallback;
-    // its unconstrained optimum would be -1. Preserve the valid user update.
-    EXPECT_NO_THROW(manager.updateCircle({circle, 3}));
+    // Neither attempt can satisfy the gap with a positive radius. Reject the update.
+    EXPECT_FALSE(manager.updateCircle({circle, 3}));
     const auto restored = manager.getFigure(circle);
     ASSERT_TRUE(restored && restored->radius);
-    EXPECT_DOUBLE_EQ(*restored->radius, 3.0);
+    EXPECT_DOUBLE_EQ(*restored->radius, 2.0);
     const auto component = manager.getComponentForFigure(circle);
     ASSERT_TRUE(component);
     EXPECT_FALSE(manager.solve(*component));
-    EXPECT_DOUBLE_EQ(*manager.getFigure(circle)->radius, 3.0);
+    EXPECT_DOUBLE_EQ(*manager.getFigure(circle)->radius, 2.0);
 }
 
 TEST(DCMManagerLineCircleSolveTest, SolvesRequestedGapWithClosestPointInEachRegion) {
@@ -1458,6 +1459,119 @@ TEST_F(DCMManagerSolveTest, DragMode_FallbackWithoutLocksWhenNoDofLeft) {
     const double dx = dDrag->x.value() - dFixed->x.value();
     const double dy = dDrag->y.value() - dFixed->y.value();
     EXPECT_NEAR(std::sqrt(dx * dx + dy * dy), 10.0, 1e-6);
+}
+
+TEST_F(DCMManagerSolveTest, DragMode_UnreachableCursorPreservesConstraintsWithOrWithoutFreePoint) {
+    for (const bool withFreePoint : {false, true}) {
+        for (int api = 0; api < 4; ++api) {
+            SCOPED_TRACE(withFreePoint);
+            SCOPED_TRACE(api);
+            DCMManager manager;
+            const auto a = manager.addFigure(FigureDescriptor::point(0, 0));
+            const auto p = manager.addFigure(FigureDescriptor::point(10, 0));
+            const auto q = manager.addFigure(FigureDescriptor::point(20, 0));
+            manager.addRequirement(RequirementDescriptor::fixPoint(a));
+            manager.addRequirement(RequirementDescriptor::pointPointDist(a, p, 10));
+            if (withFreePoint) manager.addRequirement(RequirementDescriptor::pointPointDist(p, q, 10));
+            manager.setSolveMode(SolveMode::DRAG);
+
+            for (int attempt = 0; attempt < 2; ++attempt) {
+                // Repeat to exercise both cached attempts. No manual solve follows the drag.
+                switch (api) {
+                    case 0: ASSERT_TRUE(manager.updatePoint({p, 20, 0})); break;
+                    case 1: ASSERT_TRUE(manager.updatePoints({{p, 20, 0}})); break;
+                    case 2: ASSERT_TRUE(manager.updateFigure(FigureUpdateDescriptor::point(p, 20, 0))); break;
+                    case 3: ASSERT_TRUE(manager.updateFigures({FigureUpdateDescriptor::point(p, 20, 0)})); break;
+                }
+                const auto fixed = manager.getFigure(a);
+                const auto dragged = manager.getFigure(p);
+                const auto free = manager.getFigure(q);
+                ASSERT_TRUE(fixed && dragged && free);
+                EXPECT_DOUBLE_EQ(*fixed->x, 0);
+                EXPECT_DOUBLE_EQ(*fixed->y, 0);
+                EXPECT_NEAR(std::hypot(*dragged->x, *dragged->y), 10, 1e-6);
+                if (withFreePoint) {
+                    EXPECT_NEAR(std::hypot(*free->x - *dragged->x, *free->y - *dragged->y), 10, 1e-6);
+                } else {
+                    EXPECT_DOUBLE_EQ(*free->x, 20);
+                    EXPECT_DOUBLE_EQ(*free->y, 0);
+                }
+            }
+        }
+    }
+}
+
+TEST_F(DCMManagerSolveTest, DragMode_FailedUpdatesRestoreSharedPointsAliasesAndRadius) {
+    for (int api = 0; api < 10; ++api) {
+        SCOPED_TRACE(api);
+        DCMManager manager;
+        const auto a = manager.addFigure(FigureDescriptor::point(0, 0));
+        const auto b = manager.addFigure(FigureDescriptor::point(10, 0));
+        const auto center = manager.addFigure(FigureDescriptor::point(5, 5));
+        const auto alias = manager.addFigure(FigureDescriptor::point(10, 0));
+        const auto line = manager.addFigure(FigureDescriptor::line(a, b));
+        const auto circle = manager.addFigure(FigureDescriptor::circle(b, 2));
+        const auto arc = manager.addFigure(FigureDescriptor::arc(a, b, center));
+        manager.addRequirement(RequirementDescriptor::horizontal(line));
+        manager.addRequirement(RequirementDescriptor::pointOnPoint(b, alias));
+        ASSERT_TRUE(manager.solve());
+        manager.setSolveMode(SolveMode::DRAG);
+        const auto before = manager.getAllFigures();
+        const auto* circlePointer = manager.getStorage().get<Figures::Circle2D>(circle);
+
+        for (int attempt = 0; attempt < 2; ++attempt) {
+            // Collapsing the line makes its direction undefined, so both attempts fail.
+            switch (api) {
+                case 0: EXPECT_FALSE(manager.updateLine({line, 0, 0, 0, 0})); break;
+                case 1: EXPECT_FALSE(manager.updateLines({{line, 0, 0, 0, 0}})); break;
+                case 2: EXPECT_FALSE(manager.updateCircle({circle, 0, 0, 3})); break;
+                case 3: EXPECT_FALSE(manager.updateCircles({{circle, 0, 0, 3}})); break;
+                case 4: EXPECT_FALSE(manager.updateArc({arc, 0, 0, 0, 0, 0, 5})); break;
+                case 5: EXPECT_FALSE(manager.updateArcs({{arc, 0, 0, 0, 0, 0, 5}})); break;
+                case 6: EXPECT_FALSE(manager.updatePoint({alias, 0, 0})); break;
+                case 7: EXPECT_FALSE(manager.updatePoints({{alias, 0, 0}, {center, 0, 5}})); break;
+                case 8: EXPECT_FALSE(manager.updateFigure(FigureUpdateDescriptor::circle(circle, 0, 0, 3))); break;
+                case 9: EXPECT_FALSE(manager.updateFigures({FigureUpdateDescriptor::circle(circle, 0, 0, 3)})); break;
+            }
+            for (const auto& original : before) {
+                const auto restored = manager.getFigure(*original.id);
+                ASSERT_TRUE(restored);
+                EXPECT_EQ(restored->coords, original.coords);
+                EXPECT_EQ(restored->x, original.x);
+                EXPECT_EQ(restored->y, original.y);
+                EXPECT_EQ(restored->radius, original.radius);
+            }
+            EXPECT_EQ(manager.getStorage().get<Figures::Circle2D>(circle), circlePointer);
+        }
+    }
+}
+
+TEST_F(DCMManagerSolveTest, DragMode_FailedBatchRestoresEveryTouchedComponent) {
+    const auto line = manager.addFigure(FigureDescriptor::line(0, 0, 10, 0));
+    const auto p = manager.addFigure(FigureDescriptor::point(0, 10));
+    const auto q = manager.addFigure(FigureDescriptor::point(10, 10));
+    const auto circle = manager.addFigure(FigureDescriptor::circle(50, 50, 2));
+    manager.addRequirement(RequirementDescriptor::horizontal(line));
+    manager.addRequirement(RequirementDescriptor::pointPointDist(p, q, 10));
+    manager.setSolveMode(SolveMode::DRAG);
+    for (int attempt = 0; attempt < 2; ++attempt) {
+        EXPECT_FALSE(manager.updateFigures({
+            FigureUpdateDescriptor::point(p, 0, 20),
+            FigureUpdateDescriptor::circle(circle, 60, 60, 3),
+            FigureUpdateDescriptor::line(line, 0, 0, 0, 0),
+        }));
+        EXPECT_EQ(manager.getFigure(line)->coords, (std::vector<double>{0, 0, 10, 0}));
+        EXPECT_DOUBLE_EQ(*manager.getFigure(p)->y, 10);
+        EXPECT_DOUBLE_EQ(*manager.getFigure(q)->x, 10);
+        EXPECT_DOUBLE_EQ(*manager.getFigure(q)->y, 10);
+        EXPECT_EQ(manager.getFigure(circle)->coords, (std::vector<double>{50, 50}));
+        EXPECT_DOUBLE_EQ(*manager.getFigure(circle)->radius, 2);
+    }
+    // A rejected batch must leave the cache usable for the next successful drag.
+    ASSERT_TRUE(manager.updatePoint({p, 0, 20}));
+    EXPECT_DOUBLE_EQ(*manager.getFigure(p)->y, 20);
+    const auto moved = manager.getFigure(q);
+    EXPECT_NEAR(std::hypot(*moved->x, *moved->y - 20), 10, 1e-6);
 }
 
 TEST_F(DCMManagerSolveTest, SolveUsesUpdatedRequirementParameterAfterCacheInvalidation) {
