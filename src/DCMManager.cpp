@@ -104,6 +104,7 @@ struct OurPaintDCM::DCMManager::SolveCache {
 
 struct OurPaintDCM::DCMManager::BatchUpdateContext {
     std::unordered_map<ComponentID, std::unordered_set<double*>> lockedVarsByComponent;
+    GeometrySolveState geometryState;
     bool needsCoincidentSync = false;
 };
 
@@ -430,7 +431,14 @@ void DCMManager::addDragLocks(Utils::ID figureId,
         return;
     }
 
-    auto& lockedVars = context.lockedVarsByComponent[comp.value()];
+    auto [it, inserted] = context.lockedVarsByComponent.try_emplace(comp.value());
+    if (inserted) {
+        for (const auto id : getFiguresInComponent(comp.value())) {
+            if (auto* point = _storage.get<Figures::Point2D>(id)) context.geometryState.savePoint(*point);
+            if (auto* circle = _storage.get<Figures::Circle2D>(id)) context.geometryState.saveCircle(*circle);
+        }
+    }
+    auto& lockedVars = it->second;
     for (double* var : vars) {
         if (var != nullptr) {
             lockedVars.insert(var);
@@ -438,16 +446,15 @@ void DCMManager::addDragLocks(Utils::ID figureId,
     }
 }
 
-void DCMManager::solveDragUpdates(const BatchUpdateContext& context) {
-    if (_solveMode != Utils::SolveMode::DRAG) {
-        return;
-    }
-
+bool DCMManager::solveDragUpdates(BatchUpdateContext& context) {
     for (const auto& [componentId, lockedVars] : context.lockedVarsByComponent) {
-        if (!lockedVars.empty()) {
-            solveWithLockedVars(componentId, lockedVars);
+        if (!solveWithLockedVars(componentId, lockedVars) &&
+            !solveWithLockedVars(componentId, {})) {
+            return false;
         }
     }
+    context.geometryState.accept();
+    return true;
 }
 
 void DCMManager::validatePointUpdate(const Utils::PointUpdateDescriptor& descriptor) const {
@@ -557,6 +564,7 @@ void DCMManager::applyPointUpdateNoSolve(const Utils::PointUpdateDescriptor& des
         return;
     }
 
+    addDragLocks(descriptor.pointId, {solvePoint->ptrX(), solvePoint->ptrY()}, context);
     if (descriptor.newX.has_value()) {
         solvePoint->x() = descriptor.newX.value();
     }
@@ -565,7 +573,6 @@ void DCMManager::applyPointUpdateNoSolve(const Utils::PointUpdateDescriptor& des
     }
 
     context.needsCoincidentSync = true;
-    addDragLocks(descriptor.pointId, {solvePoint->ptrX(), solvePoint->ptrY()}, context);
 }
 
 void DCMManager::applyLineUpdateNoSolve(const Utils::LineUpdateDescriptor& descriptor,
@@ -609,8 +616,8 @@ void DCMManager::applyCircleUpdateNoSolve(const Utils::CircleUpdateDescriptor& d
         return;
     }
 
-    circle->radius = descriptor.newRadius;
     addDragLocks(descriptor.circleId, {circle->ptrRadius()}, context);
+    circle->radius = descriptor.newRadius;
 }
 
 void DCMManager::applyArcUpdateNoSolve(const Utils::ArcUpdateDescriptor& descriptor,
@@ -691,11 +698,11 @@ void DCMManager::applyFigureUpdateNoSolve(const Utils::FigureUpdateDescriptor& d
     }
 }
 
-void DCMManager::updatePoint(const Utils::PointUpdateDescriptor& descriptor) {
-    updatePoints({descriptor});
+bool DCMManager::updatePoint(const Utils::PointUpdateDescriptor& descriptor) {
+    return updatePoints({descriptor});
 }
 
-void DCMManager::updatePoints(const std::vector<Utils::PointUpdateDescriptor>& descriptors) {
+bool DCMManager::updatePoints(const std::vector<Utils::PointUpdateDescriptor>& descriptors) {
     for (const auto& descriptor : descriptors) {
         validatePointUpdate(descriptor);
     }
@@ -710,14 +717,14 @@ void DCMManager::updatePoints(const std::vector<Utils::PointUpdateDescriptor>& d
     if (context.needsCoincidentSync) {
         _reqSystem.synchronizeCoincidentPoints();
     }
-    solveDragUpdates(context);
+    return solveDragUpdates(context);
 }
 
-void DCMManager::updateLine(const Utils::LineUpdateDescriptor& descriptor) {
-    updateLines({descriptor});
+bool DCMManager::updateLine(const Utils::LineUpdateDescriptor& descriptor) {
+    return updateLines({descriptor});
 }
 
-void DCMManager::updateLines(const std::vector<Utils::LineUpdateDescriptor>& descriptors) {
+bool DCMManager::updateLines(const std::vector<Utils::LineUpdateDescriptor>& descriptors) {
     for (const auto& descriptor : descriptors) {
         validateLineUpdate(descriptor);
     }
@@ -732,21 +739,21 @@ void DCMManager::updateLines(const std::vector<Utils::LineUpdateDescriptor>& des
     if (context.needsCoincidentSync) {
         _reqSystem.synchronizeCoincidentPoints();
     }
-    solveDragUpdates(context);
+    return solveDragUpdates(context);
 }
 
-void DCMManager::updateCircle(const Utils::CircleUpdateDescriptor& descriptor) {
-    updateCircles({descriptor});
+bool DCMManager::updateCircle(const Utils::CircleUpdateDescriptor& descriptor) {
+    return updateCircles({descriptor});
 }
 
-void DCMManager::updateCircles(const std::vector<Utils::CircleUpdateDescriptor>& descriptors) {
+bool DCMManager::updateCircles(const std::vector<Utils::CircleUpdateDescriptor>& descriptors) {
     bool needsPointResolution = false;
     for (const auto& descriptor : descriptors) {
         validateCircleUpdate(descriptor);
         needsPointResolution = needsPointResolution || descriptor.hasCenterUpdate();
     }
 
-    if (needsPointResolution) {
+    if (needsPointResolution || _solveMode == Utils::SolveMode::DRAG) {
         syncRequirementSystemIfNeeded();
     }
 
@@ -759,14 +766,14 @@ void DCMManager::updateCircles(const std::vector<Utils::CircleUpdateDescriptor>&
     if (context.needsCoincidentSync) {
         _reqSystem.synchronizeCoincidentPoints();
     }
-    solveDragUpdates(context);
+    return solveDragUpdates(context);
 }
 
-void DCMManager::updateArc(const Utils::ArcUpdateDescriptor& descriptor) {
-    updateArcs({descriptor});
+bool DCMManager::updateArc(const Utils::ArcUpdateDescriptor& descriptor) {
+    return updateArcs({descriptor});
 }
 
-void DCMManager::updateArcs(const std::vector<Utils::ArcUpdateDescriptor>& descriptors) {
+bool DCMManager::updateArcs(const std::vector<Utils::ArcUpdateDescriptor>& descriptors) {
     for (const auto& descriptor : descriptors) {
         validateArcUpdate(descriptor);
     }
@@ -781,14 +788,14 @@ void DCMManager::updateArcs(const std::vector<Utils::ArcUpdateDescriptor>& descr
     if (context.needsCoincidentSync) {
         _reqSystem.synchronizeCoincidentPoints();
     }
-    solveDragUpdates(context);
+    return solveDragUpdates(context);
 }
 
-void DCMManager::updateFigure(const Utils::FigureUpdateDescriptor& descriptor) {
-    updateFigures({descriptor});
+bool DCMManager::updateFigure(const Utils::FigureUpdateDescriptor& descriptor) {
+    return updateFigures({descriptor});
 }
 
-void DCMManager::updateFigures(const std::vector<Utils::FigureUpdateDescriptor>& descriptors) {
+bool DCMManager::updateFigures(const std::vector<Utils::FigureUpdateDescriptor>& descriptors) {
     bool needsPointResolution = false;
     for (const auto& descriptor : descriptors) {
         validateFigureUpdate(descriptor);
@@ -799,7 +806,7 @@ void DCMManager::updateFigures(const std::vector<Utils::FigureUpdateDescriptor>&
             (descriptor.type == Utils::FigureType::ET_CIRCLE && !descriptor.coords.empty());
     }
 
-    if (needsPointResolution) {
+    if (needsPointResolution || _solveMode == Utils::SolveMode::DRAG) {
         syncRequirementSystemIfNeeded();
     }
 
@@ -812,7 +819,7 @@ void DCMManager::updateFigures(const std::vector<Utils::FigureUpdateDescriptor>&
     if (context.needsCoincidentSync) {
         _reqSystem.synchronizeCoincidentPoints();
     }
-    solveDragUpdates(context);
+    return solveDragUpdates(context);
 }
 
 std::optional<Utils::FigureDescriptor> DCMManager::getFigure(Utils::ID figureId) const {
@@ -1436,16 +1443,6 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
     }
 
     if (!entry.hasFreeVariables) {
-        // If temporary drag locks consume all remaining DOF, retry without locks.
-        // This keeps fixed/eliminated vars constant, but allows the solver
-        // to satisfy constraints by moving the dragged point to a feasible position.
-        if (!lockedVars.empty()) {
-            const std::unordered_set<double*> noLockedVars;
-            const bool solved = solveWithLockedVars(componentId, noLockedVars, residualTolerance);
-            if (!geometryState.valid()) return false;
-            geometryState.accept();
-            return solved;
-        }
         system.synchronizeCoincidentPoints();
         return finishSolve();
     }
