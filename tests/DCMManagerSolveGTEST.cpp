@@ -1303,6 +1303,64 @@ TEST_F(DCMManagerSolveTest, DragMode_UpdateFixedPoint_RevertsToFixedCoordinates)
     EXPECT_NEAR(d1->y.value(), 0.0, 1e-6);
 }
 
+TEST_F(DCMManagerSolveTest, DragMode_FixedGeometryUpdatesCheckChangedConstraints) {
+    for (const bool fixMovingPoint : {false, true}) {
+        for (int api = 0; api < 10; ++api) {
+            SCOPED_TRACE(fixMovingPoint);
+            SCOPED_TRACE(api);
+            DCMManager manager;
+            const auto a = manager.addFigure(FigureDescriptor::point(0, 0));
+            const auto p = manager.addFigure(FigureDescriptor::point(10, 0));
+            const auto b = manager.addFigure(FigureDescriptor::point(0, 10));
+            const auto center = manager.addFigure(FigureDescriptor::point(-5, 5));
+            const auto alias = manager.addFigure(FigureDescriptor::point(0, 0));
+            const auto line = manager.addFigure(FigureDescriptor::line(a, b));
+            const auto circle = manager.addFigure(FigureDescriptor::circle(a, 5));
+            const auto arc = manager.addFigure(FigureDescriptor::arc(a, b, center));
+            manager.addRequirement(RequirementDescriptor::fixPoint(a));
+            manager.addRequirement(RequirementDescriptor::fixLine(line));
+            manager.addRequirement(RequirementDescriptor::fixCircle(circle));
+            manager.addRequirement(RequirementDescriptor::fixPoint(center));
+            manager.addRequirement(RequirementDescriptor::pointOnPoint(a, alias));
+            const auto distance = manager.addRequirement(RequirementDescriptor::pointPointDist(a, p, 10));
+            if (fixMovingPoint) manager.addRequirement(RequirementDescriptor::fixPoint(p));
+            ASSERT_TRUE(manager.solve());
+            manager.setSolveMode(SolveMode::DRAG);
+            const auto before = manager.getAllFigures();
+
+            for (const double target : {20.0, 30.0}) {
+                manager.updateRequirementParam(distance, target);
+                bool updated = false;
+                switch (api) {
+                    case 0: updated = manager.updatePoint({a, 7, 8}); break;
+                    case 1: updated = manager.updatePoints({{alias, 7, 8}}); break;
+                    case 2: updated = manager.updateLine({line, 7, 8, 9, 10}); break;
+                    case 3: updated = manager.updateLines({{line, 7, 8, 9, 10}}); break;
+                    case 4: updated = manager.updateCircle({circle, 8}); break;
+                    case 5: updated = manager.updateCircles({{circle, 7, 8, 9}}); break;
+                    case 6: updated = manager.updateArc({arc, 7, 8, 9, 10, 11, 12}); break;
+                    case 7: updated = manager.updateArcs({{arc, 7, 8, 9, 10, 11, 12}}); break;
+                    case 8: updated = manager.updateFigure(FigureUpdateDescriptor::point(alias, 7, 8)); break;
+                    case 9: updated = manager.updateFigures({FigureUpdateDescriptor::circleRadius(circle, 8)}); break;
+                }
+                EXPECT_EQ(updated, !fixMovingPoint);
+                const auto moved = manager.getFigure(p);
+                ASSERT_TRUE(moved);
+                EXPECT_NEAR(std::hypot(*moved->x, *moved->y), fixMovingPoint ? 10 : target, 1e-6);
+                for (const auto& original : before) {
+                    if (original.id == p && !fixMovingPoint) continue;
+                    const auto restored = manager.getFigure(*original.id);
+                    ASSERT_TRUE(restored);
+                    EXPECT_EQ(restored->coords, original.coords);
+                    EXPECT_EQ(restored->x, original.x);
+                    EXPECT_EQ(restored->y, original.y);
+                    EXPECT_EQ(restored->radius, original.radius);
+                }
+            }
+        }
+    }
+}
+
 TEST_F(DCMManagerSolveTest, DragMode_UpdateFixedCircleRadius_Ignored) {
     auto circle = manager.addFigure(FigureDescriptor::circle(0.0, 0.0, 10.0));
     manager.addRequirement(RequirementDescriptor::fixCircle(circle));

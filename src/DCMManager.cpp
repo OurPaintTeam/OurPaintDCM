@@ -449,7 +449,7 @@ void DCMManager::addDragLocks(Utils::ID figureId,
 bool DCMManager::solveDragUpdates(BatchUpdateContext& context) {
     for (const auto& [componentId, lockedVars] : context.lockedVarsByComponent) {
         if (!solveWithLockedVars(componentId, lockedVars) &&
-            !solveWithLockedVars(componentId, {})) {
+            (lockedVars.empty() || !solveWithLockedVars(componentId, {}))) {
             return false;
         }
     }
@@ -560,6 +560,7 @@ void DCMManager::applyPointUpdateNoSolve(const Utils::PointUpdateDescriptor& des
     }
 
     if (pointGroupHasFixConstraint(descriptor.pointId, fixedGeometry.pointIds)) {
+        addDragLocks(descriptor.pointId, {}, context);
         context.needsCoincidentSync = true;
         return;
     }
@@ -613,6 +614,7 @@ void DCMManager::applyCircleUpdateNoSolve(const Utils::CircleUpdateDescriptor& d
         return;
     }
     if (fixedGeometry.circleIds.contains(descriptor.circleId)) {
+        addDragLocks(descriptor.circleId, {}, context);
         return;
     }
 
