@@ -20,6 +20,8 @@ namespace OurPaintDCM::Function {
  */
 class RequirementFunctionFactory {
 public:
+    static std::vector<std::shared_ptr<RequirementFunction>> createPointAtArcMidpoint(
+        Figures::Point2D* point, Figures::Arc<Figures::Point2D>* arc);
     static std::shared_ptr<RequirementFunction> createPointOnArc(
         Figures::Point2D* point, Figures::Arc<Figures::Point2D>* arc);
     static std::shared_ptr<RequirementFunction> createPointPointVerticalDist(
