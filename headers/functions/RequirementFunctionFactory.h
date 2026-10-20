@@ -20,6 +20,7 @@ namespace OurPaintDCM::Function {
  */
 class RequirementFunctionFactory {
 public:
+    static std::vector<std::shared_ptr<RequirementFunction>> createFixArc(Figures::Arc<Figures::Point2D>* arc);
     template<class MathFunction>
     static std::shared_ptr<RequirementFunction> bind(
         Utils::RequirementType type,

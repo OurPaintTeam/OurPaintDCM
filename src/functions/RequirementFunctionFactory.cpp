@@ -3,6 +3,15 @@
 
 namespace OurPaintDCM::Function {
 
+std::vector<std::shared_ptr<RequirementFunction>> RequirementFunctionFactory::createFixArc(Figures::Arc<Figures::Point2D>* arc) {
+    std::vector<std::shared_ptr<RequirementFunction>> rows;
+    for (auto* point : {arc->p1, arc->p2, arc->p_center}) {
+        rows.push_back(bind<FixCoordinateError>(Utils::RequirementType::ET_FIXARC, {point->ptrX()}, point->x()));
+        rows.push_back(bind<FixCoordinateError>(Utils::RequirementType::ET_FIXARC, {point->ptrY()}, point->y()));
+    }
+    return rows;
+}
+
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointLineDist(
     Figures::Point2D* point,
     Figures::Line<Figures::Point2D>* line,
