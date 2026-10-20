@@ -3,6 +3,12 @@
 
 namespace OurPaintDCM::Function {
 
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointPointHorizontalDist(
+    Figures::Point2D* first, Figures::Point2D* second, double distance) {
+    return bind<PointPointHorizontalDistanceError>(Utils::RequirementType::ET_POINTPOINTHORIZONTALDIST,
+        {first->ptrX(), first->ptrY(), second->ptrX(), second->ptrY()}, distance);
+}
+
 std::vector<std::shared_ptr<RequirementFunction>> RequirementFunctionFactory::createFixArc(Figures::Arc<Figures::Point2D>* arc) {
     std::vector<std::shared_ptr<RequirementFunction>> rows;
     for (auto* point : {arc->p1, arc->p2, arc->p_center}) {
