@@ -386,7 +386,8 @@ DCMManager::FixedGeometry DCMManager::collectFixedGeometry() const {
             case Utils::RequirementType::ET_FIXPOINT:
                 fixed.pointIds.insert(req.objectIds[0]);
                 break;
-            case Utils::RequirementType::ET_FIXLINE: {
+            case Utils::RequirementType::ET_FIXLINE:
+            case Utils::RequirementType::ET_FIXARC: {
                 const auto dependencies = _storage.getDependencies(req.objectIds[0]);
                 fixed.pointIds.insert(dependencies.begin(), dependencies.end());
                 break;
@@ -1035,6 +1036,14 @@ Utils::ID DCMManager::addRequirement(const Utils::RequirementDescriptor& descrip
             _fixedRequirementTargets[reqId] = {p1->x(), p1->y(), p2->x(), p2->y()};
             break;
         }
+        case Utils::RequirementType::ET_FIXARC: {
+            for (const auto id : _storage.getDependencies(storedDesc.objectIds[0])) {
+                auto* point = _storage.get<Figures::Point2D>(id);
+                _fixedRequirementTargets[reqId].push_back(point->x());
+                _fixedRequirementTargets[reqId].push_back(point->y());
+            }
+            break;
+        }
         case Utils::RequirementType::ET_FIXCIRCLE: {
             auto* circle = _storage.get<Figures::Circle2D>(storedDesc.objectIds[0]);
             const auto dependencies = _storage.getDependencies(storedDesc.objectIds[0]);
@@ -1333,6 +1342,7 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
             if (constraint->getWeight() == 0) continue;
             const auto type = constraint->getType();
             if (type == Utils::RequirementType::ET_FIXPOINT ||
+                type == Utils::RequirementType::ET_FIXARC ||
                 type == Utils::RequirementType::ET_FIXLINE ||
                 type == Utils::RequirementType::ET_FIXCIRCLE) {
                 continue;

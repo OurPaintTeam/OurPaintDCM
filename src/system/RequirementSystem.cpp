@@ -487,6 +487,24 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                     entry.fixedTargets.at(3)));
                 break;
             }
+            case Utils::RequirementType::ET_FIXARC: {
+                const auto [a, b, center] = resolveArcPoints(ids[0]);
+                if (entry.fixedTargets.empty()) {
+                    for (const auto id : _storage->getDependencies(ids[0])) {
+                        auto* point = requireGeometry(_storage->get<Figures::Point2D>(id));
+                        entry.fixedTargets.push_back(point->x());
+                        entry.fixedTargets.push_back(point->y());
+                    }
+                }
+                std::size_t i = 0;
+                for (auto* point : {a, b, center}) {
+                    for (auto* coordinate : {point->ptrX(), point->ptrY()}) {
+                        addFunction(Function::RequirementFunctionFactory::bind<FixCoordinateError>(entry.type,
+                            {coordinate}, entry.fixedTargets.at(i++)));
+                    }
+                }
+                break;
+            }
             case Utils::RequirementType::ET_FIXCIRCLE: {
                 const auto [center, radius] = resolveCircleData(ids[0]);
                 auto* circle = requireGeometry(_storage->get<Figures::Circle2D>(ids[0]));
@@ -674,6 +692,10 @@ void RequirementSystem::addFixLine(Utils::ID lineId) {
 
 void RequirementSystem::addFixCircle(Utils::ID circleId) {
     addRequirement(Utils::RequirementDescriptor::fixCircle(circleId));
+}
+
+void RequirementSystem::addFixArc(Utils::ID arcId) {
+    addRequirement(Utils::RequirementDescriptor::fixArc(arcId));
 }
 
 void RequirementSystem::clear() {

@@ -140,6 +140,10 @@ struct RequirementDescriptor {
         return {RequirementType::ET_FIXCIRCLE, {circleId}};
     }
 
+    static RequirementDescriptor fixArc(ID arcId) {
+        return {RequirementType::ET_FIXARC, {arcId}};
+    }
+
     static RequirementDescriptor pointOnCircle(ID pointId, ID circleId) {
         return {RequirementType::ET_POINTONCIRCLE, {pointId, circleId}};
     }
@@ -217,6 +221,7 @@ struct RequirementDescriptor {
             (type == RequirementType::ET_POINTONPOINT ||
              type == RequirementType::ET_FIXPOINT ||
              type == RequirementType::ET_FIXLINE ||
+             type == RequirementType::ET_FIXARC ||
              type == RequirementType::ET_FIXCIRCLE)) {
             throw std::invalid_argument("Eliminated and fixed requirements must use weight 0 or 1");
         }
@@ -255,6 +260,7 @@ struct RequirementDescriptor {
             case RequirementType::ET_ARCCENTERONPERPENDICULAR:
             case RequirementType::ET_FIXPOINT:
             case RequirementType::ET_FIXLINE:
+            case RequirementType::ET_FIXARC:
             case RequirementType::ET_FIXCIRCLE:
             case RequirementType::ET_CIRCLERADIUS:
             case RequirementType::ET_CIRCLEDIAMETER:
