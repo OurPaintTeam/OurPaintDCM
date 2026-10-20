@@ -290,6 +290,15 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
             }
             case Utils::RequirementType::ET_POINTONPOINT:
                 break;
+            case Utils::RequirementType::ET_POINTATARCMIDPOINT: {
+                auto* point = resolvePoint(ids[0]);
+                const auto [a, b, center] = resolveArcPoints(ids[1]);
+                const std::vector<VAR> vars{point->ptrX(), point->ptrY(), a->ptrX(), a->ptrY(),
+                    b->ptrX(), b->ptrY(), center->ptrX(), center->ptrY()};
+                addFunction(Function::RequirementFunctionFactory::bind<ArcMidpointXError>(entry.type, vars));
+                addFunction(Function::RequirementFunctionFactory::bind<ArcMidpointYError>(entry.type, vars));
+                break;
+            }
             case Utils::RequirementType::ET_POINTATMIDPOINT: {
                 auto* point = resolvePoint(ids[0]);
                 const auto [a, b] = resolveLinePoints(ids[1]);
@@ -723,6 +732,10 @@ void RequirementSystem::addPointPointHorizontalDist(Utils::ID first, Utils::ID s
 
 void RequirementSystem::addPointOnArc(Utils::ID pointId, Utils::ID arcId) {
     addRequirement(Utils::RequirementDescriptor::pointOnArc(pointId, arcId));
+}
+
+void RequirementSystem::addPointAtArcMidpoint(Utils::ID pointId, Utils::ID arcId) {
+    addRequirement(Utils::RequirementDescriptor::pointAtArcMidpoint(pointId, arcId));
 }
 
 void RequirementSystem::addFixArc(Utils::ID arcId) {

@@ -180,6 +180,11 @@ struct RequirementDescriptor {
         return {RequirementType::ET_EQUALRADIUS, {circle1Id, circle2Id}};
     }
 
+    /// Halfway along the counterclockwise arc from its first endpoint to its second.
+    static RequirementDescriptor pointAtArcMidpoint(ID pointId, ID arcId) {
+        return {RequirementType::ET_POINTATARCMIDPOINT, {pointId, arcId}};
+    }
+
     static RequirementDescriptor pointAtMidpoint(ID pointId, ID lineId) {
         return {RequirementType::ET_POINTATMIDPOINT, {pointId, lineId}};
     }
@@ -263,6 +268,7 @@ struct RequirementDescriptor {
             case RequirementType::ET_EQUALLENGTH:
             case RequirementType::ET_EQUALRADIUS:
             case RequirementType::ET_POINTATMIDPOINT:
+            case RequirementType::ET_POINTATARCMIDPOINT:
             case RequirementType::ET_LINECIRCLETANGENT:
             case RequirementType::ET_CIRCLECIRCLETANGENT:
             case RequirementType::ET_ARCLINETANGENT:
