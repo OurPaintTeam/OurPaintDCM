@@ -154,6 +154,11 @@ struct RequirementDescriptor {
         return {RequirementType::ET_FIXARC, {arcId}};
     }
 
+    /// Membership in the arc's supporting circle, matching pointOnCircle.
+    static RequirementDescriptor pointOnArc(ID pointId, ID arcId) {
+        return {RequirementType::ET_POINTONARC, {pointId, arcId}};
+    }
+
     static RequirementDescriptor pointOnCircle(ID pointId, ID circleId) {
         return {RequirementType::ET_POINTONCIRCLE, {pointId, circleId}};
     }
@@ -254,6 +259,7 @@ struct RequirementDescriptor {
             case RequirementType::ET_LINELINEPERPENDICULAR:
             case RequirementType::ET_LINELINEANGLE:
             case RequirementType::ET_POINTONCIRCLE:
+            case RequirementType::ET_POINTONARC:
             case RequirementType::ET_EQUALLENGTH:
             case RequirementType::ET_EQUALRADIUS:
             case RequirementType::ET_POINTATMIDPOINT:

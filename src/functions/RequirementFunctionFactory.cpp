@@ -3,6 +3,13 @@
 
 namespace OurPaintDCM::Function {
 
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointOnArc(
+    Figures::Point2D* point, Figures::Arc<Figures::Point2D>* arc) {
+    return bind<PointOnArcError>(Utils::RequirementType::ET_POINTONARC,
+        {point->ptrX(), point->ptrY(), arc->p1->ptrX(), arc->p1->ptrY(),
+         arc->p_center->ptrX(), arc->p_center->ptrY()});
+}
+
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointPointVerticalDist(
     Figures::Point2D* first, Figures::Point2D* second, double distance) {
     return bind<PointPointVerticalDistanceError>(Utils::RequirementType::ET_POINTPOINTVERTICALDIST,
