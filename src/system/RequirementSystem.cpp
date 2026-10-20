@@ -323,6 +323,13 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                     resolvePoint(ids[0]),resolvePoint(ids[1]),resolvePoint(ids[2]))) addFunction(row);
                 break;
             }
+            case Utils::RequirementType::ET_POINTONARC: {
+                auto* point = resolvePoint(ids[0]);
+                const auto [a, b, center] = resolveArcPoints(ids[1]);
+                addFunction(Function::RequirementFunctionFactory::bind<PointOnArcError>(entry.type,
+                    makePointLineVars(point, a, center)));
+                break;
+            }
             case Utils::RequirementType::ET_POINTONCIRCLE: {
                 auto* point = resolvePoint(ids[0]);
                 const auto [center, radius] = resolveCircleData(ids[1]);
@@ -712,6 +719,10 @@ void RequirementSystem::addPointPointVerticalDist(Utils::ID first, Utils::ID sec
 
 void RequirementSystem::addPointPointHorizontalDist(Utils::ID first, Utils::ID second, double distance) {
     addRequirement(Utils::RequirementDescriptor::pointPointHorizontalDist(first, second, distance));
+}
+
+void RequirementSystem::addPointOnArc(Utils::ID pointId, Utils::ID arcId) {
+    addRequirement(Utils::RequirementDescriptor::pointOnArc(pointId, arcId));
 }
 
 void RequirementSystem::addFixArc(Utils::ID arcId) {
