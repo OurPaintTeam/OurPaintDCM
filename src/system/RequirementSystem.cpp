@@ -299,6 +299,15 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                 addFunction(Function::RequirementFunctionFactory::bind<ArcMidpointYError>(entry.type, vars));
                 break;
             }
+            case Utils::RequirementType::ET_LINELINEMIDPOINT: {
+                const auto [a, b] = resolveLinePoints(ids[0]);
+                const auto [c, d] = resolveLinePoints(ids[1]);
+                addFunction(Function::RequirementFunctionFactory::bind<MidpointDifferenceError>(entry.type,
+                    {a->ptrX(), b->ptrX(), c->ptrX(), d->ptrX()}));
+                addFunction(Function::RequirementFunctionFactory::bind<MidpointDifferenceError>(entry.type,
+                    {a->ptrY(), b->ptrY(), c->ptrY(), d->ptrY()}));
+                break;
+            }
             case Utils::RequirementType::ET_POINTATMIDPOINT: {
                 auto* point = resolvePoint(ids[0]);
                 const auto [a, b] = resolveLinePoints(ids[1]);
@@ -736,6 +745,10 @@ void RequirementSystem::addPointOnArc(Utils::ID pointId, Utils::ID arcId) {
 
 void RequirementSystem::addPointAtArcMidpoint(Utils::ID pointId, Utils::ID arcId) {
     addRequirement(Utils::RequirementDescriptor::pointAtArcMidpoint(pointId, arcId));
+}
+
+void RequirementSystem::addLineLineMidpoint(Utils::ID first, Utils::ID second) {
+    addRequirement(Utils::RequirementDescriptor::lineLineMidpoint(first, second));
 }
 
 void RequirementSystem::addFixArc(Utils::ID arcId) {

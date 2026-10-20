@@ -84,7 +84,8 @@ enum class RequirementType: uint8_t {
     ET_POINTPOINTHORIZONTALDIST,
     ET_POINTPOINTVERTICALDIST,
     ET_POINTONARC,
-    ET_POINTATARCMIDPOINT
+    ET_POINTATARCMIDPOINT,
+    ET_LINELINEMIDPOINT
 };
 
 /// Signed normal of the supporting line directed from its first endpoint to its second.

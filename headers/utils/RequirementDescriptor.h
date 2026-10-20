@@ -185,6 +185,11 @@ struct RequirementDescriptor {
         return {RequirementType::ET_POINTATARCMIDPOINT, {pointId, arcId}};
     }
 
+    /// The two line midpoints coincide; collapsed lines are allowed.
+    static RequirementDescriptor lineLineMidpoint(ID first, ID second) {
+        return {RequirementType::ET_LINELINEMIDPOINT, {first, second}};
+    }
+
     static RequirementDescriptor pointAtMidpoint(ID pointId, ID lineId) {
         return {RequirementType::ET_POINTATMIDPOINT, {pointId, lineId}};
     }
@@ -268,6 +273,7 @@ struct RequirementDescriptor {
             case RequirementType::ET_EQUALLENGTH:
             case RequirementType::ET_EQUALRADIUS:
             case RequirementType::ET_POINTATMIDPOINT:
+            case RequirementType::ET_LINELINEMIDPOINT:
             case RequirementType::ET_POINTATARCMIDPOINT:
             case RequirementType::ET_LINECIRCLETANGENT:
             case RequirementType::ET_CIRCLECIRCLETANGENT:
