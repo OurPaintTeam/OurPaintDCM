@@ -79,6 +79,11 @@ struct RequirementDescriptor {
         return {RequirementType::ET_POINTPOINTHORIZONTALDIST, {p1, p2}, distance};
     }
 
+    /// Non-negative vertical projection of the distance between two points.
+    static RequirementDescriptor pointPointVerticalDist(ID p1, ID p2, double distance) {
+        return {RequirementType::ET_POINTPOINTVERTICALDIST, {p1, p2}, distance};
+    }
+
     /// @brief Create point-on-point descriptor
     static RequirementDescriptor pointOnPoint(ID p1Id, ID p2Id) {
         return {RequirementType::ET_POINTONPOINT, {p1Id, p2Id}};
@@ -240,6 +245,7 @@ struct RequirementDescriptor {
             case RequirementType::ET_POINTONLINE:
             case RequirementType::ET_POINTPOINTDIST:
             case RequirementType::ET_POINTPOINTHORIZONTALDIST:
+            case RequirementType::ET_POINTPOINTVERTICALDIST:
             case RequirementType::ET_POINTONPOINT:
             case RequirementType::ET_LINECIRCLEDIST:
             case RequirementType::ET_LINEONCIRCLE:
