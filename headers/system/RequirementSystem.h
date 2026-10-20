@@ -66,6 +66,7 @@ class RequirementSystem : public RequirementFunctionSystem {
     friend class ::OurPaintDCM::DCMManager;
 
 public:
+    void addPointPointVerticalDist(Utils::ID first, Utils::ID second, double distance);
     void addPointPointHorizontalDist(Utils::ID first, Utils::ID second, double distance);
     void addFixArc(Utils::ID arcId);
     /**
