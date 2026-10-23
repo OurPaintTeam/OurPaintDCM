@@ -66,6 +66,7 @@ class RequirementSystem : public RequirementFunctionSystem {
     friend class ::OurPaintDCM::DCMManager;
 
 public:
+    void addLineArcMidpoint(Utils::ID lineId, Utils::ID arcId);
     void addArcArcMidpoint(Utils::ID first, Utils::ID second);
     void addLineLineMidpoint(Utils::ID first, Utils::ID second);
     void addPointAtArcMidpoint(Utils::ID pointId, Utils::ID arcId);
