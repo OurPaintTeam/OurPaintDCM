@@ -3,6 +3,15 @@
 
 namespace OurPaintDCM::Function {
 
+std::vector<std::shared_ptr<RequirementFunction>> RequirementFunctionFactory::createArcArcMidpoint(
+    Figures::Arc<Figures::Point2D>* first, Figures::Arc<Figures::Point2D>* second) {
+    const std::vector<VAR> vars{first->p1->ptrX(), first->p1->ptrY(), first->p2->ptrX(), first->p2->ptrY(),
+        first->p_center->ptrX(), first->p_center->ptrY(), second->p1->ptrX(), second->p1->ptrY(),
+        second->p2->ptrX(), second->p2->ptrY(), second->p_center->ptrX(), second->p_center->ptrY()};
+    return {bind<ArcArcMidpointXError>(Utils::RequirementType::ET_ARCARCMIDPOINT, vars),
+            bind<ArcArcMidpointYError>(Utils::RequirementType::ET_ARCARCMIDPOINT, vars)};
+}
+
 std::vector<std::shared_ptr<RequirementFunction>> RequirementFunctionFactory::createLineLineMidpoint(
     Figures::Line<Figures::Point2D>* first, Figures::Line<Figures::Point2D>* second) {
     return {bind<MidpointDifferenceError>(Utils::RequirementType::ET_LINELINEMIDPOINT,

@@ -299,6 +299,15 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                 addFunction(Function::RequirementFunctionFactory::bind<ArcMidpointYError>(entry.type, vars));
                 break;
             }
+            case Utils::RequirementType::ET_ARCARCMIDPOINT: {
+                const auto [a, b, c] = resolveArcPoints(ids[0]);
+                const auto [d, e, f] = resolveArcPoints(ids[1]);
+                const std::vector<VAR> vars{a->ptrX(), a->ptrY(), b->ptrX(), b->ptrY(), c->ptrX(), c->ptrY(),
+                    d->ptrX(), d->ptrY(), e->ptrX(), e->ptrY(), f->ptrX(), f->ptrY()};
+                addFunction(Function::RequirementFunctionFactory::bind<ArcArcMidpointXError>(entry.type, vars));
+                addFunction(Function::RequirementFunctionFactory::bind<ArcArcMidpointYError>(entry.type, vars));
+                break;
+            }
             case Utils::RequirementType::ET_LINELINEMIDPOINT: {
                 const auto [a, b] = resolveLinePoints(ids[0]);
                 const auto [c, d] = resolveLinePoints(ids[1]);
@@ -745,6 +754,10 @@ void RequirementSystem::addPointOnArc(Utils::ID pointId, Utils::ID arcId) {
 
 void RequirementSystem::addPointAtArcMidpoint(Utils::ID pointId, Utils::ID arcId) {
     addRequirement(Utils::RequirementDescriptor::pointAtArcMidpoint(pointId, arcId));
+}
+
+void RequirementSystem::addArcArcMidpoint(Utils::ID first, Utils::ID second) {
+    addRequirement(Utils::RequirementDescriptor::arcArcMidpoint(first, second));
 }
 
 void RequirementSystem::addLineLineMidpoint(Utils::ID first, Utils::ID second) {
