@@ -12,7 +12,7 @@ namespace OurPaintDCM::Figures {
  * @brief Bidirectional adjacency for point↔figure incidence.
  *
  * - point → figures that reference that point (for getDependents-style queries).
- * - figure → point IDs it depends on (endpoints / center), fixed small arity.
+ * - figure → point IDs it depends on (endpoints / center / curve controls).
  *
  * Updates are local to the arity k of the figure (O(k)); no full storage scan.
  */
@@ -33,6 +33,9 @@ public:
      */
     void linkArc(Utils::ID arcId, Utils::ID p1, Utils::ID p2, Utils::ID center);
 
+    /// Registers the ordered control point IDs of a curve (repeated IDs allowed).
+    void linkCurve(Utils::ID curveId, const std::vector<Utils::ID>& points);
+
     /**
      * @brief Removes @p figureId from both directions: drops figure→points and
      *        removes the figure from each point’s incident list (cleans empty point entries).
@@ -46,7 +49,7 @@ public:
     [[nodiscard]] std::vector<Utils::ID> dependentsOfPoint(Utils::ID pointId) const;
 
     /**
-     * @brief Const reference to the stored point-ID list for @p figureId (arity 1–3).
+     * @brief Const reference to the stored point-ID list for @p figureId.
      * @return Empty static vector if @p figureId is unknown; do not store the reference
      *         beyond the index’s lifetime or across mutating calls on this index.
      */

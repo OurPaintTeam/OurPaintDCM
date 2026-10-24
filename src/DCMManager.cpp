@@ -298,6 +298,23 @@ Utils::ID DCMManager::addFigure(const Utils::FigureDescriptor& descriptor) {
             }
             break;
         }
+        case Utils::FigureType::ET_CURVE2D: {
+            relatedFigures = descriptor.pointIds;
+            if (!descriptor.coords.empty()) {
+                relatedFigures.clear();
+                for (std::size_t i = 0; i < descriptor.coords.size(); i += 2) {
+                    const auto pointId = _storage.createPoint(descriptor.coords[i], descriptor.coords[i + 1]);
+                    registerPoint(pointId, descriptor.coords[i], descriptor.coords[i + 1]);
+                    relatedFigures.push_back(pointId);
+                }
+            }
+            const auto curveId = _storage.createCurve(descriptor.degree, relatedFigures,
+                descriptor.weights, descriptor.knots, descriptor.periodic, descriptor.id);
+            if (!curveId) throw std::runtime_error("Curve creation failed: invalid control point ID");
+            figureId = *curveId;
+            storedDesc.pointIds = relatedFigures;
+            break;
+        }
         default:
             throw std::invalid_argument("Unsupported figure type for addFigure");
     }
@@ -546,6 +563,14 @@ void DCMManager::validateFigureUpdate(const Utils::FigureUpdateDescriptor& descr
             }
             validateArcUpdate({descriptor.figureId});
             break;
+        case Utils::FigureType::ET_CURVE2D:
+            if (!descriptor.coords.empty() &&
+                descriptor.coords.size() != 2 * _storage.get<Figures::Curve2D>(descriptor.figureId)->pointIds.size()) {
+                throw std::invalid_argument("Curve update requires coordinates for every control point");
+            }
+            break;
+        default:
+            throw std::invalid_argument("Unsupported figure type for updateFigure");
     }
 }
 
@@ -698,6 +723,16 @@ void DCMManager::applyFigureUpdateNoSolve(const Utils::FigureUpdateDescriptor& d
                 applyArcUpdateNoSolve({descriptor.figureId}, fixedGeometry, context);
             }
             break;
+        case Utils::FigureType::ET_CURVE2D: {
+            const auto& points = _storage.get<Figures::Curve2D>(descriptor.figureId)->pointIds;
+            for (std::size_t i = 0; i < points.size(); ++i) {
+                applyPointUpdateNoSolve({points[i],
+                    descriptor.coords.empty() ? std::nullopt : std::optional<double>{descriptor.coords[2 * i]},
+                    descriptor.coords.empty() ? std::nullopt : std::optional<double>{descriptor.coords[2 * i + 1]}},
+                    fixedGeometry, context);
+            }
+            break;
+        }
     }
 }
 
@@ -806,6 +841,7 @@ bool DCMManager::updateFigures(const std::vector<Utils::FigureUpdateDescriptor>&
             descriptor.type == Utils::FigureType::ET_POINT2D ||
             descriptor.type == Utils::FigureType::ET_LINE ||
             descriptor.type == Utils::FigureType::ET_ARC ||
+            descriptor.type == Utils::FigureType::ET_CURVE2D ||
             (descriptor.type == Utils::FigureType::ET_CIRCLE && !descriptor.coords.empty());
     }
 
@@ -878,6 +914,23 @@ std::optional<Utils::FigureDescriptor> DCMManager::getFigure(Utils::ID figureId)
             desc.coords = {
                 arc->p1->x(), arc->p1->y(), arc->p2->x(), arc->p2->y(),
                 arc->p_center->x(), arc->p_center->y()};
+            break;
+        }
+        case Utils::FigureType::ET_CURVE2D: {
+            const auto* curve = _storage.get<Figures::Curve2D>(figureId);
+            if (!curve) return std::nullopt;
+            desc.pointIds = curve->pointIds;
+            desc.degree = curve->degree;
+            desc.weights = curve->weights;
+            desc.knots = curve->knots;
+            desc.periodic = curve->periodic;
+            desc.coords.clear();
+            for (const auto pointId : curve->pointIds) {
+                const auto* point = _storage.get<Figures::Point2D>(pointId);
+                if (!point) return std::nullopt;
+                desc.coords.push_back(point->x());
+                desc.coords.push_back(point->y());
+            }
             break;
         }
         default:
@@ -991,6 +1044,15 @@ std::vector<Utils::FigureDescriptor> DCMManager::getAllArcs() const {
         desc.pointIds = rec->second.pointIds;
         desc.coords = {p1->x(), p1->y(), p2->x(), p2->y(), center->x(), center->y()};
         result.push_back(std::move(desc));
+    }
+    return result;
+}
+
+std::vector<Utils::FigureDescriptor> DCMManager::getAllCurves() const {
+    std::vector<Utils::FigureDescriptor> result;
+    result.reserve(_storage.curveCount());
+    for (const auto& ref : _storage.curvesWithIds()) {
+        if (auto desc = getFigure(ref.id)) result.push_back(std::move(*desc));
     }
     return result;
 }

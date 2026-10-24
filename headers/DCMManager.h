@@ -212,6 +212,9 @@ public:
      */
     std::vector<Utils::FigureDescriptor> getAllArcs() const;
 
+    /// Get all NURBS curve descriptors, including current control coordinates.
+    std::vector<Utils::FigureDescriptor> getAllCurves() const;
+
     /**
      * @brief Add a new requirement using descriptor.
      *

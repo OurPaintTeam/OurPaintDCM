@@ -4,6 +4,7 @@
 #include "Enums.h"
 #include "ID.h"
 #include "NumericValidation.h"
+#include "Curve2D.h"
 #include <vector>
 #include <optional>
 #include <stdexcept>
@@ -25,6 +26,11 @@ struct FigureDescriptor {
     std::optional<double> x;
     std::optional<double> y;
     std::optional<double> radius;
+
+    unsigned degree = 0;
+    std::vector<double> weights;
+    std::vector<double> knots;
+    bool periodic = false;
 
     FigureDescriptor() = default;
 
@@ -129,6 +135,27 @@ struct FigureDescriptor {
         return d;
     }
 
+    /// Create a NURBS using existing control point IDs.
+    static FigureDescriptor curve(unsigned degree, std::vector<ID> pointIds,
+                                  std::vector<double> weights, std::vector<double> knots,
+                                  bool periodic = false) {
+        FigureDescriptor d{FigureType::ET_CURVE2D, std::move(pointIds)};
+        d.degree = degree;
+        d.weights = std::move(weights);
+        d.knots = std::move(knots);
+        d.periodic = periodic;
+        return d;
+    }
+
+    /// Create a NURBS with owned controls as x,y coordinate pairs.
+    static FigureDescriptor curve(unsigned degree, std::vector<double> coords,
+                                  std::vector<double> weights, std::vector<double> knots,
+                                  bool periodic = false) {
+        auto d = curve(degree, std::vector<ID>{}, std::move(weights), std::move(knots), periodic);
+        d.coords = std::move(coords);
+        return d;
+    }
+
     /**
      * @brief Validate descriptor fields for the given figure type.
      * @return true if valid.
@@ -183,6 +210,13 @@ struct FigureDescriptor {
                 if (pointIds.size() != 3) {
                     throw std::invalid_argument("Arc requires coordinates or exactly 3 point IDs");
                 }
+                break;
+            case FigureType::ET_CURVE2D:
+                if (coords.size() % 2 != 0) {
+                    throw std::invalid_argument("Curve controls require x,y coordinate pairs");
+                }
+                Figures::Curve2D::validateData(degree,
+                    coords.empty() ? pointIds.size() : coords.size() / 2, weights, knots, periodic);
                 break;
             default:
                 throw std::invalid_argument("Unsupported figure type");
@@ -348,6 +382,13 @@ struct FigureUpdateDescriptor {
                                       double centerY) {
         FigureUpdateDescriptor d{id, FigureType::ET_ARC};
         d.coords = {x1, y1, x2, y2, centerX, centerY};
+        return d;
+    }
+
+    /// Update control coordinates without changing curve structure or weights.
+    static FigureUpdateDescriptor curve(ID id, std::vector<double> coords) {
+        FigureUpdateDescriptor d{id, FigureType::ET_CURVE2D};
+        d.coords = std::move(coords);
         return d;
     }
 };

@@ -110,7 +110,10 @@ enum class FigureType : uint8_t {
     ET_CIRCLE,
 
     /// Circular arc object.
-    ET_ARC
+    ET_ARC,
+
+    /// NURBS curve, including Bezier and polynomial B-splines.
+    ET_CURVE2D
 };
 /**
  * @brief Different modes of constraint solving.

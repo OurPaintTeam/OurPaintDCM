@@ -34,6 +34,11 @@ void GeometryDependencyIndex::linkArc(Utils::ID arcId, Utils::ID p1, Utils::ID p
     pushUnique(pointToFigures_[center], arcId);
 }
 
+void GeometryDependencyIndex::linkCurve(Utils::ID curveId, const std::vector<Utils::ID>& points) {
+    figureToPoints_[curveId] = points;
+    for (Utils::ID pointId : points) pushUnique(pointToFigures_[pointId], curveId);
+}
+
 void GeometryDependencyIndex::unlinkFigure(Utils::ID figureId) {
     auto itFig = figureToPoints_.find(figureId);
     if (itFig == figureToPoints_.end()) {
