@@ -85,6 +85,8 @@ public:
         Figures::Circle<Figures::Point2D>* circle
     );
 
+    static std::shared_ptr<RequirementFunction> createPointCircleDist(
+        Figures::Point2D* point, Figures::Circle<Figures::Point2D>* circle, double distance);
     static std::shared_ptr<RequirementFunction> createPointOnCircle(
         Figures::Point2D* point, Figures::Circle<Figures::Point2D>* circle);
     static std::shared_ptr<RequirementFunction> createLineCircleTangent(

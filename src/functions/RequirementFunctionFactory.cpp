@@ -207,6 +207,12 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createArcArcTan
          q->ptrX(),q->ptrY(),c2->ptrX(),c2->ptrY()},static_cast<double>(kind));
 }
 
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointCircleDist(
+    Figures::Point2D* point, Figures::Circle<Figures::Point2D>* circle, double distance) {
+    return bind<PointCircleDistanceError>(Utils::RequirementType::ET_POINTCIRCLEDIST,
+        {point->ptrX(), point->ptrY(), circle->center->ptrX(), circle->center->ptrY(), circle->ptrRadius()}, distance);
+}
+
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointOnCircle(
     Figures::Point2D* point, Figures::Circle<Figures::Point2D>* circle) {
     return bind<PointOnCircleError>(Utils::RequirementType::ET_POINTONCIRCLE,

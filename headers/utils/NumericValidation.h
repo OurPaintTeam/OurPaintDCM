@@ -63,6 +63,10 @@ inline void validateRequirementParameter(RequirementType type, const std::option
             requirePositiveRadius(*param);
             if (type == RequirementType::ET_CIRCLEDIAMETER) requirePositiveRadius(*param / 2.0);
             break;
+        case RequirementType::ET_POINTCIRCLEDIST:
+            if (!param) throw std::invalid_argument("Point-circle distance needs a parameter");
+            requireFinite(*param);
+            break;
         case RequirementType::ET_POINTLINEDIST:
         case RequirementType::ET_POINTPOINTDIST:
         case RequirementType::ET_POINTPOINTHORIZONTALDIST:

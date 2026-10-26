@@ -374,6 +374,13 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                     makePointLineVars(point, a, center)));
                 break;
             }
+            case Utils::RequirementType::ET_POINTCIRCLEDIST: {
+                auto* point = resolvePoint(ids[0]);
+                const auto [center, radius] = resolveCircleData(ids[1]);
+                addFunction(Function::RequirementFunctionFactory::bind<PointCircleDistanceError>(entry.type,
+                    {point->ptrX(), point->ptrY(), center->ptrX(), center->ptrY(), radius}, entry.param.value()));
+                break;
+            }
             case Utils::RequirementType::ET_POINTONCIRCLE: {
                 auto* point = resolvePoint(ids[0]);
                 const auto [center, radius] = resolveCircleData(ids[1]);
@@ -675,6 +682,10 @@ void RequirementSystem::addLineOnCircle(Utils::ID lineId, Utils::ID circleId) {
 
 void RequirementSystem::addPointOnCircle(Utils::ID pointId, Utils::ID circleId) {
     addRequirement(Utils::RequirementDescriptor::pointOnCircle(pointId, circleId));
+}
+
+void RequirementSystem::addPointCircleDist(Utils::ID pointId, Utils::ID circleId, double distance) {
+    addRequirement(Utils::RequirementDescriptor::pointCircleDist(pointId, circleId, distance));
 }
 
 void RequirementSystem::addCircleRadius(Utils::ID circleId, double radius) {
