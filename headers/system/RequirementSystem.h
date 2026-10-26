@@ -67,6 +67,7 @@ class RequirementSystem : public RequirementFunctionSystem {
 
 public:
     void addPointPointHorizontal(Utils::ID first, Utils::ID second);
+    void addPointPointVertical(Utils::ID first, Utils::ID second);
     void addLineArcMidpoint(Utils::ID lineId, Utils::ID arcId);
     void addArcArcMidpoint(Utils::ID first, Utils::ID second);
     void addLineLineMidpoint(Utils::ID first, Utils::ID second);

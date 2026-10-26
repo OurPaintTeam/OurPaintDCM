@@ -89,7 +89,9 @@ enum class RequirementType: uint8_t {
     ET_ARCARCMIDPOINT,
     ET_LINEARCMIDPOINT,
     /// Two points have equal Y coordinates.
-    ET_POINTPOINTHORIZONTAL
+    ET_POINTPOINTHORIZONTAL,
+    /// Two points have equal X coordinates.
+    ET_POINTPOINTVERTICAL
 };
 
 /// Signed normal of the supporting line directed from its first endpoint to its second.

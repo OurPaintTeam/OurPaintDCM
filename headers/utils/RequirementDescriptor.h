@@ -89,6 +89,11 @@ struct RequirementDescriptor {
         return {RequirementType::ET_POINTPOINTHORIZONTAL, {first, second}};
     }
 
+    /// Vertical alignment of two points: x1 == x2; coincident points are allowed.
+    static RequirementDescriptor pointPointVertical(ID first, ID second) {
+        return {RequirementType::ET_POINTPOINTVERTICAL, {first, second}};
+    }
+
     /// @brief Create point-on-point descriptor
     static RequirementDescriptor pointOnPoint(ID p1Id, ID p2Id) {
         return {RequirementType::ET_POINTONPOINT, {p1Id, p2Id}};
@@ -277,6 +282,7 @@ struct RequirementDescriptor {
             case RequirementType::ET_POINTPOINTHORIZONTALDIST:
             case RequirementType::ET_POINTPOINTVERTICALDIST:
             case RequirementType::ET_POINTPOINTHORIZONTAL:
+            case RequirementType::ET_POINTPOINTVERTICAL:
             case RequirementType::ET_POINTONPOINT:
             case RequirementType::ET_LINECIRCLEDIST:
             case RequirementType::ET_LINEONCIRCLE:

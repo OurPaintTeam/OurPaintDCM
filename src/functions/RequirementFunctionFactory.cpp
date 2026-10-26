@@ -9,6 +9,12 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointPoin
         {first->ptrY(), second->ptrY()});
 }
 
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointPointVertical(
+    Figures::Point2D* first, Figures::Point2D* second) {
+    return bind<CoordinateDifferenceError>(Utils::RequirementType::ET_POINTPOINTVERTICAL,
+        {first->ptrX(), second->ptrX()});
+}
+
 std::vector<std::shared_ptr<RequirementFunction>> RequirementFunctionFactory::createLineArcMidpoint(
     Figures::Line<Figures::Point2D>* line, Figures::Arc<Figures::Point2D>* arc) {
     const std::vector<VAR> vars{line->p1->ptrX(), line->p1->ptrY(), line->p2->ptrX(), line->p2->ptrY(),

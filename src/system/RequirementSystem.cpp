@@ -272,6 +272,10 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                 addFunction(Function::RequirementFunctionFactory::createPointPointHorizontal(
                     resolvePoint(ids[0]), resolvePoint(ids[1])));
                 break;
+            case Utils::RequirementType::ET_POINTPOINTVERTICAL:
+                addFunction(Function::RequirementFunctionFactory::createPointPointVertical(
+                    resolvePoint(ids[0]), resolvePoint(ids[1])));
+                break;
             case Utils::RequirementType::ET_POINTPOINTVERTICALDIST: {
                 auto* first = resolvePoint(ids[0]);
                 auto* second = resolvePoint(ids[1]);
@@ -755,6 +759,10 @@ void RequirementSystem::addFixCircle(Utils::ID circleId) {
 
 void RequirementSystem::addPointPointHorizontal(Utils::ID first, Utils::ID second) {
     addRequirement(Utils::RequirementDescriptor::pointPointHorizontal(first, second));
+}
+
+void RequirementSystem::addPointPointVertical(Utils::ID first, Utils::ID second) {
+    addRequirement(Utils::RequirementDescriptor::pointPointVertical(first, second));
 }
 
 void RequirementSystem::addPointPointVerticalDist(Utils::ID first, Utils::ID second, double distance) {
