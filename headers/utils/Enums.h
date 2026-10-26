@@ -95,7 +95,9 @@ enum class RequirementType: uint8_t {
     /// Signed gap from a point to a circle: |P-C| - radius.
     ET_POINTCIRCLEDIST,
     /// Prescribed positive radius of an arc.
-    ET_ARCRADIUS
+    ET_ARCRADIUS,
+    /// Counterclockwise arc angle in radians, including major arcs.
+    ET_ARCANGLE
 };
 
 /// Signed normal of the supporting line directed from its first endpoint to its second.

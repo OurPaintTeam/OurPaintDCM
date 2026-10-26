@@ -388,6 +388,12 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                     {point->ptrX(), point->ptrY(), center->ptrX(), center->ptrY(), radius}));
                 break;
             }
+            case Utils::RequirementType::ET_ARCANGLE: {
+                const auto [a, b, center] = resolveArcPoints(ids[0]);
+                addFunction(Function::RequirementFunctionFactory::bind<ArcAngleError>(entry.type,
+                    {a->ptrX(), a->ptrY(), b->ptrX(), b->ptrY(), center->ptrX(), center->ptrY()}, entry.param.value()));
+                break;
+            }
             case Utils::RequirementType::ET_ARCRADIUS: {
                 const auto [a, b, center] = resolveArcPoints(ids[0]);
                 addFunction(Function::RequirementFunctionFactory::bind<PointPointDistanceError>(entry.type,
@@ -700,6 +706,10 @@ void RequirementSystem::addCircleRadius(Utils::ID circleId, double radius) {
 
 void RequirementSystem::addArcRadius(Utils::ID arcId, double radius) {
     addRequirement(Utils::RequirementDescriptor::arcRadius(arcId, radius));
+}
+
+void RequirementSystem::addArcAngle(Utils::ID arcId, double angle) {
+    addRequirement(Utils::RequirementDescriptor::arcAngle(arcId, angle));
 }
 
 void RequirementSystem::addCircleDiameter(Utils::ID circleId, double diameter) {

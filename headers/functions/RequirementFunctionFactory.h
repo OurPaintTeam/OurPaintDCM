@@ -102,6 +102,8 @@ public:
         Figures::Circle<Figures::Point2D>* circle, double radius);
     static std::shared_ptr<RequirementFunction> createArcRadius(
         Figures::Arc<Figures::Point2D>* arc, double radius);
+    static std::shared_ptr<RequirementFunction> createArcAngle(
+        Figures::Arc<Figures::Point2D>* arc, double angle);
     static std::shared_ptr<RequirementFunction> createCircleDiameter(
         Figures::Circle<Figures::Point2D>* circle, double diameter);
     static std::shared_ptr<RequirementFunction> createEqualLength(

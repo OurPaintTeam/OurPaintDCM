@@ -76,6 +76,12 @@ inline void validateRequirementParameter(RequirementType type, const std::option
             if (!param) throw std::invalid_argument("Distance requirement needs a parameter");
             requireNonNegative(*param);
             break;
+        case RequirementType::ET_ARCANGLE:
+            if (!param) throw std::invalid_argument("Arc angle needs a parameter");
+            requireFinite(*param);
+            if (*param <= 0 || *param >= 2 * std::numbers::pi)
+                throw std::invalid_argument("Arc angle must be in (0, 2*pi) radians");
+            break;
         case RequirementType::ET_LINELINEANGLE:
             if (!param) throw std::invalid_argument("Angle requirement needs a parameter");
             requireFinite(*param);
