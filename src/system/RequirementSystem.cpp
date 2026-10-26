@@ -388,6 +388,12 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                     {point->ptrX(), point->ptrY(), center->ptrX(), center->ptrY(), radius}));
                 break;
             }
+            case Utils::RequirementType::ET_ARCRADIUS: {
+                const auto [a, b, center] = resolveArcPoints(ids[0]);
+                addFunction(Function::RequirementFunctionFactory::bind<PointPointDistanceError>(entry.type,
+                    makeTwoPointVars(a, center), entry.param.value()));
+                break;
+            }
             case Utils::RequirementType::ET_CIRCLERADIUS:
             case Utils::RequirementType::ET_CIRCLEDIAMETER: {
                 auto* circle = requireGeometry(_storage->get<Figures::Circle2D>(ids[0]));
@@ -690,6 +696,10 @@ void RequirementSystem::addPointCircleDist(Utils::ID pointId, Utils::ID circleId
 
 void RequirementSystem::addCircleRadius(Utils::ID circleId, double radius) {
     addRequirement(Utils::RequirementDescriptor::circleRadius(circleId, radius));
+}
+
+void RequirementSystem::addArcRadius(Utils::ID arcId, double radius) {
+    addRequirement(Utils::RequirementDescriptor::arcRadius(arcId, radius));
 }
 
 void RequirementSystem::addCircleDiameter(Utils::ID circleId, double diameter) {

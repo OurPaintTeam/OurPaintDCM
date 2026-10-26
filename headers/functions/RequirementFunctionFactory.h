@@ -100,6 +100,8 @@ public:
         Figures::Arc<Figures::Point2D>* first, Figures::Arc<Figures::Point2D>* second, Utils::CircleTangencyKind kind);
     static std::shared_ptr<RequirementFunction> createCircleRadius(
         Figures::Circle<Figures::Point2D>* circle, double radius);
+    static std::shared_ptr<RequirementFunction> createArcRadius(
+        Figures::Arc<Figures::Point2D>* arc, double radius);
     static std::shared_ptr<RequirementFunction> createCircleDiameter(
         Figures::Circle<Figures::Point2D>* circle, double diameter);
     static std::shared_ptr<RequirementFunction> createEqualLength(

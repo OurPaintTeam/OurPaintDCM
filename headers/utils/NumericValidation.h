@@ -58,8 +58,9 @@ inline void validateRequirementParameter(RequirementType type, const std::option
             requireFinite(*param);
             break;
         case RequirementType::ET_CIRCLERADIUS:
+        case RequirementType::ET_ARCRADIUS:
         case RequirementType::ET_CIRCLEDIAMETER:
-            if (!param) throw std::invalid_argument("Circle size requirement needs a parameter");
+            if (!param) throw std::invalid_argument("Size requirement needs a parameter");
             requirePositiveRadius(*param);
             if (type == RequirementType::ET_CIRCLEDIAMETER) requirePositiveRadius(*param / 2.0);
             break;

@@ -186,6 +186,7 @@ public:
     void addPointOnCircle(Utils::ID pointId, Utils::ID circleId);
     void addPointCircleDist(Utils::ID pointId, Utils::ID circleId, double distance);
     void addCircleRadius(Utils::ID circleId, double radius);
+    void addArcRadius(Utils::ID arcId, double radius);
     void addCircleDiameter(Utils::ID circleId, double diameter);
     void addEqualLength(Utils::ID line1Id, Utils::ID line2Id);
     void addEqualRadius(Utils::ID circle1Id, Utils::ID circle2Id);

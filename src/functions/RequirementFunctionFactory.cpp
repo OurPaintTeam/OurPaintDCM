@@ -224,6 +224,13 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createCircleRad
     return bind<CircleRadiusError>(Utils::RequirementType::ET_CIRCLERADIUS, {circle->ptrRadius()}, radius);
 }
 
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createArcRadius(
+    Figures::Arc<Figures::Point2D>* arc, double radius) {
+    Utils::requirePositiveRadius(radius);
+    return bind<PointPointDistanceError>(Utils::RequirementType::ET_ARCRADIUS,
+        {arc->p1->ptrX(), arc->p1->ptrY(), arc->p_center->ptrX(), arc->p_center->ptrY()}, radius);
+}
+
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createCircleDiameter(
     Figures::Circle<Figures::Point2D>* circle, double diameter) {
     Utils::requirePositiveRadius(diameter);

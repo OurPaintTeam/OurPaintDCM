@@ -182,6 +182,10 @@ struct RequirementDescriptor {
         return {RequirementType::ET_CIRCLERADIUS, {circleId}, radius};
     }
 
+    static RequirementDescriptor arcRadius(ID arcId, double radius) {
+        return {RequirementType::ET_ARCRADIUS, {arcId}, radius};
+    }
+
     /// The original diameter is stored; its residual is measured in radius units.
     static RequirementDescriptor circleDiameter(ID circleId, double diameter) {
         return {RequirementType::ET_CIRCLEDIAMETER, {circleId}, diameter};
@@ -323,6 +327,7 @@ struct RequirementDescriptor {
             case RequirementType::ET_FIXARC:
             case RequirementType::ET_FIXCIRCLE:
             case RequirementType::ET_CIRCLERADIUS:
+            case RequirementType::ET_ARCRADIUS:
             case RequirementType::ET_CIRCLEDIAMETER:
                 if (objectIds.size() != 1) {
                     throw std::invalid_argument("Requirement type requires exactly 1 object ID");

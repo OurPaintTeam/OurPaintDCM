@@ -93,7 +93,9 @@ enum class RequirementType: uint8_t {
     /// Two points have equal X coordinates.
     ET_POINTPOINTVERTICAL,
     /// Signed gap from a point to a circle: |P-C| - radius.
-    ET_POINTCIRCLEDIST
+    ET_POINTCIRCLEDIST,
+    /// Prescribed positive radius of an arc.
+    ET_ARCRADIUS
 };
 
 /// Signed normal of the supporting line directed from its first endpoint to its second.
