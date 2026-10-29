@@ -73,6 +73,7 @@ public:
     void addLineLineMidpoint(Utils::ID first, Utils::ID second);
     void addPointAtArcMidpoint(Utils::ID pointId, Utils::ID arcId);
     void addPointOnArc(Utils::ID pointId, Utils::ID arcId);
+    void addPointArcDist(Utils::ID pointId, Utils::ID arcId, double distance);
     void addPointPointVerticalDist(Utils::ID first, Utils::ID second, double distance);
     void addPointPointHorizontalDist(Utils::ID first, Utils::ID second, double distance);
     void addFixArc(Utils::ID arcId);

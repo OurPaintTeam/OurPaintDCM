@@ -34,6 +34,8 @@ public:
         Figures::Point2D* point, Figures::Arc<Figures::Point2D>* arc);
     static std::shared_ptr<RequirementFunction> createPointOnArc(
         Figures::Point2D* point, Figures::Arc<Figures::Point2D>* arc);
+    static std::shared_ptr<RequirementFunction> createPointArcDist(
+        Figures::Point2D* point, Figures::Arc<Figures::Point2D>* arc, double distance);
     static std::shared_ptr<RequirementFunction> createPointPointVerticalDist(
         Figures::Point2D* first, Figures::Point2D* second, double distance);
     static std::shared_ptr<RequirementFunction> createPointPointHorizontalDist(

@@ -169,6 +169,11 @@ struct RequirementDescriptor {
         return {RequirementType::ET_POINTONARC, {pointId, arcId}};
     }
 
+    /// Signed gap to the supporting circle; the arc's angular sector is not restricted.
+    static RequirementDescriptor pointArcDist(ID pointId, ID arcId, double distance) {
+        return {RequirementType::ET_POINTARCDIST, {pointId, arcId}, distance};
+    }
+
     /// Signed gap: positive outside, negative inside, zero on the circle.
     static RequirementDescriptor pointCircleDist(ID pointId, ID circleId, double distance) {
         return {RequirementType::ET_POINTCIRCLEDIST, {pointId, circleId}, distance};
@@ -307,6 +312,7 @@ struct RequirementDescriptor {
             case RequirementType::ET_POINTONCIRCLE:
             case RequirementType::ET_POINTCIRCLEDIST:
             case RequirementType::ET_POINTONARC:
+            case RequirementType::ET_POINTARCDIST:
             case RequirementType::ET_EQUALLENGTH:
             case RequirementType::ET_EQUALRADIUS:
             case RequirementType::ET_POINTATMIDPOINT:
