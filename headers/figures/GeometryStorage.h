@@ -6,6 +6,7 @@
 #include "Line.h"
 #include "Circle.h"
 #include "Arc.h"
+#include "Curve2D.h"
 #include "ID.h"
 #include "IDGenerator.h"
 #include "Enums.h"
@@ -36,7 +37,8 @@ template <typename T>
 concept SupportedFigure = std::same_as<T, Point2D> ||
                           std::same_as<T, Line2D>  ||
                           std::same_as<T, Circle2D> ||
-                          std::same_as<T, Arc2D>;
+                          std::same_as<T, Arc2D> ||
+                          std::same_as<T, Curve2D>;
 
 /**
  * @brief Outcome of a non-throwing remove operation.
@@ -69,6 +71,10 @@ struct FigureData {
     std::vector<PointData> points{};
     PointData center{};
     double     radius{};
+    unsigned degree = 0;
+    std::vector<double> weights;
+    std::vector<double> knots;
+    bool periodic = false;
 };
 
 /**
@@ -86,7 +92,7 @@ struct FigureRef {
  * @brief ID-first 2D geometry store with slot pools and a bidirectional point↔figure dependency index.
  *
  * Dependency queries avoid scanning the whole scene: incident figures per point are O(degree)
- * in the index; each figure keeps a fixed small list of endpoint / center IDs.
+ * in the index; each figure keeps its endpoint / center / control point IDs.
  */
 class GeometryStorage {
 public:
@@ -137,6 +143,15 @@ public:
                                               ID p2,
                                               ID center,
                                               std::optional<ID> requestedId = std::nullopt);
+
+    /// Creates a NURBS referencing existing points; nullopt if a control ID is invalid.
+    [[nodiscard]] std::optional<ID> createCurve(unsigned degree, const std::vector<ID>& pointIds,
+                                               const std::vector<double>& weights,
+                                               const std::vector<double>& knots, bool periodic = false,
+                                               std::optional<ID> requestedId = std::nullopt);
+
+    /// Evaluate C(u) using rational de Boor. Periodic parameters wrap into one period.
+    [[nodiscard]] Point2D evaluateCurve(ID id, double parameter) const;
 
     /**
      * @brief Creates a figure from aggregated FigureData (may create nested points).
@@ -210,6 +225,8 @@ public:
     [[nodiscard]] std::size_t circleCount() const noexcept;
     /** @brief Number of live arcs. */
     [[nodiscard]] std::size_t arcCount() const noexcept;
+    /** @brief Number of live NURBS curves. */
+    [[nodiscard]] std::size_t curveCount() const noexcept;
     /** @brief True if size() == 0. */
     [[nodiscard]] bool empty() const noexcept;
 
@@ -259,6 +276,8 @@ public:
     [[nodiscard]] const std::vector<FigureRef<Circle2D>>& circlesWithIds() const noexcept { return m_circlesWithIds; }
     /** @brief Read-only cache of all arcs. */
     [[nodiscard]] const std::vector<FigureRef<Arc2D>>& arcsWithIds() const noexcept { return m_arcsWithIds; }
+    /** @brief Read-only cache of all NURBS curves. */
+    [[nodiscard]] const std::vector<FigureRef<Curve2D>>& curvesWithIds() const noexcept { return m_curvesWithIds; }
 
 #ifndef NDEBUG
     /**
@@ -340,6 +359,8 @@ private:
     std::vector<std::size_t>              m_circleFree;
     std::vector<std::unique_ptr<Arc2D>> m_arcSlots;
     std::vector<std::size_t>              m_arcFree;
+    std::vector<std::unique_ptr<Curve2D>> m_curveSlots;
+    std::vector<std::size_t>              m_curveFree;
 
     std::unordered_map<ID, FigureEntry> m_index;
     IDGenerator                         m_idGen;
@@ -349,11 +370,13 @@ private:
     std::vector<FigureRef<Line2D>>   m_linesWithIds;
     std::vector<FigureRef<Circle2D>> m_circlesWithIds;
     std::vector<FigureRef<Arc2D>>    m_arcsWithIds;
+    std::vector<FigureRef<Curve2D>>  m_curvesWithIds;
 
     std::unordered_map<ID, std::size_t> m_pointWithIdPos;
     std::unordered_map<ID, std::size_t> m_lineWithIdPos;
     std::unordered_map<ID, std::size_t> m_circleWithIdPos;
     std::unordered_map<ID, std::size_t> m_arcWithIdPos;
+    std::unordered_map<ID, std::size_t> m_curveWithIdPos;
 };
 
 /** @brief Compile-time FigureType for template get(). */
@@ -363,6 +386,7 @@ constexpr FigureType GeometryStorage::typeToEnum() noexcept {
     if constexpr (std::same_as<T, Line2D>)   return FigureType::ET_LINE;
     if constexpr (std::same_as<T, Circle2D>) return FigureType::ET_CIRCLE;
     if constexpr (std::same_as<T, Arc2D>)    return FigureType::ET_ARC;
+    if constexpr (std::same_as<T, Curve2D>)  return FigureType::ET_CURVE2D;
 }
 
 /** @brief Non-const get(); see class GeometryStorage::get. */
@@ -379,8 +403,10 @@ T* GeometryStorage::get(ID id) noexcept {
         return m_lineSlots[s].get();
     } else if constexpr (std::same_as<T, Circle2D>) {
         return m_circleSlots[s].get();
-    } else {
+    } else if constexpr (std::same_as<T, Arc2D>) {
         return m_arcSlots[s].get();
+    } else {
+        return m_curveSlots[s].get();
     }
 }
 
@@ -398,8 +424,10 @@ const T* GeometryStorage::get(ID id) const noexcept {
         return m_lineSlots[s].get();
     } else if constexpr (std::same_as<T, Circle2D>) {
         return m_circleSlots[s].get();
-    } else {
+    } else if constexpr (std::same_as<T, Arc2D>) {
         return m_arcSlots[s].get();
+    } else {
+        return m_curveSlots[s].get();
     }
 }
 

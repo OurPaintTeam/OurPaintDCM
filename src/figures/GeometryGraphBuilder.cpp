@@ -20,6 +20,9 @@ void addVertexAll(ObjectGraph& g, const GeometryStorage& storage) {
     for (const auto& r : storage.arcsWithIds()) {
         g.addVertex(r.id);
     }
+    for (const auto& r : storage.curvesWithIds()) {
+        g.addVertex(r.id);
+    }
 }
 
 void wireFigureEdges(ObjectGraph& g, Utils::ID figId, const GeometryStorage& storage) {
@@ -42,6 +45,9 @@ ObjectGraph GeometryGraphBuilder::buildObjectGraph(const GeometryStorage& storag
         wireFigureEdges(graph, r.id, storage);
     }
     for (const auto& r : storage.arcsWithIds()) {
+        wireFigureEdges(graph, r.id, storage);
+    }
+    for (const auto& r : storage.curvesWithIds()) {
         wireFigureEdges(graph, r.id, storage);
     }
     return graph;

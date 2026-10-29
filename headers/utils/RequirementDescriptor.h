@@ -3,9 +3,11 @@
 
 #include "Enums.h"
 #include "ID.h"
+#include "NumericValidation.h"
 #include <vector>
 #include <optional>
 #include <stdexcept>
+#include <cmath>
 
 namespace OurPaintDCM::Utils {
 
@@ -36,6 +38,8 @@ struct RequirementDescriptor {
     RequirementType type;              ///< Type of the requirement
     std::vector<ID> objectIds;         ///< IDs of objects involved
     std::optional<double> param;       ///< Optional parameter (distance, angle, etc.)
+    double weight = 1.0;               ///< Finite non-negative residual multiplier; objective uses (weight * residual)^2.
+                                       ///< Fixed and point-coincidence requirements use 1 (active) or 0 (disabled).
 
     /// @brief Default constructor
     RequirementDescriptor() = default;
@@ -45,11 +49,13 @@ struct RequirementDescriptor {
      * @param t Requirement type
      * @param ids Vector of object IDs
      * @param p Optional parameter value
+     * @param w Non-negative residual weight (default 1)
      */
     RequirementDescriptor(RequirementType t,
                           std::vector<ID> ids,
-                          std::optional<double> p = std::nullopt)
-        : type(t), objectIds(std::move(ids)), param(p) {}
+                          std::optional<double> p = std::nullopt,
+                          double w = 1.0)
+        : type(t), objectIds(std::move(ids)), param(p), weight(w) {}
 
     // ==================== Factory methods ====================
 
@@ -68,6 +74,26 @@ struct RequirementDescriptor {
         return {RequirementType::ET_POINTPOINTDIST, {p1Id, p2Id}, dist};
     }
 
+    /// Non-negative horizontal projection of the distance between two points.
+    static RequirementDescriptor pointPointHorizontalDist(ID p1, ID p2, double distance) {
+        return {RequirementType::ET_POINTPOINTHORIZONTALDIST, {p1, p2}, distance};
+    }
+
+    /// Non-negative vertical projection of the distance between two points.
+    static RequirementDescriptor pointPointVerticalDist(ID p1, ID p2, double distance) {
+        return {RequirementType::ET_POINTPOINTVERTICALDIST, {p1, p2}, distance};
+    }
+
+    /// Horizontal alignment of two points: y1 == y2; coincident points are allowed.
+    static RequirementDescriptor pointPointHorizontal(ID first, ID second) {
+        return {RequirementType::ET_POINTPOINTHORIZONTAL, {first, second}};
+    }
+
+    /// Vertical alignment of two points: x1 == x2; coincident points are allowed.
+    static RequirementDescriptor pointPointVertical(ID first, ID second) {
+        return {RequirementType::ET_POINTPOINTVERTICAL, {first, second}};
+    }
+
     /// @brief Create point-on-point descriptor
     static RequirementDescriptor pointOnPoint(ID p1Id, ID p2Id) {
         return {RequirementType::ET_POINTONPOINT, {p1Id, p2Id}};
@@ -76,6 +102,11 @@ struct RequirementDescriptor {
     /// @brief Create line-circle distance descriptor
     static RequirementDescriptor lineCircleDist(ID lineId, ID circleId, double dist) {
         return {RequirementType::ET_LINECIRCLEDIST, {lineId, circleId}, dist};
+    }
+
+    /// Non-negative clearance to the supporting circle, as for lineCircleDist.
+    static RequirementDescriptor lineArcDist(ID lineId, ID arcId, double distance) {
+        return {RequirementType::ET_LINEARCDIST, {lineId, arcId}, distance};
     }
 
     /// @brief Create line-on-circle descriptor
@@ -99,6 +130,7 @@ struct RequirementDescriptor {
     }
 
     /// @brief Create angle between lines descriptor
+    /// @param angle Angle in radians.
     static RequirementDescriptor lineLineAngle(ID l1Id, ID l2Id, double angle) {
         return {RequirementType::ET_LINELINEANGLE, {l1Id, l2Id}, angle};
     }
@@ -133,6 +165,116 @@ struct RequirementDescriptor {
         return {RequirementType::ET_FIXCIRCLE, {circleId}};
     }
 
+    static RequirementDescriptor fixArc(ID arcId) {
+        return {RequirementType::ET_FIXARC, {arcId}};
+    }
+
+    /// Membership in the arc's supporting circle, matching pointOnCircle.
+    static RequirementDescriptor pointOnArc(ID pointId, ID arcId) {
+        return {RequirementType::ET_POINTONARC, {pointId, arcId}};
+    }
+
+    /// Signed gap to the supporting circle; the arc's angular sector is not restricted.
+    static RequirementDescriptor pointArcDist(ID pointId, ID arcId, double distance) {
+        return {RequirementType::ET_POINTARCDIST, {pointId, arcId}, distance};
+    }
+
+    /// Signed gap: positive outside, negative inside, zero on the circle.
+    static RequirementDescriptor pointCircleDist(ID pointId, ID circleId, double distance) {
+        return {RequirementType::ET_POINTCIRCLEDIST, {pointId, circleId}, distance};
+    }
+
+    static RequirementDescriptor pointOnCircle(ID pointId, ID circleId) {
+        return {RequirementType::ET_POINTONCIRCLE, {pointId, circleId}};
+    }
+
+    static RequirementDescriptor circleRadius(ID circleId, double radius) {
+        return {RequirementType::ET_CIRCLERADIUS, {circleId}, radius};
+    }
+
+    static RequirementDescriptor arcRadius(ID arcId, double radius) {
+        return {RequirementType::ET_ARCRADIUS, {arcId}, radius};
+    }
+
+    /// Counterclockwise sweep from the first endpoint to the second, in (0, 2*pi) radians.
+    static RequirementDescriptor arcAngle(ID arcId, double angle) {
+        return {RequirementType::ET_ARCANGLE, {arcId}, angle};
+    }
+
+    /// The original diameter is stored; its residual is measured in radius units.
+    static RequirementDescriptor circleDiameter(ID circleId, double diameter) {
+        return {RequirementType::ET_CIRCLEDIAMETER, {circleId}, diameter};
+    }
+
+    static RequirementDescriptor equalLength(ID line1Id, ID line2Id) {
+        return {RequirementType::ET_EQUALLENGTH, {line1Id, line2Id}};
+    }
+
+    static RequirementDescriptor equalRadius(ID circle1Id, ID circle2Id) {
+        return {RequirementType::ET_EQUALRADIUS, {circle1Id, circle2Id}};
+    }
+
+    /// Halfway along the counterclockwise arc from its first endpoint to its second.
+    static RequirementDescriptor pointAtArcMidpoint(ID pointId, ID arcId) {
+        return {RequirementType::ET_POINTATARCMIDPOINT, {pointId, arcId}};
+    }
+
+    /// Counterclockwise arc midpoints coincide.
+    static RequirementDescriptor arcArcMidpoint(ID first, ID second) {
+        return {RequirementType::ET_ARCARCMIDPOINT, {first, second}};
+    }
+
+    /// Line midpoint coincides with the counterclockwise arc midpoint.
+    static RequirementDescriptor lineArcMidpoint(ID lineId, ID arcId) {
+        return {RequirementType::ET_LINEARCMIDPOINT, {lineId, arcId}};
+    }
+
+    /// The two line midpoints coincide; collapsed lines are allowed.
+    static RequirementDescriptor lineLineMidpoint(ID first, ID second) {
+        return {RequirementType::ET_LINELINEMIDPOINT, {first, second}};
+    }
+
+    static RequirementDescriptor pointAtMidpoint(ID pointId, ID lineId) {
+        return {RequirementType::ET_POINTATMIDPOINT, {pointId, lineId}};
+    }
+
+    static RequirementDescriptor symmetricAboutLine(ID p, ID q, ID axis) {
+        return {RequirementType::ET_SYMMETRICABOUTLINE, {p, q, axis}};
+    }
+    static RequirementDescriptor symmetricAboutHorizontal(ID p, ID q, double y = 0) {
+        return {RequirementType::ET_SYMMETRICABOUTHORIZONTAL, {p, q}, y};
+    }
+    static RequirementDescriptor symmetricAboutVertical(ID p, ID q, double x = 0) {
+        return {RequirementType::ET_SYMMETRICABOUTVERTICAL, {p, q}, x};
+    }
+    static RequirementDescriptor symmetricAboutPoint(ID p, ID q, ID center) {
+        return {RequirementType::ET_SYMMETRICABOUTPOINT, {p, q, center}};
+    }
+
+    /// Tangency to the infinite supporting line; circle may also be an arc.
+    /// Side is preserved until explicitly edited.
+    static RequirementDescriptor lineCircleTangent(ID line, ID circle, TangencySide side) {
+        return {RequirementType::ET_LINECIRCLETANGENT, {line, circle}, static_cast<double>(side)};
+    }
+
+    /// Either object may be a circle or an arc; containment follows object order.
+    static RequirementDescriptor circleCircleTangent(ID first, ID second, CircleTangencyKind kind) {
+        return {RequirementType::ET_CIRCLECIRCLETANGENT, {first, second}, static_cast<double>(kind)};
+    }
+
+    /// Either object may be a circle or an arc; arc spans do not restrict contact.
+    static RequirementDescriptor circleArcTangent(ID first, ID second, CircleTangencyKind kind) {
+        return circleCircleTangent(first,second,kind);
+    }
+
+    /// Tangency of the arc's supporting circle to the infinite line.
+    static RequirementDescriptor arcLineTangent(ID arc, ID line, TangencySide side) {
+        return {RequirementType::ET_ARCLINETANGENT,{arc,line},static_cast<double>(side)};
+    }
+    static RequirementDescriptor arcArcTangent(ID first, ID second, CircleTangencyKind kind) {
+        return {RequirementType::ET_ARCARCTANGENT,{first,second},static_cast<double>(kind)};
+    }
+
     // ==================== Validation ====================
 
     /**
@@ -141,17 +283,55 @@ struct RequirementDescriptor {
      * @throws std::invalid_argument with description of the problem
      */
     bool validate() const {
+        if (!std::isfinite(weight) || weight < 0.0) {
+            throw std::invalid_argument("Requirement weight must be finite and non-negative");
+        }
+        if (weight != 1.0 && weight != 0.0 &&
+            (type == RequirementType::ET_POINTONPOINT ||
+             type == RequirementType::ET_FIXPOINT ||
+             type == RequirementType::ET_FIXLINE ||
+             type == RequirementType::ET_FIXARC ||
+             type == RequirementType::ET_FIXCIRCLE)) {
+            throw std::invalid_argument("Eliminated and fixed requirements must use weight 0 or 1");
+        }
         switch (type) {
+            case RequirementType::ET_SYMMETRICABOUTLINE:
+            case RequirementType::ET_SYMMETRICABOUTPOINT:
+                if (objectIds.size() != 3)
+                    throw std::invalid_argument("Symmetry requires exactly 3 object IDs");
+                break;
             case RequirementType::ET_POINTLINEDIST:
             case RequirementType::ET_POINTONLINE:
             case RequirementType::ET_POINTPOINTDIST:
+            case RequirementType::ET_POINTPOINTHORIZONTALDIST:
+            case RequirementType::ET_POINTPOINTVERTICALDIST:
+            case RequirementType::ET_POINTPOINTHORIZONTAL:
+            case RequirementType::ET_POINTPOINTVERTICAL:
             case RequirementType::ET_POINTONPOINT:
             case RequirementType::ET_LINECIRCLEDIST:
+            case RequirementType::ET_LINEARCDIST:
             case RequirementType::ET_LINEONCIRCLE:
             case RequirementType::ET_LINEINCIRCLE:
             case RequirementType::ET_LINELINEPARALLEL:
             case RequirementType::ET_LINELINEPERPENDICULAR:
             case RequirementType::ET_LINELINEANGLE:
+            case RequirementType::ET_POINTONCIRCLE:
+            case RequirementType::ET_POINTCIRCLEDIST:
+            case RequirementType::ET_POINTONARC:
+            case RequirementType::ET_POINTARCDIST:
+            case RequirementType::ET_EQUALLENGTH:
+            case RequirementType::ET_EQUALRADIUS:
+            case RequirementType::ET_POINTATMIDPOINT:
+            case RequirementType::ET_LINELINEMIDPOINT:
+            case RequirementType::ET_ARCARCMIDPOINT:
+            case RequirementType::ET_LINEARCMIDPOINT:
+            case RequirementType::ET_POINTATARCMIDPOINT:
+            case RequirementType::ET_LINECIRCLETANGENT:
+            case RequirementType::ET_CIRCLECIRCLETANGENT:
+            case RequirementType::ET_ARCLINETANGENT:
+            case RequirementType::ET_ARCARCTANGENT:
+            case RequirementType::ET_SYMMETRICABOUTHORIZONTAL:
+            case RequirementType::ET_SYMMETRICABOUTVERTICAL:
                 if (objectIds.size() != 2) {
                     throw std::invalid_argument("Requirement type requires exactly 2 object IDs");
                 }
@@ -161,27 +341,20 @@ struct RequirementDescriptor {
             case RequirementType::ET_ARCCENTERONPERPENDICULAR:
             case RequirementType::ET_FIXPOINT:
             case RequirementType::ET_FIXLINE:
+            case RequirementType::ET_FIXARC:
             case RequirementType::ET_FIXCIRCLE:
+            case RequirementType::ET_CIRCLERADIUS:
+            case RequirementType::ET_ARCRADIUS:
+            case RequirementType::ET_ARCANGLE:
+            case RequirementType::ET_CIRCLEDIAMETER:
                 if (objectIds.size() != 1) {
                     throw std::invalid_argument("Requirement type requires exactly 1 object ID");
                 }
                 break;
-        }
-
-        // Check that param is provided for types that need it
-        switch (type) {
-            case RequirementType::ET_POINTLINEDIST:
-            case RequirementType::ET_POINTPOINTDIST:
-            case RequirementType::ET_LINECIRCLEDIST:
-            case RequirementType::ET_LINELINEANGLE:
-                if (!param.has_value()) {
-                    throw std::invalid_argument("Requirement type requires a parameter value");
-                }
-                break;
             default:
-                break;
+                throw std::invalid_argument("Unsupported requirement type");
         }
-
+        validateRequirementParameter(type, param);
         return true;
     }
 };

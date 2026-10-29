@@ -58,7 +58,56 @@ enum class RequirementType: uint8_t {
     ET_FIXLINE,
 
     /// Fix a circle (center and radius) at its current position.
-    ET_FIXCIRCLE
+    ET_FIXCIRCLE,
+
+    /// Point lies on a circle.
+    ET_POINTONCIRCLE,
+    /// Circle has a prescribed radius; its center remains free.
+    ET_CIRCLERADIUS,
+    /// Circle has a prescribed diameter; its center remains free.
+    ET_CIRCLEDIAMETER,
+    /// Two sections have equal lengths, including zero lengths.
+    ET_EQUALLENGTH,
+    /// Two circles have equal positive radii.
+    ET_EQUALRADIUS,
+    /// Point is the midpoint of a section (two independent scalar equations).
+    ET_POINTATMIDPOINT,
+    ET_SYMMETRICABOUTLINE,
+    ET_SYMMETRICABOUTHORIZONTAL,
+    ET_SYMMETRICABOUTVERTICAL,
+    ET_SYMMETRICABOUTPOINT,
+    ET_LINECIRCLETANGENT,
+    ET_CIRCLECIRCLETANGENT,
+    ET_ARCLINETANGENT,
+    ET_ARCARCTANGENT,
+    ET_FIXARC,
+    ET_POINTPOINTHORIZONTALDIST,
+    ET_POINTPOINTVERTICALDIST,
+    ET_POINTONARC,
+    ET_POINTATARCMIDPOINT,
+    ET_LINELINEMIDPOINT,
+    ET_ARCARCMIDPOINT,
+    ET_LINEARCMIDPOINT,
+    /// Two points have equal Y coordinates.
+    ET_POINTPOINTHORIZONTAL,
+    /// Two points have equal X coordinates.
+    ET_POINTPOINTVERTICAL,
+    /// Signed gap from a point to a circle: |P-C| - radius.
+    ET_POINTCIRCLEDIST,
+    /// Prescribed positive radius of an arc.
+    ET_ARCRADIUS,
+    /// Counterclockwise arc angle in radians, including major arcs.
+    ET_ARCANGLE,
+    /// Signed gap from a point to an arc's supporting circle.
+    ET_POINTARCDIST,
+    /// Non-negative clearance from a segment to an arc's supporting circle.
+    ET_LINEARCDIST
+};
+
+/// Signed normal of the supporting line directed from its first endpoint to its second.
+enum class TangencySide : int8_t { NEGATIVE = -1, POSITIVE = 1 };
+enum class CircleTangencyKind : uint8_t {
+    EXTERNAL = 0, FIRST_CONTAINS_SECOND = 1, SECOND_CONTAINS_FIRST = 2
 };
 
 /**
@@ -75,7 +124,10 @@ enum class FigureType : uint8_t {
     ET_CIRCLE,
 
     /// Circular arc object.
-    ET_ARC
+    ET_ARC,
+
+    /// NURBS curve, including Bezier and polynomial B-splines.
+    ET_CURVE2D
 };
 /**
  * @brief Different modes of constraint solving.

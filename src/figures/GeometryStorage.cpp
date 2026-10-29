@@ -2,6 +2,8 @@
 #include "GeometryGraphBuilder.h"
 
 #include <algorithm>
+#include <array>
+#include <cmath>
 #include <limits>
 
 namespace OurPaintDCM::Figures {
@@ -133,6 +135,8 @@ ID GeometryStorage::acquireID(std::optional<ID> requestedId) {
 }
 
 ID GeometryStorage::createPoint(double x, double y, std::optional<ID> requestedId) {
+    Utils::requireFinite(x);
+    Utils::requireFinite(y);
     const ID id = acquireID(requestedId);
     const std::size_t slot = allocPoint(x, y);
     m_index.emplace(id, FigureEntry{FigureType::ET_POINT2D, static_cast<std::uint32_t>(slot)});
@@ -151,6 +155,8 @@ std::optional<ID> GeometryStorage::createLine(ID p1, ID p2, std::optional<ID> re
     }
     Point2D* a = m_pointSlots[it1->second.slot].get();
     Point2D* b = m_pointSlots[it2->second.slot].get();
+    a->validate();
+    b->validate();
     const ID id = acquireID(requestedId);
     const std::size_t slot = allocLine(a, b);
     m_index.emplace(id, FigureEntry{FigureType::ET_LINE, static_cast<std::uint32_t>(slot)});
@@ -162,11 +168,13 @@ std::optional<ID> GeometryStorage::createLine(ID p1, ID p2, std::optional<ID> re
 std::optional<ID> GeometryStorage::createCircle(ID center,
                                                  double radius,
                                                  std::optional<ID> requestedId) {
+    Utils::requirePositiveRadius(radius);
     auto it = m_index.find(center);
     if (it == m_index.end() || it->second.type != FigureType::ET_POINT2D) {
         return std::nullopt;
     }
     Point2D* c = m_pointSlots[it->second.slot].get();
+    c->validate();
     const ID id = acquireID(requestedId);
     const std::size_t slot = allocCircle(c, radius);
     m_index.emplace(id, FigureEntry{FigureType::ET_CIRCLE, static_cast<std::uint32_t>(slot)});
@@ -193,6 +201,9 @@ std::optional<ID> GeometryStorage::createArc(ID p1,
     Point2D* a = m_pointSlots[it1->second.slot].get();
     Point2D* b = m_pointSlots[it2->second.slot].get();
     Point2D* c = m_pointSlots[itc->second.slot].get();
+    a->validate();
+    b->validate();
+    c->validate();
     const ID id = acquireID(requestedId);
     const std::size_t slot = allocArc(a, b, c);
     m_index.emplace(id, FigureEntry{FigureType::ET_ARC, static_cast<std::uint32_t>(slot)});
@@ -201,7 +212,93 @@ std::optional<ID> GeometryStorage::createArc(ID p1,
     return id;
 }
 
+std::optional<ID> GeometryStorage::createCurve(unsigned degree, const std::vector<ID>& pointIds,
+                                               const std::vector<double>& weights,
+                                               const std::vector<double>& knots, bool periodic,
+                                               std::optional<ID> requestedId) {
+    auto curve = std::make_unique<Curve2D>(Curve2D{degree, pointIds, weights, knots, periodic});
+    curve->validate();
+    for (ID pointId : pointIds) {
+        const auto* point = get<Point2D>(pointId);
+        if (!point) return std::nullopt;
+        point->validate();
+    }
+    const ID id = acquireID(requestedId);
+    const std::size_t slot = m_curveFree.empty() ? m_curveSlots.size() : m_curveFree.back();
+    if (m_curveFree.empty()) m_curveSlots.push_back(std::move(curve));
+    else {
+        m_curveFree.pop_back();
+        m_curveSlots[slot] = std::move(curve);
+    }
+    m_index.emplace(id, FigureEntry{FigureType::ET_CURVE2D, static_cast<std::uint32_t>(slot)});
+    m_deps.linkCurve(id, pointIds);
+    m_curveWithIdPos.emplace(id, m_curvesWithIds.size());
+    m_curvesWithIds.push_back({id, m_curveSlots[slot].get()});
+    return id;
+}
+
+Point2D GeometryStorage::evaluateCurve(ID id, double parameter) const {
+    Utils::requireFinite(parameter);
+    const auto* curve = get<Curve2D>(id);
+    if (!curve) throw std::runtime_error("Curve not found");
+    const auto& knots = curve->knots;
+    const std::size_t degree = curve->degree;
+    const std::size_t count = curve->pointIds.size();
+    const double first = curve->firstParameter(), last = curve->lastParameter();
+    if (curve->periodic) {
+        const double period = last - first;
+        // Normalize separately so subtraction cannot overflow for distant parameters.
+        double origin = std::fmod(first, period);
+        parameter = std::fmod(parameter, period);
+        if (origin < 0) origin += period;
+        if (parameter < 0) parameter += period;
+        parameter -= origin;
+        if (parameter < 0) parameter += period;
+        parameter += first;
+        if (parameter >= last) parameter = first;
+    } else if (parameter < first || parameter > last) {
+        throw std::out_of_range("Curve parameter is outside its domain");
+    }
+    const std::size_t end = count + (curve->periodic ? degree : 0);
+    const std::size_t span = parameter == last ?
+        std::lower_bound(knots.begin() + degree, knots.begin() + end + 1, parameter) - knots.begin() - 1 :
+        std::upper_bound(knots.begin() + degree, knots.begin() + end + 1, parameter) - knots.begin() - 1;
+    double maxWeight = 0;
+    for (std::size_t j = 0; j <= degree; ++j)
+        maxWeight = std::max(maxWeight, curve->weights[(span - degree + j) % count]);
+    std::vector<std::array<long double, 3>> values(degree + 1);
+    for (std::size_t j = 0; j <= degree; ++j) {
+        const std::size_t i = (span - degree + j) % count;
+        const auto* point = get<Point2D>(curve->pointIds[i]);
+        if (!point) throw std::runtime_error("Curve control point not found");
+        point->validate();
+        const long double weight = static_cast<long double>(curve->weights[i]) / maxWeight;
+        values[j] = {point->x() * weight, point->y() * weight, weight};
+    }
+    for (std::size_t r = 1; r <= degree; ++r) {
+        for (std::size_t j = degree; j >= r; --j) {
+            const std::size_t i = span - degree + j;
+            const double alpha = (parameter - knots[i]) / (knots[i + degree - r + 1] - knots[i]);
+            for (std::size_t axis = 0; axis < 3; ++axis)
+                values[j][axis] = std::lerp(values[j - 1][axis], values[j][axis], alpha);
+        }
+    }
+    return {static_cast<double>(values[degree][0] / values[degree][2]),
+            static_cast<double>(values[degree][1] / values[degree][2])};
+}
+
 ID GeometryStorage::createFigure(FigureType type, const FigureData& data) {
+    // Validate all supplied numbers before creating any nested point or consuming an ID.
+    for (const auto& point : data.points) {
+        Utils::requireFinite(point.x);
+        Utils::requireFinite(point.y);
+    }
+    Utils::requireFinite(data.center.x);
+    Utils::requireFinite(data.center.y);
+    Utils::requireNonNegative(data.radius);
+    if (type == FigureType::ET_CIRCLE) Utils::requirePositiveRadius(data.radius);
+    if (type == FigureType::ET_CURVE2D)
+        Curve2D::validateData(data.degree, data.points.size(), data.weights, data.knots, data.periodic);
     switch (type) {
         case FigureType::ET_POINT2D: {
             if (data.points.empty()) {
@@ -243,6 +340,12 @@ ID GeometryStorage::createFigure(FigureType type, const FigureData& data) {
             }
             return *arcId;
         }
+        case FigureType::ET_CURVE2D: {
+            std::vector<ID> points;
+            points.reserve(data.points.size());
+            for (const auto& point : data.points) points.push_back(createPoint(point.x, point.y));
+            return *createCurve(data.degree, points, data.weights, data.knots, data.periodic);
+        }
         default:
             throw std::runtime_error("Unknown figure type");
     }
@@ -271,6 +374,11 @@ RemoveResult GeometryStorage::removeFigureOnly(ID id) noexcept {
             eraseArcCache(id);
             m_arcSlots[ent.slot].reset();
             m_arcFree.push_back(ent.slot);
+            break;
+        case FigureType::ET_CURVE2D:
+            eraseCachedById(id, m_curvesWithIds, m_curveWithIdPos);
+            m_curveSlots[ent.slot].reset();
+            m_curveFree.push_back(ent.slot);
             break;
         default:
             return RemoveResult::NotFound;
@@ -314,20 +422,24 @@ void GeometryStorage::clear() noexcept {
     m_lineSlots.clear();
     m_circleSlots.clear();
     m_arcSlots.clear();
+    m_curveSlots.clear();
     m_pointFree.clear();
     m_lineFree.clear();
     m_circleFree.clear();
     m_arcFree.clear();
+    m_curveFree.clear();
     m_index.clear();
     m_deps.clear();
     m_pointsWithIds.clear();
     m_linesWithIds.clear();
     m_circlesWithIds.clear();
     m_arcsWithIds.clear();
+    m_curvesWithIds.clear();
     m_pointWithIdPos.clear();
     m_lineWithIdPos.clear();
     m_circleWithIdPos.clear();
     m_arcWithIdPos.clear();
+    m_curveWithIdPos.clear();
     m_idGen.reset();
 }
 
@@ -385,6 +497,12 @@ std::vector<ID> GeometryStorage::getIDsByType(FigureType type) const {
             }
             return ids;
         }
+        case FigureType::ET_CURVE2D: {
+            std::vector<ID> ids;
+            ids.reserve(m_curvesWithIds.size());
+            for (const auto& r : m_curvesWithIds) ids.push_back(r.id);
+            return ids;
+        }
         default:
             return {};
     }
@@ -408,6 +526,10 @@ std::size_t GeometryStorage::circleCount() const noexcept {
 
 std::size_t GeometryStorage::arcCount() const noexcept {
     return m_arcsWithIds.size();
+}
+
+std::size_t GeometryStorage::curveCount() const noexcept {
+    return m_curvesWithIds.size();
 }
 
 bool GeometryStorage::empty() const noexcept {
@@ -449,12 +571,12 @@ std::optional<ObjectGraph> GeometryStorage::buildObjectSubgraph(ID id) const {
 #ifndef NDEBUG
 bool GeometryStorage::validate() const noexcept {
     const std::size_t totalCached =
-        m_pointsWithIds.size() + m_linesWithIds.size() + m_circlesWithIds.size() + m_arcsWithIds.size();
+        m_pointsWithIds.size() + m_linesWithIds.size() + m_circlesWithIds.size() + m_arcsWithIds.size() + m_curvesWithIds.size();
     if (m_index.size() != totalCached) {
         return false;
     }
     if (m_index.size() != m_pointWithIdPos.size() + m_lineWithIdPos.size() + m_circleWithIdPos.size() +
-                               m_arcWithIdPos.size()) {
+                               m_arcWithIdPos.size() + m_curveWithIdPos.size()) {
         return false;
     }
     for (const auto& [id, ent] : m_index) {
@@ -481,6 +603,9 @@ bool GeometryStorage::validate() const noexcept {
                 if (ent.slot >= m_arcSlots.size() || !m_arcSlots[ent.slot]) {
                     return false;
                 }
+                break;
+            case FigureType::ET_CURVE2D:
+                if (ent.slot >= m_curveSlots.size() || !m_curveSlots[ent.slot]) return false;
                 break;
             default:
                 return false;
@@ -514,6 +639,13 @@ bool GeometryStorage::validate() const noexcept {
         }
         if (m_deps.pointsForFigure(r.id).size() != 3) {
             return false;
+        }
+    }
+    for (const auto& r : m_curvesWithIds) {
+        if (!contains(r.id) || get<Curve2D>(r.id) != r.ptr ||
+            m_deps.pointsForFigure(r.id) != r.ptr->pointIds) return false;
+        for (ID pointId : r.ptr->pointIds) {
+            if (!get<Point2D>(pointId)) return false;
         }
     }
     return true;

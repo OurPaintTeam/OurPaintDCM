@@ -1,7 +1,7 @@
 #ifndef OURPAINTDCM_HEADERS_FIGURES_LINE_H
 #define OURPAINTDCM_HEADERS_FIGURES_LINE_H
 #include "PointBase.h"
-#include "cmath"
+#include "core/ErrorFunction.h"
 
 namespace OurPaintDCM::Figures{
     /**
@@ -27,7 +27,11 @@ namespace OurPaintDCM::Figures{
             * @param p2 Pointer to the second point.
             */
         Line(PointT* p1, PointT* p2)
-            : p1(p1), p2(p2) {}
+            : p1(p1), p2(p2) {
+            if (p1 == nullptr || p2 == nullptr) throw std::invalid_argument("Line endpoints must not be null");
+            p1->validate();
+            p2->validate();
+        }
 
         /**
              * @brief Calculate the length of the line segment.
@@ -35,12 +39,7 @@ namespace OurPaintDCM::Figures{
              * @return The distance between p1 and p2 points as a double.
              */
         double length() const {
-            double sum = 0.0;
-            for (std::size_t i = 0; i < PointT::dimension(); ++i) {
-                double diff = (*p2)[i] - (*p1)[i];
-                sum += diff * diff;
-            }
-            return std::sqrt(sum);
+            return PointPointDistanceError::distance(p1->coords,p2->coords);
         }
     };
 

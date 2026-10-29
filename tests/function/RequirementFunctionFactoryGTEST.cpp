@@ -65,7 +65,7 @@ TEST_F(RequirementFunctionFactoryTest, CreatePointOnLine) {
     ASSERT_NE(func, nullptr);
     EXPECT_EQ(func->getVarCount(), 6);
     
-    double val = func->evaluate();
+    double val = func->mathematical()->evaluate();
     EXPECT_NEAR(val, 0.0, 1e-9);
 }
 
@@ -74,7 +74,7 @@ TEST_F(RequirementFunctionFactoryTest, CreatePointPointDist) {
     ASSERT_NE(func, nullptr);
     EXPECT_EQ(func->getVarCount(), 4);
     
-    double val = func->evaluate();
+    double val = func->mathematical()->evaluate();
     EXPECT_NEAR(val, 0.0, 1e-9);
 }
 
@@ -83,7 +83,7 @@ TEST_F(RequirementFunctionFactoryTest, CreatePointOnPoint) {
     ASSERT_NE(func, nullptr);
     EXPECT_EQ(func->getVarCount(), 4);
     
-    double val = func->evaluate();
+    double val = func->mathematical()->evaluate();
     EXPECT_NEAR(val, 0.0, 1e-9);
 }
 
@@ -97,9 +97,14 @@ TEST_F(RequirementFunctionFactoryTest, CreateLineCircleDist) {
 }
 
 TEST_F(RequirementFunctionFactoryTest, CreateLineOnCircle) {
-    auto func = RequirementFunctionFactory::createLineOnCircle(line1, circle);
-    ASSERT_NE(func, nullptr);
-    EXPECT_EQ(func->getVarCount(), 7);
+    auto rows = RequirementFunctionFactory::createLineOnCircle(line1, circle);
+    ASSERT_EQ(rows.size(), 2u);
+    EXPECT_EQ(rows[0]->getVars()[0],line1->p1->ptrX());
+    EXPECT_EQ(rows[1]->getVars()[0],line1->p2->ptrX());
+    for (const auto& row : rows) {
+        EXPECT_NE(dynamic_cast<PointOnCircleError*>(row->mathematical().get()),nullptr);
+        EXPECT_EQ(row->getVarCount(),5);
+    }
 }
 
 TEST_F(RequirementFunctionFactoryTest, CreateLineLineParallel) {
@@ -148,7 +153,7 @@ TEST_F(RequirementFunctionFactoryTest, CreateArcCenterOnPerpendicular) {
 
 TEST_F(RequirementFunctionFactoryTest, GradientNotEmpty) {
     auto func = RequirementFunctionFactory::createPointPointDist(p1, p2, 5.0);
-    auto grad = func->gradient();
+    auto grad = func->mathematical()->gradient();
     EXPECT_FALSE(grad.empty());
 }
 
@@ -161,4 +166,26 @@ TEST_F(RequirementFunctionFactoryTest, VarsPointToStorageData) {
     
     *vars[1] = 200.0;
     EXPECT_DOUBLE_EQ(p1->y(), 200.0);
+}
+
+TEST(RequirementFunctionFactoryTangency, ArcsUseCircleResidualsWithoutEndpointContact) {
+    using namespace OurPaintDCM::Utils;
+    Point2D c1(0,0),p1(3,4),q1(-3,4),c2(7,0),p2(7,2),q2(9,0);
+    Point2D l1(10,-5),l2(20,-5);
+    Arc2D first(&p1,&q1,&c1),second(&p2,&q2,&c2);
+    Circle2D circle1(&c1,5),circle2(&c2,2);
+    Line2D line(&l1,&l2);
+    for (auto side:{TangencySide::POSITIVE,TangencySide::NEGATIVE}) {
+        auto arc=RequirementFunctionFactory::createArcLineTangent(&first,&line,side);
+        auto circle=RequirementFunctionFactory::createLineCircleTangent(&line,&circle1,side);
+        EXPECT_DOUBLE_EQ(arc->mathematical()->evaluate(),circle->mathematical()->evaluate());
+    }
+    for (auto kind:{CircleTangencyKind::EXTERNAL,CircleTangencyKind::FIRST_CONTAINS_SECOND}) {
+        auto arcs=RequirementFunctionFactory::createArcArcTangent(&first,&second,kind);
+        auto circles=RequirementFunctionFactory::createCircleCircleTangent(&circle1,&circle2,kind);
+        EXPECT_DOUBLE_EQ(arcs->mathematical()->evaluate(),circles->mathematical()->evaluate());
+        auto reversed=RequirementFunctionFactory::createArcArcTangent(&second,&first,
+            kind==CircleTangencyKind::EXTERNAL ? kind : CircleTangencyKind::SECOND_CONTAINS_FIRST);
+        EXPECT_DOUBLE_EQ(reversed->mathematical()->evaluate(),circles->mathematical()->evaluate());
+    }
 }

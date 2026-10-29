@@ -8,6 +8,7 @@
 #include "IDGenerator.h"
 #include "utils/RequirementDescriptor.h"
 #include <unordered_map>
+#include <utility>
 
 namespace OurPaintDCM {
 class DCMManager;
@@ -41,8 +42,11 @@ class RequirementSystem : public RequirementFunctionSystem {
         Utils::RequirementType type;             ///< Type of the requirement
         std::vector<Utils::ID> objectIds;        ///< IDs of objects involved
         std::optional<double> param;             ///< Optional parameter (distance, angle)
+        std::vector<double> fixedTargets;
+        double weight = 1.0;                     ///< Residual multiplier
     };
 
+    std::optional<std::vector<Utils::ID>> _figureScope;
     std::vector<RequirementEntry> _requirements;
     std::unordered_map<Utils::ID, Utils::ID> _pointRepresentative;
     std::unordered_map<Utils::ID, std::vector<Utils::ID>> _coincidentPointGroups;
@@ -50,22 +54,42 @@ class RequirementSystem : public RequirementFunctionSystem {
     void rebuildFunctionsAndAliases();
     /** Replaces all records and rebuilds function state once; used by DCM restoration. */
     void replaceRequirements(const std::vector<Utils::RequirementDescriptor>& descriptors,
-                             Utils::ID nextRequirementId);
+                             Utils::ID nextRequirementId,
+                             const std::unordered_map<Utils::ID,std::vector<double>>& fixedTargets);
     Utils::ID resolvePointRepresentative(Utils::ID pointId) const noexcept;
     Figures::Point2D* resolvePoint(Utils::ID pointId) const;
     std::vector<Utils::ID> getCoincidentPoints(Utils::ID pointId) const;
     void applyDirectAssignments() const;
     void synchronizeCoincidentPoints() const noexcept;
+    bool coincidencesSatisfied(double tolerance) const;
 
     friend class ::OurPaintDCM::DCMManager;
 
 public:
+    void addPointPointHorizontal(Utils::ID first, Utils::ID second);
+    void addPointPointVertical(Utils::ID first, Utils::ID second);
+    void addLineArcMidpoint(Utils::ID lineId, Utils::ID arcId);
+    void addArcArcMidpoint(Utils::ID first, Utils::ID second);
+    void addLineLineMidpoint(Utils::ID first, Utils::ID second);
+    void addPointAtArcMidpoint(Utils::ID pointId, Utils::ID arcId);
+    void addPointOnArc(Utils::ID pointId, Utils::ID arcId);
+    void addPointArcDist(Utils::ID pointId, Utils::ID arcId, double distance);
+    void addLineArcDist(Utils::ID lineId, Utils::ID arcId, double distance);
+    void addPointPointVerticalDist(Utils::ID first, Utils::ID second, double distance);
+    void addPointPointHorizontalDist(Utils::ID first, Utils::ID second, double distance);
+    void addFixArc(Utils::ID arcId);
     /**
      * @brief Construct system bound to a GeometryStorage.
      * @param storage Pointer to the storage (must outlive this object).
      */
-    explicit RequirementSystem(Figures::GeometryStorage* storage);
+    explicit RequirementSystem(Figures::GeometryStorage* storage,
+        std::optional<std::vector<Utils::ID>> figureScope = std::nullopt);
 
+    /** Rank and local degrees of freedom of all geometry in this system's scope.
+     * Coincident points share coordinates; mandatory arc conditions are included.
+     * rank/degreesOfFreedom are absent when the linearization is undefined.
+     */
+    Diagnosis diagnoseDetailed() const override;
 
     /**
      * @brief Add a requirement using a descriptor (unified high-level interface).
@@ -160,6 +184,24 @@ public:
 
     /// @brief Add line-on-circle constraint by IDs.
     void addLineOnCircle(Utils::ID lineId, Utils::ID circleId);
+
+    void addPointOnCircle(Utils::ID pointId, Utils::ID circleId);
+    void addPointCircleDist(Utils::ID pointId, Utils::ID circleId, double distance);
+    void addCircleRadius(Utils::ID circleId, double radius);
+    void addArcRadius(Utils::ID arcId, double radius);
+    void addArcAngle(Utils::ID arcId, double angle);
+    void addCircleDiameter(Utils::ID circleId, double diameter);
+    void addEqualLength(Utils::ID line1Id, Utils::ID line2Id);
+    void addEqualRadius(Utils::ID circle1Id, Utils::ID circle2Id);
+    void addPointAtMidpoint(Utils::ID pointId, Utils::ID lineId);
+    void addLineCircleTangent(Utils::ID line, Utils::ID circle, Utils::TangencySide side);
+    void addCircleCircleTangent(Utils::ID first, Utils::ID second, Utils::CircleTangencyKind kind);
+    void addArcLineTangent(Utils::ID arc, Utils::ID line, Utils::TangencySide side);
+    void addArcArcTangent(Utils::ID first, Utils::ID second, Utils::CircleTangencyKind kind);
+    void addSymmetricAboutLine(Utils::ID p, Utils::ID q, Utils::ID axis);
+    void addSymmetricAboutHorizontal(Utils::ID p, Utils::ID q, double y = 0);
+    void addSymmetricAboutVertical(Utils::ID p, Utils::ID q, double x = 0);
+    void addSymmetricAboutPoint(Utils::ID p, Utils::ID q, Utils::ID center);
 
     /// @brief Add parallel-lines constraint by IDs.
     void addLineLineParallel(Utils::ID l1Id, Utils::ID l2Id);
