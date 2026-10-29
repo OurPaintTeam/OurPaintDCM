@@ -62,6 +62,13 @@ std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointArcD
          arc->p_center->ptrX(), arc->p_center->ptrY()}, distance);
 }
 
+std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createLineArcDist(
+    Figures::Line<Figures::Point2D>* line, Figures::Arc<Figures::Point2D>* arc, double distance) {
+    return bind<SectionArcDistanceError>(Utils::RequirementType::ET_LINEARCDIST,
+        {line->p1->ptrX(), line->p1->ptrY(), line->p2->ptrX(), line->p2->ptrY(),
+         arc->p1->ptrX(), arc->p1->ptrY(), arc->p_center->ptrX(), arc->p_center->ptrY()}, distance);
+}
+
 std::shared_ptr<RequirementFunction> RequirementFunctionFactory::createPointPointVerticalDist(
     Figures::Point2D* first, Figures::Point2D* second, double distance) {
     return bind<PointPointVerticalDistanceError>(Utils::RequirementType::ET_POINTPOINTVERTICALDIST,

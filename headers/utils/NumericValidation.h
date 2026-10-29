@@ -74,6 +74,7 @@ inline void validateRequirementParameter(RequirementType type, const std::option
         case RequirementType::ET_POINTPOINTHORIZONTALDIST:
         case RequirementType::ET_POINTPOINTVERTICALDIST:
         case RequirementType::ET_LINECIRCLEDIST:
+        case RequirementType::ET_LINEARCDIST:
             if (!param) throw std::invalid_argument("Distance requirement needs a parameter");
             requireNonNegative(*param);
             break;

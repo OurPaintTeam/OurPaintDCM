@@ -104,6 +104,11 @@ struct RequirementDescriptor {
         return {RequirementType::ET_LINECIRCLEDIST, {lineId, circleId}, dist};
     }
 
+    /// Non-negative clearance to the supporting circle, as for lineCircleDist.
+    static RequirementDescriptor lineArcDist(ID lineId, ID arcId, double distance) {
+        return {RequirementType::ET_LINEARCDIST, {lineId, arcId}, distance};
+    }
+
     /// @brief Create line-on-circle descriptor
     static RequirementDescriptor lineOnCircle(ID lineId, ID circleId) {
         return {RequirementType::ET_LINEONCIRCLE, {lineId, circleId}};
@@ -304,6 +309,7 @@ struct RequirementDescriptor {
             case RequirementType::ET_POINTPOINTVERTICAL:
             case RequirementType::ET_POINTONPOINT:
             case RequirementType::ET_LINECIRCLEDIST:
+            case RequirementType::ET_LINEARCDIST:
             case RequirementType::ET_LINEONCIRCLE:
             case RequirementType::ET_LINEINCIRCLE:
             case RequirementType::ET_LINELINEPARALLEL:

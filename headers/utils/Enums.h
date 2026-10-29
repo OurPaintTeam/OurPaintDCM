@@ -99,7 +99,9 @@ enum class RequirementType: uint8_t {
     /// Counterclockwise arc angle in radians, including major arcs.
     ET_ARCANGLE,
     /// Signed gap from a point to an arc's supporting circle.
-    ET_POINTARCDIST
+    ET_POINTARCDIST,
+    /// Non-negative clearance from a segment to an arc's supporting circle.
+    ET_LINEARCDIST
 };
 
 /// Signed normal of the supporting line directed from its first endpoint to its second.

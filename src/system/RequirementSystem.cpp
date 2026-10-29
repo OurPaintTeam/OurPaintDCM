@@ -438,6 +438,14 @@ void RequirementSystem::rebuildFunctionsAndAliases() {
                     entry.param.value()));
                 break;
             }
+            case Utils::RequirementType::ET_LINEARCDIST: {
+                const auto [a, b] = resolveLinePoints(ids[0]);
+                const auto [p, q, center] = resolveArcPoints(ids[1]);
+                addFunction(Function::RequirementFunctionFactory::bind<SectionArcDistanceError>(entry.type,
+                    {a->ptrX(), a->ptrY(), b->ptrX(), b->ptrY(), p->ptrX(), p->ptrY(),
+                     center->ptrX(), center->ptrY()}, entry.param.value()));
+                break;
+            }
             case Utils::RequirementType::ET_LINECIRCLETANGENT:
             case Utils::RequirementType::ET_ARCLINETANGENT: {
                 const bool arcFirst=entry.type == Utils::RequirementType::ET_ARCLINETANGENT;
@@ -817,6 +825,10 @@ void RequirementSystem::addPointOnArc(Utils::ID pointId, Utils::ID arcId) {
 
 void RequirementSystem::addPointArcDist(Utils::ID pointId, Utils::ID arcId, double distance) {
     addRequirement(Utils::RequirementDescriptor::pointArcDist(pointId, arcId, distance));
+}
+
+void RequirementSystem::addLineArcDist(Utils::ID lineId, Utils::ID arcId, double distance) {
+    addRequirement(Utils::RequirementDescriptor::lineArcDist(lineId, arcId, distance));
 }
 
 void RequirementSystem::addPointAtArcMidpoint(Utils::ID pointId, Utils::ID arcId) {
