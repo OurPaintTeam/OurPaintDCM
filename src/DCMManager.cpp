@@ -10,10 +10,6 @@
 
 namespace {
 
-void eraseRequirementId(std::vector<OurPaintDCM::Utils::ID>& ids, OurPaintDCM::Utils::ID id) {
-    ids.erase(std::remove(ids.begin(), ids.end(), id), ids.end());
-}
-
 void hashCombine(std::size_t& seed, std::size_t value) {
     seed ^= value + 0x9e3779b9u + (seed << 6u) + (seed >> 2u);
 }
@@ -343,56 +339,26 @@ Utils::ID DCMManager::addFigure(const Utils::FigureDescriptor& descriptor) {
 }
 
 void DCMManager::removeFigure(Utils::ID figureId, bool forceCascade) {
-    if (!_storage.contains(figureId)) {
-        throw std::runtime_error("Figure not found");
-    }
+    removeFigures({figureId}, forceCascade);
+}
 
-    std::vector<Utils::ID> dependencyPoints;
-    if (forceCascade) {
-        auto reqs = getRequirementsForFigure(figureId);
-        for (const auto& reqId : reqs) {
-            removeRequirement(reqId);
-        }
-        dependencyPoints = _storage.getDependencies(figureId);
+void DCMManager::removeFigures(const std::vector<Utils::ID>& figureIds, bool forceCascade) {
+    if (figureIds.empty()) {
+        return;
     }
-
-    std::vector<Utils::ID> cascadedFigures;
-    if (forceCascade) {
-        const auto ty = _storage.getType(figureId);
-        if (ty.has_value() && *ty == Utils::FigureType::ET_POINT2D) {
-            cascadedFigures = _storage.getDependents(figureId);
-        }
-    }
+    const auto idsToRemove = collectFiguresForRemoval(figureIds, forceCascade);
 
     invalidateSolveCache();
     static_cast<System::RequirementFunctionSystem&>(_reqSystem).clear();
     _reqSystemSyncedWithRecords = false;
-    const auto removed = _storage.remove(figureId, forceCascade);
-    if (removed == Figures::RemoveResult::NotFound) {
-        throw std::runtime_error("Figure not found");
-    }
-    if (removed == Figures::RemoveResult::BlockedByDependents) {
-        throw std::runtime_error("Dependencies exist");
-    }
-
-    for (const auto& id : cascadedFigures) {
+    for (const auto id : idsToRemove) {
+        (void)_storage.remove(id);
         _figureRecords.erase(id);
         removeFigureFromComponent(id);
-    }
-    _figureRecords.erase(figureId);
-    removeFigureFromComponent(figureId);
-
-    if (forceCascade) {
-        for (const auto& depPointId : dependencyPoints) {
-            if (_storage.contains(depPointId)) {
-                removeFigure(depPointId, true);
-            }
-        }
     }
 
     pruneRequirementsWithMissingObjects();
     splitComponentsAfterRemoval();
-    invalidateSolveCache();
 }
 
 DCMManager::FixedGeometry DCMManager::collectFixedGeometry() const {
@@ -1139,14 +1105,27 @@ Utils::ID DCMManager::addRequirement(const Utils::RequirementDescriptor& descrip
 }
 
 void DCMManager::removeRequirement(Utils::ID reqId) {
-    auto it = _requirementRecords.find(reqId);
-    if (it == _requirementRecords.end()) {
-        throw std::runtime_error("Requirement not found");
+    removeRequirements({reqId});
+}
+
+void DCMManager::removeRequirements(const std::vector<Utils::ID>& reqIds) {
+    if (reqIds.empty()) {
+        return;
+    }
+    for (const auto reqId : reqIds) {
+        if (!_requirementRecords.contains(reqId)) {
+            throw std::runtime_error("Requirement not found");
+        }
     }
 
-    _requirementRecords.erase(it);
-    _fixedRequirementTargets.erase(reqId);
-    eraseRequirementId(_requirementOrder, reqId);
+    for (const auto reqId : reqIds) {
+        _requirementRecords.erase(reqId);
+        _fixedRequirementTargets.erase(reqId);
+    }
+    std::erase_if(_requirementOrder, [this](Utils::ID id) {
+        return !_requirementRecords.contains(id);
+    });
+
     _reqSystemSyncedWithRecords = false;
     rebuildComponents();
     invalidateSolveCache();
@@ -1675,31 +1654,24 @@ void DCMManager::syncRequirementSystemIfNeeded() {
 }
 
 void DCMManager::pruneRequirementsWithMissingObjects() {
-    bool changed = false;
-    std::vector<Utils::ID> staleRequirementIds;
-    for (auto it = _requirementRecords.begin(); it != _requirementRecords.end();) {
-        bool stale = false;
-        for (const auto& oid : it->second.objectIds) {
-            if (!_storage.contains(oid)) {
-                stale = true;
-                break;
-            }
-        }
+    const auto removed = std::erase_if(_requirementRecords, [this](const auto& entry) {
+        const auto& objectIds = entry.second.objectIds;
+        const bool stale = std::any_of(objectIds.begin(), objectIds.end(), [this](Utils::ID id) {
+            return !_storage.contains(id);
+        });
         if (stale) {
-            staleRequirementIds.push_back(it->first);
-            _fixedRequirementTargets.erase(it->first);
-            it = _requirementRecords.erase(it);
-            changed = true;
-        } else {
-            ++it;
+            _fixedRequirementTargets.erase(entry.first);
         }
+        return stale;
+    });
+    if (removed == 0) {
+        return;
     }
-    for (const auto& reqId : staleRequirementIds) {
-        eraseRequirementId(_requirementOrder, reqId);
-    }
-    if (changed) {
-        _reqSystemSyncedWithRecords = false;
-    }
+
+    std::erase_if(_requirementOrder, [this](Utils::ID id) {
+        return !_requirementRecords.contains(id);
+    });
+    _reqSystemSyncedWithRecords = false;
 }
 
 void DCMManager::rebuildComponents() {
@@ -1795,22 +1767,36 @@ void DCMManager::removeFigureFromComponent(Utils::ID figureId) {
     }
 }
 
-std::vector<Utils::ID> DCMManager::getRequirementsForFigure(Utils::ID figureId) const {
-    std::vector<Utils::ID> result;
-    for (const auto& reqId : _requirementOrder) {
-        const auto it = _requirementRecords.find(reqId);
-        if (it == _requirementRecords.end()) {
-            continue;
+std::vector<Utils::ID> DCMManager::collectFiguresForRemoval(
+    const std::vector<Utils::ID>& figureIds, bool forceCascade) const {
+    std::unordered_set<Utils::ID> idsToRemove(figureIds.begin(), figureIds.end());
+    for (const auto id : figureIds) {
+        if (!_storage.contains(id)) {
+            throw std::runtime_error("Figure not found");
         }
-
-        const auto& desc = it->second;
-        for (const auto& objId : desc.objectIds) {
-            if (objId == figureId) {
-                result.push_back(reqId);
-                break;
-            }
+        if (forceCascade) {
+            const auto points = _storage.getDependencies(id);
+            idsToRemove.insert(points.begin(), points.end());
         }
     }
+
+    std::vector<Utils::ID> result(idsToRemove.begin(), idsToRemove.end());
+    for (std::size_t i = 0; i < result.size(); ++i) {
+        for (const auto dependent : _storage.getDependents(result[i])) {
+            if (idsToRemove.contains(dependent)) {
+                continue;
+            }
+            if (!forceCascade) {
+                throw std::runtime_error("Dependencies exist");
+            }
+            idsToRemove.insert(dependent);
+            result.push_back(dependent);
+        }
+    }
+
+    std::partition(result.begin(), result.end(), [this](Utils::ID id) {
+        return _storage.getType(id) != Utils::FigureType::ET_POINT2D;
+    });
     return result;
 }
 

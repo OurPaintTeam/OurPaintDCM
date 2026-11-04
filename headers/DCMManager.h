@@ -111,6 +111,7 @@ public:
      * @throws std::runtime_error if figure not found or has dependencies.
      */
     void removeFigure(Utils::ID figureId, bool forceCascade = false);
+    void removeFigures(const std::vector<Utils::ID>& figureIds, bool forceCascade = false);
 
     /**
      * @brief Update point coordinates.
@@ -252,6 +253,7 @@ public:
      * @throws std::runtime_error if requirement not found.
      */
     void removeRequirement(Utils::ID reqId);
+    void removeRequirements(const std::vector<Utils::ID>& reqIds);
 
     /**
      * @brief Update requirement parameter value.
@@ -478,7 +480,8 @@ private:
     ComponentID createNewComponent();
     void addFigureToComponent(Utils::ID figureId, ComponentID componentId);
     void removeFigureFromComponent(Utils::ID figureId);
-    std::vector<Utils::ID> getRequirementsForFigure(Utils::ID figureId) const;
+    std::vector<Utils::ID> collectFiguresForRemoval(
+        const std::vector<Utils::ID>& figureIds, bool forceCascade) const;
 };
 
 } // namespace OurPaintDCM
