@@ -14,11 +14,29 @@
 #include <memory>
 #include <cmath>
 #include <initializer_list>
+#include <span>
 
 namespace OurPaintDCM {
 
 using ComponentID = std::size_t;
 using ComponentGraph = Graph<Utils::ID, Utils::ID, UndirectedPolicy, WeightedPolicy>;
+
+struct PointTarget {
+    Utils::ID point;
+    double x;
+    double y;
+};
+
+enum class TargetPolicy {
+    Require,
+    Prefer
+};
+
+struct TargetSolveResult {
+    bool converged = false;
+    bool targetsSatisfied = false;
+    bool usedFallback = false;
+};
 
 /**
  * @brief Main manager class for the DCM (Dynamic Constraint Manager) system.
@@ -371,6 +389,25 @@ public:
      */
     bool solve(std::optional<ComponentID> componentId = std::nullopt,
                double residualTolerance = 1e-6);
+
+    /**
+     * @brief Solve globally with point positions held temporarily for this call.
+     *
+     * Targets address whole coincidence groups. Identical targets for a group are
+     * accepted; different targets for the same group are invalid. Existing Fix
+     * requirements always take precedence. Require fails when a target cannot be
+     * retained. Prefer may release targets and retry from the prepared geometry.
+     * No requirements are created, and the previous solve mode is restored.
+     *
+     * Failed calls and exceptions restore all pre-call coordinates. Result flags
+     * describe an accepted solution; usedFallback also records target relaxation
+     * when the final solve fails. Empty targets perform an ordinary global solve.
+     * @throws std::invalid_argument for invalid policy, tolerance, or targets.
+     * @throws std::runtime_error if a target point does not exist.
+     */
+    TargetSolveResult solveWithTargets(std::span<const PointTarget> targets,
+                                      TargetPolicy policy = TargetPolicy::Require,
+                                      double residualTolerance = 1e-6);
 
 private:
     struct SolveCache;

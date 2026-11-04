@@ -76,9 +76,16 @@ public:
         return true;
     }
     void accept() noexcept { _accepted = true; }
+
+    void restore() const noexcept {
+        for (const auto& value : _values) {
+            *value.variable = value.original;
+        }
+    }
+
     ~GeometrySolveState() {
         if (!_accepted) {
-            for (const auto& value : _values) *value.variable = value.original;
+            restore();
         }
     }
 };
@@ -1325,6 +1332,101 @@ Utils::SolveMode DCMManager::getSolveMode() const noexcept {
 bool DCMManager::solve(std::optional<ComponentID> componentId, double residualTolerance) {
     const std::unordered_set<double*> noLockedVars;
     return solveWithLockedVars(componentId, noLockedVars, residualTolerance);
+}
+
+TargetSolveResult DCMManager::solveWithTargets(std::span<const PointTarget> targets,
+                                             TargetPolicy policy,
+                                             double residualTolerance) {
+    if (policy != TargetPolicy::Require && policy != TargetPolicy::Prefer) {
+        throw std::invalid_argument("Unknown target policy");
+    }
+    if (!std::isfinite(residualTolerance) || residualTolerance < 0.0) {
+        throw std::invalid_argument("Residual tolerance must be finite and non-negative");
+    }
+    for (const auto& target : targets) {
+        validatePointUpdate({target.point, target.x, target.y});
+    }
+
+    const auto saveGeometry = [&](GeometrySolveState& state) {
+        for (const auto& ref : _storage.pointsWithIds()) {
+            state.savePoint(*_storage.get<Figures::Point2D>(ref.id));
+        }
+        for (const auto& ref : _storage.circlesWithIds()) {
+            state.saveCircle(*_storage.get<Figures::Circle2D>(ref.id));
+        }
+    };
+    GeometrySolveState originalGeometry;
+    saveGeometry(originalGeometry);
+    struct RestoreMode {
+        Utils::SolveMode& mode;
+        Utils::SolveMode previous;
+        ~RestoreMode() { mode = previous; }
+    } restoreMode{_solveMode, _solveMode};
+    _solveMode = Utils::SolveMode::GLOBAL;
+
+    syncRequirementSystemIfNeeded();
+    std::unordered_map<Utils::ID, PointTarget> groupTargets;
+    for (const auto& target : targets) {
+        const auto representative = _reqSystem.resolvePointRepresentative(target.point);
+        const auto [it, inserted] = groupTargets.emplace(representative, target);
+        if (!inserted && (it->second.x != target.x || it->second.y != target.y)) {
+            throw std::invalid_argument("Conflicting targets for one coincidence group");
+        }
+    }
+    _reqSystem.applyDirectAssignments();
+    _reqSystem.synchronizeCoincidentPoints();
+
+    const auto matches = [&](const Figures::Point2D& point, const PointTarget& target) {
+        return std::abs(point.x() - target.x) <= residualTolerance &&
+               std::abs(point.y() - target.y) <= residualTolerance;
+    };
+    const auto targetsSatisfied = [&] {
+        return std::all_of(targets.begin(), targets.end(), [&](const PointTarget& target) {
+            return matches(*_storage.get<Figures::Point2D>(target.point), target);
+        });
+    };
+
+    const auto fixedGeometry = collectFixedGeometry();
+    bool relaxed = false;
+    std::unordered_set<double*> lockedVars;
+    for (const auto& [representative, target] : groupTargets) {
+        auto* point = _storage.get<Figures::Point2D>(representative);
+        if (pointGroupHasFixConstraint(representative, fixedGeometry.pointIds)) {
+            if (!matches(*point, target)) {
+                if (policy == TargetPolicy::Require) return {};
+                relaxed = true;
+            }
+            continue;
+        }
+        point->x() = target.x;
+        point->y() = target.y;
+        lockedVars.insert(point->ptrX());
+        lockedVars.insert(point->ptrY());
+    }
+    _reqSystem.synchronizeCoincidentPoints();
+
+    // The relaxed attempt starts with the same guesses, not a failed iterate.
+    GeometrySolveState preparedGeometry;
+    saveGeometry(preparedGeometry);
+    preparedGeometry.accept();
+    if (solveWithLockedVars(std::nullopt, lockedVars, residualTolerance)) {
+        const bool satisfied = targetsSatisfied();
+        if (policy == TargetPolicy::Prefer || satisfied) {
+            originalGeometry.accept();
+            return {true, satisfied, relaxed};
+        }
+    }
+    if (policy == TargetPolicy::Require || lockedVars.empty()) {
+        return {false, false, relaxed};
+    }
+
+    preparedGeometry.restore();
+    if (!solveWithLockedVars(std::nullopt, {}, residualTolerance)) {
+        return {false, false, true};
+    }
+    const bool satisfied = targetsSatisfied();
+    originalGeometry.accept();
+    return {true, satisfied, true};
 }
 
 bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
