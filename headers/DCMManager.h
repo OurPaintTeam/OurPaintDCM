@@ -378,11 +378,13 @@ public:
     /// @brief Get current solving mode.
     Utils::SolveMode getSolveMode() const noexcept;
 
+    void setSolver(Utils::SolverType solver) noexcept;
+
     /**
      * @brief Solve the constraint system according to the current mode.
      *
-     * GLOBAL — solves all requirements at once (Levenberg-Marquardt).
-     * LOCAL  — solves only the specified component (Levenberg-Marquardt).
+     * GLOBAL — solves all requirements at once.
+     * LOCAL  — solves only the specified component.
      * DRAG   — solves touched components automatically from geometry update methods.
      *
      * @param componentId Component to solve (used only in LOCAL mode).
@@ -433,6 +435,7 @@ private:
     ComponentID _nextComponentId = 0;
     std::size_t _activeComponentCount = 0;
     Utils::SolveMode _solveMode = Utils::SolveMode::GLOBAL;
+    Utils::SolverType _solverType = Utils::SolverType::LEVENBERG_MARQUARDT;
     std::unique_ptr<SolveCache> _solveCache;
 
     std::unique_ptr<System::RequirementSystem> buildSubsystem(ComponentID componentId) const;

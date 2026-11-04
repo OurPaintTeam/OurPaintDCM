@@ -1,7 +1,12 @@
 #include "DCMManager.h"
 #include "Function.h"
+#include "MatrixOptimizer.h"
 #include "SparseLSMTask.h"
+#include "SparseSystemTask.h"
+#include "sparse/SparseDogLegSolver.h"
 #include "sparse/SparseLevenbergMarquardtSolver.h"
+#include "sparse/SparseNewtonGaussSolver.h"
+#include "sparse/SparseNewtonSolver.h"
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
@@ -9,6 +14,26 @@
 #include <stdexcept>
 
 namespace {
+
+std::unique_ptr<MatrixOptimizer> createSolver(OurPaintDCM::Utils::SolverType type,
+                                            double residualTolerance) {
+    using OurPaintDCM::Utils::SolverType;
+    const double tolerance = std::min(residualTolerance, 1e-4);
+    const double epsilon = std::min(1e-8, tolerance * 0.01);
+    const double errorTolerance = tolerance * tolerance * 0.01;
+    switch (type) {
+        case SolverType::LEVENBERG_MARQUARDT:
+            return std::make_unique<SparseLMSolver>(100, 1e-3, epsilon, epsilon, errorTolerance);
+        case SolverType::DOGLEG:
+            return std::make_unique<SparseDogLegSolver>(
+                100, 1.0, 100.0, 1e-4, epsilon, epsilon, errorTolerance);
+        case SolverType::GAUSS_NEWTON:
+            return std::make_unique<SparseNewtonGaussSolver>(100, epsilon, epsilon, errorTolerance);
+        case SolverType::NEWTON:
+            return std::make_unique<SparseNewtonSolver>(100, epsilon, epsilon, errorTolerance);
+    }
+    throw std::invalid_argument("Unknown solver type");
+}
 
 void hashCombine(std::size_t& seed, std::size_t value) {
     seed ^= value + 0x9e3779b9u + (seed << 6u) + (seed >> 2u);
@@ -41,7 +66,7 @@ using FixedAssignmentMap = std::unordered_map<double*, double>;
 struct BuiltSolvePipeline {
     FixedAssignmentMap fixedAssignments;
     std::vector<std::unique_ptr<Variable>> variableOwners;
-    std::unique_ptr<SparseLSMTask> task;
+    std::unique_ptr<TaskMatrix> task;
     bool hasFunctions = false;
     bool hasFreeVariables = false;
 };
@@ -94,8 +119,8 @@ struct OurPaintDCM::DCMManager::SolveCache {
         std::unique_ptr<System::RequirementSystem> subsystem;
         FixedAssignmentMap fixedAssignments;
             std::vector<std::unique_ptr<Variable>> variableOwners;
-        std::unique_ptr<SparseLSMTask> task;
-        std::unique_ptr<SparseLMSolver> solver;
+        std::unique_ptr<TaskMatrix> task;
+        std::unique_ptr<MatrixOptimizer> solver;
         double solverResidualTolerance = -1.0;
         bool hasFunctions = false;
         bool hasFreeVariables = false;
@@ -1308,6 +1333,14 @@ Utils::SolveMode DCMManager::getSolveMode() const noexcept {
     return _solveMode;
 }
 
+void DCMManager::setSolver(Utils::SolverType solver) noexcept {
+    if (_solverType == solver) {
+        return;
+    }
+    _solverType = solver;
+    invalidateSolveCache();
+}
+
 bool DCMManager::solve(std::optional<ComponentID> componentId, double residualTolerance) {
     const std::unordered_set<double*> noLockedVars;
     return solveWithLockedVars(componentId, noLockedVars, residualTolerance);
@@ -1520,7 +1553,11 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
             mathFuncs.push_back(owner.release());
         }
 
-        pipeline.task = std::make_unique<SparseLSMTask>(std::move(mathFuncs), std::move(mathVars));
+        if (_solverType == Utils::SolverType::NEWTON) {
+            pipeline.task = std::make_unique<SparseSystemTask>(std::move(mathFuncs), std::move(mathVars));
+        } else {
+            pipeline.task = std::make_unique<SparseLSMTask>(std::move(mathFuncs), std::move(mathVars));
+        }
         return pipeline;
     };
 
@@ -1585,7 +1622,7 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
     }
 
     // Undefined geometry has no usable linearization. Reject it before sending
-    // infinite residuals into LM, including when fixes or aliases collapse a line.
+    // infinite residuals into the solver, including when fixes or aliases collapse a line.
     for (const auto& function : system.getFunctions()) {
         if (!std::isfinite(function->mathematical()->weightedValue())) {
             return false;
@@ -1603,10 +1640,7 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
     }
 
     if (entry.solver == nullptr || entry.solverResidualTolerance != residualTolerance) {
-        const double tolerance = std::min(residualTolerance, 1e-4);
-        entry.solver = std::make_unique<SparseLMSolver>(
-            100, 1e-3, std::min(1e-8, tolerance * 0.01),
-            std::min(1e-8, tolerance * 0.01), tolerance * tolerance * 0.01);
+        entry.solver = createSolver(_solverType, residualTolerance);
         entry.solverResidualTolerance = residualTolerance;
     }
     entry.solver->setTask(entry.task.get());

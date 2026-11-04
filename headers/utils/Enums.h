@@ -137,6 +137,12 @@ enum class SolveMode {
     LOCAL,  ///< Solve only affected subgraphs/subsystems
     DRAG    ///< Interactive drag mode (tracking free DoF)
 };
+enum class SolverType {
+    LEVENBERG_MARQUARDT,
+    DOGLEG,
+    GAUSS_NEWTON,
+    NEWTON
+};
 enum class SystemStatus {
     WELL_CONSTRAINED,
     UNDER_CONSTRAINED,
