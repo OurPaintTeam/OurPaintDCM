@@ -237,7 +237,17 @@ public:
      */
     void clear();
 
+    /** Temporary topology of this system's figure scope (all storage if unscoped).
+     * Vertices are figure IDs; edge weights do not enumerate all constraints between a pair.
+     * Numerical constraints remain in getFunctions(), including implicit arc constraints.
+     */
     Figures::ObjectGraph buildDependencyGraph() const;
+
+    /** Solvable parameters of a figure, including defining points and resolved point aliases.
+     * Returns unique pointers into storage, not copied values; missing figures return an empty list.
+     * Re-query after changes to geometry structure or coincidence requirements.
+     */
+    std::vector<VAR> getFigureVariables(Utils::ID figureId) const;
 };
 
 }

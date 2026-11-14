@@ -53,6 +53,17 @@ ObjectGraph GeometryGraphBuilder::buildObjectGraph(const GeometryStorage& storag
     return graph;
 }
 
+ObjectGraph GeometryGraphBuilder::buildObjectGraph(const GeometryStorage& storage,
+                                                  std::span<const Utils::ID> figureIds) {
+    ObjectGraph graph;
+    for (const auto id : figureIds) {
+        if (!storage.getType(id)) continue;
+        graph.addVertex(id);
+        wireFigureEdges(graph, id, storage);
+    }
+    return graph;
+}
+
 std::optional<ObjectGraph> GeometryGraphBuilder::buildObjectSubgraph(const GeometryStorage& storage, Utils::ID id) {
     auto typeOpt = storage.getType(id);
     if (!typeOpt.has_value()) {
