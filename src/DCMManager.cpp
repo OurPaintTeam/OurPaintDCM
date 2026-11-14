@@ -133,6 +133,7 @@ struct OurPaintDCM::DCMManager::SolveCache {
 
 struct OurPaintDCM::DCMManager::BatchUpdateContext {
     std::unordered_map<ComponentID, std::unordered_set<double*>> lockedVarsByComponent;
+    std::unordered_map<ComponentID, std::unordered_set<Utils::ID>> editedFiguresByComponent;
     GeometrySolveState geometryState;
     bool needsCoincidentSync = false;
 };
@@ -439,8 +440,10 @@ bool DCMManager::pointGroupHasFixConstraint(
 
 void DCMManager::addDragLocks(Utils::ID figureId,
                               std::initializer_list<double*> vars,
-                              BatchUpdateContext& context) {
+                              BatchUpdateContext& context,
+                              bool edited) {
     if (_solveMode != Utils::SolveMode::DRAG) {
+        if (edited) _pendingEditedFigures.insert(figureId);
         return;
     }
 
@@ -457,6 +460,7 @@ void DCMManager::addDragLocks(Utils::ID figureId,
         }
     }
     auto& lockedVars = it->second;
+    if (edited) context.editedFiguresByComponent[*comp].insert(figureId);
     for (double* var : vars) {
         if (var != nullptr) {
             lockedVars.insert(var);
@@ -466,11 +470,17 @@ void DCMManager::addDragLocks(Utils::ID figureId,
 
 bool DCMManager::solveDragUpdates(BatchUpdateContext& context) {
     for (const auto& [componentId, lockedVars] : context.lockedVarsByComponent) {
-        if (!solveWithLockedVars(componentId, lockedVars) &&
-            (lockedVars.empty() || !solveWithLockedVars(componentId, {}))) {
+        std::vector<Utils::ID> edited;
+        if (const auto found = context.editedFiguresByComponent.find(componentId);
+            found != context.editedFiguresByComponent.end())
+            edited.assign(found->second.begin(), found->second.end());
+        if (!solveWithLockedVars(componentId, lockedVars, 1e-6, edited) &&
+            (lockedVars.empty() || !solveWithLockedVars(componentId, {}, 1e-6, edited))) {
             return false;
         }
     }
+    for (const auto& [componentId, lockedVars] : context.lockedVarsByComponent)
+        forgetEditedFigures(componentId);
     context.geometryState.accept();
     return true;
 }
@@ -591,7 +601,8 @@ void DCMManager::applyPointUpdateNoSolve(const Utils::PointUpdateDescriptor& des
         return;
     }
 
-    addDragLocks(descriptor.pointId, {solvePoint->ptrX(), solvePoint->ptrY()}, context);
+    addDragLocks(descriptor.pointId, {solvePoint->ptrX(), solvePoint->ptrY()}, context,
+                 descriptor.newX.has_value() || descriptor.newY.has_value());
     if (descriptor.newX.has_value()) {
         solvePoint->x() = descriptor.newX.value();
     }
@@ -644,7 +655,7 @@ void DCMManager::applyCircleUpdateNoSolve(const Utils::CircleUpdateDescriptor& d
         return;
     }
 
-    addDragLocks(descriptor.circleId, {circle->ptrRadius()}, context);
+    addDragLocks(descriptor.circleId, {circle->ptrRadius()}, context, true);
     circle->radius = descriptor.newRadius;
 }
 
@@ -1312,6 +1323,7 @@ std::size_t DCMManager::requirementCount() const noexcept {
 }
 
 void DCMManager::clear() {
+    _pendingEditedFigures.clear();
     invalidateSolveCache();
     _reqSystem.clear();
     _storage.clear();
@@ -1345,7 +1357,17 @@ void DCMManager::setSolver(Utils::SolverType solver) noexcept {
 
 bool DCMManager::solve(std::optional<ComponentID> componentId, double residualTolerance) {
     const std::unordered_set<double*> noLockedVars;
-    return solveWithLockedVars(componentId, noLockedVars, residualTolerance);
+    const std::vector<Utils::ID> edited(_pendingEditedFigures.begin(), _pendingEditedFigures.end());
+    const bool solved = solveWithLockedVars(componentId, noLockedVars, residualTolerance, edited);
+    if (solved) forgetEditedFigures(_solveMode == Utils::SolveMode::GLOBAL ? std::nullopt : componentId);
+    return solved;
+}
+
+void DCMManager::forgetEditedFigures(std::optional<ComponentID> componentId) {
+    std::erase_if(_pendingEditedFigures, [&](Utils::ID id) {
+        const auto component = getComponentForFigure(id);
+        return !component || !componentId || component == componentId;
+    });
 }
 
 TargetSolveResult DCMManager::solveWithTargets(std::span<const PointTarget> targets,
@@ -1423,9 +1445,12 @@ TargetSolveResult DCMManager::solveWithTargets(std::span<const PointTarget> targ
     GeometrySolveState preparedGeometry;
     saveGeometry(preparedGeometry);
     preparedGeometry.accept();
-    if (solveWithLockedVars(std::nullopt, lockedVars, residualTolerance)) {
+    std::vector<Utils::ID> edited;
+    for (const auto& target : targets) edited.push_back(target.point);
+    if (solveWithLockedVars(std::nullopt, lockedVars, residualTolerance, edited)) {
         const bool satisfied = targetsSatisfied();
         if (policy == TargetPolicy::Prefer || satisfied) {
+            forgetEditedFigures(std::nullopt);
             originalGeometry.accept();
             return {true, satisfied, relaxed};
         }
@@ -1435,17 +1460,19 @@ TargetSolveResult DCMManager::solveWithTargets(std::span<const PointTarget> targ
     }
 
     preparedGeometry.restore();
-    if (!solveWithLockedVars(std::nullopt, {}, residualTolerance)) {
+    if (!solveWithLockedVars(std::nullopt, {}, residualTolerance, edited)) {
         return {false, false, true};
     }
     const bool satisfied = targetsSatisfied();
+    forgetEditedFigures(std::nullopt);
     originalGeometry.accept();
     return {true, satisfied, true};
 }
 
 bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
                                      const std::unordered_set<double*>& lockedVars,
-                                     double residualTolerance) {
+                                     double residualTolerance,
+                                     std::span<const Utils::ID> editedFigures) {
     if (!std::isfinite(residualTolerance) || residualTolerance < 0.0) {
         throw std::invalid_argument("Residual tolerance must be finite and non-negative");
     }
@@ -1590,7 +1617,7 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
                 if (!binding->mathematical()->satisfied(residualTolerance)) return false;
             return component.system->coincidencesSatisfied(residualTolerance);
         }
-        const auto order = System::chooseConstraintSolveOrder(*component.system, *component.decomposition);
+        const auto order = System::chooseConstraintSolveOrder(*component.system, *component.decomposition, editedFigures);
         const bool solved = System::solveSequentialConstraints(*component.system, *component.decomposition,
             order, lockedVars, _solverType, residualTolerance, optimizeTask);
         if (solved) component.system->synchronizeCoincidentPoints();
