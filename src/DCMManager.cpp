@@ -1,5 +1,7 @@
 #include "DCMManager.h"
 #include "SolvePipeline.h"
+#include "ConstraintSolveOrder.h"
+#include "SequentialConstraintSolve.h"
 #include "Function.h"
 #include "MatrixOptimizer.h"
 #include "SparseLSMTask.h"
@@ -109,16 +111,22 @@ public:
 struct OurPaintDCM::DCMManager::SolveCache {
     struct Entry {
         std::size_t version = 0;
-        std::unique_ptr<System::RequirementSystem> subsystem;
+        std::shared_ptr<System::RequirementSystem> subsystem;
         FixedAssignmentMap fixedAssignments;
             std::vector<std::unique_ptr<Variable>> variableOwners;
         std::unique_ptr<TaskMatrix> task;
         std::unique_ptr<MatrixOptimizer> solver;
         double solverResidualTolerance = -1.0;
+        bool prepared = false;
         bool hasFunctions = false;
         bool hasFreeVariables = false;
     };
 
+    struct Component {
+        std::shared_ptr<System::RequirementSystem> system;
+        std::optional<System::ConstraintDecomposition> decomposition;
+    };
+    std::unordered_map<ComponentID, Component> components;
     std::size_t version = 0;
     std::unordered_map<SolveCacheKey, Entry, SolveCacheKeyHasher> entries;
 };
@@ -206,6 +214,7 @@ void DCMManager::invalidateSolveCache() noexcept {
     }
     ++_solveCache->version;
     _solveCache->entries.clear();
+    _solveCache->components.clear();
 }
 
 Utils::ID DCMManager::addFigure(const Utils::FigureDescriptor& descriptor) {
@@ -1486,6 +1495,16 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
     cacheKey.lockedVars.assign(lockedVars.begin(), lockedVars.end());
     std::sort(cacheKey.lockedVars.begin(), cacheKey.lockedVars.end());
 
+    const auto componentData = [&](ComponentID id) -> SolveCache::Component& {
+        auto found = _solveCache->components.find(id);
+        if (found != _solveCache->components.end()) return found->second;
+        SolveCache::Component component;
+        component.system = buildSubsystem(id);
+        component.decomposition = System::buildConstraintDecomposition(*component.system,
+            System::decomposeByArticulationPoints(component.system->buildDependencyGraph()));
+        return _solveCache->components.emplace(id, std::move(component)).first->second;
+    };
+
     auto entryIt = _solveCache->entries.find(cacheKey);
     if (entryIt == _solveCache->entries.end() || entryIt->second.version != _solveCache->version) {
         SolveCache::Entry entry;
@@ -1493,7 +1512,7 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
 
         System::RequirementSystem* buildSystem = nullptr;
         if (cacheKey.componentId.has_value()) {
-            entry.subsystem = buildSubsystem(cacheKey.componentId.value());
+            entry.subsystem = componentData(*cacheKey.componentId).system;
             buildSystem = entry.subsystem.get();
         } else {
             syncRequirementSystemIfNeeded();
@@ -1502,12 +1521,6 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
 
         entry.fixedAssignments = System::collectFixedAssignments(buildSystem->getFunctions());
         for (const auto& [variable, target] : entry.fixedAssignments) *variable = target;
-        auto pipeline = System::buildSolvePipeline(
-            buildSystem->getFunctions(), entry.fixedAssignments, lockedVars, _solverType);
-        entry.variableOwners = std::move(pipeline.variableOwners);
-        entry.task = std::move(pipeline.task);
-        entry.hasFunctions = pipeline.hasFunctions;
-        entry.hasFreeVariables = pipeline.hasFreeVariables;
         entryIt = _solveCache->entries.insert_or_assign(std::move(cacheKey), std::move(entry)).first;
     }
 
@@ -1554,6 +1567,75 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
         if (!std::isfinite(function->mathematical()->weightedValue())) {
             return false;
         }
+    }
+
+    const auto optimizeTask = [&](TaskMatrix& task) {
+        auto optimizer = createSolver(_solverType, residualTolerance);
+        optimizer->setTask(&task);
+        optimizer->optimize();
+    };
+    bool attemptedDecomposition = false;
+    const auto solveComponentBlocks = [&](ComponentID id) {
+        auto& component = componentData(id);
+        attemptedDecomposition = true;
+        if (!component.decomposition) {
+            const auto fixed = System::collectFixedAssignments(component.system->getFunctions());
+            for (const auto& [variable, target] : fixed) *variable = target;
+            for (const auto& binding : component.system->getFunctions())
+                if (!std::isfinite(binding->mathematical()->weightedValue())) return false;
+            auto pipeline = System::buildSolvePipeline(component.system->getFunctions(), fixed, lockedVars, _solverType);
+            if (pipeline.task) optimizeTask(*pipeline.task);
+            component.system->synchronizeCoincidentPoints();
+            for (const auto& binding : component.system->getFunctions())
+                if (!binding->mathematical()->satisfied(residualTolerance)) return false;
+            return component.system->coincidencesSatisfied(residualTolerance);
+        }
+        const auto order = System::chooseConstraintSolveOrder(*component.system, *component.decomposition);
+        const bool solved = System::solveSequentialConstraints(*component.system, *component.decomposition,
+            order, lockedVars, _solverType, residualTolerance, optimizeTask);
+        if (solved) component.system->synchronizeCoincidentPoints();
+        return solved;
+    };
+    bool decomposed = false;
+    if (cacheKey.componentId) {
+        if (componentData(*cacheKey.componentId).decomposition)
+            decomposed = solveComponentBlocks(*cacheKey.componentId);
+    } else {
+        // GLOBAL still selects every existing connected component; graph searches remain local.
+        bool hasSplit = false;
+        for (ComponentID id = 0; id < _components.size(); ++id)
+            if (!_components[id].empty() && componentData(id).decomposition) hasSplit = true;
+        if (hasSplit) {
+            decomposed = true;
+            for (ComponentID id = 0; id < _components.size(); ++id) {
+                if (_components[id].empty()) continue;
+                if (!solveComponentBlocks(id)) { decomposed = false; break; }
+            }
+        }
+    }
+    if (decomposed) {
+        system.synchronizeCoincidentPoints();
+        if (geometryState.valid() && constraintsSatisfied() && geometryState.valid()) {
+            geometryState.accept();
+            return true;
+        }
+    }
+    if (attemptedDecomposition) {
+        geometryState.restore();
+        for (const auto& [variable, target] : entry.fixedAssignments) *variable = target;
+        system.synchronizeCoincidentPoints();
+        invalidEvaluationCounts.clear();
+        for (const auto& binding : system.getFunctions())
+            invalidEvaluationCounts.push_back(binding->mathematical()->invalidEvaluations());
+    }
+
+    if (!entry.prepared) {
+        auto pipeline = System::buildSolvePipeline(system.getFunctions(), entry.fixedAssignments, lockedVars, _solverType);
+        entry.variableOwners = std::move(pipeline.variableOwners);
+        entry.task = std::move(pipeline.task);
+        entry.hasFunctions = pipeline.hasFunctions;
+        entry.hasFreeVariables = pipeline.hasFreeVariables;
+        entry.prepared = true;
     }
 
     if (!entry.hasFunctions) {
