@@ -1,4 +1,5 @@
-#pragma once
+#ifndef OURPAINTDCM_HEADERS_SYSTEM_ARTICULATIONDECOMPOSITION_H
+#define OURPAINTDCM_HEADERS_SYSTEM_ARTICULATIONDECOMPOSITION_H
 
 #include "GeometryGraphBuilder.h"
 #include <vector>
@@ -19,3 +20,5 @@ struct ArticulationDecomposition {
 [[nodiscard]] ArticulationDecomposition decomposeByArticulationPoints(const Figures::ObjectGraph& graph);
 
 } // namespace OurPaintDCM::System
+
+#endif
