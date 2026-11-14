@@ -1,4 +1,5 @@
 #include "DCMManager.h"
+#include "SolvePipeline.h"
 #include "Function.h"
 #include "MatrixOptimizer.h"
 #include "SparseLSMTask.h"
@@ -62,14 +63,6 @@ struct SolveCacheKeyHasher {
 };
 
 using FixedAssignmentMap = std::unordered_map<double*, double>;
-
-struct BuiltSolvePipeline {
-    FixedAssignmentMap fixedAssignments;
-    std::vector<std::unique_ptr<Variable>> variableOwners;
-    std::unique_ptr<TaskMatrix> task;
-    bool hasFunctions = false;
-    bool hasFreeVariables = false;
-};
 
 class GeometrySolveState {
     struct Value {
@@ -1493,74 +1486,6 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
     cacheKey.lockedVars.assign(lockedVars.begin(), lockedVars.end());
     std::sort(cacheKey.lockedVars.begin(), cacheKey.lockedVars.end());
 
-    const auto buildPipeline = [&](System::RequirementSystem& system) {
-        BuiltSolvePipeline pipeline;
-        std::vector<std::unique_ptr<::Function>> mathFunctionOwners;
-        std::vector<double*> mathVariableRefs;
-        std::unordered_set<double*> mathVariableRefSet;
-
-        const auto rememberVariable = [&](double* valueRef) {
-            if (!lockedVars.contains(valueRef) &&
-                !pipeline.fixedAssignments.contains(valueRef) &&
-                mathVariableRefSet.insert(valueRef).second) mathVariableRefs.push_back(valueRef);
-        };
-        for (const auto& binding : system.getFunctions()) {
-            double* variable = nullptr;
-            double target = 0;
-            if (binding->tryGetAssignment(variable,target)) pipeline.fixedAssignments[variable] = target;
-        }
-
-        for (const auto& [valueRef, target] : pipeline.fixedAssignments) {
-            *valueRef = target;
-        }
-
-        for (const auto& constraint : system.getFunctions()) {
-            if (constraint->getWeight() == 0) continue;
-            const auto type = constraint->getType();
-            if (type == Utils::RequirementType::ET_FIXPOINT ||
-                type == Utils::RequirementType::ET_FIXARC ||
-                type == Utils::RequirementType::ET_FIXLINE ||
-                type == Utils::RequirementType::ET_FIXCIRCLE) {
-                continue;
-            }
-            for (double* variable : constraint->getVars()) {
-                rememberVariable(variable);
-            }
-            mathFunctionOwners.push_back(std::unique_ptr<::Function>(constraint->mathematical()->weightedFunction()));
-        }
-
-        pipeline.hasFunctions = !mathFunctionOwners.empty();
-        if (!pipeline.hasFunctions) {
-            return pipeline;
-        }
-
-        pipeline.hasFreeVariables = !mathVariableRefs.empty();
-        if (!pipeline.hasFreeVariables) {
-            return pipeline;
-        }
-
-        std::vector<Variable*> mathVars;
-        pipeline.variableOwners.reserve(mathVariableRefs.size());
-        mathVars.reserve(mathVariableRefs.size());
-        for (double* valueRef : mathVariableRefs) {
-            pipeline.variableOwners.push_back(std::make_unique<Variable>(valueRef));
-            mathVars.push_back(pipeline.variableOwners.back().get());
-        }
-
-        std::vector<::Function*> mathFuncs;
-        mathFuncs.reserve(mathFunctionOwners.size());
-        for (auto& owner : mathFunctionOwners) {
-            mathFuncs.push_back(owner.release());
-        }
-
-        if (_solverType == Utils::SolverType::NEWTON) {
-            pipeline.task = std::make_unique<SparseSystemTask>(std::move(mathFuncs), std::move(mathVars));
-        } else {
-            pipeline.task = std::make_unique<SparseLSMTask>(std::move(mathFuncs), std::move(mathVars));
-        }
-        return pipeline;
-    };
-
     auto entryIt = _solveCache->entries.find(cacheKey);
     if (entryIt == _solveCache->entries.end() || entryIt->second.version != _solveCache->version) {
         SolveCache::Entry entry;
@@ -1575,8 +1500,10 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
             buildSystem = &_reqSystem;
         }
 
-        auto pipeline = buildPipeline(*buildSystem);
-        entry.fixedAssignments = std::move(pipeline.fixedAssignments);
+        entry.fixedAssignments = System::collectFixedAssignments(buildSystem->getFunctions());
+        for (const auto& [variable, target] : entry.fixedAssignments) *variable = target;
+        auto pipeline = System::buildSolvePipeline(
+            buildSystem->getFunctions(), entry.fixedAssignments, lockedVars, _solverType);
         entry.variableOwners = std::move(pipeline.variableOwners);
         entry.task = std::move(pipeline.task);
         entry.hasFunctions = pipeline.hasFunctions;
