@@ -423,6 +423,7 @@ private:
                              double residualTolerance = 1e-6,
                              std::span<const Utils::ID> editedFigures = {});
     void invalidateSolveCache() noexcept;
+    void invalidateRequirementSolveCache(Utils::ID requirementId);
     void forgetEditedFigures(std::optional<ComponentID> componentId);
 
     Figures::GeometryStorage _storage;

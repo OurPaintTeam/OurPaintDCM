@@ -125,6 +125,7 @@ struct OurPaintDCM::DCMManager::SolveCache {
     struct Component {
         std::shared_ptr<System::RequirementSystem> system;
         std::optional<System::ConstraintDecomposition> decomposition;
+        bool needsRebuild = false;
     };
     std::unordered_map<ComponentID, Component> components;
     std::size_t version = 0;
@@ -216,6 +217,21 @@ void DCMManager::invalidateSolveCache() noexcept {
     ++_solveCache->version;
     _solveCache->entries.clear();
     _solveCache->components.clear();
+}
+
+void DCMManager::invalidateRequirementSolveCache(Utils::ID requirementId) {
+    const auto& objects = _requirementRecords.at(requirementId).objectIds;
+    const auto componentId = objects.empty() ? std::nullopt : getComponentForFigure(objects.front());
+    if (!componentId) {
+        invalidateSolveCache();
+        return;
+    }
+    if (!_solveCache) return;
+    std::erase_if(_solveCache->entries, [&](const auto& entry) {
+        return !entry.first.componentId || entry.first.componentId == componentId;
+    });
+    if (const auto found = _solveCache->components.find(*componentId); found != _solveCache->components.end())
+        found->second.needsRebuild = true;
 }
 
 Utils::ID DCMManager::addFigure(const Utils::FigureDescriptor& descriptor) {
@@ -382,6 +398,7 @@ void DCMManager::removeFigures(const std::vector<Utils::ID>& figureIds, bool for
     for (const auto id : idsToRemove) {
         (void)_storage.remove(id);
         _figureRecords.erase(id);
+        _pendingEditedFigures.erase(id);
         removeFigureFromComponent(id);
     }
 
@@ -1184,7 +1201,7 @@ void DCMManager::updateRequirementParam(Utils::ID reqId, double newParam) {
     updated.validate();
     it->second.param = newParam;
     _reqSystemSyncedWithRecords = false;
-    invalidateSolveCache();
+    invalidateRequirementSolveCache(reqId);
 }
 
 void DCMManager::updateLineCircleTangencySide(Utils::ID reqId, Utils::TangencySide side) {
@@ -1213,7 +1230,7 @@ void DCMManager::updateRequirementWeight(Utils::ID reqId, double newWeight) {
     updated.validate();
     it->second.weight = newWeight;
     _reqSystemSyncedWithRecords = false;
-    invalidateSolveCache();
+    invalidateRequirementSolveCache(reqId);
 }
 
 std::optional<Utils::RequirementDescriptor> DCMManager::getRequirement(Utils::ID reqId) const noexcept {
@@ -1352,7 +1369,7 @@ void DCMManager::setSolver(Utils::SolverType solver) noexcept {
         return;
     }
     _solverType = solver;
-    invalidateSolveCache();
+    if (_solveCache) _solveCache->entries.clear();
 }
 
 bool DCMManager::solve(std::optional<ComponentID> componentId, double residualTolerance) {
@@ -1524,12 +1541,21 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
 
     const auto componentData = [&](ComponentID id) -> SolveCache::Component& {
         auto found = _solveCache->components.find(id);
-        if (found != _solveCache->components.end()) return found->second;
+        if (found != _solveCache->components.end() && !found->second.needsRebuild) return found->second;
         SolveCache::Component component;
         component.system = buildSubsystem(id);
+        System::ArticulationDecomposition topology;
+        if (found != _solveCache->components.end() && found->second.decomposition) {
+            auto previous = std::move(*found->second.decomposition);
+            found->second.decomposition.reset();
+            topology.articulationPoints = std::move(previous.articulationPoints);
+            for (auto& block : previous.blocks) topology.blocks.push_back(std::move(block.figures));
+        } else {
+            topology = System::decomposeByArticulationPoints(component.system->buildDependencyGraph());
+        }
         component.decomposition = System::buildConstraintDecomposition(*component.system,
-            System::decomposeByArticulationPoints(component.system->buildDependencyGraph()));
-        return _solveCache->components.emplace(id, std::move(component)).first->second;
+            std::move(topology));
+        return _solveCache->components.insert_or_assign(id, std::move(component)).first->second;
     };
 
     auto entryIt = _solveCache->entries.find(cacheKey);
