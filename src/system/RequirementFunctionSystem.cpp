@@ -1,98 +1,72 @@
-#include "system/RequirementFunctionSystem.h"
+#include "RequirementFunctionSystem.h"
 #include <algorithm>
-#include <Eigen/SVD>
 
 using namespace OurPaintDCM::System;
-using namespace OurPaintDCM::Function;
 
-RequirementFunctionSystem::RequirementFunctionSystem() = default;
+void RequirementFunctionSystem::addFunction(std::shared_ptr<OurPaintDCM::Function::RequirementFunction> function) {
+    if (!function) throw std::invalid_argument("Null requirement binding");
+    _task.reset();
+    _variables.clear();
+    for (auto* variable : function->getVars())
+        if (std::find(_allVars.begin(),_allVars.end(),variable) == _allVars.end()) _allVars.push_back(variable);
+    _functions.push_back(std::move(function));
+}
 
-void RequirementFunctionSystem::addFunction(std::shared_ptr<RequirementFunction> func) {
-    _functions.push_back(func);
-    for (auto v : func->getVars()) {
-        if (_allVarsSet.insert(v).second) {
-            _allVars.push_back(v);
+const SparseLSMTask& RequirementFunctionSystem::task() const {
+    if (!_task) {
+        _variables.clear();
+        std::vector<Variable*> variables;
+        for (auto* coordinate : _allVars) {
+            _variables.push_back(std::make_unique<Variable>(coordinate));
+            variables.push_back(_variables.back().get());
         }
+        std::vector<std::unique_ptr<::Function>> owners;
+        for (const auto& binding : _functions) owners.emplace_back(binding->mathematical()->weightedFunction());
+        std::vector<::Function*> functions;
+        functions.reserve(owners.size());
+        for (auto& owner : owners) functions.push_back(owner.release());
+        _task = std::make_unique<SparseLSMTask>(std::move(functions),std::move(variables));
     }
-    _jacobianDirty = true;
+    return *_task;
 }
 
-void RequirementFunctionSystem::updateJ() {
-    const size_t m = _functions.size();
-    const size_t n = _allVars.size();
-    std::vector<Eigen::Triplet<double>> triplets;
-    triplets.reserve(m * 6);
-
-    for (size_t i = 0; i < m; ++i) {
-        auto grad = _functions[i]->gradient();
-        for (size_t j = 0; j < n; ++j) {
-            VAR v = _allVars[j];
-            double val = grad.contains(v) ? grad[v] : 0.0;
-            if (val != 0.0)
-                triplets.emplace_back(i, j, val);
-        }
-    }
-
-    _jacobian.resize(m, n);
-    _jacobian.setFromTriplets(triplets.begin(), triplets.end());
-    _jacobianDirty = false;
-}
-
-void RequirementFunctionSystem::ensureJacobian() const {
-    if (_jacobianDirty) {
-        const_cast<RequirementFunctionSystem*>(this)->updateJ();
+namespace {
+OurPaintDCM::Utils::SystemStatus convertStatus(SparseLSMTask::DiagnosticStatus status) {
+    using Status = SparseLSMTask::DiagnosticStatus;
+    switch (status) {
+        case Status::EMPTY: return OurPaintDCM::Utils::SystemStatus::EMPTY;
+        case Status::WELL_CONSTRAINED: return OurPaintDCM::Utils::SystemStatus::WELL_CONSTRAINED;
+        case Status::UNDER_CONSTRAINED: return OurPaintDCM::Utils::SystemStatus::UNDER_CONSTRAINED;
+        case Status::OVER_CONSTRAINED: return OurPaintDCM::Utils::SystemStatus::OVER_CONSTRAINED;
+        case Status::SINGULAR_SYSTEM: return OurPaintDCM::Utils::SystemStatus::SINGULAR_SYSTEM;
+        default: return OurPaintDCM::Utils::SystemStatus::UNKNOWN;
     }
 }
 
+RequirementFunctionSystem::Diagnosis convertDiagnosis(const SparseLSMTask::Diagnosis& result) {
+    return {convertStatus(result.status), result.variableCount, result.constraintCount,
+            result.rank, result.degreesOfFreedom};
+}
+} // namespace
 
-Eigen::SparseMatrix<double> RequirementFunctionSystem::J() const {
-    ensureJacobian();
-    return _jacobian;
+RequirementFunctionSystem::Diagnosis RequirementFunctionSystem::diagnoseDetailed() const {
+    return convertDiagnosis(task().diagnoseDetailed());
 }
 
-Eigen::SparseMatrix<double> RequirementFunctionSystem::JTJ() const {
-    ensureJacobian();
-    Eigen::SparseMatrix<double> JT = _jacobian.transpose();
-    return JT * _jacobian;
-}
-
-Eigen::VectorXd RequirementFunctionSystem::residuals() const {
-    Eigen::VectorXd r(_functions.size());
-    for (size_t i = 0; i < _functions.size(); ++i)
-        r[i] = _functions[i]->evaluate() * _functions[i]->getWeight();
-    return r;
-}
-
-std::vector<VAR> RequirementFunctionSystem::getAllVars() const {
-    return _allVars;
-}
-
-OurPaintDCM::Utils::SystemStatus RequirementFunctionSystem::diagnose() const {
-    ensureJacobian();
-    if (_jacobian.rows() == 0 || _jacobian.cols() == 0)
-        return Utils::SystemStatus::EMPTY;
-
-    Eigen::MatrixXd denseJ = Eigen::MatrixXd(_jacobian);
-    Eigen::JacobiSVD<Eigen::MatrixXd> svd(denseJ);
-    int rank = (svd.singularValues().array() > 1e-8).count();
-    int m = denseJ.rows();
-    int n = denseJ.cols();
-
-    if (m == n && rank == n)
-        return Utils::SystemStatus::WELL_CONSTRAINED;
-    if (rank < std::min(m, n))
-        return Utils::SystemStatus::SINGULAR_SYSTEM;
-    if (m < n)
-        return Utils::SystemStatus::UNDER_CONSTRAINED;
-    if (m > n)
-        return Utils::SystemStatus::OVER_CONSTRAINED;
-    return Utils::SystemStatus::UNKNOWN;
-}
-
-void RequirementFunctionSystem::clear() {
-    _functions.clear();
-    _allVars.clear();
-    _allVarsSet.clear();
-    _jacobian.resize(0, 0);
-    _jacobianDirty = false;
+RequirementFunctionSystem::Diagnosis RequirementFunctionSystem::diagnoseWithVariables(
+    const std::vector<VAR>& coordinates) const {
+    std::vector<std::unique_ptr<Variable>> owners;
+    std::vector<Variable*> variables;
+    for (auto* coordinate : coordinates) {
+        owners.push_back(std::make_unique<Variable>(coordinate));
+        variables.push_back(owners.back().get());
+    }
+    std::vector<std::unique_ptr<::Function>> functionOwners;
+    for (const auto& binding : _functions)
+        functionOwners.emplace_back(binding->mathematical()->weightedFunction());
+    std::vector<::Function*> functions;
+    functions.reserve(functionOwners.size());
+    for (auto& owner : functionOwners) functions.push_back(owner.release());
+    SparseLSMTask diagnosticTask(std::move(functions), std::move(variables));
+    return convertDiagnosis(diagnosticTask.diagnoseDetailed(SparseLSMTask::DiagnosticScope::ALL_VARIABLES));
 }

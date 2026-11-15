@@ -21,7 +21,7 @@ struct ID {
      *
      * Initializes the ID to zero.
      */
-    ID() : id(0) {}
+    constexpr ID() : id(0) {}
     /**
      * @brief Explicit constructor.
      *
@@ -29,7 +29,7 @@ struct ID {
      *
      * @param value The initial ID value.
      */
-    explicit ID(unsigned long long value): id(value) {}
+    constexpr explicit ID(unsigned long long value): id(value) {}
     /**
      * @brief Equality operator.
      *

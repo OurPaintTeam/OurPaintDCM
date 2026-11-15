@@ -28,7 +28,11 @@ namespace OurPaintDCM::Figures
          * @param c Pointer to the center point.
          * @param r Radius of the circle (default: 10).
          */
-        Circle(PointT* c, double r = 10.0) : center(c), radius(r) {}
+        Circle(PointT* c, double r = 10.0) : center(c), radius(r) {
+            Utils::requirePositiveRadius(r);
+            if (center == nullptr) throw std::invalid_argument("Circle center must not be null");
+            center->validate();
+        }
 
         /**
          * @brief Get the area of the circle.

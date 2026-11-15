@@ -14,11 +14,29 @@
 #include <memory>
 #include <cmath>
 #include <initializer_list>
+#include <span>
 
 namespace OurPaintDCM {
 
 using ComponentID = std::size_t;
 using ComponentGraph = Graph<Utils::ID, Utils::ID, UndirectedPolicy, WeightedPolicy>;
+
+struct PointTarget {
+    Utils::ID point;
+    double x;
+    double y;
+};
+
+enum class TargetPolicy {
+    Require,
+    Prefer
+};
+
+struct TargetSolveResult {
+    bool converged = false;
+    bool targetsSatisfied = false;
+    bool usedFallback = false;
+};
 
 /**
  * @brief Main manager class for the DCM (Dynamic Constraint Manager) system.
@@ -93,80 +111,81 @@ public:
      * @throws std::runtime_error if figure not found or has dependencies.
      */
     void removeFigure(Utils::ID figureId, bool forceCascade = false);
+    void removeFigures(const std::vector<Utils::ID>& figureIds, bool forceCascade = false);
 
     /**
      * @brief Update point coordinates.
      * @param descriptor PointUpdateDescriptor with new values.
      * @throws std::runtime_error if point not found.
      */
-    void updatePoint(const Utils::PointUpdateDescriptor& descriptor);
+    bool updatePoint(const Utils::PointUpdateDescriptor& descriptor);
 
     /**
      * @brief Update multiple point coordinates in one batch.
      *
      * In DRAG mode all changed point representatives are locked, and each touched
-     * component is solved once after the whole batch is applied.
+     * component is solved after the whole batch is applied.
      *
      * @param descriptors Point updates.
      * @throws std::runtime_error if any point is not found.
      */
-    void updatePoints(const std::vector<Utils::PointUpdateDescriptor>& descriptors);
+    bool updatePoints(const std::vector<Utils::PointUpdateDescriptor>& descriptors);
 
     /**
      * @brief Update line endpoint coordinates.
      * @param descriptor LineUpdateDescriptor with endpoint values.
      * @throws std::runtime_error if line not found.
      */
-    void updateLine(const Utils::LineUpdateDescriptor& descriptor);
+    bool updateLine(const Utils::LineUpdateDescriptor& descriptor);
 
     /**
      * @brief Update multiple lines in one batch.
      * @param descriptors Line updates.
      * @throws std::runtime_error if any line is not found.
      */
-    void updateLines(const std::vector<Utils::LineUpdateDescriptor>& descriptors);
+    bool updateLines(const std::vector<Utils::LineUpdateDescriptor>& descriptors);
 
     /**
      * @brief Update circle center and/or radius.
      * @param descriptor CircleUpdateDescriptor with new values.
      * @throws std::runtime_error if circle not found.
      */
-    void updateCircle(const Utils::CircleUpdateDescriptor& descriptor);
+    bool updateCircle(const Utils::CircleUpdateDescriptor& descriptor);
 
     /**
      * @brief Update multiple circles in one batch.
      * @param descriptors Circle updates.
      * @throws std::runtime_error if any circle is not found.
      */
-    void updateCircles(const std::vector<Utils::CircleUpdateDescriptor>& descriptors);
+    bool updateCircles(const std::vector<Utils::CircleUpdateDescriptor>& descriptors);
 
     /**
      * @brief Update arc endpoint and center coordinates.
      * @param descriptor ArcUpdateDescriptor with point values.
      * @throws std::runtime_error if arc not found.
      */
-    void updateArc(const Utils::ArcUpdateDescriptor& descriptor);
+    bool updateArc(const Utils::ArcUpdateDescriptor& descriptor);
 
     /**
      * @brief Update multiple arcs in one batch.
      * @param descriptors Arc updates.
      * @throws std::runtime_error if any arc is not found.
      */
-    void updateArcs(const std::vector<Utils::ArcUpdateDescriptor>& descriptors);
+    bool updateArcs(const std::vector<Utils::ArcUpdateDescriptor>& descriptors);
 
     /**
      * @brief Update any supported figure by unified update descriptor.
      * @param descriptor Figure update.
      * @throws std::runtime_error if figure not found or type does not match.
      */
-    void updateFigure(const Utils::FigureUpdateDescriptor& descriptor);
+    bool updateFigure(const Utils::FigureUpdateDescriptor& descriptor);
 
     /**
      * @brief Update multiple figures of arbitrary types in one batch.
      * @param descriptors Figure updates.
      * @throws std::runtime_error if any figure is not found or type does not match.
      */
-    void updateFigures(const std::vector<Utils::FigureUpdateDescriptor>& descriptors);
+    bool updateFigures(const std::vector<Utils::FigureUpdateDescriptor>& descriptors);
 
     /**
      * @brief Get figure descriptor with current state.
@@ -212,6 +231,9 @@ public:
      */
     std::vector<Utils::FigureDescriptor> getAllArcs() const;
 
+    /// Get all NURBS curve descriptors, including current control coordinates.
+    std::vector<Utils::FigureDescriptor> getAllCurves() const;
+
     /**
      * @brief Add a new requirement using descriptor.
      *
@@ -231,6 +253,7 @@ public:
      * @throws std::runtime_error if requirement not found.
      */
     void removeRequirement(Utils::ID reqId);
+    void removeRequirements(const std::vector<Utils::ID>& reqIds);
 
     /**
      * @brief Update requirement parameter value.
@@ -239,6 +262,13 @@ public:
      * @throws std::runtime_error if requirement not found or has no parameter.
      */
     void updateRequirementParam(Utils::ID reqId, double newParam);
+    /// Explicitly switch the saved side of a line/circle or arc/line tangency.
+    void updateLineCircleTangencySide(Utils::ID reqId, Utils::TangencySide side);
+    /// Switch containment/external contact for any circle/arc pair.
+    void updateCircleCircleTangencyKind(Utils::ID reqId, Utils::CircleTangencyKind kind);
+
+    /// Update a requirement's residual weight and invalidate cached solve state.
+    void updateRequirementWeight(Utils::ID reqId, double newWeight);
 
     /**
      * @brief Get requirement descriptor by ID.
@@ -348,17 +378,40 @@ public:
     /// @brief Get current solving mode.
     Utils::SolveMode getSolveMode() const noexcept;
 
+    void setSolver(Utils::SolverType solver) noexcept;
+
     /**
      * @brief Solve the constraint system according to the current mode.
      *
-     * GLOBAL — solves all requirements at once (Levenberg-Marquardt).
-     * LOCAL  — solves only the specified component (Levenberg-Marquardt).
-     * DRAG   — lightweight gradient descent, intended to be called from updatePoint/updateCircle.
+     * GLOBAL — solves all requirements at once.
+     * LOCAL  — solves only the specified component.
+     * DRAG   — solves touched components automatically from geometry update methods.
      *
      * @param componentId Component to solve (used only in LOCAL mode).
-     * @return true if the solver converged.
+     * @param residualTolerance Maximum absolute residual per constraint; must be finite and non-negative.
+     * @return true if every selected constraint has a finite residual within residualTolerance.
      */
-    bool solve(std::optional<ComponentID> componentId = std::nullopt);
+    bool solve(std::optional<ComponentID> componentId = std::nullopt,
+               double residualTolerance = 1e-6);
+
+    /**
+     * @brief Solve globally with point positions held temporarily for this call.
+     *
+     * Targets address whole coincidence groups. Identical targets for a group are
+     * accepted; different targets for the same group are invalid. Existing Fix
+     * requirements always take precedence. Require fails when a target cannot be
+     * retained. Prefer may release targets and retry from the prepared geometry.
+     * No requirements are created, and the previous solve mode is restored.
+     *
+     * Failed calls and exceptions restore all pre-call coordinates. Result flags
+     * describe an accepted solution; usedFallback also records target relaxation
+     * when the final solve fails. Empty targets perform an ordinary global solve.
+     * @throws std::invalid_argument for invalid policy, tolerance, or targets.
+     * @throws std::runtime_error if a target point does not exist.
+     */
+    TargetSolveResult solveWithTargets(std::span<const PointTarget> targets,
+                                      TargetPolicy policy = TargetPolicy::Require,
+                                      double residualTolerance = 1e-6);
 
 private:
     struct SolveCache;
@@ -366,7 +419,8 @@ private:
     struct FixedGeometry;
 
     bool solveWithLockedVars(std::optional<ComponentID> componentId,
-                             const std::unordered_set<double*>& lockedVars);
+                             const std::unordered_set<double*>& lockedVars,
+                             double residualTolerance = 1e-6);
     void invalidateSolveCache() noexcept;
 
     Figures::GeometryStorage _storage;
@@ -381,6 +435,7 @@ private:
     ComponentID _nextComponentId = 0;
     std::size_t _activeComponentCount = 0;
     Utils::SolveMode _solveMode = Utils::SolveMode::GLOBAL;
+    Utils::SolverType _solverType = Utils::SolverType::LEVENBERG_MARQUARDT;
     std::unique_ptr<SolveCache> _solveCache;
 
     std::unique_ptr<System::RequirementSystem> buildSubsystem(ComponentID componentId) const;
@@ -392,7 +447,7 @@ private:
     void addDragLocks(Utils::ID figureId,
                       std::initializer_list<double*> vars,
                       BatchUpdateContext& context);
-    void solveDragUpdates(const BatchUpdateContext& context);
+    bool solveDragUpdates(BatchUpdateContext& context);
     void applyPointUpdateNoSolve(const Utils::PointUpdateDescriptor& descriptor,
                                  const FixedGeometry& fixedGeometry,
                                  BatchUpdateContext& context);
@@ -428,7 +483,8 @@ private:
     ComponentID createNewComponent();
     void addFigureToComponent(Utils::ID figureId, ComponentID componentId);
     void removeFigureFromComponent(Utils::ID figureId);
-    std::vector<Utils::ID> getRequirementsForFigure(Utils::ID figureId) const;
+    std::vector<Utils::ID> collectFiguresForRemoval(
+        const std::vector<Utils::ID>& figureIds, bool forceCascade) const;
 };
 
 } // namespace OurPaintDCM

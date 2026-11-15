@@ -1,0 +1,101 @@
+#ifndef OURPAINTDCM_HEADERS_UTILS_NUMERICVALIDATION_H
+#define OURPAINTDCM_HEADERS_UTILS_NUMERICVALIDATION_H
+
+#include "Enums.h"
+#include <limits>
+#include <numbers>
+#include <optional>
+#include <stdexcept>
+
+namespace OurPaintDCM::Utils {
+
+constexpr void requireFinite(double value) {
+    // Comparisons also reject NaN and remain usable in C++20 constexpr constructors.
+    constexpr double limit = std::numeric_limits<double>::max();
+    if (!(value >= -limit && value <= limit)) {
+        throw std::invalid_argument("Numeric value must be finite");
+    }
+}
+
+constexpr void requireFinite(const std::optional<double>& value) {
+    if (value) requireFinite(*value);
+}
+
+template <typename Range>
+constexpr void requireFiniteValues(const Range& values) {
+    for (const auto& value : values) requireFinite(value);
+}
+
+constexpr void requireNonNegative(double value) {
+    requireFinite(value);
+    if (value < 0.0) {
+        throw std::invalid_argument("Numeric value must be non-negative");
+    }
+}
+
+constexpr void requirePositiveRadius(double radius) {
+    requireFinite(radius);
+    if (radius <= 0.0) {
+        throw std::invalid_argument("Circle radius must be positive");
+    }
+}
+
+inline void validateRequirementParameter(RequirementType type, const std::optional<double>& param) {
+    switch (type) {
+        case RequirementType::ET_ARCARCTANGENT:
+        case RequirementType::ET_CIRCLECIRCLETANGENT:
+            if (!param || (*param != 0 && *param != 1 && *param != 2))
+                throw std::invalid_argument("Circle tangency kind must be 0, 1 or 2");
+            break;
+        case RequirementType::ET_ARCLINETANGENT:
+        case RequirementType::ET_LINECIRCLETANGENT:
+            if (!param || (*param != -1 && *param != 1))
+                throw std::invalid_argument("Tangency side must be -1 or +1");
+            break;
+        case RequirementType::ET_SYMMETRICABOUTHORIZONTAL:
+        case RequirementType::ET_SYMMETRICABOUTVERTICAL:
+            if (!param) throw std::invalid_argument("Axis symmetry needs an axis coordinate");
+            requireFinite(*param);
+            break;
+        case RequirementType::ET_CIRCLERADIUS:
+        case RequirementType::ET_ARCRADIUS:
+        case RequirementType::ET_CIRCLEDIAMETER:
+            if (!param) throw std::invalid_argument("Size requirement needs a parameter");
+            requirePositiveRadius(*param);
+            if (type == RequirementType::ET_CIRCLEDIAMETER) requirePositiveRadius(*param / 2.0);
+            break;
+        case RequirementType::ET_POINTCIRCLEDIST:
+        case RequirementType::ET_POINTARCDIST:
+            if (!param) throw std::invalid_argument("Point-circle/arc distance needs a parameter");
+            requireFinite(*param);
+            break;
+        case RequirementType::ET_POINTLINEDIST:
+        case RequirementType::ET_POINTPOINTDIST:
+        case RequirementType::ET_POINTPOINTHORIZONTALDIST:
+        case RequirementType::ET_POINTPOINTVERTICALDIST:
+        case RequirementType::ET_LINECIRCLEDIST:
+        case RequirementType::ET_LINEARCDIST:
+            if (!param) throw std::invalid_argument("Distance requirement needs a parameter");
+            requireNonNegative(*param);
+            break;
+        case RequirementType::ET_ARCANGLE:
+            if (!param) throw std::invalid_argument("Arc angle needs a parameter");
+            requireFinite(*param);
+            if (*param <= 0 || *param >= 2 * std::numbers::pi)
+                throw std::invalid_argument("Arc angle must be in (0, 2*pi) radians");
+            break;
+        case RequirementType::ET_LINELINEANGLE:
+            if (!param) throw std::invalid_argument("Angle requirement needs a parameter");
+            requireFinite(*param);
+            if (*param < 0.0 || *param > std::numbers::pi) {
+                throw std::invalid_argument("Line angle must be in [0, pi] radians");
+            }
+            break;
+        default:
+            if (param) throw std::invalid_argument("Requirement does not accept a parameter");
+            break;
+    }
+}
+
+} // namespace OurPaintDCM::Utils
+#endif

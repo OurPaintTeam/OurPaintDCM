@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
+#include <numbers>
 #include "RequirementDescriptor.h"
+#include <limits>
 
 using namespace OurPaintDCM::Utils;
 
@@ -9,6 +11,24 @@ TEST(RequirementDescriptorTest, DefaultConstructor) {
     RequirementDescriptor desc;
     EXPECT_TRUE(desc.objectIds.empty());
     EXPECT_FALSE(desc.param.has_value());
+    EXPECT_DOUBLE_EQ(desc.weight, 1.0);
+}
+
+TEST(RequirementDescriptorTest, ValidatesWeightAndHardConstraintSemantics) {
+    auto distance = RequirementDescriptor::pointPointDist(ID(1), ID(2), 5.0);
+    distance.weight = 0.0;
+    EXPECT_TRUE(distance.validate());
+    distance.weight = -1.0;
+    EXPECT_THROW(distance.validate(), std::invalid_argument);
+    distance.weight = std::numeric_limits<double>::infinity();
+    EXPECT_THROW(distance.validate(), std::invalid_argument);
+
+    auto fixed = RequirementDescriptor::fixPoint(ID(1));
+    fixed.weight = 2.0;
+    EXPECT_THROW(fixed.validate(), std::invalid_argument);
+    auto coincidence = RequirementDescriptor::pointOnPoint(ID(1), ID(2));
+    coincidence.weight = 0.0;
+    EXPECT_TRUE(coincidence.validate());
 }
 
 // ==================== Full Constructor ====================
@@ -17,7 +37,8 @@ TEST(RequirementDescriptorTest, FullConstructor) {
     RequirementDescriptor desc(
         RequirementType::ET_POINTPOINTDIST,
         {ID(1), ID(2)},
-        50.0
+        50.0,
+        2.0
     );
     
     EXPECT_EQ(desc.type, RequirementType::ET_POINTPOINTDIST);
@@ -26,6 +47,7 @@ TEST(RequirementDescriptorTest, FullConstructor) {
     EXPECT_EQ(desc.objectIds[1], ID(2));
     EXPECT_TRUE(desc.param.has_value());
     EXPECT_DOUBLE_EQ(desc.param.value(), 50.0);
+    EXPECT_DOUBLE_EQ(desc.weight, 2.0);
 }
 
 TEST(RequirementDescriptorTest, FullConstructorWithoutParam) {
@@ -118,11 +140,11 @@ TEST(RequirementDescriptorTest, LineLinePerpendicular) {
 }
 
 TEST(RequirementDescriptorTest, LineLineAngle) {
-    auto desc = RequirementDescriptor::lineLineAngle(ID(19), ID(20), 45.0);
+    auto desc = RequirementDescriptor::lineLineAngle(ID(19), ID(20), std::numbers::pi / 4.0);
     
     EXPECT_EQ(desc.type, RequirementType::ET_LINELINEANGLE);
     EXPECT_EQ(desc.objectIds.size(), 2);
-    EXPECT_DOUBLE_EQ(desc.param.value(), 45.0);
+    EXPECT_DOUBLE_EQ(desc.param.value(), std::numbers::pi / 4.0);
 }
 
 TEST(RequirementDescriptorTest, Vertical) {
@@ -174,7 +196,7 @@ TEST(RequirementDescriptorTest, ValidateTwoObjectTypes) {
     auto desc6 = RequirementDescriptor::lineLinePerpendicular(ID(1), ID(2));
     EXPECT_TRUE(desc6.validate());
     
-    auto desc7 = RequirementDescriptor::lineLineAngle(ID(1), ID(2), 90.0);
+    auto desc7 = RequirementDescriptor::lineLineAngle(ID(1), ID(2), std::numbers::pi / 2.0);
     EXPECT_TRUE(desc7.validate());
 }
 
@@ -278,9 +300,8 @@ TEST(RequirementDescriptorTest, ZeroDistance) {
 }
 
 TEST(RequirementDescriptorTest, NegativeDistance) {
-    // Note: validation doesn't check for negative distance
     auto desc = RequirementDescriptor::pointPointDist(ID(1), ID(2), -10.0);
-    EXPECT_TRUE(desc.validate());  // Still valid structurally
+    EXPECT_THROW(desc.validate(), std::invalid_argument);
     EXPECT_DOUBLE_EQ(desc.param.value(), -10.0);
 }
 

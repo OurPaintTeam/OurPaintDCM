@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "RequirementSystem.h"
 #include "GeometryStorage.h"
+#include <algorithm>
 
 using namespace OurPaintDCM::System;
 using namespace OurPaintDCM::Figures;
@@ -31,15 +32,25 @@ protected:
         ASSERT_TRUE(circOpt.has_value());
         circleId = *circOpt;
 
-        auto arcOpt = storage.createArc(p1Id, p3Id, centerId);
-        ASSERT_TRUE(arcOpt.has_value());
-        arcId = *arcOpt;
     }
 };
 
 TEST_F(RequirementSystemTest, ConstructWithStorage) {
     RequirementSystem system(&storage);
     EXPECT_TRUE(system.getAllVars().empty());
+}
+
+TEST_F(RequirementSystemTest, DiagnosisIncludesOnlyScopedGeometryAndItsDependencies) {
+    RequirementSystem whole(&storage);
+    EXPECT_EQ(whole.diagnoseDetailed().degreesOfFreedom, 9u);
+    RequirementSystem lineScope(&storage, std::vector<ID>{line1Id});
+    EXPECT_EQ(lineScope.diagnose(), SystemStatus::UNDER_CONSTRAINED);
+    EXPECT_EQ(lineScope.diagnoseDetailed().degreesOfFreedom, 4u);
+    RequirementSystem circleScope(&storage, std::vector<ID>{circleId, centerId});
+    EXPECT_EQ(circleScope.diagnoseDetailed().degreesOfFreedom, 3u);
+    RequirementSystem emptyScope(&storage, std::vector<ID>{});
+    EXPECT_EQ(emptyScope.diagnose(), SystemStatus::EMPTY);
+    EXPECT_EQ(emptyScope.diagnoseDetailed().degreesOfFreedom, 0u);
 }
 
 TEST_F(RequirementSystemTest, AddPointPointDist) {
@@ -117,6 +128,40 @@ TEST_F(RequirementSystemTest, AddLineOnCircle) {
     EXPECT_EQ(system.getAllVars().size(), 7);
 }
 
+TEST_F(RequirementSystemTest, LineOnCircleHasTwoIndependentWeightedRows) {
+    auto* first = storage.get<Point2D>(p1Id);
+    auto* second = storage.get<Point2D>(p2Id);
+    auto* center = storage.get<Point2D>(centerId);
+    auto* circle = storage.get<Circle2D>(circleId);
+    first->x() = 6; first->y() = 7;
+    second->x() = 10; second->y() = 7;
+    center->x() = 3; center->y() = 7;
+    circle->radius = 5;
+    RequirementSystem system(&storage);
+    auto descriptor = RequirementDescriptor::lineOnCircle(line1Id, circleId);
+    descriptor.weight = 2.0;
+    system.addRequirement(descriptor);
+    const auto residuals = system.residuals();
+    ASSERT_EQ(residuals.size(), 2);
+    EXPECT_DOUBLE_EQ(residuals[0], -4.0);
+    EXPECT_DOUBLE_EQ(residuals[1], 4.0);
+    const auto jacobian = system.J();
+    const auto vars = system.getAllVars();
+    const auto column = [&](VAR var) {
+        return std::distance(vars.begin(), std::find(vars.begin(), vars.end(), var));
+    };
+    EXPECT_DOUBLE_EQ(jacobian.coeff(0, column(first->ptrX())), 2.0);
+    EXPECT_DOUBLE_EQ(jacobian.coeff(0, column(second->ptrX())), 0.0);
+    EXPECT_DOUBLE_EQ(jacobian.coeff(1, column(first->ptrX())), 0.0);
+    EXPECT_DOUBLE_EQ(jacobian.coeff(1, column(second->ptrX())), 2.0);
+    EXPECT_DOUBLE_EQ(jacobian.coeff(0, column(circle->ptrRadius())), -2.0);
+    EXPECT_DOUBLE_EQ(jacobian.coeff(1, column(circle->ptrRadius())), -2.0);
+    // At the solution both independent rows must retain their rank.
+    first->x() = -2; second->x() = 8;
+    EXPECT_NEAR(system.residuals().norm(), 0.0, 1e-12);
+    EXPECT_EQ(system.diagnose(), SystemStatus::UNDER_CONSTRAINED);
+}
+
 TEST_F(RequirementSystemTest, AddLineLineParallel) {
     RequirementSystem system(&storage);
     system.addLineLineParallel(line1Id, line2Id);
@@ -153,6 +198,7 @@ TEST_F(RequirementSystemTest, AddHorizontal) {
 }
 
 TEST_F(RequirementSystemTest, AddArcCenterOnPerpendicular) {
+    arcId = storage.createArc(p1Id,p3Id,centerId).value();
     RequirementSystem system(&storage);
     system.addArcCenterOnPerpendicular(arcId);
     
@@ -167,6 +213,38 @@ TEST_F(RequirementSystemTest, UpdateJacobianAndGet) {
     auto J = system.J();
     EXPECT_EQ(J.rows(), 1);
     EXPECT_EQ(J.cols(), 4);
+}
+
+TEST_F(RequirementSystemTest, JacobianResidualsAndDiagnosisFollowPointCoordinates) {
+    RequirementSystem system(&storage);
+    system.addPointPointDist(p1Id, p2Id, 5.0);
+
+    const Eigen::MatrixXd initialJ = Eigen::MatrixXd(system.J());
+    EXPECT_NEAR(initialJ(0, 0), -0.6, 1e-12);
+    EXPECT_NEAR(initialJ(0, 1), -0.8, 1e-12);
+    EXPECT_DOUBLE_EQ(system.residuals()[0], 0.0);
+    EXPECT_EQ(system.diagnose(), SystemStatus::UNDER_CONSTRAINED);
+
+    auto* p2 = storage.get<Point2D>(p2Id);
+    ASSERT_NE(p2, nullptr);
+    p2->x() = 0.0;
+    p2->y() = 0.0;
+
+    const Eigen::MatrixXd coincidentJ = Eigen::MatrixXd(system.J());
+    EXPECT_FALSE(initialJ.isApprox(coincidentJ));
+    EXPECT_TRUE(coincidentJ.isZero());
+    EXPECT_DOUBLE_EQ(system.residuals()[0], -5.0);
+    EXPECT_EQ(system.diagnose(), SystemStatus::SINGULAR_SYSTEM);
+    EXPECT_TRUE(Eigen::MatrixXd(system.JTJ()).isZero());
+
+    p2->x() = 5.0;
+    const Eigen::MatrixXd movedJ = Eigen::MatrixXd(system.J());
+    EXPECT_NEAR(movedJ(0, 0), -1.0, 1e-12);
+    EXPECT_NEAR(movedJ(0, 1), 0.0, 1e-12);
+    EXPECT_NEAR(movedJ(0, 2), 1.0, 1e-12);
+    EXPECT_NEAR(movedJ(0, 3), 0.0, 1e-12);
+    EXPECT_DOUBLE_EQ(system.residuals()[0], 0.0);
+    EXPECT_EQ(system.diagnose(), SystemStatus::UNDER_CONSTRAINED);
 }
 
 TEST_F(RequirementSystemTest, JTJComputation) {
@@ -231,6 +309,7 @@ TEST_F(RequirementSystemTest, InvalidIdThrows) {
 }
 
 TEST_F(RequirementSystemTest, BuildDependencyGraphEmpty) {
+    arcId = storage.createArc(p1Id,p3Id,centerId).value();
     RequirementSystem system(&storage);
     
     auto graph = system.buildDependencyGraph();

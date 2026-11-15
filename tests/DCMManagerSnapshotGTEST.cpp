@@ -92,3 +92,19 @@ TEST(DCMManagerSnapshotTest, PreservesFixedRequirementTargets) {
     EXPECT_NEAR(restoredPoint->x.value(), 0.0, 1e-6);
     EXPECT_NEAR(restoredPoint->y.value(), 0.0, 1e-6);
 }
+
+TEST(DCMManagerSnapshotTest, PreservesRequirementWeight) {
+    DCMManager manager;
+    const auto p1 = manager.addFigure(FigureDescriptor::point(0.0, 0.0));
+    const auto p2 = manager.addFigure(FigureDescriptor::point(7.0, 0.0));
+    auto distance = RequirementDescriptor::pointPointDist(p1, p2, 5.0);
+    distance.weight = 3.0;
+    const auto id = manager.addRequirement(distance);
+    const auto state = manager.snapshot();
+
+    manager.updateRequirementWeight(id, 1.0);
+    manager.restoreSnapshot(state);
+    ASSERT_TRUE(manager.getRequirement(id).has_value());
+    EXPECT_DOUBLE_EQ(manager.getRequirement(id)->weight, 3.0);
+    EXPECT_DOUBLE_EQ(manager.getRequirementSystem().residuals()[0], 6.0);
+}
