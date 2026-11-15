@@ -29,6 +29,7 @@ var NAVTREE =
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", null ],
+        [ "Functions", "namespacemembers_func.html", null ],
         [ "Typedefs", "namespacemembers_type.html", null ],
         [ "Enumerations", "namespacemembers_enum.html", null ]
       ] ]
@@ -49,7 +50,7 @@ var NAVTREE =
       [ "File List", "files.html", "files_dup" ],
       [ "File Members", "globals.html", [
         [ "All", "globals.html", null ],
-        [ "Macros", "globals_defs.html", null ]
+        [ "Typedefs", "globals_type.html", null ]
       ] ]
     ] ]
   ] ]
@@ -58,11 +59,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Arc_8h.html",
-"classOurPaintDCM_1_1DCMManager.html#ae6a9d597b8fab7df762474f9c00d5490",
-"classOurPaintDCM_1_1Function_1_1FixCoordinateFunction.html#aa08873034098edb0baafe8f8247d8c33",
-"classOurPaintDCM_1_1Requirements_1_1LineLineAngle.html#afb22c9efb6e791e07ce6f29623a94682",
-"dir_7f57b1e41c5acd0e859ae5f3a2b075a9.html",
-"structOurPaintDCM_1_1Figures_1_1PointBase.html#aee9effa43c902ead55ccbf7a12707032"
+"classOurPaintDCM_1_1DCMManager.html#a8831c139d8c28c3bbc9013df65608f40",
+"classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ab2ed873954b31b6a81964163e7f134c5",
+"classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#aecf2c9fa7cd06edf3b6c169cf75bb6f0",
+"namespaceOurPaintDCM.html#ad151bf1d7804f784ece03d94afeaf435afed8597cb02dc50d094035240fdad0b0",
+"structOurPaintDCM_1_1Figures_1_1Point2D.html#ad4e6e2bae59f79ba39b367ca1bc6580f",
+"structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html#a135b683e85e55b270fabb0a1b7630f12"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -1,5 +1,17 @@
 <map id="OurPaintDCM::DCMManager::addFigure" name="OurPaintDCM::DCMManager::addFigure">
-<area shape="rect" id="Node000001" title="Add a new geometric figure using descriptor." alt="" coords="5,13,209,53"/>
-<area shape="rect" id="Node000002" href="$structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#af1a43faa50e20ca3ebe7a3c75ceee954" title="Validate descriptor fields for the given figure type." alt="" coords="257,5,404,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,30,243,30,243,35,210,35"/>
+<area shape="rect" id="Node000001" title="Add a new geometric figure using descriptor." alt="" coords="5,61,209,101"/>
+<area shape="rect" id="Node000002" href="$structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#af1a43faa50e20ca3ebe7a3c75ceee954" title="Validate descriptor fields for the given figure type." alt="" coords="257,54,404,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,79,243,79,243,84,210,84"/>
+<area shape="rect" id="Node000003" href="$namespaceOurPaintDCM_1_1Utils.html#a43757230430230c98e28b886fa685c32" title=" " alt="" coords="899,61,1045,101"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="404,54,494,30,606,10,667,5,729,3,791,7,851,18,893,32,931,52,928,57,891,37,850,23,790,12,729,8,667,10,607,16,495,36,405,60"/>
+<area shape="rect" id="Node000004" href="$namespaceOurPaintDCM_1_1Utils.html#ab147d3dfbb9b895aac22476639df5c7d" title=" " alt="" coords="687,32,842,72"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="404,74,674,56,674,61,404,79"/>
+<area shape="rect" id="Node000005" href="$namespaceOurPaintDCM_1_1Utils.html#a8d48225b0556798ea39a309eaf5af05b" title=" " alt="" coords="679,147,851,187"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="378,106,414,124,453,139,506,151,562,159,665,166,665,171,561,164,505,156,451,144,412,129,375,111"/>
+<area shape="rect" id="Node000006" href="$structOurPaintDCM_1_1Figures_1_1Curve2D.html#aa71c132ba3c4d05a9dc82a5ddd4d5d9d" title=" " alt="" coords="452,89,631,129"/>
+<area shape="poly" id="edge7_Node000002_Node000006" title=" " alt="" coords="405,89,439,93,438,98,404,94"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="843,60,885,67,885,72,842,66"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="813,144,909,104,911,109,815,149"/>
+<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="631,101,885,84,885,90,631,106"/>
+<area shape="poly" id="edge9_Node000006_Node000004" title=" " alt="" coords="619,87,674,73,675,78,621,92"/>
 </map>

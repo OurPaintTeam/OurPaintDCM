@@ -2,6 +2,7 @@ var namespaceOurPaintDCM_1_1Figures =
 [
     [ "Arc", "structOurPaintDCM_1_1Figures_1_1Arc.html", "structOurPaintDCM_1_1Figures_1_1Arc" ],
     [ "Circle", "structOurPaintDCM_1_1Figures_1_1Circle.html", "structOurPaintDCM_1_1Figures_1_1Circle" ],
+    [ "Curve2D", "structOurPaintDCM_1_1Figures_1_1Curve2D.html", "structOurPaintDCM_1_1Figures_1_1Curve2D" ],
     [ "FigureData", "structOurPaintDCM_1_1Figures_1_1FigureData.html", "structOurPaintDCM_1_1Figures_1_1FigureData" ],
     [ "FigureEntry", "structOurPaintDCM_1_1Figures_1_1FigureEntry.html", "structOurPaintDCM_1_1Figures_1_1FigureEntry" ],
     [ "FigureRef", "structOurPaintDCM_1_1Figures_1_1FigureRef.html", "structOurPaintDCM_1_1Figures_1_1FigureRef" ],

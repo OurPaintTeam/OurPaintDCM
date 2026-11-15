@@ -4,6 +4,7 @@ var annotated_dup =
       [ "Figures", "namespaceOurPaintDCM_1_1Figures.html", [
         [ "Arc", "structOurPaintDCM_1_1Figures_1_1Arc.html", "structOurPaintDCM_1_1Figures_1_1Arc" ],
         [ "Circle", "structOurPaintDCM_1_1Figures_1_1Circle.html", "structOurPaintDCM_1_1Figures_1_1Circle" ],
+        [ "Curve2D", "structOurPaintDCM_1_1Figures_1_1Curve2D.html", "structOurPaintDCM_1_1Figures_1_1Curve2D" ],
         [ "FigureData", "structOurPaintDCM_1_1Figures_1_1FigureData.html", "structOurPaintDCM_1_1Figures_1_1FigureData" ],
         [ "FigureEntry", "structOurPaintDCM_1_1Figures_1_1FigureEntry.html", "structOurPaintDCM_1_1Figures_1_1FigureEntry" ],
         [ "FigureRef", "structOurPaintDCM_1_1Figures_1_1FigureRef.html", "structOurPaintDCM_1_1Figures_1_1FigureRef" ],
@@ -15,38 +16,12 @@ var annotated_dup =
         [ "PointBase", "structOurPaintDCM_1_1Figures_1_1PointBase.html", "structOurPaintDCM_1_1Figures_1_1PointBase" ]
       ] ],
       [ "Function", "namespaceOurPaintDCM_1_1Function.html", [
-        [ "ArcCenterOnPerpendicularFunction", "classOurPaintDCM_1_1Function_1_1ArcCenterOnPerpendicularFunction.html", "classOurPaintDCM_1_1Function_1_1ArcCenterOnPerpendicularFunction" ],
-        [ "FixCoordinateFunction", "classOurPaintDCM_1_1Function_1_1FixCoordinateFunction.html", "classOurPaintDCM_1_1Function_1_1FixCoordinateFunction" ],
-        [ "HorizontalFunction", "classOurPaintDCM_1_1Function_1_1HorizontalFunction.html", "classOurPaintDCM_1_1Function_1_1HorizontalFunction" ],
-        [ "LineCircleDistanceFunction", "classOurPaintDCM_1_1Function_1_1LineCircleDistanceFunction.html", "classOurPaintDCM_1_1Function_1_1LineCircleDistanceFunction" ],
-        [ "LineLineAngleFunction", "classOurPaintDCM_1_1Function_1_1LineLineAngleFunction.html", "classOurPaintDCM_1_1Function_1_1LineLineAngleFunction" ],
-        [ "LineLineParallelFunction", "classOurPaintDCM_1_1Function_1_1LineLineParallelFunction.html", "classOurPaintDCM_1_1Function_1_1LineLineParallelFunction" ],
-        [ "LineLinePerpendicularFunction", "classOurPaintDCM_1_1Function_1_1LineLinePerpendicularFunction.html", "classOurPaintDCM_1_1Function_1_1LineLinePerpendicularFunction" ],
-        [ "LineOnCircleFunction", "classOurPaintDCM_1_1Function_1_1LineOnCircleFunction.html", "classOurPaintDCM_1_1Function_1_1LineOnCircleFunction" ],
-        [ "PointLineDistanceFunction", "classOurPaintDCM_1_1Function_1_1PointLineDistanceFunction.html", "classOurPaintDCM_1_1Function_1_1PointLineDistanceFunction" ],
-        [ "PointOnLineFunction", "classOurPaintDCM_1_1Function_1_1PointOnLineFunction.html", "classOurPaintDCM_1_1Function_1_1PointOnLineFunction" ],
-        [ "PointOnPointFunction", "classOurPaintDCM_1_1Function_1_1PointOnPointFunction.html", "classOurPaintDCM_1_1Function_1_1PointOnPointFunction" ],
-        [ "PointPointDistanceFunction", "classOurPaintDCM_1_1Function_1_1PointPointDistanceFunction.html", "classOurPaintDCM_1_1Function_1_1PointPointDistanceFunction" ],
         [ "RequirementFunction", "classOurPaintDCM_1_1Function_1_1RequirementFunction.html", "classOurPaintDCM_1_1Function_1_1RequirementFunction" ],
-        [ "RequirementFunctionFactory", "classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html", "classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory" ],
-        [ "VerticalFunction", "classOurPaintDCM_1_1Function_1_1VerticalFunction.html", "classOurPaintDCM_1_1Function_1_1VerticalFunction" ]
+        [ "RequirementFunctionFactory", "classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html", "classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory" ]
       ] ],
       [ "Requirements", "namespaceOurPaintDCM_1_1Requirements.html", [
         [ "ComponentElement", "structOurPaintDCM_1_1Requirements_1_1ComponentElement.html", "structOurPaintDCM_1_1Requirements_1_1ComponentElement" ],
-        [ "Components", "classOurPaintDCM_1_1Requirements_1_1Components.html", "classOurPaintDCM_1_1Requirements_1_1Components" ],
-        [ "LineCircleDist", "classOurPaintDCM_1_1Requirements_1_1LineCircleDist.html", "classOurPaintDCM_1_1Requirements_1_1LineCircleDist" ],
-        [ "LineHorizontal", "classOurPaintDCM_1_1Requirements_1_1LineHorizontal.html", "classOurPaintDCM_1_1Requirements_1_1LineHorizontal" ],
-        [ "LineInCircle", "classOurPaintDCM_1_1Requirements_1_1LineInCircle.html", "classOurPaintDCM_1_1Requirements_1_1LineInCircle" ],
-        [ "LineLineAngle", "classOurPaintDCM_1_1Requirements_1_1LineLineAngle.html", "classOurPaintDCM_1_1Requirements_1_1LineLineAngle" ],
-        [ "LineLineParallel", "classOurPaintDCM_1_1Requirements_1_1LineLineParallel.html", "classOurPaintDCM_1_1Requirements_1_1LineLineParallel" ],
-        [ "LineLinePerpendicular", "classOurPaintDCM_1_1Requirements_1_1LineLinePerpendicular.html", "classOurPaintDCM_1_1Requirements_1_1LineLinePerpendicular" ],
-        [ "LineOnCircle", "classOurPaintDCM_1_1Requirements_1_1LineOnCircle.html", "classOurPaintDCM_1_1Requirements_1_1LineOnCircle" ],
-        [ "LineVertical", "classOurPaintDCM_1_1Requirements_1_1LineVertical.html", "classOurPaintDCM_1_1Requirements_1_1LineVertical" ],
-        [ "PointLineDist", "classOurPaintDCM_1_1Requirements_1_1PointLineDist.html", "classOurPaintDCM_1_1Requirements_1_1PointLineDist" ],
-        [ "PointOnLine", "classOurPaintDCM_1_1Requirements_1_1PointOnLine.html", "classOurPaintDCM_1_1Requirements_1_1PointOnLine" ],
-        [ "PointOnPoint", "classOurPaintDCM_1_1Requirements_1_1PointOnPoint.html", "classOurPaintDCM_1_1Requirements_1_1PointOnPoint" ],
-        [ "PointPointDist", "classOurPaintDCM_1_1Requirements_1_1PointPointDist.html", "classOurPaintDCM_1_1Requirements_1_1PointPointDist" ],
-        [ "Requirement", "classOurPaintDCM_1_1Requirements_1_1Requirement.html", "classOurPaintDCM_1_1Requirements_1_1Requirement" ]
+        [ "Components", "classOurPaintDCM_1_1Requirements_1_1Components.html", "classOurPaintDCM_1_1Requirements_1_1Components" ]
       ] ],
       [ "System", "namespaceOurPaintDCM_1_1System.html", [
         [ "RequirementFunctionSystem", "classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html", "classOurPaintDCM_1_1System_1_1RequirementFunctionSystem" ],
@@ -63,7 +38,9 @@ var annotated_dup =
         [ "PointUpdateDescriptor", "structOurPaintDCM_1_1Utils_1_1PointUpdateDescriptor.html", "structOurPaintDCM_1_1Utils_1_1PointUpdateDescriptor" ],
         [ "RequirementDescriptor", "structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html", "structOurPaintDCM_1_1Utils_1_1RequirementDescriptor" ]
       ] ],
-      [ "DCMManager", "classOurPaintDCM_1_1DCMManager.html", "classOurPaintDCM_1_1DCMManager" ]
+      [ "DCMManager", "classOurPaintDCM_1_1DCMManager.html", "classOurPaintDCM_1_1DCMManager" ],
+      [ "PointTarget", "structOurPaintDCM_1_1PointTarget.html", "structOurPaintDCM_1_1PointTarget" ],
+      [ "TargetSolveResult", "structOurPaintDCM_1_1TargetSolveResult.html", "structOurPaintDCM_1_1TargetSolveResult" ]
     ] ],
     [ "std", "namespacestd.html", [
       [ "hash< OurPaintDCM::Utils::ID >", "structstd_1_1hash_3_01OurPaintDCM_1_1Utils_1_1ID_01_4.html", "structstd_1_1hash_3_01OurPaintDCM_1_1Utils_1_1ID_01_4" ]

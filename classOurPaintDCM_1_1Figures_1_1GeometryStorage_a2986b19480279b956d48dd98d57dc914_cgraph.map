@@ -1,0 +1,7 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::evaluateCurve" name="OurPaintDCM::Figures::GeometryStorage::evaluateCurve">
+<area shape="rect" id="Node000001" title="Evaluate C(u) using rational de Boor. Periodic parameters wrap into one period." alt="" coords="5,30,216,85"/>
+<area shape="rect" id="Node000002" href="$namespaceOurPaintDCM_1_1Utils.html#a43757230430230c98e28b886fa685c32" title=" " alt="" coords="307,5,454,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="216,42,294,33,294,38,216,48"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Maps C++ figure type to FigureType enum." alt="" coords="264,69,497,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="216,67,251,71,250,77,216,72"/>
+</map>

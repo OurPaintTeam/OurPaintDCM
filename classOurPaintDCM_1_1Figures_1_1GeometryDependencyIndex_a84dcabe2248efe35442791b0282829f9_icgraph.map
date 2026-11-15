@@ -1,0 +1,7 @@
+<map id="OurPaintDCM::Figures::GeometryDependencyIndex::linkCurve" name="OurPaintDCM::Figures::GeometryDependencyIndex::linkCurve">
+<area shape="rect" id="Node000001" title="Registers the ordered control point IDs of a curve (repeated IDs allowed)." alt="" coords="568,5,780,60"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a15e18a8197cb45f31a486a3106e160dd" title="Creates a NURBS referencing existing points; nullopt if a control ID is invalid." alt="" coords="288,13,520,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="554,35,520,35,520,30,554,30"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Creates a figure from aggregated FigureData (may create nested points)." alt="" coords="5,13,240,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="274,35,240,35,240,30,274,30"/>
+</map>

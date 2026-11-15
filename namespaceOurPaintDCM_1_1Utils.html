@@ -99,7 +99,8 @@ $(document).ready(function(){initNavTree('namespaceOurPaintDCM_1_1Utils.html',''
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#concepts">Concepts</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">OurPaintDCM::Utils Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -161,14 +162,65 @@ Enumerations</h2></td></tr>
 , <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a47e907c7c654795231350732d7b2ab4b">ET_FIXPOINT</a>
 , <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a8301936036492570639532339b626d29">ET_FIXLINE</a>
 , <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a05614f5614e1e7a6d41d8481e2ea2ff3">ET_FIXCIRCLE</a>
+, <br />
+&#160;&#160;<a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a4bcf613b5e4996f522b1d5ac43625ed2">ET_POINTONCIRCLE</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a8897e07efea9d7f8948481bb32b6326c">ET_CIRCLERADIUS</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a8ec2cc7a265ba86eb4fb24967930c084">ET_CIRCLEDIAMETER</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a6ae552c8832ad09f3c744f3fbd2bedb9">ET_EQUALLENGTH</a>
+, <br />
+&#160;&#160;<a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a5f7e483591f278250c6af15f13c2f6f8">ET_EQUALRADIUS</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a9aac96ef3544e92df4ca1096a2b07364">ET_POINTATMIDPOINT</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a3583a06f5a9421bd99d7fa8ba4f3e465">ET_SYMMETRICABOUTLINE</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9ab0a086564f23d2b1e581091edb5480d6">ET_SYMMETRICABOUTHORIZONTAL</a>
+, <br />
+&#160;&#160;<a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9ab4df8ae09d0b0b98dd9e7e97328f0c2d">ET_SYMMETRICABOUTVERTICAL</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a3192ed7139265764028ea1ad95a90f1d">ET_SYMMETRICABOUTPOINT</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a299610c2379943e2d2c5d052274a8c3b">ET_LINECIRCLETANGENT</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9ab50717880d49d9369161a701cf4a14f6">ET_CIRCLECIRCLETANGENT</a>
+, <br />
+&#160;&#160;<a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a760836d6213494cad1fea3bbaf553785">ET_ARCLINETANGENT</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9ac180473487138f2f732da54c172f1159">ET_ARCARCTANGENT</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9aaf81cc2d4fb6f2f42d97c10c3023ffc7">ET_FIXARC</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a0406b93231d6180e06019fe0456c4b72">ET_POINTPOINTHORIZONTALDIST</a>
+, <br />
+&#160;&#160;<a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9aa14e1a7aa55e2053bd101679eefe4065">ET_POINTPOINTVERTICALDIST</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a5eeec234498c86ee770e9b40c0053c8c">ET_POINTONARC</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9ab7cfe56f84eaa518a26cd868532e8ce7">ET_POINTATARCMIDPOINT</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9ae7c64f276fbc39e004214e6dd349113d">ET_LINELINEMIDPOINT</a>
+, <br />
+&#160;&#160;<a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9aec4c4527851af3615a7b6344e2aaf910">ET_ARCARCMIDPOINT</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a4ded714b07acdaf8b1855ad58dcdd840">ET_LINEARCMIDPOINT</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9ae697f8bbe6bc4c01d9ca1a5d031d2dc4">ET_POINTPOINTHORIZONTAL</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9af4a965313063c1e121158acdfd37b5b1">ET_POINTPOINTVERTICAL</a>
+, <br />
+&#160;&#160;<a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a730a866d3b50a8a22d638f52d6e47e88">ET_POINTCIRCLEDIST</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a941054b8d94f675626a1cf1076a11ee0">ET_ARCRADIUS</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a73301cfa820da315b67b1d44dc225289">ET_ARCANGLE</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a10711742a674312e1fcb991c4c7d3168">ET_POINTARCDIST</a>
+, <br />
+&#160;&#160;<a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9ad57a7ebd2afc982868ad65c3e9ae90c3">ET_LINEARCDIST</a>
 <br />
  }</td></tr>
 <tr class="memdesc:a640e0a0fd14fb2852b0080e87304d5b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum which illustrates every requirement type Each value describes a geometric constraint that can be applied to points, sections (lines), circles, or arcs in the system. These constraints are used by solvers to maintain relationships between geometric objects.  <a href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9">More...</a><br /></td></tr>
 <tr class="separator:a640e0a0fd14fb2852b0080e87304d5b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04b4a3b6dcee5e30db2920a0034287c1" id="r_a04b4a3b6dcee5e30db2920a0034287c1"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a04b4a3b6dcee5e30db2920a0034287c1">FigureType</a> : uint8_t { <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a04b4a3b6dcee5e30db2920a0034287c1a5c4c1a7ec89c97c9f50ebdd563c1e1f2">ET_POINT2D</a>
+<tr class="memitem:a5d281ccd8250f89a12b5b7ef185b67f5" id="r_a5d281ccd8250f89a12b5b7ef185b67f5"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a5d281ccd8250f89a12b5b7ef185b67f5">TangencySide</a> : int8_t { <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a5d281ccd8250f89a12b5b7ef185b67f5a50546bf973283065b6ccf09faf7a580a">NEGATIVE</a> = -1
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a5d281ccd8250f89a12b5b7ef185b67f5aab6c31432785221bae58327ef5f6ea58">POSITIVE</a> = 1
+ }</td></tr>
+<tr class="memdesc:a5d281ccd8250f89a12b5b7ef185b67f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signed normal of the supporting line directed from its first endpoint to its second.  <a href="namespaceOurPaintDCM_1_1Utils.html#a5d281ccd8250f89a12b5b7ef185b67f5">More...</a><br /></td></tr>
+<tr class="separator:a5d281ccd8250f89a12b5b7ef185b67f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab645409a2e80572dfe1eb4a90d52c83e" id="r_ab645409a2e80572dfe1eb4a90d52c83e"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Utils.html#ab645409a2e80572dfe1eb4a90d52c83e">CircleTangencyKind</a> : uint8_t { <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#ab645409a2e80572dfe1eb4a90d52c83ea3932d629fb5e2be9d09b3a4485b3cc9d">EXTERNAL</a> = 0
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#ab645409a2e80572dfe1eb4a90d52c83ea4920b21558185dfb9ffdddebce2e3b54">FIRST_CONTAINS_SECOND</a> = 1
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#ab645409a2e80572dfe1eb4a90d52c83eae2f17fe892955d9c9dd80ebbe55108ad">SECOND_CONTAINS_FIRST</a> = 2
+ }</td></tr>
+<tr class="separator:ab645409a2e80572dfe1eb4a90d52c83e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04b4a3b6dcee5e30db2920a0034287c1" id="r_a04b4a3b6dcee5e30db2920a0034287c1"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a04b4a3b6dcee5e30db2920a0034287c1">FigureType</a> : uint8_t { <br />
+&#160;&#160;<a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a04b4a3b6dcee5e30db2920a0034287c1a5c4c1a7ec89c97c9f50ebdd563c1e1f2">ET_POINT2D</a>
 , <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a04b4a3b6dcee5e30db2920a0034287c1a95d6faf610ee5aadcbc3b9bac87edf06">ET_LINE</a>
 , <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a04b4a3b6dcee5e30db2920a0034287c1a90594dabe3661828ebdd51b2c16fe590">ET_CIRCLE</a>
 , <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a04b4a3b6dcee5e30db2920a0034287c1aed036b4faa73f77c338c711c8f151ce0">ET_ARC</a>
+, <br />
+&#160;&#160;<a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a04b4a3b6dcee5e30db2920a0034287c1a31ec5ebc51b978d1d51d16e64eb83abd">ET_CURVE2D</a>
+<br />
  }</td></tr>
 <tr class="memdesc:a04b4a3b6dcee5e30db2920a0034287c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum for all geometric figure types.  <a href="namespaceOurPaintDCM_1_1Utils.html#a04b4a3b6dcee5e30db2920a0034287c1">More...</a><br /></td></tr>
 <tr class="separator:a04b4a3b6dcee5e30db2920a0034287c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -178,6 +230,12 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:a6f2b4a61c8ed5b8b772f8424adf5af15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Different modes of constraint solving.  <a href="namespaceOurPaintDCM_1_1Utils.html#a6f2b4a61c8ed5b8b772f8424adf5af15">More...</a><br /></td></tr>
 <tr class="separator:a6f2b4a61c8ed5b8b772f8424adf5af15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a662e400f96d936b8662d108d7807450a" id="r_a662e400f96d936b8662d108d7807450a"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a662e400f96d936b8662d108d7807450a">SolverType</a> { <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a662e400f96d936b8662d108d7807450aa1f058942f87b3559ca2adbc037f16a5c">LEVENBERG_MARQUARDT</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a662e400f96d936b8662d108d7807450aafb7c863b4733a96a17b62d27eb010e77">DOGLEG</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a662e400f96d936b8662d108d7807450aa2105fc2bc941c6095b2af1074e221ba7">GAUSS_NEWTON</a>
+, <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a662e400f96d936b8662d108d7807450aa543a80c769aa267bbf02f31e2d7e07e6">NEWTON</a>
+ }</td></tr>
+<tr class="separator:a662e400f96d936b8662d108d7807450a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae51395db4b382114f464d061563658ca" id="r_ae51395db4b382114f464d061563658ca"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Utils.html#ae51395db4b382114f464d061563658ca">SystemStatus</a> { <br />
 &#160;&#160;<a class="el" href="namespaceOurPaintDCM_1_1Utils.html#ae51395db4b382114f464d061563658caaa6fe173e0f8c78314af47a9713c5e85e">WELL_CONSTRAINED</a>
 , <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#ae51395db4b382114f464d061563658caa59c70733d9896122f7355fa460a0f2cc">UNDER_CONSTRAINED</a>
@@ -189,8 +247,51 @@ Enumerations</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:ae51395db4b382114f464d061563658ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a43757230430230c98e28b886fa685c32" id="r_a43757230430230c98e28b886fa685c32"><td class="memItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a43757230430230c98e28b886fa685c32">requireFinite</a> (double value)</td></tr>
+<tr class="separator:a43757230430230c98e28b886fa685c32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a842cbb53bdceb9ec06c0ffe9f473ed22" id="r_a842cbb53bdceb9ec06c0ffe9f473ed22"><td class="memItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a842cbb53bdceb9ec06c0ffe9f473ed22">requireFinite</a> (const std::optional&lt; double &gt; &amp;value)</td></tr>
+<tr class="separator:a842cbb53bdceb9ec06c0ffe9f473ed22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab147d3dfbb9b895aac22476639df5c7d" id="r_ab147d3dfbb9b895aac22476639df5c7d"><td class="memTemplParams" colspan="2">template&lt;typename Range &gt; </td></tr>
+<tr class="memitem:ab147d3dfbb9b895aac22476639df5c7d"><td class="memTemplItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Utils.html#ab147d3dfbb9b895aac22476639df5c7d">requireFiniteValues</a> (const Range &amp;values)</td></tr>
+<tr class="separator:ab147d3dfbb9b895aac22476639df5c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d6582360f3f1a566385ae9ad42c45ea" id="r_a7d6582360f3f1a566385ae9ad42c45ea"><td class="memItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a7d6582360f3f1a566385ae9ad42c45ea">requireNonNegative</a> (double value)</td></tr>
+<tr class="separator:a7d6582360f3f1a566385ae9ad42c45ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d48225b0556798ea39a309eaf5af05b" id="r_a8d48225b0556798ea39a309eaf5af05b"><td class="memItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a8d48225b0556798ea39a309eaf5af05b">requirePositiveRadius</a> (double radius)</td></tr>
+<tr class="separator:a8d48225b0556798ea39a309eaf5af05b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64c2112258e35049b903035ee8a57995" id="r_a64c2112258e35049b903035ee8a57995"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a64c2112258e35049b903035ee8a57995">validateRequirementParameter</a> (<a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9">RequirementType</a> type, const std::optional&lt; double &gt; &amp;param)</td></tr>
+<tr class="separator:a64c2112258e35049b903035ee8a57995"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ab645409a2e80572dfe1eb4a90d52c83e" name="ab645409a2e80572dfe1eb4a90d52c83e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab645409a2e80572dfe1eb4a90d52c83e">&#9670;&#160;</a></span>CircleTangencyKind</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#ab645409a2e80572dfe1eb4a90d52c83e">OurPaintDCM::Utils::CircleTangencyKind</a> : uint8_t</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ab645409a2e80572dfe1eb4a90d52c83ea3932d629fb5e2be9d09b3a4485b3cc9d" name="ab645409a2e80572dfe1eb4a90d52c83ea3932d629fb5e2be9d09b3a4485b3cc9d"></a>EXTERNAL&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab645409a2e80572dfe1eb4a90d52c83ea4920b21558185dfb9ffdddebce2e3b54" name="ab645409a2e80572dfe1eb4a90d52c83ea4920b21558185dfb9ffdddebce2e3b54"></a>FIRST_CONTAINS_SECOND&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab645409a2e80572dfe1eb4a90d52c83eae2f17fe892955d9c9dd80ebbe55108ad" name="ab645409a2e80572dfe1eb4a90d52c83eae2f17fe892955d9c9dd80ebbe55108ad"></a>SECOND_CONTAINS_FIRST&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
 <a id="a04b4a3b6dcee5e30db2920a0034287c1" name="a04b4a3b6dcee5e30db2920a0034287c1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a04b4a3b6dcee5e30db2920a0034287c1">&#9670;&#160;</a></span>FigureType</h2>
 
@@ -220,6 +321,8 @@ Enumerations</h2></td></tr>
 <tr><td class="fieldname"><a id="a04b4a3b6dcee5e30db2920a0034287c1a90594dabe3661828ebdd51b2c16fe590" name="a04b4a3b6dcee5e30db2920a0034287c1a90594dabe3661828ebdd51b2c16fe590"></a>ET_CIRCLE&#160;</td><td class="fielddoc"><p>Circle object. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a04b4a3b6dcee5e30db2920a0034287c1aed036b4faa73f77c338c711c8f151ce0" name="a04b4a3b6dcee5e30db2920a0034287c1aed036b4faa73f77c338c711c8f151ce0"></a>ET_ARC&#160;</td><td class="fielddoc"><p>Circular arc object. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a04b4a3b6dcee5e30db2920a0034287c1a31ec5ebc51b978d1d51d16e64eb83abd" name="a04b4a3b6dcee5e30db2920a0034287c1a31ec5ebc51b978d1d51d16e64eb83abd"></a>ET_CURVE2D&#160;</td><td class="fielddoc"><p>NURBS curve, including Bezier and polynomial B-splines. </p>
 </td></tr>
 </table>
 
@@ -279,6 +382,48 @@ Enumerations</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9a05614f5614e1e7a6d41d8481e2ea2ff3" name="a640e0a0fd14fb2852b0080e87304d5b9a05614f5614e1e7a6d41d8481e2ea2ff3"></a>ET_FIXCIRCLE&#160;</td><td class="fielddoc"><p>Fix a circle (center and radius) at its current position. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9a4bcf613b5e4996f522b1d5ac43625ed2" name="a640e0a0fd14fb2852b0080e87304d5b9a4bcf613b5e4996f522b1d5ac43625ed2"></a>ET_POINTONCIRCLE&#160;</td><td class="fielddoc"><p>Point lies on a circle. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9a8897e07efea9d7f8948481bb32b6326c" name="a640e0a0fd14fb2852b0080e87304d5b9a8897e07efea9d7f8948481bb32b6326c"></a>ET_CIRCLERADIUS&#160;</td><td class="fielddoc"><p>Circle has a prescribed radius; its center remains free. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9a8ec2cc7a265ba86eb4fb24967930c084" name="a640e0a0fd14fb2852b0080e87304d5b9a8ec2cc7a265ba86eb4fb24967930c084"></a>ET_CIRCLEDIAMETER&#160;</td><td class="fielddoc"><p>Circle has a prescribed diameter; its center remains free. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9a6ae552c8832ad09f3c744f3fbd2bedb9" name="a640e0a0fd14fb2852b0080e87304d5b9a6ae552c8832ad09f3c744f3fbd2bedb9"></a>ET_EQUALLENGTH&#160;</td><td class="fielddoc"><p>Two sections have equal lengths, including zero lengths. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9a5f7e483591f278250c6af15f13c2f6f8" name="a640e0a0fd14fb2852b0080e87304d5b9a5f7e483591f278250c6af15f13c2f6f8"></a>ET_EQUALRADIUS&#160;</td><td class="fielddoc"><p>Two circles have equal positive radii. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9a9aac96ef3544e92df4ca1096a2b07364" name="a640e0a0fd14fb2852b0080e87304d5b9a9aac96ef3544e92df4ca1096a2b07364"></a>ET_POINTATMIDPOINT&#160;</td><td class="fielddoc"><p>Point is the midpoint of a section (two independent scalar equations). </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9a3583a06f5a9421bd99d7fa8ba4f3e465" name="a640e0a0fd14fb2852b0080e87304d5b9a3583a06f5a9421bd99d7fa8ba4f3e465"></a>ET_SYMMETRICABOUTLINE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9ab0a086564f23d2b1e581091edb5480d6" name="a640e0a0fd14fb2852b0080e87304d5b9ab0a086564f23d2b1e581091edb5480d6"></a>ET_SYMMETRICABOUTHORIZONTAL&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9ab4df8ae09d0b0b98dd9e7e97328f0c2d" name="a640e0a0fd14fb2852b0080e87304d5b9ab4df8ae09d0b0b98dd9e7e97328f0c2d"></a>ET_SYMMETRICABOUTVERTICAL&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9a3192ed7139265764028ea1ad95a90f1d" name="a640e0a0fd14fb2852b0080e87304d5b9a3192ed7139265764028ea1ad95a90f1d"></a>ET_SYMMETRICABOUTPOINT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9a299610c2379943e2d2c5d052274a8c3b" name="a640e0a0fd14fb2852b0080e87304d5b9a299610c2379943e2d2c5d052274a8c3b"></a>ET_LINECIRCLETANGENT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9ab50717880d49d9369161a701cf4a14f6" name="a640e0a0fd14fb2852b0080e87304d5b9ab50717880d49d9369161a701cf4a14f6"></a>ET_CIRCLECIRCLETANGENT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9a760836d6213494cad1fea3bbaf553785" name="a640e0a0fd14fb2852b0080e87304d5b9a760836d6213494cad1fea3bbaf553785"></a>ET_ARCLINETANGENT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9ac180473487138f2f732da54c172f1159" name="a640e0a0fd14fb2852b0080e87304d5b9ac180473487138f2f732da54c172f1159"></a>ET_ARCARCTANGENT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9aaf81cc2d4fb6f2f42d97c10c3023ffc7" name="a640e0a0fd14fb2852b0080e87304d5b9aaf81cc2d4fb6f2f42d97c10c3023ffc7"></a>ET_FIXARC&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9a0406b93231d6180e06019fe0456c4b72" name="a640e0a0fd14fb2852b0080e87304d5b9a0406b93231d6180e06019fe0456c4b72"></a>ET_POINTPOINTHORIZONTALDIST&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9aa14e1a7aa55e2053bd101679eefe4065" name="a640e0a0fd14fb2852b0080e87304d5b9aa14e1a7aa55e2053bd101679eefe4065"></a>ET_POINTPOINTVERTICALDIST&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9a5eeec234498c86ee770e9b40c0053c8c" name="a640e0a0fd14fb2852b0080e87304d5b9a5eeec234498c86ee770e9b40c0053c8c"></a>ET_POINTONARC&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9ab7cfe56f84eaa518a26cd868532e8ce7" name="a640e0a0fd14fb2852b0080e87304d5b9ab7cfe56f84eaa518a26cd868532e8ce7"></a>ET_POINTATARCMIDPOINT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9ae7c64f276fbc39e004214e6dd349113d" name="a640e0a0fd14fb2852b0080e87304d5b9ae7c64f276fbc39e004214e6dd349113d"></a>ET_LINELINEMIDPOINT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9aec4c4527851af3615a7b6344e2aaf910" name="a640e0a0fd14fb2852b0080e87304d5b9aec4c4527851af3615a7b6344e2aaf910"></a>ET_ARCARCMIDPOINT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9a4ded714b07acdaf8b1855ad58dcdd840" name="a640e0a0fd14fb2852b0080e87304d5b9a4ded714b07acdaf8b1855ad58dcdd840"></a>ET_LINEARCMIDPOINT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9ae697f8bbe6bc4c01d9ca1a5d031d2dc4" name="a640e0a0fd14fb2852b0080e87304d5b9ae697f8bbe6bc4c01d9ca1a5d031d2dc4"></a>ET_POINTPOINTHORIZONTAL&#160;</td><td class="fielddoc"><p>Two points have equal Y coordinates. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9af4a965313063c1e121158acdfd37b5b1" name="a640e0a0fd14fb2852b0080e87304d5b9af4a965313063c1e121158acdfd37b5b1"></a>ET_POINTPOINTVERTICAL&#160;</td><td class="fielddoc"><p>Two points have equal X coordinates. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9a730a866d3b50a8a22d638f52d6e47e88" name="a640e0a0fd14fb2852b0080e87304d5b9a730a866d3b50a8a22d638f52d6e47e88"></a>ET_POINTCIRCLEDIST&#160;</td><td class="fielddoc"><p>Signed gap from a point to a circle: |P-C| - radius. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9a941054b8d94f675626a1cf1076a11ee0" name="a640e0a0fd14fb2852b0080e87304d5b9a941054b8d94f675626a1cf1076a11ee0"></a>ET_ARCRADIUS&#160;</td><td class="fielddoc"><p>Prescribed positive radius of an arc. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9a73301cfa820da315b67b1d44dc225289" name="a640e0a0fd14fb2852b0080e87304d5b9a73301cfa820da315b67b1d44dc225289"></a>ET_ARCANGLE&#160;</td><td class="fielddoc"><p>Counterclockwise arc angle in radians, including major arcs. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9a10711742a674312e1fcb991c4c7d3168" name="a640e0a0fd14fb2852b0080e87304d5b9a10711742a674312e1fcb991c4c7d3168"></a>ET_POINTARCDIST&#160;</td><td class="fielddoc"><p>Signed gap from a point to an arc's supporting circle. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a640e0a0fd14fb2852b0080e87304d5b9ad57a7ebd2afc982868ad65c3e9ae90c3" name="a640e0a0fd14fb2852b0080e87304d5b9ad57a7ebd2afc982868ad65c3e9ae90c3"></a>ET_LINEARCDIST&#160;</td><td class="fielddoc"><p>Non-negative clearance from a segment to an arc's supporting circle. </p>
+</td></tr>
 </table>
 
 </div>
@@ -315,6 +460,34 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
+<a id="a662e400f96d936b8662d108d7807450a" name="a662e400f96d936b8662d108d7807450a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a662e400f96d936b8662d108d7807450a">&#9670;&#160;</a></span>SolverType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a662e400f96d936b8662d108d7807450a">OurPaintDCM::Utils::SolverType</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a662e400f96d936b8662d108d7807450aa1f058942f87b3559ca2adbc037f16a5c" name="a662e400f96d936b8662d108d7807450aa1f058942f87b3559ca2adbc037f16a5c"></a>LEVENBERG_MARQUARDT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a662e400f96d936b8662d108d7807450aafb7c863b4733a96a17b62d27eb010e77" name="a662e400f96d936b8662d108d7807450aafb7c863b4733a96a17b62d27eb010e77"></a>DOGLEG&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a662e400f96d936b8662d108d7807450aa2105fc2bc941c6095b2af1074e221ba7" name="a662e400f96d936b8662d108d7807450aa2105fc2bc941c6095b2af1074e221ba7"></a>GAUSS_NEWTON&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a662e400f96d936b8662d108d7807450aa543a80c769aa267bbf02f31e2d7e07e6" name="a662e400f96d936b8662d108d7807450aa543a80c769aa267bbf02f31e2d7e07e6"></a>NEWTON&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
 <a id="ae51395db4b382114f464d061563658ca" name="ae51395db4b382114f464d061563658ca"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae51395db4b382114f464d061563658ca">&#9670;&#160;</a></span>SystemStatus</h2>
 
@@ -342,6 +515,726 @@ Enumerations</h2></td></tr>
 <tr><td class="fieldname"><a id="ae51395db4b382114f464d061563658caaba2b45bdc11e2a4a6e86aab2ac693cbb" name="ae51395db4b382114f464d061563658caaba2b45bdc11e2a4a6e86aab2ac693cbb"></a>EMPTY&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ae51395db4b382114f464d061563658caa696b031073e74bf2cb98e5ef201d4aa3" name="ae51395db4b382114f464d061563658caa696b031073e74bf2cb98e5ef201d4aa3"></a>UNKNOWN&#160;</td><td class="fielddoc"></td></tr>
 </table>
+
+</div>
+</div>
+<a id="a5d281ccd8250f89a12b5b7ef185b67f5" name="a5d281ccd8250f89a12b5b7ef185b67f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d281ccd8250f89a12b5b7ef185b67f5">&#9670;&#160;</a></span>TangencySide</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a5d281ccd8250f89a12b5b7ef185b67f5">OurPaintDCM::Utils::TangencySide</a> : int8_t</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Signed normal of the supporting line directed from its first endpoint to its second. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a5d281ccd8250f89a12b5b7ef185b67f5a50546bf973283065b6ccf09faf7a580a" name="a5d281ccd8250f89a12b5b7ef185b67f5a50546bf973283065b6ccf09faf7a580a"></a>NEGATIVE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a5d281ccd8250f89a12b5b7ef185b67f5aab6c31432785221bae58327ef5f6ea58" name="a5d281ccd8250f89a12b5b7ef185b67f5aab6c31432785221bae58327ef5f6ea58"></a>POSITIVE&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a842cbb53bdceb9ec06c0ffe9f473ed22" name="a842cbb53bdceb9ec06c0ffe9f473ed22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a842cbb53bdceb9ec06c0ffe9f473ed22">&#9670;&#160;</a></span>requireFinite() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr void OurPaintDCM::Utils::requireFinite </td>
+          <td>(</td>
+          <td class="paramtype">const std::optional&lt; double &gt; &amp;&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="namespaceOurPaintDCM_1_1Utils_a842cbb53bdceb9ec06c0ffe9f473ed22_cgraph.png" border="0" usemap="#anamespaceOurPaintDCM_1_1Utils_a842cbb53bdceb9ec06c0ffe9f473ed22_cgraph" alt=""/></div>
+<map name="anamespaceOurPaintDCM_1_1Utils_a842cbb53bdceb9ec06c0ffe9f473ed22_cgraph" id="anamespaceOurPaintDCM_1_1Utils_a842cbb53bdceb9ec06c0ffe9f473ed22_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,152,45"/>
+<area shape="rect" href="namespaceOurPaintDCM_1_1Utils.html#a43757230430230c98e28b886fa685c32" title=" " alt="" coords="200,5,347,45"/>
+<area shape="poly" title=" " alt="" coords="152,23,186,23,186,28,152,28"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a43757230430230c98e28b886fa685c32" name="a43757230430230c98e28b886fa685c32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43757230430230c98e28b886fa685c32">&#9670;&#160;</a></span>requireFinite() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr void OurPaintDCM::Utils::requireFinite </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="namespaceOurPaintDCM_1_1Utils_a43757230430230c98e28b886fa685c32_icgraph.png" border="0" usemap="#anamespaceOurPaintDCM_1_1Utils_a43757230430230c98e28b886fa685c32_icgraph" alt=""/></div>
+<map name="anamespaceOurPaintDCM_1_1Utils_a43757230430230c98e28b886fa685c32_icgraph" id="anamespaceOurPaintDCM_1_1Utils_a43757230430230c98e28b886fa685c32_icgraph">
+<area shape="rect" title=" " alt="" coords="1597,718,1744,758"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Creates a figure from aggregated FigureData (may create nested points)." alt="" coords="531,551,765,591"/>
+<area shape="poly" title=" " alt="" coords="1592,717,1549,706,1333,664,1117,630,765,586,766,580,1118,624,1334,659,1550,701,1593,712"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af8c35571d12a7a86d789d4e35ee8cf9f" title="Creates a point at (x, y)." alt="" coords="1323,866,1549,906"/>
+<area shape="poly" title=" " alt="" coords="1644,770,1603,811,1551,850,1511,868,1509,863,1548,845,1599,807,1641,767"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a2986b19480279b956d48dd98d57dc914" title="Evaluate C(u) using rational de Boor. Periodic parameters wrap into one period." alt="" coords="1331,931,1541,985"/>
+<area shape="poly" title=" " alt="" coords="1658,772,1617,846,1587,886,1551,920,1531,933,1528,928,1548,916,1583,882,1612,843,1653,770"/>
+<area shape="rect" href="namespaceOurPaintDCM_1_1Utils.html#a842cbb53bdceb9ec06c0ffe9f473ed22" title=" " alt="" coords="1363,1010,1509,1050"/>
+<area shape="poly" title=" " alt="" coords="1666,772,1653,822,1631,884,1598,946,1576,975,1551,1000,1532,1013,1510,1022,1508,1017,1529,1008,1548,996,1572,971,1593,943,1626,882,1648,821,1661,770"/>
+<area shape="rect" href="namespaceOurPaintDCM_1_1Utils.html#ab147d3dfbb9b895aac22476639df5c7d" title=" " alt="" coords="1359,383,1513,423"/>
+<area shape="poly" title=" " alt="" coords="1645,708,1449,425,1454,422,1650,705"/>
+<area shape="rect" href="structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#af1a43faa50e20ca3ebe7a3c75ceee954" title="Validate descriptor fields for the given figure type." alt="" coords="857,251,1004,305"/>
+<area shape="poly" title=" " alt="" coords="1667,704,1661,634,1644,543,1629,496,1608,451,1581,409,1548,374,1526,366,1477,356,1328,333,1004,290,1004,284,1329,327,1478,351,1527,361,1551,369,1586,406,1613,448,1634,494,1649,542,1667,633,1672,704"/>
+<area shape="rect" href="structOurPaintDCM_1_1Figures_1_1Curve2D.html#aa71c132ba3c4d05a9dc82a5ddd4d5d9d" title=" " alt="" coords="1096,243,1275,283"/>
+<area shape="poly" title=" " alt="" coords="1662,705,1648,610,1623,489,1607,429,1589,375,1569,332,1547,304,1518,283,1485,268,1450,257,1414,250,1341,245,1275,250,1275,244,1341,240,1415,244,1451,251,1487,263,1521,279,1551,300,1574,329,1594,373,1613,427,1628,488,1653,609,1668,704"/>
+<area shape="rect" href="namespaceOurPaintDCM_1_1Utils.html#a7d6582360f3f1a566385ae9ad42c45ea" title=" " alt="" coords="1105,751,1266,791"/>
+<area shape="poly" title=" " alt="" coords="1584,747,1266,768,1266,763,1583,741"/>
+<area shape="rect" href="namespaceOurPaintDCM_1_1Utils.html#a64c2112258e35049b903035ee8a57995" title=" " alt="" coords="813,961,1048,1001"/>
+<area shape="poly" title=" " alt="" coords="1597,765,1049,946,995,963,994,958,1047,941,1595,760"/>
+<area shape="rect" href="namespaceOurPaintDCM_1_1Utils.html#a8d48225b0556798ea39a309eaf5af05b" title=" " alt="" coords="1099,687,1271,727"/>
+<area shape="poly" title=" " alt="" coords="1583,735,1271,715,1272,710,1584,730"/>
+<area shape="poly" title=" " alt="" coords="1354,912,1324,922,1247,951,1178,984,1116,1017,1058,1044,1000,1062,971,1066,942,1066,911,1061,880,1052,847,1036,812,1015,795,992,774,949,727,825,653,593,658,591,732,823,779,947,799,989,815,1011,849,1032,881,1047,912,1056,942,1061,971,1061,999,1057,1056,1039,1114,1012,1176,979,1245,946,1322,917,1352,907"/>
+<area shape="rect" href="structOurPaintDCM_1_1Figures_1_1PointBase.html#a963a2cf6200ecc6b8c7b82e8e1772fa7" title=" " alt="" coords="1104,409,1267,449"/>
+<area shape="poly" title=" " alt="" coords="1345,415,1267,423,1267,418,1345,410"/>
+<area shape="poly" title=" " alt="" coords="1345,395,1225,374,1095,342,1071,332,1047,320,1003,304,1005,299,1049,316,1073,327,1097,337,1226,369,1345,390"/>
+<area shape="poly" title=" " alt="" coords="1386,379,1221,286,1223,281,1389,374"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac5445f4f2f67cd4973d9d78f8455ae5c" title="Creates an arc through two points with a center point." alt="" coords="823,330,1038,370"/>
+<area shape="poly" title=" " alt="" coords="1114,407,1047,385,1007,373,1008,368,1049,379,1116,402"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1db8de13e90373f4a63d04cf04c97455" title="Creates a circle with given center and radius." alt="" coords="815,522,1046,562"/>
+<area shape="poly" title=" " alt="" coords="1146,459,1100,487,1049,512,1016,524,1014,519,1047,508,1098,482,1143,454"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1553e7abc4def94e41466a6aae0e410c" title="Creates a line through two existing points." alt="" coords="820,458,1041,498"/>
+<area shape="poly" title=" " alt="" coords="1091,450,1035,461,1034,455,1090,444"/>
+<area shape="rect" href="structOurPaintDCM_1_1Figures_1_1PointBase.html#acbba67373d49a3207d6e8b450abfd7d7" title="Constructor with initialization values." alt="" coords="847,394,1015,434"/>
+<area shape="poly" title=" " alt="" coords="1090,426,1015,421,1015,416,1091,421"/>
+<area shape="poly" title=" " alt="" coords="826,378,815,384,765,424,721,471,687,516,663,553,659,550,683,513,717,467,761,420,812,380,823,373"/>
+<area shape="poly" title=" " alt="" coords="802,558,766,562,765,557,801,553"/>
+<area shape="poly" title=" " alt="" coords="841,504,814,513,700,554,699,549,812,507,839,499"/>
+<area shape="rect" href="classOurPaintDCM_1_1DCMManager.html#aac0ea08abe5a8da7d345aa2852e04515" title="Add a new geometric figure using descriptor." alt="" coords="546,258,750,298"/>
+<area shape="poly" title=" " alt="" coords="844,281,750,281,750,275,844,275"/>
+<area shape="poly" title=" " alt="" coords="1121,241,1054,221,974,209,932,208,891,212,852,222,815,240,801,255,783,286,738,377,660,552,655,550,733,374,778,284,797,252,812,236,850,217,890,207,932,202,974,203,1055,216,1123,236"/>
+<area shape="poly" title=" " alt="" coords="1082,272,1004,276,1004,271,1082,267"/>
+<area shape="rect" href="structOurPaintDCM_1_1Figures_1_1Curve2D.html#ad3b97782ca1c6ced27f5d00fad3cb159" title=" " alt="" coords="849,135,1012,175"/>
+<area shape="poly" title=" " alt="" coords="1135,239,1047,196,997,178,999,173,1049,192,1137,234"/>
+<area shape="poly" title=" " alt="" coords="1113,800,1098,812,1082,834,1077,858,1069,880,1062,891,1049,900,987,931,958,938,930,941,902,939,874,931,812,900,772,869,739,830,712,787,691,742,663,655,650,592,655,591,668,654,696,740,717,785,744,827,776,865,815,896,876,926,903,933,930,936,957,933,985,926,1047,896,1058,887,1065,878,1071,856,1078,832,1094,808,1110,796"/>
+<area shape="poly" title=" " alt="" coords="1111,801,1098,812,1086,828,1079,844,1075,877,1071,910,1063,927,1050,944,1023,963,1020,958,1046,940,1059,924,1066,909,1070,876,1074,843,1081,826,1094,808,1107,797"/>
+<area shape="rect" href="structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html#a99f0e928eebfacb51d696d0f76941b6e" title="Validate that descriptor has correct number of objects for its type." alt="" coords="557,953,739,1008"/>
+<area shape="poly" title=" " alt="" coords="800,983,739,983,739,978,800,978"/>
+<area shape="rect" href="classOurPaintDCM_1_1DCMManager.html#ae497fb8e8aef91685c75adaaad740a1f" title="Add a new requirement using descriptor." alt="" coords="279,925,483,965"/>
+<area shape="poly" title=" " alt="" coords="543,969,483,961,483,956,544,964"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a83793b5b89f46cb835972736f83f02f2" title="Add a requirement using a descriptor (unified high&#45;level interface)." alt="" coords="298,989,463,1044"/>
+<area shape="poly" title=" " alt="" coords="544,997,464,1008,463,1003,543,992"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a1eb6992b2b5c75e34e5c4d084303c0e9" title=" " alt="" coords="35,5,201,60"/>
+<area shape="poly" title=" " alt="" coords="285,988,276,978,258,942,245,898,238,846,236,789,241,661,253,523,265,385,270,258,267,201,260,150,247,107,229,73,216,60,200,50,202,46,219,56,233,70,252,105,265,149,273,200,275,258,271,386,259,523,246,661,241,789,244,846,250,897,263,940,281,975,289,984"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a19a0efbb68c751c0c41f8751ff0e3a3b" title=" " alt="" coords="35,84,201,139"/>
+<area shape="poly" title=" " alt="" coords="285,988,276,978,259,945,248,905,241,858,239,805,243,688,253,562,264,437,267,320,264,268,258,222,246,183,229,152,216,139,200,129,202,125,219,135,233,148,251,181,263,221,270,268,272,320,269,437,259,563,248,688,244,805,246,857,253,904,264,943,281,975,289,984"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ae0fe011c029c57565e4b49069c77fd87" title=" " alt="" coords="35,163,201,217"/>
+<area shape="poly" title=" " alt="" coords="285,988,276,978,261,949,250,912,244,869,241,822,244,716,253,602,262,488,264,383,262,336,255,294,244,258,229,230,216,218,200,208,202,203,219,213,233,227,249,256,260,293,267,335,270,382,267,488,258,602,250,716,247,822,249,869,255,911,266,947,281,975,289,984"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a8c343229dbfbf8badf9d0db172d2e4b5" title="Add arc&#45;center perpendicular&#45;bisector constraint by ID." alt="" coords="5,241,231,296"/>
+<area shape="poly" title=" " alt="" coords="285,987,276,978,262,952,252,919,244,838,246,743,253,641,260,539,261,445,253,366,243,334,229,309,218,298,222,295,233,306,248,332,258,365,267,445,265,540,258,641,251,743,249,838,258,918,267,950,281,975,289,984"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#af56a89a8522bbf3edf727b64ba370969" title=" " alt="" coords="35,320,201,375"/>
+<area shape="poly" title=" " alt="" coords="285,987,276,978,264,955,255,926,247,854,248,771,253,681,258,591,259,507,250,438,241,410,229,388,216,375,199,365,202,361,219,371,233,384,246,408,255,436,264,507,263,591,258,681,253,771,252,854,260,925,269,953,281,975,289,984"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a9c91e4d20ba8ce72bd144e610a4d6d0e" title=" " alt="" coords="35,399,201,453"/>
+<area shape="poly" title=" " alt="" coords="285,987,277,978,255,944,241,910,233,877,231,845,238,781,254,719,269,657,276,595,273,563,265,532,251,499,229,466,215,454,199,444,202,439,219,449,233,463,255,497,270,530,278,563,281,595,274,658,259,720,243,782,236,845,238,877,246,909,259,942,281,975,289,984"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a21c9ceca2c22eebc4e434fb9b3b51ab4" title=" " alt="" coords="29,477,207,532"/>
+<area shape="poly" title=" " alt="" coords="285,987,277,978,258,949,245,921,238,893,236,866,241,812,253,759,265,707,270,655,267,628,260,601,247,574,229,546,206,527,209,523,233,543,252,572,265,600,272,627,275,655,270,708,258,761,246,813,241,866,244,892,250,919,262,947,281,975,289,984"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a26e77bff03890c5c550edb0ca83caa7c" title=" " alt="" coords="35,556,201,611"/>
+<area shape="poly" title=" " alt="" coords="285,987,277,978,261,955,250,932,241,886,244,842,253,799,261,756,264,713,255,670,244,648,229,625,216,613,200,603,202,598,219,608,233,622,249,645,260,668,269,713,267,757,258,800,250,843,247,886,255,930,265,952,281,975,289,984"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a76ba33b93572f2e89f05b84bdf535a54" title=" " alt="" coords="35,635,201,689"/>
+<area shape="poly" title=" " alt="" coords="285,987,277,978,255,942,247,907,247,872,253,838,258,805,258,772,250,738,229,704,215,691,199,682,202,677,219,687,233,700,255,736,263,771,263,805,258,839,253,873,252,906,260,940,281,975,289,983"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#aa7730b0f7b9e3c39b8b6b09ef33e6ada" title=" " alt="" coords="35,713,201,768"/>
+<area shape="poly" title=" " alt="" coords="285,986,277,978,260,953,252,927,251,902,252,878,254,854,253,830,245,807,229,783,199,761,202,757,233,779,250,804,258,829,259,854,258,878,256,903,257,926,265,950,281,975,288,982"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a1d2ab3353d36a616b6ae28d6f050a361" title=" " alt="" coords="35,792,201,847"/>
+<area shape="poly" title=" " alt="" coords="285,986,277,979,265,963,257,948,252,918,247,889,241,875,229,861,199,842,202,837,232,857,245,873,252,888,258,917,263,946,269,960,281,975,288,982"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#afdd5741b1f8dcf7131eb29c048574cef" title=" " alt="" coords="35,871,201,925"/>
+<area shape="poly" title=" " alt="" coords="289,985,277,979,253,959,229,940,200,926,202,921,232,936,256,955,280,974,292,981"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ac466f9644e6e868ae0fe6e762af71321" title="Fix a circle (center and radius) at its current position." alt="" coords="35,949,201,1004"/>
+<area shape="poly" title=" " alt="" coords="284,1005,201,992,201,987,285,999"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#affa87d2377d064e0ec45687b246adc6b" title="Fix a line (both endpoints) at its current position." alt="" coords="35,1028,201,1083"/>
+<area shape="poly" title=" " alt="" coords="285,1033,201,1046,201,1041,284,1028"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ad40b5a666e77e66f4b59e7cbc267bf6a" title="Fix a point at its current position." alt="" coords="35,1107,201,1161"/>
+<area shape="poly" title=" " alt="" coords="321,1053,232,1098,202,1110,200,1105,230,1093,319,1048"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a090214a76b5dc63ba09897bac0f2e9d3" title="Add horizontal&#45;line constraint by ID." alt="" coords="35,1185,201,1240"/>
+<area shape="poly" title=" " alt="" coords="354,1057,301,1118,268,1149,232,1176,202,1192,200,1187,229,1172,265,1145,297,1114,350,1054"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#acd956357db48bd2b5f0d0ef36c2c6259" title=" " alt="" coords="35,1264,201,1319"/>
+<area shape="poly" title=" " alt="" coords="367,1058,346,1103,316,1156,278,1209,232,1255,203,1272,200,1268,229,1251,274,1205,312,1153,341,1101,362,1056"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab7272e28537c744756bc1356cd045ff3" title=" " alt="" coords="35,1343,201,1397"/>
+<area shape="poly" title=" " alt="" coords="373,1058,357,1118,329,1192,288,1268,262,1302,232,1333,202,1353,199,1348,229,1329,258,1299,283,1265,324,1190,352,1117,368,1057"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a6342987e5432d4882aa87a2b75177010" title="Add line&#45;circle distance constraint by IDs." alt="" coords="35,1421,201,1476"/>
+<area shape="poly" title=" " alt="" coords="378,1058,365,1133,340,1228,321,1277,297,1326,268,1371,232,1412,202,1432,199,1428,229,1408,263,1368,292,1323,316,1275,335,1226,360,1132,373,1058"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ae80f0be1191f5e4cea9e36b6543e109d" title=" " alt="" coords="33,1500,203,1555"/>
+<area shape="poly" title=" " alt="" coords="381,1058,373,1146,364,1202,350,1262,331,1323,306,1383,273,1440,232,1491,204,1510,201,1506,229,1487,269,1437,301,1381,326,1321,345,1260,358,1201,367,1146,376,1058"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a0e9a8ad04cc56cca3511a3c2faa33bbc" title="Add angle&#45;between&#45;lines constraint by IDs." alt="" coords="35,1579,201,1633"/>
+<area shape="poly" title=" " alt="" coords="383,1058,379,1160,372,1225,360,1296,341,1369,315,1441,279,1509,233,1569,203,1590,199,1586,229,1565,274,1506,310,1439,336,1367,355,1295,367,1224,374,1159,378,1058"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#af6a679a9af232e3fb475b5aa4afa5adb" title=" " alt="" coords="35,1657,201,1712"/>
+<area shape="poly" title=" " alt="" coords="377,1058,360,1190,330,1366,310,1455,287,1535,262,1602,233,1648,202,1670,199,1665,229,1644,257,1599,282,1534,305,1453,325,1365,355,1190,372,1057"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a94161cac4e0347106d9eca8be3246dfd" title="Add parallel&#45;lines constraint by IDs." alt="" coords="35,1736,201,1791"/>
+<area shape="poly" title=" " alt="" coords="379,1058,363,1205,335,1404,315,1505,292,1598,264,1674,249,1703,233,1726,219,1739,202,1749,200,1744,215,1735,229,1723,245,1701,260,1671,287,1596,310,1504,330,1404,358,1204,373,1057"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab34a6d3e1ba2dc93955e7acde536a7fb" title="Add perpendicular&#45;lines constraint by IDs." alt="" coords="19,1815,217,1869"/>
+<area shape="poly" title=" " alt="" coords="380,1058,367,1220,340,1443,320,1556,296,1660,267,1745,251,1779,233,1805,219,1818,215,1814,229,1802,246,1776,262,1743,291,1658,315,1555,335,1442,361,1219,374,1058"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#aefd4fb76785f5539a9297d3403894dd4" title="Add line&#45;on&#45;circle constraint by IDs." alt="" coords="35,1893,201,1948"/>
+<area shape="poly" title=" " alt="" coords="380,1058,370,1234,345,1480,325,1606,301,1722,270,1817,252,1855,233,1884,219,1897,203,1906,200,1902,216,1892,229,1880,248,1852,265,1815,296,1721,320,1606,339,1480,364,1234,375,1058"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#abdec8ba9cfb8eb7a2b086fbefcc6e852" title=" " alt="" coords="35,1972,201,2027"/>
+<area shape="poly" title=" " alt="" coords="381,1058,372,1248,363,1378,349,1518,330,1657,305,1784,273,1889,254,1930,233,1962,219,1975,202,1985,199,1981,215,1971,229,1959,249,1928,268,1887,300,1783,325,1656,344,1517,358,1378,367,1248,376,1058"/>
+<area shape="poly" title=" " alt="" coords="1085,687,813,621,717,594,718,589,814,615,1087,682"/>
+<area shape="poly" title=" " alt="" coords="1140,682,961,564,964,560,1143,677"/>
+<area shape="poly" title=" " alt="" coords="1169,675,1093,461,1083,419,1079,384,1070,353,1046,320,1026,305,1003,294,1005,289,1029,300,1050,316,1075,350,1084,383,1089,418,1099,460,1174,673"/>
+<area shape="poly" title=" " alt="" coords="1102,738,1098,741,1083,760,1076,779,1072,817,1069,856,1063,877,1050,900,1014,936,974,963,971,958,1011,932,1046,896,1058,875,1064,855,1066,816,1071,778,1079,758,1094,738,1098,734"/>
+<area shape="rect" href="structOurPaintDCM_1_1Figures_1_1Circle.html#ab3f460bdec036407cbd7d3e8a181d507" title="Constructor for Circle." alt="" coords="849,687,1012,727"/>
+<area shape="poly" title=" " alt="" coords="1085,710,1012,710,1012,705,1085,705"/>
+<area shape="rect" href="classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#af084a28d931c44de8d6da22d62714117" title=" " alt="" coords="823,752,1039,807"/>
+<area shape="poly" title=" " alt="" coords="1101,734,1028,755,1027,749,1100,729"/>
+<area shape="rect" href="classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#ad9e87f4f20813363ab750f606f7b852e" title=" " alt="" coords="823,831,1039,885"/>
+<area shape="poly" title=" " alt="" coords="1104,737,1098,741,1082,761,1075,780,1067,801,1050,821,1033,833,1030,828,1046,817,1062,798,1070,779,1077,758,1094,737,1101,732"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ab147d3dfbb9b895aac22476639df5c7d" name="ab147d3dfbb9b895aac22476639df5c7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab147d3dfbb9b895aac22476639df5c7d">&#9670;&#160;</a></span>requireFiniteValues()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Range &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr void OurPaintDCM::Utils::requireFiniteValues </td>
+          <td>(</td>
+          <td class="paramtype">const Range &amp;&#160;</td>
+          <td class="paramname"><em>values</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="namespaceOurPaintDCM_1_1Utils_ab147d3dfbb9b895aac22476639df5c7d_cgraph.png" border="0" usemap="#anamespaceOurPaintDCM_1_1Utils_ab147d3dfbb9b895aac22476639df5c7d_cgraph" alt=""/></div>
+<map name="anamespaceOurPaintDCM_1_1Utils_ab147d3dfbb9b895aac22476639df5c7d_cgraph" id="anamespaceOurPaintDCM_1_1Utils_ab147d3dfbb9b895aac22476639df5c7d_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,160,45"/>
+<area shape="rect" href="namespaceOurPaintDCM_1_1Utils.html#a43757230430230c98e28b886fa685c32" title=" " alt="" coords="208,5,355,45"/>
+<area shape="poly" title=" " alt="" coords="160,23,194,23,194,28,160,28"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="namespaceOurPaintDCM_1_1Utils_ab147d3dfbb9b895aac22476639df5c7d_icgraph.png" border="0" usemap="#anamespaceOurPaintDCM_1_1Utils_ab147d3dfbb9b895aac22476639df5c7d_icgraph" alt=""/></div>
+<map name="anamespaceOurPaintDCM_1_1Utils_ab147d3dfbb9b895aac22476639df5c7d_icgraph" id="anamespaceOurPaintDCM_1_1Utils_ab147d3dfbb9b895aac22476639df5c7d_icgraph">
+<area shape="rect" title=" " alt="" coords="793,312,948,352"/>
+<area shape="rect" href="structOurPaintDCM_1_1Figures_1_1PointBase.html#a963a2cf6200ecc6b8c7b82e8e1772fa7" title=" " alt="" coords="575,133,737,173"/>
+<area shape="poly" title=" " alt="" coords="833,305,680,176,683,172,837,301"/>
+<area shape="rect" href="structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#af1a43faa50e20ca3ebe7a3c75ceee954" title="Validate descriptor fields for the given figure type." alt="" coords="330,377,477,431"/>
+<area shape="poly" title=" " alt="" coords="786,358,746,367,603,388,477,401,477,396,602,383,745,361,785,353"/>
+<area shape="rect" href="structOurPaintDCM_1_1Figures_1_1Curve2D.html#aa71c132ba3c4d05a9dc82a5ddd4d5d9d" title=" " alt="" coords="567,312,745,352"/>
+<area shape="poly" title=" " alt="" coords="779,335,746,335,746,329,779,329"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac5445f4f2f67cd4973d9d78f8455ae5c" title="Creates an arc through two points with a center point." alt="" coords="296,69,511,109"/>
+<area shape="poly" title=" " alt="" coords="562,132,482,112,483,107,564,127"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1db8de13e90373f4a63d04cf04c97455" title="Creates a circle with given center and radius." alt="" coords="288,197,519,237"/>
+<area shape="poly" title=" " alt="" coords="564,179,483,200,482,195,562,174"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1553e7abc4def94e41466a6aae0e410c" title="Creates a line through two existing points." alt="" coords="293,5,514,45"/>
+<area shape="poly" title=" " alt="" coords="619,126,572,92,517,60,488,48,490,43,520,55,575,87,622,122"/>
+<area shape="rect" href="structOurPaintDCM_1_1Figures_1_1PointBase.html#acbba67373d49a3207d6e8b450abfd7d7" title="Constructor with initialization values." alt="" coords="319,133,487,173"/>
+<area shape="poly" title=" " alt="" coords="561,156,487,156,487,151,561,151"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Creates a figure from aggregated FigureData (may create nested points)." alt="" coords="5,133,240,173"/>
+<area shape="poly" title=" " alt="" coords="302,115,211,136,210,131,301,110"/>
+<area shape="poly" title=" " alt="" coords="301,197,210,176,211,171,302,192"/>
+<area shape="poly" title=" " alt="" coords="309,52,289,60,215,98,154,136,152,131,212,93,287,55,307,47"/>
+<area shape="rect" href="classOurPaintDCM_1_1DCMManager.html#aac0ea08abe5a8da7d345aa2852e04515" title="Add a new geometric figure using descriptor." alt="" coords="21,384,225,424"/>
+<area shape="poly" title=" " alt="" coords="316,407,225,407,225,401,316,401"/>
+<area shape="poly" title=" " alt="" coords="556,311,518,303,453,290,401,283,350,273,287,252,212,215,151,176,154,171,214,210,289,247,352,268,402,278,454,285,519,297,557,306"/>
+<area shape="poly" title=" " alt="" coords="573,358,478,386,476,381,571,353"/>
+<area shape="rect" href="structOurPaintDCM_1_1Figures_1_1Curve2D.html#ad3b97782ca1c6ced27f5d00fad3cb159" title=" " alt="" coords="322,312,485,352"/>
+<area shape="poly" title=" " alt="" coords="553,335,485,335,485,329,553,329"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a7d6582360f3f1a566385ae9ad42c45ea" name="a7d6582360f3f1a566385ae9ad42c45ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d6582360f3f1a566385ae9ad42c45ea">&#9670;&#160;</a></span>requireNonNegative()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr void OurPaintDCM::Utils::requireNonNegative </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="namespaceOurPaintDCM_1_1Utils_a7d6582360f3f1a566385ae9ad42c45ea_cgraph.png" border="0" usemap="#anamespaceOurPaintDCM_1_1Utils_a7d6582360f3f1a566385ae9ad42c45ea_cgraph" alt=""/></div>
+<map name="anamespaceOurPaintDCM_1_1Utils_a7d6582360f3f1a566385ae9ad42c45ea_cgraph" id="anamespaceOurPaintDCM_1_1Utils_a7d6582360f3f1a566385ae9ad42c45ea_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,167,45"/>
+<area shape="rect" href="namespaceOurPaintDCM_1_1Utils.html#a43757230430230c98e28b886fa685c32" title=" " alt="" coords="215,5,361,45"/>
+<area shape="poly" title=" " alt="" coords="167,23,201,23,201,28,167,28"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="namespaceOurPaintDCM_1_1Utils_a7d6582360f3f1a566385ae9ad42c45ea_icgraph.png" border="0" usemap="#anamespaceOurPaintDCM_1_1Utils_a7d6582360f3f1a566385ae9ad42c45ea_icgraph" alt=""/></div>
+<map name="anamespaceOurPaintDCM_1_1Utils_a7d6582360f3f1a566385ae9ad42c45ea_icgraph" id="anamespaceOurPaintDCM_1_1Utils_a7d6582360f3f1a566385ae9ad42c45ea_icgraph">
+<area shape="rect" title=" " alt="" coords="1048,1637,1209,1677"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Creates a figure from aggregated FigureData (may create nested points)." alt="" coords="765,1605,1000,1645"/>
+<area shape="poly" title=" " alt="" coords="1034,1647,1000,1643,1001,1637,1035,1642"/>
+<area shape="rect" href="namespaceOurPaintDCM_1_1Utils.html#a64c2112258e35049b903035ee8a57995" title=" " alt="" coords="765,1669,1000,1709"/>
+<area shape="poly" title=" " alt="" coords="1035,1672,1001,1676,1000,1671,1034,1666"/>
+<area shape="rect" href="structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html#a99f0e928eebfacb51d696d0f76941b6e" title="Validate that descriptor has correct number of objects for its type." alt="" coords="536,1661,717,1716"/>
+<area shape="poly" title=" " alt="" coords="752,1691,717,1691,717,1686,752,1686"/>
+<area shape="rect" href="classOurPaintDCM_1_1DCMManager.html#ae497fb8e8aef91685c75adaaad740a1f" title="Add a new requirement using descriptor." alt="" coords="284,1633,488,1673"/>
+<area shape="poly" title=" " alt="" coords="522,1676,488,1671,488,1665,523,1670"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a83793b5b89f46cb835972736f83f02f2" title="Add a requirement using a descriptor (unified high&#45;level interface)." alt="" coords="303,1697,469,1752"/>
+<area shape="poly" title=" " alt="" coords="523,1707,469,1715,469,1710,522,1702"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a1eb6992b2b5c75e34e5c4d084303c0e9" title=" " alt="" coords="38,5,203,60"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,265,1645,254,1579,248,1494,245,1391,249,1148,259,877,268,606,271,364,269,261,262,176,250,112,234,73,220,59,202,49,205,44,223,55,238,70,256,111,267,176,274,261,277,364,274,607,264,877,254,1148,251,1391,253,1493,259,1579,270,1643,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a19a0efbb68c751c0c41f8751ff0e3a3b" title=" " alt="" coords="38,84,203,139"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,266,1647,255,1585,249,1503,247,1405,250,1174,259,916,267,659,270,428,267,331,261,250,250,189,234,151,220,138,202,128,205,123,223,134,238,149,255,188,266,249,272,330,275,428,273,659,264,916,255,1174,252,1405,255,1503,261,1584,271,1645,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ae0fe011c029c57565e4b49069c77fd87" title=" " alt="" coords="38,163,203,217"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,267,1649,257,1590,251,1512,248,1420,251,1200,259,956,266,712,268,492,266,400,259,323,249,266,234,230,220,216,202,206,205,202,223,212,238,227,254,264,265,323,271,400,274,492,272,712,264,956,256,1200,253,1420,256,1512,262,1589,272,1647,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a8c343229dbfbf8badf9d0db172d2e4b5" title="Add arc&#45;center perpendicular&#45;bisector constraint by ID." alt="" coords="8,241,233,296"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,267,1651,258,1595,252,1522,249,1434,251,1226,259,995,265,764,267,557,264,470,258,397,248,342,234,309,223,298,227,294,238,306,253,341,263,396,269,469,272,557,271,764,264,995,257,1226,255,1434,257,1521,263,1594,272,1649,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#af56a89a8522bbf3edf727b64ba370969" title=" " alt="" coords="38,320,203,375"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,268,1653,259,1600,251,1448,252,1252,258,1034,264,817,266,621,263,539,257,471,247,419,234,388,220,374,202,364,205,359,223,370,238,384,252,418,262,470,268,539,271,621,270,817,264,1035,258,1253,256,1448,264,1599,273,1651,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a9c91e4d20ba8ce72bd144e610a4d6d0e" title=" " alt="" coords="38,399,203,453"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,269,1655,260,1605,252,1463,253,1279,258,1074,264,869,264,686,256,544,247,496,234,466,220,452,202,442,205,438,223,448,238,463,252,494,261,543,269,685,269,869,264,1074,258,1279,258,1463,265,1605,274,1653,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a21c9ceca2c22eebc4e434fb9b3b51ab4" title=" " alt="" coords="31,477,210,532"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,270,1657,261,1610,254,1477,254,1305,258,1113,263,922,263,750,254,618,246,573,234,545,209,524,212,520,238,542,251,571,260,617,268,750,268,922,264,1113,259,1305,259,1477,267,1610,275,1655,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a26e77bff03890c5c550edb0ca83caa7c" title=" " alt="" coords="38,556,203,611"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,270,1659,263,1616,255,1491,255,1331,258,1153,262,974,261,814,253,691,245,649,234,624,220,610,202,600,205,595,223,606,238,620,250,648,258,691,266,814,267,974,264,1153,260,1331,260,1491,268,1615,276,1657,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a76ba33b93572f2e89f05b84bdf535a54" title=" " alt="" coords="38,635,203,689"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,261,1647,248,1599,241,1543,239,1480,245,1341,259,1191,273,1042,279,903,276,841,268,786,254,740,234,702,220,688,202,678,205,674,223,684,238,699,259,738,273,785,281,841,284,903,278,1042,264,1192,250,1341,244,1480,246,1542,253,1598,266,1645,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#aa7730b0f7b9e3c39b8b6b09ef33e6ada" title=" " alt="" coords="38,713,203,768"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,263,1650,251,1606,244,1554,241,1497,247,1368,259,1231,271,1093,276,966,273,909,266,858,253,815,234,781,220,767,202,757,205,752,223,763,238,778,258,813,271,857,278,908,281,966,276,1093,264,1231,252,1369,247,1497,249,1554,256,1605,268,1648,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a1d2ab3353d36a616b6ae28d6f050a361" title=" " alt="" coords="38,792,203,847"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,264,1653,253,1613,246,1566,244,1513,248,1396,259,1270,269,1144,273,1028,270,976,263,930,251,891,234,860,220,846,202,836,205,831,223,842,238,856,256,889,268,929,275,976,278,1028,274,1145,264,1271,254,1396,249,1513,252,1565,258,1612,269,1651,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#afdd5741b1f8dcf7131eb29c048574cef" title=" " alt="" coords="38,871,203,925"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,266,1657,255,1620,249,1577,247,1530,250,1423,259,1310,267,1196,270,1090,267,1044,261,1002,250,966,234,938,220,925,203,915,205,910,223,920,238,935,255,964,266,1001,272,1043,275,1090,273,1196,264,1310,255,1424,252,1530,255,1577,261,1619,271,1655,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ac466f9644e6e868ae0fe6e762af71321" title="Fix a circle (center and radius) at its current position." alt="" coords="38,949,203,1004"/>
+<area shape="poly" title=" " alt="" coords="290,1695,282,1686,267,1660,258,1627,249,1546,251,1451,258,1349,265,1247,267,1153,264,1111,258,1074,248,1042,234,1017,220,1003,202,993,205,989,223,999,238,1014,253,1040,263,1072,269,1110,272,1153,271,1247,264,1349,257,1451,255,1546,263,1626,272,1658,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#affa87d2377d064e0ec45687b246adc6b" title="Fix a line (both endpoints) at its current position." alt="" coords="38,1028,203,1083"/>
+<area shape="poly" title=" " alt="" coords="290,1695,282,1686,269,1663,260,1634,252,1562,253,1479,258,1388,263,1299,264,1215,256,1145,247,1118,234,1096,220,1082,202,1072,205,1068,223,1078,238,1092,251,1116,261,1144,269,1215,269,1299,264,1389,258,1479,258,1562,265,1633,274,1661,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ad40b5a666e77e66f4b59e7cbc267bf6a" title="Fix a point at its current position." alt="" coords="38,1107,203,1161"/>
+<area shape="poly" title=" " alt="" coords="290,1695,282,1686,270,1666,263,1641,255,1579,255,1506,258,1428,262,1350,261,1278,253,1217,245,1193,234,1174,220,1161,202,1151,205,1146,223,1157,238,1171,250,1191,258,1216,266,1277,267,1350,264,1428,260,1506,260,1579,268,1640,275,1664,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a090214a76b5dc63ba09897bac0f2e9d3" title="Add horizontal&#45;line constraint by ID." alt="" coords="38,1185,203,1240"/>
+<area shape="poly" title=" " alt="" coords="290,1695,282,1686,263,1657,251,1629,244,1601,241,1573,247,1519,259,1466,271,1414,276,1361,273,1335,266,1308,253,1281,234,1253,220,1240,202,1230,205,1225,223,1235,238,1250,258,1278,271,1306,278,1334,281,1361,276,1415,264,1467,252,1520,247,1573,249,1600,256,1627,268,1655,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#acd956357db48bd2b5f0d0ef36c2c6259" title=" " alt="" coords="38,1264,203,1319"/>
+<area shape="poly" title=" " alt="" coords="290,1695,282,1686,266,1663,255,1639,247,1594,250,1549,259,1506,267,1463,270,1420,261,1376,250,1354,234,1332,220,1319,203,1309,205,1304,223,1314,238,1328,254,1351,266,1374,275,1419,272,1463,264,1507,255,1550,252,1593,260,1638,271,1660,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab7272e28537c744756bc1356cd045ff3" title=" " alt="" coords="38,1343,203,1397"/>
+<area shape="poly" title=" " alt="" coords="290,1695,282,1686,260,1650,252,1614,253,1580,258,1545,263,1512,264,1478,256,1445,234,1410,220,1398,202,1388,205,1383,223,1393,238,1407,261,1443,269,1478,269,1512,264,1546,258,1580,257,1614,265,1648,286,1683,294,1691"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a6342987e5432d4882aa87a2b75177010" title="Add line&#45;circle distance constraint by IDs." alt="" coords="38,1421,203,1476"/>
+<area shape="poly" title=" " alt="" coords="290,1694,282,1686,265,1660,257,1635,256,1610,258,1585,260,1561,258,1537,251,1513,234,1489,219,1477,202,1467,205,1463,223,1472,238,1486,256,1511,264,1536,265,1561,263,1586,262,1610,263,1634,270,1658,286,1683,294,1690"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ae80f0be1191f5e4cea9e36b6543e109d" title=" " alt="" coords="36,1500,205,1555"/>
+<area shape="poly" title=" " alt="" coords="290,1694,282,1687,270,1671,263,1655,258,1625,253,1596,246,1582,234,1568,204,1549,207,1544,238,1564,251,1579,258,1595,263,1624,268,1654,274,1668,286,1683,294,1690"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a0e9a8ad04cc56cca3511a3c2faa33bbc" title="Add angle&#45;between&#45;lines constraint by IDs." alt="" coords="38,1579,203,1633"/>
+<area shape="poly" title=" " alt="" coords="294,1694,282,1687,258,1666,235,1647,203,1632,205,1627,237,1642,262,1662,286,1682,297,1689"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#af6a679a9af232e3fb475b5aa4afa5adb" title=" " alt="" coords="38,1657,203,1712"/>
+<area shape="poly" title=" " alt="" coords="289,1713,203,1700,204,1694,290,1708"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a94161cac4e0347106d9eca8be3246dfd" title="Add parallel&#45;lines constraint by IDs." alt="" coords="38,1736,203,1791"/>
+<area shape="poly" title=" " alt="" coords="290,1741,204,1754,203,1749,289,1736"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab34a6d3e1ba2dc93955e7acde536a7fb" title="Add perpendicular&#45;lines constraint by IDs." alt="" coords="22,1815,219,1869"/>
+<area shape="poly" title=" " alt="" coords="325,1761,237,1804,206,1817,204,1812,235,1800,323,1756"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#aefd4fb76785f5539a9297d3403894dd4" title="Add line&#45;on&#45;circle constraint by IDs." alt="" coords="38,1893,203,1948"/>
+<area shape="poly" title=" " alt="" coords="359,1765,307,1825,273,1856,237,1883,205,1900,202,1895,235,1878,270,1852,303,1821,355,1761"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#abdec8ba9cfb8eb7a2b086fbefcc6e852" title=" " alt="" coords="38,1972,203,2027"/>
+<area shape="poly" title=" " alt="" coords="371,1766,351,1811,321,1863,283,1916,238,1961,205,1981,202,1976,234,1957,279,1912,317,1861,346,1809,367,1764"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a03f35ae2d8a6a0fd64a6c94c70617355" title=" " alt="" coords="31,2051,210,2105"/>
+<area shape="poly" title=" " alt="" coords="379,1766,362,1826,334,1900,293,1975,267,2009,238,2040,212,2058,209,2053,234,2036,263,2006,288,1972,329,1898,357,1825,373,1765"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#aa27d226454c79626d2883d452227300e" title=" " alt="" coords="38,2129,203,2184"/>
+<area shape="poly" title=" " alt="" coords="383,1766,370,1841,345,1935,326,1984,302,2033,273,2078,238,2119,205,2140,202,2136,234,2115,269,2075,297,2030,321,1982,340,1933,365,1840,378,1765"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a92dd83622c0f7193f30f5110983321e3" title=" " alt="" coords="38,2208,203,2263"/>
+<area shape="poly" title=" " alt="" coords="386,1766,378,1854,369,1909,355,1969,336,2030,311,2090,278,2147,238,2197,205,2220,202,2215,234,2193,274,2144,306,2088,331,2028,350,1968,363,1908,373,1853,381,1765"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#aac6cef4fd8e57b9e3608ac457b5fe715" title="Add point&#45;line distance constraint by IDs." alt="" coords="38,2287,203,2341"/>
+<area shape="poly" title=" " alt="" coords="388,1766,384,1867,377,1932,365,2003,346,2076,320,2148,284,2215,238,2276,222,2289,205,2299,202,2294,219,2285,234,2272,279,2213,315,2146,341,2074,360,2002,372,1932,379,1867,383,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab233bc2f7225f7f0639f96610c81f14f" title=" " alt="" coords="38,2365,203,2420"/>
+<area shape="poly" title=" " alt="" coords="383,1766,365,1898,335,2073,315,2162,293,2242,267,2308,238,2354,223,2368,205,2378,202,2373,220,2363,234,2351,262,2306,287,2240,310,2160,330,2072,360,1897,377,1765"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a52b1e82d43d52b158da2fdf3deef35ac" title=" " alt="" coords="38,2444,203,2499"/>
+<area shape="poly" title=" " alt="" coords="384,1766,369,1913,340,2112,320,2212,297,2304,270,2380,254,2410,238,2433,223,2447,205,2457,203,2452,220,2442,234,2430,250,2407,265,2378,292,2303,315,2211,335,2111,363,1912,379,1765"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a6b6645773c95ffa7ecc9f36aa0419e7a" title="Add point&#45;on&#45;line constraint by IDs." alt="" coords="38,2523,203,2577"/>
+<area shape="poly" title=" " alt="" coords="385,1766,372,1927,345,2150,326,2263,302,2367,273,2452,256,2486,238,2512,223,2526,205,2536,202,2531,219,2521,234,2508,251,2483,268,2450,296,2365,320,2262,340,2149,367,1927,380,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a3c47e959870bb0d3afa98ccdb26c4914" title="Add point&#45;on&#45;point constraint by IDs." alt="" coords="38,2601,203,2656"/>
+<area shape="poly" title=" " alt="" coords="386,1766,375,1942,350,2188,331,2313,306,2429,275,2524,258,2561,238,2590,223,2604,205,2615,202,2610,220,2600,234,2587,253,2559,270,2522,301,2427,325,2313,345,2187,369,1941,380,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab572c3a39938a7b042ab9ddd0b1c1488" title="Add point&#45;point distance constraint by IDs." alt="" coords="38,2680,203,2735"/>
+<area shape="poly" title=" " alt="" coords="386,1766,378,1956,368,2086,355,2225,335,2364,310,2491,278,2596,259,2637,238,2669,223,2683,205,2693,202,2689,220,2679,234,2666,255,2635,273,2594,305,2489,330,2363,349,2225,363,2085,372,1955,381,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a5b24dea0e0d9334cdf5f00fec7c09169" title=" " alt="" coords="27,2759,214,2813"/>
+<area shape="poly" title=" " alt="" coords="387,1766,380,1970,372,2111,359,2263,340,2414,315,2553,299,2614,281,2668,261,2713,238,2748,216,2766,213,2762,234,2744,256,2710,276,2666,294,2612,310,2552,335,2413,354,2262,367,2110,375,1969,382,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a0058b732cfb2103eac0c1f4f4e51a3fd" title=" " alt="" coords="14,2837,227,2892"/>
+<area shape="poly" title=" " alt="" coords="387,1766,383,1984,376,2136,364,2300,345,2464,319,2615,303,2681,284,2740,262,2789,238,2826,225,2839,221,2835,234,2823,258,2786,279,2738,298,2680,314,2614,340,2463,358,2300,370,2136,378,1984,382,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a9376a659ff4ced079f7e7d90f43f9b9f" title=" " alt="" coords="36,2916,205,2971"/>
+<area shape="poly" title=" " alt="" coords="388,1766,385,1997,379,2161,368,2338,350,2514,323,2677,306,2748,287,2811,264,2864,238,2905,224,2919,207,2929,204,2924,221,2914,234,2902,259,2862,282,2810,301,2747,318,2675,345,2513,363,2337,374,2161,380,1997,382,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a0cdef8f39c8642e5bed9ecc4386a432f" title=" " alt="" coords="23,2995,218,3049"/>
+<area shape="poly" title=" " alt="" coords="385,1766,368,2030,337,2415,316,2609,293,2781,267,2911,253,2956,238,2984,220,3000,217,2996,234,2980,248,2954,262,2910,287,2780,311,2609,331,2415,363,2029,380,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a4c912005e51fb749511c2ac3e295c194" title=" " alt="" coords="5,3073,236,3128"/>
+<area shape="poly" title=" " alt="" coords="385,1766,370,2044,339,2455,319,2662,295,2845,268,2985,254,3032,238,3062,225,3075,221,3071,234,3059,249,3030,263,2983,290,2844,313,2661,334,2454,364,2044,380,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab15ce6c2b9a48e0696bc5a3f4750160e" title=" " alt="" coords="25,3152,216,3207"/>
+<area shape="poly" title=" " alt="" coords="386,1766,371,2058,341,2494,321,2715,297,2909,270,3058,254,3109,238,3141,218,3159,215,3155,234,3138,250,3107,264,3057,292,2909,316,2714,336,2494,366,2058,380,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a9e71ef015b987ca0d6d6c02f632bd6ab" title=" " alt="" coords="23,3231,219,3285"/>
+<area shape="poly" title=" " alt="" coords="386,1766,372,2073,344,2534,324,2768,299,2974,271,3132,255,3186,238,3220,221,3236,217,3232,234,3216,250,3184,266,3131,294,2973,318,2767,338,2534,367,2073,381,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a98b06ddf50e536e3fecf77f0c572b447" title=" " alt="" coords="15,3309,227,3364"/>
+<area shape="poly" title=" " alt="" coords="386,1766,373,2087,346,2573,326,2820,302,3038,288,3130,273,3205,256,3263,238,3298,225,3311,222,3307,234,3295,251,3261,267,3204,282,3129,296,3038,321,2819,341,2573,368,2086,381,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#afbddee5832268b0bb2e9939c41161ef9" title="Add vertical&#45;line constraint by ID." alt="" coords="38,3388,203,3443"/>
+<area shape="poly" title=" " alt="" coords="386,1766,375,2101,348,2612,328,2873,304,3103,290,3199,274,3279,257,3339,238,3377,223,3392,205,3402,202,3397,220,3387,234,3374,252,3337,269,3278,284,3198,299,3102,323,2872,343,2612,369,2101,381,1766"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a8d48225b0556798ea39a309eaf5af05b" name="a8d48225b0556798ea39a309eaf5af05b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d48225b0556798ea39a309eaf5af05b">&#9670;&#160;</a></span>requirePositiveRadius()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr void OurPaintDCM::Utils::requirePositiveRadius </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>radius</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="namespaceOurPaintDCM_1_1Utils_a8d48225b0556798ea39a309eaf5af05b_cgraph.png" border="0" usemap="#anamespaceOurPaintDCM_1_1Utils_a8d48225b0556798ea39a309eaf5af05b_cgraph" alt=""/></div>
+<map name="anamespaceOurPaintDCM_1_1Utils_a8d48225b0556798ea39a309eaf5af05b_cgraph" id="anamespaceOurPaintDCM_1_1Utils_a8d48225b0556798ea39a309eaf5af05b_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,177,45"/>
+<area shape="rect" href="namespaceOurPaintDCM_1_1Utils.html#a43757230430230c98e28b886fa685c32" title=" " alt="" coords="225,5,372,45"/>
+<area shape="poly" title=" " alt="" coords="178,23,212,23,212,28,178,28"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="namespaceOurPaintDCM_1_1Utils_a8d48225b0556798ea39a309eaf5af05b_icgraph.png" border="0" usemap="#anamespaceOurPaintDCM_1_1Utils_a8d48225b0556798ea39a309eaf5af05b_icgraph" alt=""/></div>
+<map name="anamespaceOurPaintDCM_1_1Utils_a8d48225b0556798ea39a309eaf5af05b_icgraph" id="anamespaceOurPaintDCM_1_1Utils_a8d48225b0556798ea39a309eaf5af05b_icgraph">
+<area shape="rect" title=" " alt="" coords="1096,1217,1268,1257"/>
+<area shape="rect" href="structOurPaintDCM_1_1Figures_1_1Circle.html#ab3f460bdec036407cbd7d3e8a181d507" title="Constructor for Circle." alt="" coords="849,1015,1012,1055"/>
+<area shape="poly" title=" " alt="" coords="1162,1206,1116,1136,1084,1100,1047,1070,1011,1053,1013,1048,1049,1065,1087,1096,1120,1133,1166,1203"/>
+<area shape="rect" href="classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#af084a28d931c44de8d6da22d62714117" title=" " alt="" coords="823,1080,1039,1135"/>
+<area shape="poly" title=" " alt="" coords="1143,1211,1098,1179,1047,1150,1019,1137,1021,1132,1049,1145,1101,1175,1146,1206"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1db8de13e90373f4a63d04cf04c97455" title="Creates a circle with given center and radius." alt="" coords="815,1159,1046,1199"/>
+<area shape="poly" title=" " alt="" coords="1082,1217,1018,1202,1020,1197,1083,1211"/>
+<area shape="rect" href="classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Creates a figure from aggregated FigureData (may create nested points)." alt="" coords="531,1189,765,1229"/>
+<area shape="poly" title=" " alt="" coords="1082,1234,765,1217,766,1212,1083,1229"/>
+<area shape="rect" href="classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#ad9e87f4f20813363ab750f606f7b852e" title=" " alt="" coords="823,1275,1039,1329"/>
+<area shape="poly" title=" " alt="" coords="1092,1263,1037,1277,1035,1272,1090,1258"/>
+<area shape="rect" href="structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#af1a43faa50e20ca3ebe7a3c75ceee954" title="Validate descriptor fields for the given figure type." alt="" coords="857,1353,1004,1408"/>
+<area shape="poly" title=" " alt="" coords="1151,1268,1105,1306,1049,1343,1005,1362,1003,1358,1047,1338,1102,1302,1148,1264"/>
+<area shape="rect" href="namespaceOurPaintDCM_1_1Utils.html#a64c2112258e35049b903035ee8a57995" title=" " alt="" coords="813,1433,1048,1473"/>
+<area shape="poly" title=" " alt="" coords="1168,1271,1148,1306,1122,1347,1089,1387,1050,1422,1025,1435,1023,1430,1046,1417,1085,1383,1118,1344,1144,1303,1163,1268"/>
+<area shape="poly" title=" " alt="" coords="802,1195,766,1199,765,1194,801,1190"/>
+<area shape="rect" href="classOurPaintDCM_1_1DCMManager.html#aac0ea08abe5a8da7d345aa2852e04515" title="Add a new geometric figure using descriptor." alt="" coords="546,1361,750,1401"/>
+<area shape="poly" title=" " alt="" coords="844,1383,750,1383,750,1378,844,1378"/>
+<area shape="rect" href="structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html#a99f0e928eebfacb51d696d0f76941b6e" title="Validate that descriptor has correct number of objects for its type." alt="" coords="557,1425,739,1480"/>
+<area shape="poly" title=" " alt="" coords="800,1455,739,1455,739,1450,800,1450"/>
+<area shape="rect" href="classOurPaintDCM_1_1DCMManager.html#ae497fb8e8aef91685c75adaaad740a1f" title="Add a new requirement using descriptor." alt="" coords="279,1397,483,1437"/>
+<area shape="poly" title=" " alt="" coords="543,1441,483,1433,483,1428,544,1436"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a83793b5b89f46cb835972736f83f02f2" title="Add a requirement using a descriptor (unified high&#45;level interface)." alt="" coords="298,1461,463,1516"/>
+<area shape="poly" title=" " alt="" coords="544,1469,464,1480,463,1475,543,1464"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a1eb6992b2b5c75e34e5c4d084303c0e9" title=" " alt="" coords="35,5,201,60"/>
+<area shape="poly" title=" " alt="" coords="285,1460,276,1450,262,1415,252,1359,247,1286,244,1198,246,990,253,759,260,528,261,321,259,234,253,161,243,106,228,73,216,60,199,50,202,45,219,56,233,70,248,105,258,160,264,233,267,321,265,528,258,759,251,990,249,1198,252,1285,258,1358,267,1413,281,1447,289,1456"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a19a0efbb68c751c0c41f8751ff0e3a3b" title=" " alt="" coords="35,84,201,139"/>
+<area shape="poly" title=" " alt="" coords="285,1460,276,1450,263,1417,254,1364,245,1212,247,1016,253,799,259,581,260,385,257,303,251,235,242,183,228,151,216,139,199,129,202,124,219,134,233,149,247,182,257,234,263,303,265,385,264,581,258,799,252,1017,251,1212,259,1363,268,1415,281,1447,289,1456"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ae0fe011c029c57565e4b49069c77fd87" title=" " alt="" coords="35,163,201,217"/>
+<area shape="poly" title=" " alt="" coords="285,1460,276,1450,264,1419,255,1369,247,1227,248,1043,253,838,258,633,259,450,250,308,241,260,228,230,216,217,199,207,202,203,219,213,233,227,246,258,255,308,264,450,263,633,258,838,253,1043,252,1227,260,1369,269,1417,281,1447,289,1456"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a8c343229dbfbf8badf9d0db172d2e4b5" title="Add arc&#45;center perpendicular&#45;bisector constraint by ID." alt="" coords="5,241,231,296"/>
+<area shape="poly" title=" " alt="" coords="285,1460,276,1450,264,1421,256,1374,248,1241,248,1069,253,877,257,686,257,514,249,382,240,337,228,309,218,298,222,294,233,306,245,335,254,381,262,514,262,686,258,877,254,1069,253,1241,261,1374,269,1419,281,1447,289,1456"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#af56a89a8522bbf3edf727b64ba370969" title=" " alt="" coords="35,320,201,375"/>
+<area shape="poly" title=" " alt="" coords="285,1460,276,1450,255,1408,240,1356,233,1296,231,1228,238,1078,254,916,269,755,276,605,273,538,265,479,251,428,229,388,216,375,200,365,203,360,219,371,233,384,255,426,270,478,278,538,281,605,274,755,259,916,243,1078,236,1228,238,1295,246,1355,260,1406,281,1447,289,1456"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a9c91e4d20ba8ce72bd144e610a4d6d0e" title=" " alt="" coords="35,399,201,453"/>
+<area shape="poly" title=" " alt="" coords="285,1460,276,1450,256,1411,243,1363,236,1307,233,1244,239,1105,253,955,267,806,273,667,270,606,263,551,249,504,229,466,216,453,200,444,203,439,219,449,233,463,254,502,268,549,276,605,278,667,273,806,259,956,245,1105,239,1244,241,1307,248,1362,261,1409,281,1447,289,1456"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a21c9ceca2c22eebc4e434fb9b3b51ab4" title=" " alt="" coords="29,477,207,532"/>
+<area shape="poly" title=" " alt="" coords="285,1460,276,1450,258,1414,245,1370,238,1318,236,1261,241,1133,253,995,265,857,270,730,267,673,260,622,247,579,229,545,206,526,209,522,233,542,252,577,265,621,273,672,275,730,271,858,259,995,246,1133,241,1261,244,1318,250,1369,263,1412,281,1447,289,1456"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a26e77bff03890c5c550edb0ca83caa7c" title=" " alt="" coords="35,556,201,611"/>
+<area shape="poly" title=" " alt="" coords="285,1460,276,1450,259,1417,248,1377,241,1330,239,1277,243,1160,253,1034,264,909,267,792,264,740,258,694,246,655,229,624,216,611,200,601,202,597,219,607,233,620,251,653,263,693,270,740,272,792,269,909,259,1035,248,1160,244,1277,246,1329,253,1376,264,1415,281,1447,289,1456"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a76ba33b93572f2e89f05b84bdf535a54" title=" " alt="" coords="35,635,201,689"/>
+<area shape="poly" title=" " alt="" coords="285,1460,276,1450,261,1421,250,1384,244,1341,241,1294,244,1188,253,1074,262,960,264,855,262,808,255,766,244,730,229,702,216,690,200,680,202,675,219,685,233,699,249,728,260,765,267,807,270,854,267,960,258,1074,250,1188,247,1294,249,1341,255,1383,266,1419,281,1447,289,1456"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#aa7730b0f7b9e3c39b8b6b09ef33e6ada" title=" " alt="" coords="35,713,201,768"/>
+<area shape="poly" title=" " alt="" coords="285,1459,276,1450,262,1424,252,1391,244,1310,246,1215,253,1113,260,1011,261,917,253,838,243,806,229,781,216,768,200,759,202,754,219,764,233,778,248,804,258,837,267,917,265,1012,258,1113,251,1215,249,1310,258,1390,267,1422,281,1447,289,1456"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a1d2ab3353d36a616b6ae28d6f050a361" title=" " alt="" coords="35,792,201,847"/>
+<area shape="poly" title=" " alt="" coords="285,1459,276,1450,264,1427,255,1398,247,1326,248,1243,253,1153,258,1063,259,979,250,910,241,882,229,860,216,847,199,837,202,833,219,843,233,856,246,880,255,908,264,979,263,1063,258,1153,253,1243,252,1326,260,1397,269,1425,281,1447,289,1456"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#afdd5741b1f8dcf7131eb29c048574cef" title=" " alt="" coords="35,871,201,925"/>
+<area shape="poly" title=" " alt="" coords="285,1459,277,1450,255,1416,241,1382,233,1349,231,1317,238,1253,254,1191,269,1129,276,1067,273,1035,265,1004,251,971,229,938,215,926,199,916,202,911,219,921,233,935,255,969,270,1002,278,1035,281,1067,274,1130,259,1192,243,1254,236,1317,238,1349,246,1381,259,1414,281,1447,289,1456"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ac466f9644e6e868ae0fe6e762af71321" title="Fix a circle (center and radius) at its current position." alt="" coords="35,949,201,1004"/>
+<area shape="poly" title=" " alt="" coords="285,1459,277,1450,258,1421,245,1393,238,1365,236,1337,241,1283,253,1230,265,1178,270,1125,267,1099,260,1072,248,1045,229,1017,216,1005,200,995,203,991,219,1000,233,1014,252,1042,265,1070,273,1098,275,1125,271,1179,259,1232,246,1284,241,1337,244,1364,250,1391,262,1419,281,1447,289,1456"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#affa87d2377d064e0ec45687b246adc6b" title="Fix a line (both endpoints) at its current position." alt="" coords="35,1028,201,1083"/>
+<area shape="poly" title=" " alt="" coords="285,1459,277,1450,261,1427,250,1403,241,1358,244,1313,253,1270,262,1227,264,1184,255,1140,244,1118,229,1096,216,1083,200,1074,202,1069,219,1079,233,1092,249,1116,260,1139,270,1184,267,1228,258,1271,250,1314,247,1358,255,1402,265,1424,281,1447,289,1456"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ad40b5a666e77e66f4b59e7cbc267bf6a" title="Fix a point at its current position." alt="" coords="35,1107,201,1161"/>
+<area shape="poly" title=" " alt="" coords="285,1459,277,1450,255,1414,247,1378,248,1344,253,1310,258,1276,258,1243,250,1209,229,1174,216,1162,200,1153,203,1149,219,1158,233,1171,255,1207,264,1242,263,1276,258,1310,253,1344,252,1378,260,1412,281,1447,289,1455"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a090214a76b5dc63ba09897bac0f2e9d3" title="Add horizontal&#45;line constraint by ID." alt="" coords="35,1185,201,1240"/>
+<area shape="poly" title=" " alt="" coords="285,1458,277,1450,260,1424,252,1399,251,1374,253,1349,254,1325,253,1301,245,1277,229,1253,199,1232,202,1228,233,1249,250,1275,258,1300,260,1325,258,1350,256,1374,257,1398,265,1422,281,1447,288,1454"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#acd956357db48bd2b5f0d0ef36c2c6259" title=" " alt="" coords="35,1264,201,1319"/>
+<area shape="poly" title=" " alt="" coords="285,1458,277,1451,264,1435,257,1419,252,1389,247,1360,241,1346,229,1332,199,1312,202,1308,232,1328,245,1343,252,1359,258,1389,262,1418,269,1432,281,1447,288,1454"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab7272e28537c744756bc1356cd045ff3" title=" " alt="" coords="35,1343,201,1397"/>
+<area shape="poly" title=" " alt="" coords="289,1458,277,1451,253,1431,229,1411,200,1397,202,1392,232,1406,256,1426,280,1446,292,1453"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a6342987e5432d4882aa87a2b75177010" title="Add line&#45;circle distance constraint by IDs." alt="" coords="35,1421,201,1476"/>
+<area shape="poly" title=" " alt="" coords="284,1477,201,1464,201,1459,285,1471"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ae80f0be1191f5e4cea9e36b6543e109d" title=" " alt="" coords="33,1500,203,1555"/>
+<area shape="poly" title=" " alt="" coords="285,1505,203,1518,202,1512,284,1500"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a0e9a8ad04cc56cca3511a3c2faa33bbc" title="Add angle&#45;between&#45;lines constraint by IDs." alt="" coords="35,1579,201,1633"/>
+<area shape="poly" title=" " alt="" coords="320,1525,232,1568,201,1581,199,1576,230,1564,318,1520"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#af6a679a9af232e3fb475b5aa4afa5adb" title=" " alt="" coords="35,1657,201,1712"/>
+<area shape="poly" title=" " alt="" coords="353,1529,301,1589,268,1620,232,1647,202,1663,200,1658,229,1642,265,1616,297,1585,349,1525"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a94161cac4e0347106d9eca8be3246dfd" title="Add parallel&#45;lines constraint by IDs." alt="" coords="35,1736,201,1791"/>
+<area shape="poly" title=" " alt="" coords="366,1530,345,1575,316,1627,278,1680,232,1725,203,1743,200,1739,229,1721,274,1676,311,1624,341,1572,361,1528"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab34a6d3e1ba2dc93955e7acde536a7fb" title="Add perpendicular&#45;lines constraint by IDs." alt="" coords="19,1815,217,1869"/>
+<area shape="poly" title=" " alt="" coords="373,1530,356,1590,328,1664,287,1738,262,1773,232,1804,215,1817,212,1812,229,1800,258,1770,283,1736,323,1661,351,1589,368,1529"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#aefd4fb76785f5539a9297d3403894dd4" title="Add line&#45;on&#45;circle constraint by IDs." alt="" coords="35,1893,201,1948"/>
+<area shape="poly" title=" " alt="" coords="378,1530,365,1605,339,1699,320,1748,296,1797,267,1842,232,1883,202,1903,199,1899,229,1879,263,1839,292,1794,315,1746,334,1697,360,1603,372,1529"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#abdec8ba9cfb8eb7a2b086fbefcc6e852" title=" " alt="" coords="35,1972,201,2027"/>
+<area shape="poly" title=" " alt="" coords="381,1530,372,1618,363,1674,349,1733,330,1794,305,1854,273,1911,232,1961,202,1982,199,1978,229,1957,269,1908,300,1852,325,1792,344,1732,358,1673,367,1618,375,1530"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a03f35ae2d8a6a0fd64a6c94c70617355" title=" " alt="" coords="29,2051,207,2105"/>
+<area shape="poly" title=" " alt="" coords="383,1530,379,1631,372,1696,359,1767,341,1840,314,1911,278,1979,233,2040,209,2058,206,2054,229,2036,274,1976,309,1909,335,1838,354,1766,366,1695,374,1631,378,1530"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#aa27d226454c79626d2883d452227300e" title=" " alt="" coords="35,2129,201,2184"/>
+<area shape="poly" title=" " alt="" coords="377,1530,360,1662,329,1837,310,1926,287,2006,261,2072,233,2118,202,2141,199,2136,229,2115,257,2070,282,2004,305,1924,324,1836,355,1661,372,1529"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a92dd83622c0f7193f30f5110983321e3" title=" " alt="" coords="35,2208,201,2263"/>
+<area shape="poly" title=" " alt="" coords="379,1530,363,1677,335,1875,315,1976,292,2068,264,2144,249,2174,233,2197,219,2210,202,2220,200,2215,215,2206,229,2194,244,2171,259,2142,286,2067,310,1975,329,1875,358,1676,373,1529"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#aac6cef4fd8e57b9e3608ac457b5fe715" title="Add point&#45;line distance constraint by IDs." alt="" coords="35,2287,201,2341"/>
+<area shape="poly" title=" " alt="" coords="380,1530,366,1691,339,1914,320,2027,296,2130,267,2216,251,2250,233,2276,219,2289,202,2298,200,2294,215,2284,229,2272,246,2247,262,2214,291,2129,315,2026,334,1913,361,1691,374,1530"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab233bc2f7225f7f0639f96610c81f14f" title=" " alt="" coords="35,2365,201,2420"/>
+<area shape="poly" title=" " alt="" coords="380,1530,369,1706,344,1951,325,2077,300,2193,270,2288,252,2325,233,2354,219,2368,202,2377,199,2373,215,2363,229,2351,248,2323,265,2286,295,2191,320,2076,339,1951,364,1705,375,1530"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a52b1e82d43d52b158da2fdf3deef35ac" title=" " alt="" coords="35,2444,201,2499"/>
+<area shape="poly" title=" " alt="" coords="381,1530,372,1720,363,1850,349,1989,330,2128,305,2255,273,2360,254,2401,233,2433,219,2446,202,2456,199,2452,215,2442,229,2430,249,2398,268,2358,300,2253,325,2127,344,1988,357,1849,367,1719,376,1530"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a6b6645773c95ffa7ecc9f36aa0419e7a" title="Add point&#45;on&#45;line constraint by IDs." alt="" coords="35,2523,201,2577"/>
+<area shape="poly" title=" " alt="" coords="381,1530,375,1734,367,1875,354,2027,335,2178,309,2316,293,2378,276,2432,255,2477,233,2512,219,2525,202,2535,200,2530,215,2521,229,2508,251,2474,271,2430,288,2376,304,2315,329,2177,348,2026,361,1874,369,1733,376,1530"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a3c47e959870bb0d3afa98ccdb26c4914" title="Add point&#45;on&#45;point constraint by IDs." alt="" coords="35,2601,201,2656"/>
+<area shape="poly" title=" " alt="" coords="382,1530,377,1748,370,1900,358,2064,340,2228,313,2378,297,2445,278,2503,257,2552,233,2590,219,2604,202,2614,200,2609,216,2599,229,2587,252,2550,273,2502,292,2444,308,2377,334,2227,353,2064,365,1900,372,1747,377,1530"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab572c3a39938a7b042ab9ddd0b1c1488" title="Add point&#45;point distance constraint by IDs." alt="" coords="35,2680,201,2735"/>
+<area shape="poly" title=" " alt="" coords="382,1530,380,1761,374,1925,362,2101,344,2278,318,2440,301,2512,281,2575,259,2628,233,2669,219,2682,202,2692,200,2688,216,2678,229,2666,254,2626,276,2573,296,2511,313,2439,339,2277,357,2101,368,1924,374,1761,377,1530"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a5b24dea0e0d9334cdf5f00fec7c09169" title=" " alt="" coords="25,2759,211,2813"/>
+<area shape="poly" title=" " alt="" coords="380,1530,363,1794,331,2179,311,2373,287,2544,261,2675,247,2720,233,2748,213,2765,210,2761,229,2744,242,2718,256,2674,282,2543,305,2373,326,2179,357,1793,374,1530"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a0058b732cfb2103eac0c1f4f4e51a3fd" title=" " alt="" coords="11,2837,225,2892"/>
+<area shape="poly" title=" " alt="" coords="380,1530,364,1808,333,2219,313,2426,289,2609,263,2749,248,2796,233,2826,220,2839,216,2835,229,2823,243,2794,258,2747,284,2608,308,2425,328,2218,359,1808,375,1530"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a9376a659ff4ced079f7e7d90f43f9b9f" title=" " alt="" coords="33,2916,203,2971"/>
+<area shape="poly" title=" " alt="" coords="380,1530,366,1822,336,2259,316,2480,292,2675,264,2823,249,2874,233,2906,220,2919,204,2929,201,2924,216,2915,229,2903,244,2872,259,2822,287,2674,311,2479,331,2258,360,1822,375,1530"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a64c2112258e35049b903035ee8a57995" name="a64c2112258e35049b903035ee8a57995"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64c2112258e35049b903035ee8a57995">&#9670;&#160;</a></span>validateRequirementParameter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OurPaintDCM::Utils::validateRequirementParameter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9">RequirementType</a>&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::optional&lt; double &gt; &amp;&#160;</td>
+          <td class="paramname"><em>param</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="namespaceOurPaintDCM_1_1Utils_a64c2112258e35049b903035ee8a57995_cgraph.png" border="0" usemap="#anamespaceOurPaintDCM_1_1Utils_a64c2112258e35049b903035ee8a57995_cgraph" alt=""/></div>
+<map name="anamespaceOurPaintDCM_1_1Utils_a64c2112258e35049b903035ee8a57995_cgraph" id="anamespaceOurPaintDCM_1_1Utils_a64c2112258e35049b903035ee8a57995_cgraph">
+<area shape="rect" title=" " alt="" coords="5,24,240,64"/>
+<area shape="rect" href="namespaceOurPaintDCM_1_1Utils.html#a43757230430230c98e28b886fa685c32" title=" " alt="" coords="508,24,655,64"/>
+<area shape="poly" title=" " alt="" coords="210,21,288,9,374,3,460,9,505,18,504,23,460,15,374,8,288,15,211,27"/>
+<area shape="rect" href="namespaceOurPaintDCM_1_1Utils.html#a7d6582360f3f1a566385ae9ad42c45ea" title=" " alt="" coords="293,24,455,64"/>
+<area shape="poly" title=" " alt="" coords="240,41,279,41,279,47,240,47"/>
+<area shape="rect" href="namespaceOurPaintDCM_1_1Utils.html#a8d48225b0556798ea39a309eaf5af05b" title=" " alt="" coords="288,88,460,128"/>
+<area shape="poly" title=" " alt="" coords="203,62,283,82,281,87,201,67"/>
+<area shape="poly" title=" " alt="" coords="455,41,494,41,494,47,455,47"/>
+<area shape="poly" title=" " alt="" coords="439,86,502,66,504,71,440,91"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="namespaceOurPaintDCM_1_1Utils_a64c2112258e35049b903035ee8a57995_icgraph.png" border="0" usemap="#anamespaceOurPaintDCM_1_1Utils_a64c2112258e35049b903035ee8a57995_icgraph" alt=""/></div>
+<map name="anamespaceOurPaintDCM_1_1Utils_a64c2112258e35049b903035ee8a57995_icgraph" id="anamespaceOurPaintDCM_1_1Utils_a64c2112258e35049b903035ee8a57995_icgraph">
+<area shape="rect" title=" " alt="" coords="765,1669,1000,1709"/>
+<area shape="rect" href="structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html#a99f0e928eebfacb51d696d0f76941b6e" title="Validate that descriptor has correct number of objects for its type." alt="" coords="536,1661,717,1716"/>
+<area shape="poly" title=" " alt="" coords="752,1691,717,1691,717,1686,752,1686"/>
+<area shape="rect" href="classOurPaintDCM_1_1DCMManager.html#ae497fb8e8aef91685c75adaaad740a1f" title="Add a new requirement using descriptor." alt="" coords="284,1633,488,1673"/>
+<area shape="poly" title=" " alt="" coords="522,1676,488,1671,488,1665,523,1670"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a83793b5b89f46cb835972736f83f02f2" title="Add a requirement using a descriptor (unified high&#45;level interface)." alt="" coords="303,1697,469,1752"/>
+<area shape="poly" title=" " alt="" coords="523,1707,469,1715,469,1710,522,1702"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a1eb6992b2b5c75e34e5c4d084303c0e9" title=" " alt="" coords="38,5,203,60"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,265,1645,254,1579,248,1494,245,1391,249,1148,259,877,268,606,271,364,269,261,262,176,250,112,234,73,220,59,202,49,205,44,223,55,238,70,256,111,267,176,274,261,277,364,274,607,264,877,254,1148,251,1391,253,1493,259,1579,270,1643,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a19a0efbb68c751c0c41f8751ff0e3a3b" title=" " alt="" coords="38,84,203,139"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,266,1647,255,1585,249,1503,247,1405,250,1174,259,916,267,659,270,428,267,331,261,250,250,189,234,151,220,138,202,128,205,123,223,134,238,149,255,188,266,249,272,330,275,428,273,659,264,916,255,1174,252,1405,255,1503,261,1584,271,1645,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ae0fe011c029c57565e4b49069c77fd87" title=" " alt="" coords="38,163,203,217"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,267,1649,257,1590,251,1512,248,1420,251,1200,259,956,266,712,268,492,266,400,259,323,249,266,234,230,220,216,202,206,205,202,223,212,238,227,254,264,265,323,271,400,274,492,272,712,264,956,256,1200,253,1420,256,1512,262,1589,272,1647,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a8c343229dbfbf8badf9d0db172d2e4b5" title="Add arc&#45;center perpendicular&#45;bisector constraint by ID." alt="" coords="8,241,233,296"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,267,1651,258,1595,252,1522,249,1434,251,1226,259,995,265,764,267,557,264,470,258,397,248,342,234,309,223,298,227,294,238,306,253,341,263,396,269,469,272,557,271,764,264,995,257,1226,255,1434,257,1521,263,1594,272,1649,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#af56a89a8522bbf3edf727b64ba370969" title=" " alt="" coords="38,320,203,375"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,268,1653,259,1600,251,1448,252,1252,258,1034,264,817,266,621,263,539,257,471,247,419,234,388,220,374,202,364,205,359,223,370,238,384,252,418,262,470,268,539,271,621,270,817,264,1035,258,1253,256,1448,264,1599,273,1651,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a9c91e4d20ba8ce72bd144e610a4d6d0e" title=" " alt="" coords="38,399,203,453"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,269,1655,260,1605,252,1463,253,1279,258,1074,264,869,264,686,256,544,247,496,234,466,220,452,202,442,205,438,223,448,238,463,252,494,261,543,269,685,269,869,264,1074,258,1279,258,1463,265,1605,274,1653,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a21c9ceca2c22eebc4e434fb9b3b51ab4" title=" " alt="" coords="31,477,210,532"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,270,1657,261,1610,254,1477,254,1305,258,1113,263,922,263,750,254,618,246,573,234,545,209,524,212,520,238,542,251,571,260,617,268,750,268,922,264,1113,259,1305,259,1477,267,1610,275,1655,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a26e77bff03890c5c550edb0ca83caa7c" title=" " alt="" coords="38,556,203,611"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,270,1659,263,1616,255,1491,255,1331,258,1153,262,974,261,814,253,691,245,649,234,624,220,610,202,600,205,595,223,606,238,620,250,648,258,691,266,814,267,974,264,1153,260,1331,260,1491,268,1615,276,1657,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a76ba33b93572f2e89f05b84bdf535a54" title=" " alt="" coords="38,635,203,689"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,261,1647,248,1599,241,1543,239,1480,245,1341,259,1191,273,1042,279,903,276,841,268,786,254,740,234,702,220,688,202,678,205,674,223,684,238,699,259,738,273,785,281,841,284,903,278,1042,264,1192,250,1341,244,1480,246,1542,253,1598,266,1645,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#aa7730b0f7b9e3c39b8b6b09ef33e6ada" title=" " alt="" coords="38,713,203,768"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,263,1650,251,1606,244,1554,241,1497,247,1368,259,1231,271,1093,276,966,273,909,266,858,253,815,234,781,220,767,202,757,205,752,223,763,238,778,258,813,271,857,278,908,281,966,276,1093,264,1231,252,1369,247,1497,249,1554,256,1605,268,1648,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a1d2ab3353d36a616b6ae28d6f050a361" title=" " alt="" coords="38,792,203,847"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,264,1653,253,1613,246,1566,244,1513,248,1396,259,1270,269,1144,273,1028,270,976,263,930,251,891,234,860,220,846,202,836,205,831,223,842,238,856,256,889,268,929,275,976,278,1028,274,1145,264,1271,254,1396,249,1513,252,1565,258,1612,269,1651,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#afdd5741b1f8dcf7131eb29c048574cef" title=" " alt="" coords="38,871,203,925"/>
+<area shape="poly" title=" " alt="" coords="290,1696,282,1686,266,1657,255,1620,249,1577,247,1530,250,1423,259,1310,267,1196,270,1090,267,1044,261,1002,250,966,234,938,220,925,203,915,205,910,223,920,238,935,255,964,266,1001,272,1043,275,1090,273,1196,264,1310,255,1424,252,1530,255,1577,261,1619,271,1655,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ac466f9644e6e868ae0fe6e762af71321" title="Fix a circle (center and radius) at its current position." alt="" coords="38,949,203,1004"/>
+<area shape="poly" title=" " alt="" coords="290,1695,282,1686,267,1660,258,1627,249,1546,251,1451,258,1349,265,1247,267,1153,264,1111,258,1074,248,1042,234,1017,220,1003,202,993,205,989,223,999,238,1014,253,1040,263,1072,269,1110,272,1153,271,1247,264,1349,257,1451,255,1546,263,1626,272,1658,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#affa87d2377d064e0ec45687b246adc6b" title="Fix a line (both endpoints) at its current position." alt="" coords="38,1028,203,1083"/>
+<area shape="poly" title=" " alt="" coords="290,1695,282,1686,269,1663,260,1634,252,1562,253,1479,258,1388,263,1299,264,1215,256,1145,247,1118,234,1096,220,1082,202,1072,205,1068,223,1078,238,1092,251,1116,261,1144,269,1215,269,1299,264,1389,258,1479,258,1562,265,1633,274,1661,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ad40b5a666e77e66f4b59e7cbc267bf6a" title="Fix a point at its current position." alt="" coords="38,1107,203,1161"/>
+<area shape="poly" title=" " alt="" coords="290,1695,282,1686,270,1666,263,1641,255,1579,255,1506,258,1428,262,1350,261,1278,253,1217,245,1193,234,1174,220,1161,202,1151,205,1146,223,1157,238,1171,250,1191,258,1216,266,1277,267,1350,264,1428,260,1506,260,1579,268,1640,275,1664,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a090214a76b5dc63ba09897bac0f2e9d3" title="Add horizontal&#45;line constraint by ID." alt="" coords="38,1185,203,1240"/>
+<area shape="poly" title=" " alt="" coords="290,1695,282,1686,263,1657,251,1629,244,1601,241,1573,247,1519,259,1466,271,1414,276,1361,273,1335,266,1308,253,1281,234,1253,220,1240,202,1230,205,1225,223,1235,238,1250,258,1278,271,1306,278,1334,281,1361,276,1415,264,1467,252,1520,247,1573,249,1600,256,1627,268,1655,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#acd956357db48bd2b5f0d0ef36c2c6259" title=" " alt="" coords="38,1264,203,1319"/>
+<area shape="poly" title=" " alt="" coords="290,1695,282,1686,266,1663,255,1639,247,1594,250,1549,259,1506,267,1463,270,1420,261,1376,250,1354,234,1332,220,1319,203,1309,205,1304,223,1314,238,1328,254,1351,266,1374,275,1419,272,1463,264,1507,255,1550,252,1593,260,1638,271,1660,286,1683,294,1692"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab7272e28537c744756bc1356cd045ff3" title=" " alt="" coords="38,1343,203,1397"/>
+<area shape="poly" title=" " alt="" coords="290,1695,282,1686,260,1650,252,1614,253,1580,258,1545,263,1512,264,1478,256,1445,234,1410,220,1398,202,1388,205,1383,223,1393,238,1407,261,1443,269,1478,269,1512,264,1546,258,1580,257,1614,265,1648,286,1683,294,1691"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a6342987e5432d4882aa87a2b75177010" title="Add line&#45;circle distance constraint by IDs." alt="" coords="38,1421,203,1476"/>
+<area shape="poly" title=" " alt="" coords="290,1694,282,1686,265,1660,257,1635,256,1610,258,1585,260,1561,258,1537,251,1513,234,1489,219,1477,202,1467,205,1463,223,1472,238,1486,256,1511,264,1536,265,1561,263,1586,262,1610,263,1634,270,1658,286,1683,294,1690"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ae80f0be1191f5e4cea9e36b6543e109d" title=" " alt="" coords="36,1500,205,1555"/>
+<area shape="poly" title=" " alt="" coords="290,1694,282,1687,270,1671,263,1655,258,1625,253,1596,246,1582,234,1568,204,1549,207,1544,238,1564,251,1579,258,1595,263,1624,268,1654,274,1668,286,1683,294,1690"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a0e9a8ad04cc56cca3511a3c2faa33bbc" title="Add angle&#45;between&#45;lines constraint by IDs." alt="" coords="38,1579,203,1633"/>
+<area shape="poly" title=" " alt="" coords="294,1694,282,1687,258,1666,235,1647,203,1632,205,1627,237,1642,262,1662,286,1682,297,1689"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#af6a679a9af232e3fb475b5aa4afa5adb" title=" " alt="" coords="38,1657,203,1712"/>
+<area shape="poly" title=" " alt="" coords="289,1713,203,1700,204,1694,290,1708"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a94161cac4e0347106d9eca8be3246dfd" title="Add parallel&#45;lines constraint by IDs." alt="" coords="38,1736,203,1791"/>
+<area shape="poly" title=" " alt="" coords="290,1741,204,1754,203,1749,289,1736"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab34a6d3e1ba2dc93955e7acde536a7fb" title="Add perpendicular&#45;lines constraint by IDs." alt="" coords="22,1815,219,1869"/>
+<area shape="poly" title=" " alt="" coords="325,1761,237,1804,206,1817,204,1812,235,1800,323,1756"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#aefd4fb76785f5539a9297d3403894dd4" title="Add line&#45;on&#45;circle constraint by IDs." alt="" coords="38,1893,203,1948"/>
+<area shape="poly" title=" " alt="" coords="359,1765,307,1825,273,1856,237,1883,205,1900,202,1895,235,1878,270,1852,303,1821,355,1761"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#abdec8ba9cfb8eb7a2b086fbefcc6e852" title=" " alt="" coords="38,1972,203,2027"/>
+<area shape="poly" title=" " alt="" coords="371,1766,351,1811,321,1863,283,1916,238,1961,205,1981,202,1976,234,1957,279,1912,317,1861,346,1809,367,1764"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a03f35ae2d8a6a0fd64a6c94c70617355" title=" " alt="" coords="31,2051,210,2105"/>
+<area shape="poly" title=" " alt="" coords="379,1766,362,1826,334,1900,293,1975,267,2009,238,2040,212,2058,209,2053,234,2036,263,2006,288,1972,329,1898,357,1825,373,1765"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#aa27d226454c79626d2883d452227300e" title=" " alt="" coords="38,2129,203,2184"/>
+<area shape="poly" title=" " alt="" coords="383,1766,370,1841,345,1935,326,1984,302,2033,273,2078,238,2119,205,2140,202,2136,234,2115,269,2075,297,2030,321,1982,340,1933,365,1840,378,1765"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a92dd83622c0f7193f30f5110983321e3" title=" " alt="" coords="38,2208,203,2263"/>
+<area shape="poly" title=" " alt="" coords="386,1766,378,1854,369,1909,355,1969,336,2030,311,2090,278,2147,238,2197,205,2220,202,2215,234,2193,274,2144,306,2088,331,2028,350,1968,363,1908,373,1853,381,1765"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#aac6cef4fd8e57b9e3608ac457b5fe715" title="Add point&#45;line distance constraint by IDs." alt="" coords="38,2287,203,2341"/>
+<area shape="poly" title=" " alt="" coords="388,1766,384,1867,377,1932,365,2003,346,2076,320,2148,284,2215,238,2276,222,2289,205,2299,202,2294,219,2285,234,2272,279,2213,315,2146,341,2074,360,2002,372,1932,379,1867,383,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab233bc2f7225f7f0639f96610c81f14f" title=" " alt="" coords="38,2365,203,2420"/>
+<area shape="poly" title=" " alt="" coords="383,1766,365,1898,335,2073,315,2162,293,2242,267,2308,238,2354,223,2368,205,2378,202,2373,220,2363,234,2351,262,2306,287,2240,310,2160,330,2072,360,1897,377,1765"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a52b1e82d43d52b158da2fdf3deef35ac" title=" " alt="" coords="38,2444,203,2499"/>
+<area shape="poly" title=" " alt="" coords="384,1766,369,1913,340,2112,320,2212,297,2304,270,2380,254,2410,238,2433,223,2447,205,2457,203,2452,220,2442,234,2430,250,2407,265,2378,292,2303,315,2211,335,2111,363,1912,379,1765"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a6b6645773c95ffa7ecc9f36aa0419e7a" title="Add point&#45;on&#45;line constraint by IDs." alt="" coords="38,2523,203,2577"/>
+<area shape="poly" title=" " alt="" coords="385,1766,372,1927,345,2150,326,2263,302,2367,273,2452,256,2486,238,2512,223,2526,205,2536,202,2531,219,2521,234,2508,251,2483,268,2450,296,2365,320,2262,340,2149,367,1927,380,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a3c47e959870bb0d3afa98ccdb26c4914" title="Add point&#45;on&#45;point constraint by IDs." alt="" coords="38,2601,203,2656"/>
+<area shape="poly" title=" " alt="" coords="386,1766,375,1942,350,2188,331,2313,306,2429,275,2524,258,2561,238,2590,223,2604,205,2615,202,2610,220,2600,234,2587,253,2559,270,2522,301,2427,325,2313,345,2187,369,1941,380,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab572c3a39938a7b042ab9ddd0b1c1488" title="Add point&#45;point distance constraint by IDs." alt="" coords="38,2680,203,2735"/>
+<area shape="poly" title=" " alt="" coords="386,1766,378,1956,368,2086,355,2225,335,2364,310,2491,278,2596,259,2637,238,2669,223,2683,205,2693,202,2689,220,2679,234,2666,255,2635,273,2594,305,2489,330,2363,349,2225,363,2085,372,1955,381,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a5b24dea0e0d9334cdf5f00fec7c09169" title=" " alt="" coords="27,2759,214,2813"/>
+<area shape="poly" title=" " alt="" coords="387,1766,380,1970,372,2111,359,2263,340,2414,315,2553,299,2614,281,2668,261,2713,238,2748,216,2766,213,2762,234,2744,256,2710,276,2666,294,2612,310,2552,335,2413,354,2262,367,2110,375,1969,382,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a0058b732cfb2103eac0c1f4f4e51a3fd" title=" " alt="" coords="14,2837,227,2892"/>
+<area shape="poly" title=" " alt="" coords="387,1766,383,1984,376,2136,364,2300,345,2464,319,2615,303,2681,284,2740,262,2789,238,2826,225,2839,221,2835,234,2823,258,2786,279,2738,298,2680,314,2614,340,2463,358,2300,370,2136,378,1984,382,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a9376a659ff4ced079f7e7d90f43f9b9f" title=" " alt="" coords="36,2916,205,2971"/>
+<area shape="poly" title=" " alt="" coords="388,1766,385,1997,379,2161,368,2338,350,2514,323,2677,306,2748,287,2811,264,2864,238,2905,224,2919,207,2929,204,2924,221,2914,234,2902,259,2862,282,2810,301,2747,318,2675,345,2513,363,2337,374,2161,380,1997,382,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a0cdef8f39c8642e5bed9ecc4386a432f" title=" " alt="" coords="23,2995,218,3049"/>
+<area shape="poly" title=" " alt="" coords="385,1766,368,2030,337,2415,316,2609,293,2781,267,2911,253,2956,238,2984,220,3000,217,2996,234,2980,248,2954,262,2910,287,2780,311,2609,331,2415,363,2029,380,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a4c912005e51fb749511c2ac3e295c194" title=" " alt="" coords="5,3073,236,3128"/>
+<area shape="poly" title=" " alt="" coords="385,1766,370,2044,339,2455,319,2662,295,2845,268,2985,254,3032,238,3062,225,3075,221,3071,234,3059,249,3030,263,2983,290,2844,313,2661,334,2454,364,2044,380,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab15ce6c2b9a48e0696bc5a3f4750160e" title=" " alt="" coords="25,3152,216,3207"/>
+<area shape="poly" title=" " alt="" coords="386,1766,371,2058,341,2494,321,2715,297,2909,270,3058,254,3109,238,3141,218,3159,215,3155,234,3138,250,3107,264,3057,292,2909,316,2714,336,2494,366,2058,380,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a9e71ef015b987ca0d6d6c02f632bd6ab" title=" " alt="" coords="23,3231,219,3285"/>
+<area shape="poly" title=" " alt="" coords="386,1766,372,2073,344,2534,324,2768,299,2974,271,3132,255,3186,238,3220,221,3236,217,3232,234,3216,250,3184,266,3131,294,2973,318,2767,338,2534,367,2073,381,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#a98b06ddf50e536e3fecf77f0c572b447" title=" " alt="" coords="15,3309,227,3364"/>
+<area shape="poly" title=" " alt="" coords="386,1766,373,2087,346,2573,326,2820,302,3038,288,3130,273,3205,256,3263,238,3298,225,3311,222,3307,234,3295,251,3261,267,3204,282,3129,296,3038,321,2819,341,2573,368,2086,381,1766"/>
+<area shape="rect" href="classOurPaintDCM_1_1System_1_1RequirementSystem.html#afbddee5832268b0bb2e9939c41161ef9" title="Add vertical&#45;line constraint by ID." alt="" coords="38,3388,203,3443"/>
+<area shape="poly" title=" " alt="" coords="386,1766,375,2101,348,2612,328,2873,304,3103,290,3199,274,3279,257,3339,238,3377,223,3392,205,3402,202,3397,220,3387,234,3374,252,3337,269,3278,284,3198,299,3102,323,2872,343,2612,369,2101,381,1766"/>
+</map>
+</div>
 
 </div>
 </div>

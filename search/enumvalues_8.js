@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['under_5fconstrained_0',['UNDER_CONSTRAINED',['../namespaceOurPaintDCM_1_1Utils.html#ae51395db4b382114f464d061563658caa59c70733d9896122f7355fa460a0f2cc',1,'OurPaintDCM::Utils']]],
-  ['unknown_1',['UNKNOWN',['../namespaceOurPaintDCM_1_1Utils.html#ae51395db4b382114f464d061563658caa696b031073e74bf2cb98e5ef201d4aa3',1,'OurPaintDCM::Utils']]]
+  ['positive_0',['POSITIVE',['../namespaceOurPaintDCM_1_1Utils.html#a5d281ccd8250f89a12b5b7ef185b67f5aab6c31432785221bae58327ef5f6ea58',1,'OurPaintDCM::Utils']]],
+  ['prefer_1',['Prefer',['../namespaceOurPaintDCM.html#ad151bf1d7804f784ece03d94afeaf435afed8597cb02dc50d094035240fdad0b0',1,'OurPaintDCM']]]
 ];

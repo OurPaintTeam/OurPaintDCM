@@ -98,104 +98,49 @@ $(document).ready(function(){initNavTree('classOurPaintDCM_1_1Function_1_1Requir
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classOurPaintDCM_1_1Function_1_1RequirementFunction-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">OurPaintDCM::Function::RequirementFunction Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
+  <div class="headertitle"><div class="title">OurPaintDCM::Function::RequirementFunction Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Abstract base class for all geometric constraint functions.  
- <a href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#details">More...</a></p>
-
 <p><code>#include &lt;<a class="el" href="RequirementFunction_8h_source.html">RequirementFunction.h</a>&gt;</code></p>
-<div class="dynheader">
-Inheritance diagram for OurPaintDCM::Function::RequirementFunction:</div>
-<div class="dyncontent">
-<div class="center"><img src="classOurPaintDCM_1_1Function_1_1RequirementFunction__inherit__graph.png" border="0" usemap="#aOurPaintDCM_1_1Function_1_1RequirementFunction_inherit__map" alt="Inheritance graph"/></div>
-<map name="aOurPaintDCM_1_1Function_1_1RequirementFunction_inherit__map" id="aOurPaintDCM_1_1Function_1_1RequirementFunction_inherit__map">
-<area shape="rect" title="Abstract base class for all geometric constraint functions." alt="" coords="5,389,176,429"/>
-<area shape="rect" href="classOurPaintDCM_1_1Function_1_1ArcCenterOnPerpendicularFunction.html" title="Default constraint used for arcs: the arc center lies on a perpendicular bisector." alt="" coords="224,5,480,45"/>
-<area shape="poly" title=" " alt="" coords="92,375,102,308,123,221,140,176,162,132,189,91,222,55,239,43,242,48,226,59,193,94,167,135,145,178,129,223,107,309,97,376"/>
-<area shape="rect" href="classOurPaintDCM_1_1Function_1_1FixCoordinateFunction.html" title="Fixes a single coordinate at a target value." alt="" coords="265,69,439,109"/>
-<area shape="poly" title=" " alt="" coords="95,375,109,319,133,250,170,179,194,147,222,119,242,106,264,98,266,102,244,111,226,123,198,151,174,182,138,252,114,321,100,376"/>
-<area shape="rect" href="classOurPaintDCM_1_1Function_1_1HorizontalFunction.html" title="Line must be horizontal (aligned with the X&#45;axis)." alt="" coords="267,133,437,173"/>
-<area shape="poly" title=" " alt="" coords="100,376,117,332,142,280,177,227,199,204,222,183,243,171,265,162,267,167,245,176,226,187,202,208,182,231,147,282,122,334,105,378"/>
-<area shape="rect" href="classOurPaintDCM_1_1Function_1_1LineCircleDistanceFunction.html" title="Fixed distance between a line segment and a circle." alt="" coords="249,197,455,237"/>
-<area shape="poly" title=" " alt="" coords="108,376,154,310,186,276,223,247,247,235,249,240,225,252,189,280,158,313,112,379"/>
-<area shape="rect" href="classOurPaintDCM_1_1Function_1_1LineLineAngleFunction.html" title="Fixed angle between two line segments." alt="" coords="264,261,440,301"/>
-<area shape="poly" title=" " alt="" coords="123,378,168,343,223,311,263,296,265,301,225,316,171,348,126,383"/>
-<area shape="rect" href="classOurPaintDCM_1_1Function_1_1LineLineParallelFunction.html" title="Two line segments must be parallel." alt="" coords="259,325,445,365"/>
-<area shape="poly" title=" " alt="" coords="186,383,269,363,270,368,187,389"/>
-<area shape="rect" href="classOurPaintDCM_1_1Function_1_1LineLinePerpendicularFunction.html" title="Two line segments must be perpendicular." alt="" coords="238,389,466,429"/>
-<area shape="poly" title=" " alt="" coords="190,407,238,407,238,412,190,412"/>
-<area shape="rect" href="classOurPaintDCM_1_1Function_1_1LineOnCircleFunction.html" title="Both endpoints of a line must lie on a circle." alt="" coords="267,453,437,493"/>
-<area shape="poly" title=" " alt="" coords="187,430,270,451,269,456,186,435"/>
-<area shape="rect" href="classOurPaintDCM_1_1Function_1_1PointLineDistanceFunction.html" title="Fixed distance between a point and a line segment." alt="" coords="251,517,453,557"/>
-<area shape="poly" title=" " alt="" coords="126,436,171,471,225,503,256,515,254,520,223,508,168,476,123,440"/>
-<area shape="rect" href="classOurPaintDCM_1_1Function_1_1PointOnLineFunction.html" title="Point must lie exactly on a line segment (distance == 0)." alt="" coords="267,581,437,621"/>
-<area shape="poly" title=" " alt="" coords="112,440,158,505,189,539,225,567,268,586,265,590,223,572,186,543,154,509,108,443"/>
-<area shape="rect" href="classOurPaintDCM_1_1Function_1_1PointOnPointFunction.html" title="Two points must coincide (distance == 0)." alt="" coords="267,645,437,685"/>
-<area shape="poly" title=" " alt="" coords="105,441,122,485,147,536,182,588,202,611,226,631,245,643,267,651,265,656,243,648,222,635,199,615,177,591,142,539,117,487,100,443"/>
-<area shape="rect" href="classOurPaintDCM_1_1Function_1_1PointPointDistanceFunction.html" title="Fixed distance between two points." alt="" coords="248,709,456,749"/>
-<area shape="poly" title=" " alt="" coords="100,442,114,498,138,567,174,636,198,668,226,695,249,710,246,714,222,699,194,671,170,639,133,569,109,499,95,444"/>
-<area shape="rect" href="classOurPaintDCM_1_1Function_1_1VerticalFunction.html" title="Line must be vertical (aligned with the Y&#45;axis)." alt="" coords="267,773,437,813"/>
-<area shape="poly" title=" " alt="" coords="97,443,107,510,129,596,145,640,167,684,193,724,226,759,245,773,268,782,266,787,243,777,222,763,189,728,162,687,140,643,123,597,102,511,92,444"/>
-</map>
-<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a79372474813b650e56267bdb19f4f88f" id="r_a79372474813b650e56267bdb19f4f88f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#a79372474813b650e56267bdb19f4f88f">RequirementFunction</a> (<a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9">Utils::RequirementType</a> type, const std::vector&lt; <a class="el" href="RequirementFunction_8h.html#abca8dfa78652bc61165262af4fade766">VAR</a> &gt; &amp;vars)</td></tr>
-<tr class="separator:a79372474813b650e56267bdb19f4f88f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc2741f7af6bb89b5da4feede2e417c2" id="r_abc2741f7af6bb89b5da4feede2e417c2"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#abc2741f7af6bb89b5da4feede2e417c2">~RequirementFunction</a> ()=default</td></tr>
-<tr class="separator:abc2741f7af6bb89b5da4feede2e417c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac80c3e9bd1af4414e2447533c5c9eaa9" id="r_ac80c3e9bd1af4414e2447533c5c9eaa9"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#ac80c3e9bd1af4414e2447533c5c9eaa9">evaluate</a> () const =0</td></tr>
-<tr class="memdesc:ac80c3e9bd1af4414e2447533c5c9eaa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the scalar value of the constraint (error).  <br /></td></tr>
-<tr class="separator:ac80c3e9bd1af4414e2447533c5c9eaa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab82f7adda3b45c169d2e31b1f14e19c2" id="r_ab82f7adda3b45c169d2e31b1f14e19c2"><td class="memItemLeft" align="right" valign="top">virtual std::unordered_map&lt; <a class="el" href="RequirementFunction_8h.html#abca8dfa78652bc61165262af4fade766">VAR</a>, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#ab82f7adda3b45c169d2e31b1f14e19c2">gradient</a> () const =0</td></tr>
-<tr class="memdesc:ab82f7adda3b45c169d2e31b1f14e19c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the gradient (first-order derivatives) with respect to variables.  <br /></td></tr>
-<tr class="separator:ab82f7adda3b45c169d2e31b1f14e19c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaeb8a6a64c8c157fe701d8e2227eaefd" id="r_aaeb8a6a64c8c157fe701d8e2227eaefd"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; <a class="el" href="RequirementFunction_8h.html#abca8dfa78652bc61165262af4fade766">VAR</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#aaeb8a6a64c8c157fe701d8e2227eaefd">getVars</a> () const</td></tr>
-<tr class="memdesc:aaeb8a6a64c8c157fe701d8e2227eaefd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return variables involved in this constraint.  <br /></td></tr>
-<tr class="separator:aaeb8a6a64c8c157fe701d8e2227eaefd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a405c5ed3126ce6ecfbba87bdc92aa489" id="r_a405c5ed3126ce6ecfbba87bdc92aa489"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#a405c5ed3126ce6ecfbba87bdc92aa489">getVarCount</a> () const =0</td></tr>
-<tr class="memdesc:a405c5ed3126ce6ecfbba87bdc92aa489"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the number of variables used.  <br /></td></tr>
-<tr class="separator:a405c5ed3126ce6ecfbba87bdc92aa489"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada51a1d5de8cd32efa901664022ab1db" id="r_ada51a1d5de8cd32efa901664022ab1db"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#ada51a1d5de8cd32efa901664022ab1db">tryGetAssignment</a> (<a class="el" href="RequirementFunction_8h.html#abca8dfa78652bc61165262af4fade766">VAR</a> &amp;var, double &amp;value) const</td></tr>
-<tr class="memdesc:ada51a1d5de8cd32efa901664022ab1db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Try to expose this requirement as a direct assignment var = value.  <br /></td></tr>
-<tr class="separator:ada51a1d5de8cd32efa901664022ab1db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac852acc6432f3b5b49eaf3f8b13f4ccf" id="r_ac852acc6432f3b5b49eaf3f8b13f4ccf"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9">Utils::RequirementType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#ac852acc6432f3b5b49eaf3f8b13f4ccf">getType</a> () const</td></tr>
-<tr class="memdesc:ac852acc6432f3b5b49eaf3f8b13f4ccf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the type of this geometric requirement.  <br /></td></tr>
-<tr class="separator:ac852acc6432f3b5b49eaf3f8b13f4ccf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae93f895112a99a1209a7d7fa8ee04b8a" id="r_ae93f895112a99a1209a7d7fa8ee04b8a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#ae93f895112a99a1209a7d7fa8ee04b8a">RequirementFunction</a> (<a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9">Utils::RequirementType</a> type, std::shared_ptr&lt;::ErrorFunction &gt; function)</td></tr>
+<tr class="separator:ae93f895112a99a1209a7d7fa8ee04b8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19558ba286148c173de5f7d2258bf6b9" id="r_a19558ba286148c173de5f7d2258bf6b9"><td class="memItemLeft" align="right" valign="top">const std::shared_ptr&lt;::ErrorFunction &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#a19558ba286148c173de5f7d2258bf6b9">mathematical</a> () const</td></tr>
+<tr class="separator:a19558ba286148c173de5f7d2258bf6b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56451644d5308a3362626182f98b95e9" id="r_a56451644d5308a3362626182f98b95e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9">Utils::RequirementType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#a56451644d5308a3362626182f98b95e9">getType</a> () const</td></tr>
+<tr class="separator:a56451644d5308a3362626182f98b95e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1be5f653f54ff560635322a6892086e" id="r_ae1be5f653f54ff560635322a6892086e"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="RequirementFunction_8h.html#ae61d1f6bb7d742deea219e333d97ef70">VAR</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#ae1be5f653f54ff560635322a6892086e">getVars</a> () const</td></tr>
+<tr class="separator:ae1be5f653f54ff560635322a6892086e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee8bda40c087840aecc12697bbfff445" id="r_aee8bda40c087840aecc12697bbfff445"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#aee8bda40c087840aecc12697bbfff445">getVarCount</a> () const</td></tr>
+<tr class="separator:aee8bda40c087840aecc12697bbfff445"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade767e09c4f222ae5446ef14370082fe" id="r_ade767e09c4f222ae5446ef14370082fe"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#ade767e09c4f222ae5446ef14370082fe">getWeight</a> () const</td></tr>
-<tr class="memdesc:ade767e09c4f222ae5446ef14370082fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current weight of this function.  <br /></td></tr>
 <tr class="separator:ade767e09c4f222ae5446ef14370082fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57e8845fe03c0bb3e84a0eb9572e24d6" id="r_a57e8845fe03c0bb3e84a0eb9572e24d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#a57e8845fe03c0bb3e84a0eb9572e24d6">setWeight</a> (double w)</td></tr>
-<tr class="memdesc:a57e8845fe03c0bb3e84a0eb9572e24d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the weight for this function.  <br /></td></tr>
-<tr class="separator:a57e8845fe03c0bb3e84a0eb9572e24d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac334e945bd5fd007554aab428a68a2a9" id="r_ac334e945bd5fd007554aab428a68a2a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#ac334e945bd5fd007554aab428a68a2a9">setWeight</a> (double weight)</td></tr>
+<tr class="separator:ac334e945bd5fd007554aab428a68a2a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeedcead25664bba7c01762747ed41c91" id="r_aeedcead25664bba7c01762747ed41c91"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#aeedcead25664bba7c01762747ed41c91">tryGetAssignment</a> (<a class="el" href="RequirementFunction_8h.html#ae61d1f6bb7d742deea219e333d97ef70">VAR</a> &amp;variable, double &amp;target) const</td></tr>
+<tr class="separator:aeedcead25664bba7c01762747ed41c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0eaba049d9586082d4cac16711b1199" id="r_aa0eaba049d9586082d4cac16711b1199"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#aa0eaba049d9586082d4cac16711b1199">setRequirementId</a> (<a class="el" href="structOurPaintDCM_1_1Utils_1_1ID.html">Utils::ID</a> id)</td></tr>
+<tr class="separator:aa0eaba049d9586082d4cac16711b1199"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3f876c8713cc53df76a6304d1d99303" id="r_aa3f876c8713cc53df76a6304d1d99303"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="structOurPaintDCM_1_1Utils_1_1ID.html">Utils::ID</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#aa3f876c8713cc53df76a6304d1d99303">requirementId</a> () const</td></tr>
+<tr class="separator:aa3f876c8713cc53df76a6304d1d99303"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:a6cbe0c65247e9137840e2d2897cec1f9" id="r_a6cbe0c65247e9137840e2d2897cec1f9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#a6cbe0c65247e9137840e2d2897cec1f9">_weight</a> = 1.0</td></tr>
-<tr class="memdesc:a6cbe0c65247e9137840e2d2897cec1f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Importance coefficient in the optimization system.  <br /></td></tr>
-<tr class="separator:a6cbe0c65247e9137840e2d2897cec1f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af7462fc56069a6b0ec8e7bf9e752068e" id="r_af7462fc56069a6b0ec8e7bf9e752068e"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="RequirementFunction_8h.html#abca8dfa78652bc61165262af4fade766">VAR</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#af7462fc56069a6b0ec8e7bf9e752068e">_vars</a></td></tr>
-<tr class="memdesc:af7462fc56069a6b0ec8e7bf9e752068e"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of variable pointers.  <br /></td></tr>
-<tr class="separator:af7462fc56069a6b0ec8e7bf9e752068e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0529b15fbf67d9854e35bd3cc3326149" id="r_a0529b15fbf67d9854e35bd3cc3326149"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9">Utils::RequirementType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#a0529b15fbf67d9854e35bd3cc3326149">_t</a></td></tr>
-<tr class="memdesc:a0529b15fbf67d9854e35bd3cc3326149"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of the geometric requirement.  <br /></td></tr>
-<tr class="separator:a0529b15fbf67d9854e35bd3cc3326149"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a575e92f0ffc1de3b65dd70a81484c492" id="r_a575e92f0ffc1de3b65dd70a81484c492"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9">Utils::RequirementType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#a575e92f0ffc1de3b65dd70a81484c492">_type</a></td></tr>
+<tr class="separator:a575e92f0ffc1de3b65dd70a81484c492"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37ee9afda411f49c6a4f907e4d335f95" id="r_a37ee9afda411f49c6a4f907e4d335f95"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt;::ErrorFunction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#a37ee9afda411f49c6a4f907e4d335f95">_math</a></td></tr>
+<tr class="separator:a37ee9afda411f49c6a4f907e4d335f95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7761cb62d3a981af68cbcbc4f47f08f" id="r_aa7761cb62d3a981af68cbcbc4f47f08f"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="structOurPaintDCM_1_1Utils_1_1ID.html">Utils::ID</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#aa7761cb62d3a981af68cbcbc4f47f08f">_requirementId</a></td></tr>
+<tr class="separator:aa7761cb62d3a981af68cbcbc4f47f08f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Abstract base class for all geometric constraint functions. </p>
-<p>Each requirement function represents a mathematical constraint f(x), used in geometric solvers or optimization systems.</p>
-<p>The function typically computes:</p><ul>
-<li><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#ac80c3e9bd1af4414e2447533c5c9eaa9" title="Compute the scalar value of the constraint (error).">evaluate()</a>: deviation from the desired condition</li>
-<li><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#ab82f7adda3b45c169d2e31b1f14e19c2" title="Compute the gradient (first-order derivatives) with respect to variables.">gradient()</a>: partial derivatives with respect to all variables </li>
-</ul>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a79372474813b650e56267bdb19f4f88f" name="a79372474813b650e56267bdb19f4f88f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a79372474813b650e56267bdb19f4f88f">&#9670;&#160;</a></span>RequirementFunction()</h2>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ae93f895112a99a1209a7d7fa8ee04b8a" name="ae93f895112a99a1209a7d7fa8ee04b8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae93f895112a99a1209a7d7fa8ee04b8a">&#9670;&#160;</a></span>RequirementFunction()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -212,8 +157,8 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::vector&lt; <a class="el" href="RequirementFunction_8h.html#abca8dfa78652bc61165262af4fade766">VAR</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>vars</em>&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt;::ErrorFunction &gt;&#160;</td>
+          <td class="paramname"><em>function</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -230,34 +175,9 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="abc2741f7af6bb89b5da4feede2e417c2" name="abc2741f7af6bb89b5da4feede2e417c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc2741f7af6bb89b5da4feede2e417c2">&#9670;&#160;</a></span>~RequirementFunction()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual OurPaintDCM::Function::RequirementFunction::~RequirementFunction </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">default</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ac80c3e9bd1af4414e2447533c5c9eaa9" name="ac80c3e9bd1af4414e2447533c5c9eaa9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac80c3e9bd1af4414e2447533c5c9eaa9">&#9670;&#160;</a></span>evaluate()</h2>
+<a id="a56451644d5308a3362626182f98b95e9" name="a56451644d5308a3362626182f98b95e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56451644d5308a3362626182f98b95e9">&#9670;&#160;</a></span>getType()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -266,7 +186,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual double OurPaintDCM::Function::RequirementFunction::evaluate </td>
+          <td class="memname"><a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9">Utils::RequirementType</a> OurPaintDCM::Function::RequirementFunction::getType </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -274,19 +194,15 @@ Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Compute the scalar value of the constraint (error). </p>
-
-<p>Implemented in <a class="el" href="classOurPaintDCM_1_1Function_1_1PointLineDistanceFunction.html#ab4421e5ad273a35c7133cb300b93afaf">OurPaintDCM::Function::PointLineDistanceFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1PointOnLineFunction.html#a060fc7c171ffbe49c9074ce999986bcb">OurPaintDCM::Function::PointOnLineFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1PointPointDistanceFunction.html#aa4905aed8be321e67cb316cdcaebeae4">OurPaintDCM::Function::PointPointDistanceFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1PointOnPointFunction.html#a13130df42a9937bed5f9774b71f5f92e">OurPaintDCM::Function::PointOnPointFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1LineCircleDistanceFunction.html#a766bdc949051e6bf2d69dbe14705986e">OurPaintDCM::Function::LineCircleDistanceFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1LineOnCircleFunction.html#ac9a752b56e0591a7c7b8f1c1948dfa59">OurPaintDCM::Function::LineOnCircleFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1LineLineParallelFunction.html#a34de36b19d7c4f2880b1a64040de726d">OurPaintDCM::Function::LineLineParallelFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1LineLinePerpendicularFunction.html#a7f3f07bee72037cccb09e0c207722de9">OurPaintDCM::Function::LineLinePerpendicularFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1LineLineAngleFunction.html#a73039dc3b01de02d97c455bb7044bfa0">OurPaintDCM::Function::LineLineAngleFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1VerticalFunction.html#a8f016fb7496990e5ce8a3768dac204f0">OurPaintDCM::Function::VerticalFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1HorizontalFunction.html#a56de2cdf2d0814e5df34f5d444baa3b8">OurPaintDCM::Function::HorizontalFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1ArcCenterOnPerpendicularFunction.html#a7989bccad1e2d6367dee9d247f2bad8c">OurPaintDCM::Function::ArcCenterOnPerpendicularFunction</a>, and <a class="el" href="classOurPaintDCM_1_1Function_1_1FixCoordinateFunction.html#aa08873034098edb0baafe8f8247d8c33">OurPaintDCM::Function::FixCoordinateFunction</a>.</p>
-
 </div>
 </div>
-<a id="ac852acc6432f3b5b49eaf3f8b13f4ccf" name="ac852acc6432f3b5b49eaf3f8b13f4ccf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac852acc6432f3b5b49eaf3f8b13f4ccf">&#9670;&#160;</a></span>getType()</h2>
+<a id="aee8bda40c087840aecc12697bbfff445" name="aee8bda40c087840aecc12697bbfff445"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee8bda40c087840aecc12697bbfff445">&#9670;&#160;</a></span>getVarCount()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -295,7 +211,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9">Utils::RequirementType</a> OurPaintDCM::Function::RequirementFunction::getType </td>
+          <td class="memname">size_t OurPaintDCM::Function::RequirementFunction::getVarCount </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -303,17 +219,25 @@ Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Return the type of this geometric requirement. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classOurPaintDCM_1_1Function_1_1RequirementFunction_aee8bda40c087840aecc12697bbfff445_cgraph.png" border="0" usemap="#aclassOurPaintDCM_1_1Function_1_1RequirementFunction_aee8bda40c087840aecc12697bbfff445_cgraph" alt=""/></div>
+<map name="aclassOurPaintDCM_1_1Function_1_1RequirementFunction_aee8bda40c087840aecc12697bbfff445_cgraph" id="aclassOurPaintDCM_1_1Function_1_1RequirementFunction_aee8bda40c087840aecc12697bbfff445_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,176,60"/>
+<area shape="rect" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#ae1be5f653f54ff560635322a6892086e" title=" " alt="" coords="224,5,395,60"/>
+<area shape="poly" title=" " alt="" coords="176,30,210,30,210,35,176,35"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="a405c5ed3126ce6ecfbba87bdc92aa489" name="a405c5ed3126ce6ecfbba87bdc92aa489"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a405c5ed3126ce6ecfbba87bdc92aa489">&#9670;&#160;</a></span>getVarCount()</h2>
+<a id="ae1be5f653f54ff560635322a6892086e" name="ae1be5f653f54ff560635322a6892086e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1be5f653f54ff560635322a6892086e">&#9670;&#160;</a></span>getVars()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -322,7 +246,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual size_t OurPaintDCM::Function::RequirementFunction::getVarCount </td>
+          <td class="memname">const std::vector&lt; <a class="el" href="RequirementFunction_8h.html#ae61d1f6bb7d742deea219e333d97ef70">VAR</a> &gt; &amp; OurPaintDCM::Function::RequirementFunction::getVars </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -330,41 +254,20 @@ Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Return the number of variables used. </p>
-
-<p>Implemented in <a class="el" href="classOurPaintDCM_1_1Function_1_1PointLineDistanceFunction.html#a98522366384adf1352d0e3e009952292">OurPaintDCM::Function::PointLineDistanceFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1PointOnLineFunction.html#a6abc040d0ede12cf9b26a73ef67f5ae0">OurPaintDCM::Function::PointOnLineFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1PointPointDistanceFunction.html#a15daccfe34bc49216f18fcfd6d72d20e">OurPaintDCM::Function::PointPointDistanceFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1PointOnPointFunction.html#a4efc6a3b78c4166d0f18ce5c9514e04c">OurPaintDCM::Function::PointOnPointFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1LineCircleDistanceFunction.html#a4b81e676ddf34dcc92668ccddcde76c6">OurPaintDCM::Function::LineCircleDistanceFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1LineOnCircleFunction.html#a96633e89582b80d2ab8cd82a5e7854a3">OurPaintDCM::Function::LineOnCircleFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1LineLineParallelFunction.html#a38f7693c4c6a8542db185eed3408a6af">OurPaintDCM::Function::LineLineParallelFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1LineLinePerpendicularFunction.html#adc208b9e1a31cbe63ac18583173d0d02">OurPaintDCM::Function::LineLinePerpendicularFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1LineLineAngleFunction.html#aec7c63e01e913c4b34ba315d6bf2304f">OurPaintDCM::Function::LineLineAngleFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1VerticalFunction.html#a17400d4fdb3ff8025b036c94b58a6810">OurPaintDCM::Function::VerticalFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1HorizontalFunction.html#a3ea650bbcd839b34029cf73fdec5a220">OurPaintDCM::Function::HorizontalFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1ArcCenterOnPerpendicularFunction.html#a0c34e3f3d194bc09d7b8e7742bbb4645">OurPaintDCM::Function::ArcCenterOnPerpendicularFunction</a>, and <a class="el" href="classOurPaintDCM_1_1Function_1_1FixCoordinateFunction.html#aa5be2ef0822b6205de895658fb0e88b1">OurPaintDCM::Function::FixCoordinateFunction</a>.</p>
-
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classOurPaintDCM_1_1Function_1_1RequirementFunction_ae1be5f653f54ff560635322a6892086e_icgraph.png" border="0" usemap="#aclassOurPaintDCM_1_1Function_1_1RequirementFunction_ae1be5f653f54ff560635322a6892086e_icgraph" alt=""/></div>
+<map name="aclassOurPaintDCM_1_1Function_1_1RequirementFunction_ae1be5f653f54ff560635322a6892086e_icgraph" id="aclassOurPaintDCM_1_1Function_1_1RequirementFunction_ae1be5f653f54ff560635322a6892086e_icgraph">
+<area shape="rect" title=" " alt="" coords="224,5,395,60"/>
+<area shape="rect" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#aee8bda40c087840aecc12697bbfff445" title=" " alt="" coords="5,5,176,60"/>
+<area shape="poly" title=" " alt="" coords="210,35,176,35,176,30,210,30"/>
+</map>
 </div>
-</div>
-<a id="aaeb8a6a64c8c157fe701d8e2227eaefd" name="aaeb8a6a64c8c157fe701d8e2227eaefd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaeb8a6a64c8c157fe701d8e2227eaefd">&#9670;&#160;</a></span>getVars()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual std::vector&lt; <a class="el" href="RequirementFunction_8h.html#abca8dfa78652bc61165262af4fade766">VAR</a> &gt; OurPaintDCM::Function::RequirementFunction::getVars </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Return variables involved in this constraint. </p>
 
 </div>
 </div>
@@ -390,13 +293,21 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Return the current weight of this function. </p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classOurPaintDCM_1_1Function_1_1RequirementFunction_ade767e09c4f222ae5446ef14370082fe_icgraph.png" border="0" usemap="#aclassOurPaintDCM_1_1Function_1_1RequirementFunction_ade767e09c4f222ae5446ef14370082fe_icgraph" alt=""/></div>
+<map name="aclassOurPaintDCM_1_1Function_1_1RequirementFunction_ade767e09c4f222ae5446ef14370082fe_icgraph" id="aclassOurPaintDCM_1_1Function_1_1RequirementFunction_ade767e09c4f222ae5446ef14370082fe_icgraph">
+<area shape="rect" title=" " alt="" coords="224,5,395,60"/>
+<area shape="rect" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#aeedcead25664bba7c01762747ed41c91" title=" " alt="" coords="5,5,176,60"/>
+<area shape="poly" title=" " alt="" coords="210,35,176,35,176,30,210,30"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="ab82f7adda3b45c169d2e31b1f14e19c2" name="ab82f7adda3b45c169d2e31b1f14e19c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab82f7adda3b45c169d2e31b1f14e19c2">&#9670;&#160;</a></span>gradient()</h2>
+<a id="a19558ba286148c173de5f7d2258bf6b9" name="a19558ba286148c173de5f7d2258bf6b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19558ba286148c173de5f7d2258bf6b9">&#9670;&#160;</a></span>mathematical()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -405,7 +316,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::unordered_map&lt; <a class="el" href="RequirementFunction_8h.html#abca8dfa78652bc61165262af4fade766">VAR</a>, double &gt; OurPaintDCM::Function::RequirementFunction::gradient </td>
+          <td class="memname">const std::shared_ptr&lt;::ErrorFunction &gt; &amp; OurPaintDCM::Function::RequirementFunction::mathematical </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -413,19 +324,66 @@ Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Compute the gradient (first-order derivatives) with respect to variables. </p>
+</div>
+</div>
+<a id="aa3f876c8713cc53df76a6304d1d99303" name="aa3f876c8713cc53df76a6304d1d99303"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3f876c8713cc53df76a6304d1d99303">&#9670;&#160;</a></span>requirementId()</h2>
 
-<p>Implemented in <a class="el" href="classOurPaintDCM_1_1Function_1_1PointLineDistanceFunction.html#a7202908c9a5a8c27350892bef0e6a728">OurPaintDCM::Function::PointLineDistanceFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1PointOnLineFunction.html#af82525aa3a7674fee5908ac5f9cc8417">OurPaintDCM::Function::PointOnLineFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1PointPointDistanceFunction.html#a0e71424284405573f1e76f8bad928089">OurPaintDCM::Function::PointPointDistanceFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1PointOnPointFunction.html#afaa1ee315108c142929d656f34dcdbe6">OurPaintDCM::Function::PointOnPointFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1LineCircleDistanceFunction.html#a23ecc1fc67c5d2ce6992964098e53982">OurPaintDCM::Function::LineCircleDistanceFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1LineOnCircleFunction.html#ab3779e1fa439aabde5c37f7266cfa5b5">OurPaintDCM::Function::LineOnCircleFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1LineLineParallelFunction.html#a617ade68bc60f6dbfc020954cab2f37f">OurPaintDCM::Function::LineLineParallelFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1LineLinePerpendicularFunction.html#af303d79f7c6da3583940cd966daa4f15">OurPaintDCM::Function::LineLinePerpendicularFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1LineLineAngleFunction.html#a7f867ed946774028049db57cb12f3e04">OurPaintDCM::Function::LineLineAngleFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1VerticalFunction.html#acf51c57e79f80f95eb9a68d3c97b9982">OurPaintDCM::Function::VerticalFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1HorizontalFunction.html#a7ca25c1b5ef84b82d56252a42a1fcf2e">OurPaintDCM::Function::HorizontalFunction</a>, <a class="el" href="classOurPaintDCM_1_1Function_1_1ArcCenterOnPerpendicularFunction.html#a40ef5404faddfa1f0b93ab884d9d00bd">OurPaintDCM::Function::ArcCenterOnPerpendicularFunction</a>, and <a class="el" href="classOurPaintDCM_1_1Function_1_1FixCoordinateFunction.html#a47fb70f7cc77974df58e26763ac37e0b">OurPaintDCM::Function::FixCoordinateFunction</a>.</p>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; <a class="el" href="structOurPaintDCM_1_1Utils_1_1ID.html">Utils::ID</a> &gt; OurPaintDCM::Function::RequirementFunction::requirementId </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
-<a id="a57e8845fe03c0bb3e84a0eb9572e24d6" name="a57e8845fe03c0bb3e84a0eb9572e24d6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a57e8845fe03c0bb3e84a0eb9572e24d6">&#9670;&#160;</a></span>setWeight()</h2>
+<a id="aa0eaba049d9586082d4cac16711b1199" name="aa0eaba049d9586082d4cac16711b1199"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0eaba049d9586082d4cac16711b1199">&#9670;&#160;</a></span>setRequirementId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OurPaintDCM::Function::RequirementFunction::setRequirementId </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structOurPaintDCM_1_1Utils_1_1ID.html">Utils::ID</a>&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac334e945bd5fd007554aab428a68a2a9" name="ac334e945bd5fd007554aab428a68a2a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac334e945bd5fd007554aab428a68a2a9">&#9670;&#160;</a></span>setWeight()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -437,7 +395,7 @@ Protected Attributes</h2></td></tr>
           <td class="memname">void OurPaintDCM::Function::RequirementFunction::setWeight </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>w</em></td><td>)</td>
+          <td class="paramname"><em>weight</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -448,12 +406,10 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Set the weight for this function. </p>
-
 </div>
 </div>
-<a id="ada51a1d5de8cd32efa901664022ab1db" name="ada51a1d5de8cd32efa901664022ab1db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada51a1d5de8cd32efa901664022ab1db">&#9670;&#160;</a></span>tryGetAssignment()</h2>
+<a id="aeedcead25664bba7c01762747ed41c91" name="aeedcead25664bba7c01762747ed41c91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeedcead25664bba7c01762747ed41c91">&#9670;&#160;</a></span>tryGetAssignment()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -462,16 +418,16 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool OurPaintDCM::Function::RequirementFunction::tryGetAssignment </td>
+          <td class="memname">bool OurPaintDCM::Function::RequirementFunction::tryGetAssignment </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="RequirementFunction_8h.html#abca8dfa78652bc61165262af4fade766">VAR</a> &amp;&#160;</td>
-          <td class="paramname"><em>var</em>, </td>
+          <td class="paramtype"><a class="el" href="RequirementFunction_8h.html#ae61d1f6bb7d742deea219e333d97ef70">VAR</a> &amp;&#160;</td>
+          <td class="paramname"><em>variable</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double &amp;&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
+          <td class="paramname"><em>target</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -481,21 +437,26 @@ Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Try to expose this requirement as a direct assignment var = value. </p>
-<p>Default implementation returns false. <a class="el" href="namespaceOurPaintDCM_1_1Requirements.html">Requirements</a> like <a class="el" href="classOurPaintDCM_1_1Function_1_1FixCoordinateFunction.html" title="Fixes a single coordinate at a target value.">FixCoordinateFunction</a> override it to provide algebraic elimination metadata. </p>
-
-<p>Reimplemented in <a class="el" href="classOurPaintDCM_1_1Function_1_1FixCoordinateFunction.html#a50f2ed3d89d5b132d416bf594be9486b">OurPaintDCM::Function::FixCoordinateFunction</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classOurPaintDCM_1_1Function_1_1RequirementFunction_aeedcead25664bba7c01762747ed41c91_cgraph.png" border="0" usemap="#aclassOurPaintDCM_1_1Function_1_1RequirementFunction_aeedcead25664bba7c01762747ed41c91_cgraph" alt=""/></div>
+<map name="aclassOurPaintDCM_1_1Function_1_1RequirementFunction_aeedcead25664bba7c01762747ed41c91_cgraph" id="aclassOurPaintDCM_1_1Function_1_1RequirementFunction_aeedcead25664bba7c01762747ed41c91_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,176,60"/>
+<area shape="rect" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#ade767e09c4f222ae5446ef14370082fe" title=" " alt="" coords="224,5,395,60"/>
+<area shape="poly" title=" " alt="" coords="176,30,210,30,210,35,176,35"/>
+</map>
+</div>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a0529b15fbf67d9854e35bd3cc3326149" name="a0529b15fbf67d9854e35bd3cc3326149"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0529b15fbf67d9854e35bd3cc3326149">&#9670;&#160;</a></span>_t</h2>
+<a id="a37ee9afda411f49c6a4f907e4d335f95" name="a37ee9afda411f49c6a4f907e4d335f95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37ee9afda411f49c6a4f907e4d335f95">&#9670;&#160;</a></span>_math</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -504,22 +465,20 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9">Utils::RequirementType</a> OurPaintDCM::Function::RequirementFunction::_t</td>
+          <td class="memname">std::shared_ptr&lt;::ErrorFunction&gt; OurPaintDCM::Function::RequirementFunction::_math</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Type of the geometric requirement. </p>
-
 </div>
 </div>
-<a id="af7462fc56069a6b0ec8e7bf9e752068e" name="af7462fc56069a6b0ec8e7bf9e752068e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af7462fc56069a6b0ec8e7bf9e752068e">&#9670;&#160;</a></span>_vars</h2>
+<a id="aa7761cb62d3a981af68cbcbc4f47f08f" name="aa7761cb62d3a981af68cbcbc4f47f08f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7761cb62d3a981af68cbcbc4f47f08f">&#9670;&#160;</a></span>_requirementId</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -528,22 +487,20 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="RequirementFunction_8h.html#abca8dfa78652bc61165262af4fade766">VAR</a>&gt; OurPaintDCM::Function::RequirementFunction::_vars</td>
+          <td class="memname">std::optional&lt;<a class="el" href="structOurPaintDCM_1_1Utils_1_1ID.html">Utils::ID</a>&gt; OurPaintDCM::Function::RequirementFunction::_requirementId</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>List of variable pointers. </p>
-
 </div>
 </div>
-<a id="a6cbe0c65247e9137840e2d2897cec1f9" name="a6cbe0c65247e9137840e2d2897cec1f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6cbe0c65247e9137840e2d2897cec1f9">&#9670;&#160;</a></span>_weight</h2>
+<a id="a575e92f0ffc1de3b65dd70a81484c492" name="a575e92f0ffc1de3b65dd70a81484c492"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a575e92f0ffc1de3b65dd70a81484c492">&#9670;&#160;</a></span>_type</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -552,17 +509,15 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double OurPaintDCM::Function::RequirementFunction::_weight = 1.0</td>
+          <td class="memname"><a class="el" href="namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9">Utils::RequirementType</a> OurPaintDCM::Function::RequirementFunction::_type</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Importance coefficient in the optimization system. </p>
 
 </div>
 </div>

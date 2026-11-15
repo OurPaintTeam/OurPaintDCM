@@ -1,0 +1,11 @@
+<map id="OurPaintDCM::Figures::Curve2D::validateData" name="OurPaintDCM::Figures::Curve2D::validateData">
+<area shape="rect" id="Node000001" title=" " alt="" coords="540,69,719,109"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Creates a figure from aggregated FigureData (may create nested points)." alt="" coords="257,5,492,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="535,68,454,48,455,43,536,63"/>
+<area shape="rect" id="Node000003" href="$structOurPaintDCM_1_1Figures_1_1Curve2D.html#ad3b97782ca1c6ced27f5d00fad3cb159" title=" " alt="" coords="293,69,456,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="526,92,456,92,456,87,526,87"/>
+<area shape="rect" id="Node000004" href="$structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#af1a43faa50e20ca3ebe7a3c75ceee954" title="Validate descriptor fields for the given figure type." alt="" coords="301,134,448,189"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="545,116,449,143,447,138,544,111"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1DCMManager.html#aac0ea08abe5a8da7d345aa2852e04515" title="Add a new geometric figure using descriptor." alt="" coords="5,141,209,181"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="288,164,210,164,210,159,288,159"/>
+</map>

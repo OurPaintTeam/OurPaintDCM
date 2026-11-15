@@ -5,5 +5,6 @@ var structOurPaintDCM_1_1Figures_1_1PointBase =
     [ "dimension", "structOurPaintDCM_1_1Figures_1_1PointBase.html#aee9effa43c902ead55ccbf7a12707032", null ],
     [ "operator[]", "structOurPaintDCM_1_1Figures_1_1PointBase.html#a5069908eb537376005fa62b2d0c013a1", null ],
     [ "operator[]", "structOurPaintDCM_1_1Figures_1_1PointBase.html#a95c55f63a84b529896320debf18ea292", null ],
+    [ "validate", "structOurPaintDCM_1_1Figures_1_1PointBase.html#a963a2cf6200ecc6b8c7b82e8e1772fa7", null ],
     [ "coords", "structOurPaintDCM_1_1Figures_1_1PointBase.html#a840f39824aacf49d36766ee634958325", null ]
 ];

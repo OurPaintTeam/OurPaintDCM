@@ -99,7 +99,8 @@ $(document).ready(function(){initNavTree('namespaceOurPaintDCM.html',''); initRe
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle"><div class="title">OurPaintDCM Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -122,6 +123,10 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1DCMManager.html">DCMManager</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main manager class for the DCM (Dynamic Constraint Manager) system.  <a href="classOurPaintDCM_1_1DCMManager.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOurPaintDCM_1_1PointTarget.html">PointTarget</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOurPaintDCM_1_1TargetSolveResult.html">TargetSolveResult</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -129,6 +134,13 @@ Typedefs</h2></td></tr>
 <tr class="separator:af9e84ec46bc80dac06fba234d9e1c39b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd4cdc184b619f8aacc478391259d3c7" id="r_abd4cdc184b619f8aacc478391259d3c7"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM.html#abd4cdc184b619f8aacc478391259d3c7">ComponentGraph</a> = Graph&lt; <a class="el" href="structOurPaintDCM_1_1Utils_1_1ID.html">Utils::ID</a>, <a class="el" href="structOurPaintDCM_1_1Utils_1_1ID.html">Utils::ID</a>, UndirectedPolicy, WeightedPolicy &gt;</td></tr>
 <tr class="separator:abd4cdc184b619f8aacc478391259d3c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ad151bf1d7804f784ece03d94afeaf435" id="r_ad151bf1d7804f784ece03d94afeaf435"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM.html#ad151bf1d7804f784ece03d94afeaf435">TargetPolicy</a> { <a class="el" href="namespaceOurPaintDCM.html#ad151bf1d7804f784ece03d94afeaf435aa942541eeaaaa1b2ab8cf0e43b5a03f9">Require</a>
+, <a class="el" href="namespaceOurPaintDCM.html#ad151bf1d7804f784ece03d94afeaf435afed8597cb02dc50d094035240fdad0b0">Prefer</a>
+ }</td></tr>
+<tr class="separator:ad151bf1d7804f784ece03d94afeaf435"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="abd4cdc184b619f8aacc478391259d3c7" name="abd4cdc184b619f8aacc478391259d3c7"></a>
@@ -156,6 +168,33 @@ Typedefs</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ad151bf1d7804f784ece03d94afeaf435" name="ad151bf1d7804f784ece03d94afeaf435"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad151bf1d7804f784ece03d94afeaf435">&#9670;&#160;</a></span>TargetPolicy</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="namespaceOurPaintDCM.html#ad151bf1d7804f784ece03d94afeaf435">OurPaintDCM::TargetPolicy</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ad151bf1d7804f784ece03d94afeaf435aa942541eeaaaa1b2ab8cf0e43b5a03f9" name="ad151bf1d7804f784ece03d94afeaf435aa942541eeaaaa1b2ab8cf0e43b5a03f9"></a>Require&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ad151bf1d7804f784ece03d94afeaf435afed8597cb02dc50d094035240fdad0b0" name="ad151bf1d7804f784ece03d94afeaf435afed8597cb02dc50d094035240fdad0b0"></a>Prefer&#160;</td><td class="fielddoc"></td></tr>
+</table>
 
 </div>
 </div>

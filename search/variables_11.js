@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['variableowners_0',['variableOwners',['../structOurPaintDCM_1_1DCMManager_1_1SolveCache_1_1Entry.html#a86fcaac048fb581bbede653592208b47',1,'OurPaintDCM::DCMManager::SolveCache::Entry']]],
-  ['version_1',['version',['../structOurPaintDCM_1_1DCMManager_1_1SolveCache_1_1Entry.html#afdef23b3b0a810ee68538cd487532193',1,'OurPaintDCM::DCMManager::SolveCache::Entry::version'],['../structOurPaintDCM_1_1DCMManager_1_1SolveCache.html#a3e802c3fe192b8cbbe31b77deb724901',1,'OurPaintDCM::DCMManager::SolveCache::version']]]
+  ['targetssatisfied_0',['targetsSatisfied',['../structOurPaintDCM_1_1TargetSolveResult.html#ab3b36f59304137ea67f1b963238ee0ac',1,'OurPaintDCM::TargetSolveResult']]],
+  ['task_1',['task',['../structOurPaintDCM_1_1DCMManager_1_1SolveCache_1_1Entry.html#a73068688c0e4dd61195bdd51c48a25fe',1,'OurPaintDCM::DCMManager::SolveCache::Entry']]],
+  ['type_2',['type',['../structOurPaintDCM_1_1Figures_1_1FigureEntry.html#ad1fc2feaa67825a2bad895c7bd0ab1ee',1,'OurPaintDCM::Figures::FigureEntry::type'],['../structOurPaintDCM_1_1System_1_1RequirementSystem_1_1RequirementEntry.html#ac8e1893b9b315e111dc2114619e6d8d1',1,'OurPaintDCM::System::RequirementSystem::RequirementEntry::type'],['../structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#abb27bc7f0fa9257e3e381cd391996b19',1,'OurPaintDCM::Utils::FigureDescriptor::type'],['../structOurPaintDCM_1_1Utils_1_1FigureUpdateDescriptor.html#ad6531cf36b6860f1cb93ae36386ec1e2',1,'OurPaintDCM::Utils::FigureUpdateDescriptor::type'],['../structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html#a9fc585064a047c0fa637151e5870eb1e',1,'OurPaintDCM::Utils::RequirementDescriptor::type']]]
 ];

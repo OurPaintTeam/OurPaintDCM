@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['verticalfunction_0',['VerticalFunction',['../classOurPaintDCM_1_1Function_1_1VerticalFunction.html',1,'OurPaintDCM::Function']]]
+  ['targetsolveresult_0',['TargetSolveResult',['../structOurPaintDCM_1_1TargetSolveResult.html',1,'OurPaintDCM']]]
 ];

@@ -1,0 +1,9 @@
+<map id="OurPaintDCM::Figures::PointBase::PointBase" name="OurPaintDCM::Figures::PointBase::PointBase">
+<area shape="rect" id="Node000001" title="Constructor with initialization values." alt="" coords="5,5,173,45"/>
+<area shape="rect" id="Node000002" href="$structOurPaintDCM_1_1Figures_1_1PointBase.html#a963a2cf6200ecc6b8c7b82e8e1772fa7" title=" " alt="" coords="221,5,384,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="174,23,208,23,208,28,174,28"/>
+<area shape="rect" id="Node000003" href="$namespaceOurPaintDCM_1_1Utils.html#ab147d3dfbb9b895aac22476639df5c7d" title=" " alt="" coords="432,5,587,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="384,23,418,23,418,28,384,28"/>
+<area shape="rect" id="Node000004" href="$namespaceOurPaintDCM_1_1Utils.html#a43757230430230c98e28b886fa685c32" title=" " alt="" coords="635,5,781,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="587,23,621,23,621,28,587,28"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Utils::RequirementDescriptor::circleArcTangent" name="OurPaintDCM::Utils::RequirementDescriptor::circleArcTangent">
+<area shape="rect" id="Node000001" title="Either object may be a circle or an arc; arc spans do not restrict contact." alt="" coords="5,5,187,60"/>
+<area shape="rect" id="Node000002" href="$structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html#abe59e63b860f2b9e9fcde57c8607e97a" title="Either object may be a circle or an arc; containment follows object order." alt="" coords="235,5,416,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,30,221,30,221,35,187,35"/>
+</map>

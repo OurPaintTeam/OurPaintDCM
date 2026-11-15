@@ -1,5 +1,7 @@
 <map id="OurPaintDCM::Utils::CircleUpdateDescriptor::hasRadiusUpdate" name="OurPaintDCM::Utils::CircleUpdateDescriptor::hasRadiusUpdate">
-<area shape="rect" id="Node000001" title=" " alt="" coords="257,5,439,60"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a7121e326733ecb077bf826735d65cf1f" title=" " alt="" coords="5,13,209,53"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="243,35,209,35,209,30,243,30"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="257,30,439,85"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a7121e326733ecb077bf826735d65cf1f" title=" " alt="" coords="5,5,209,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="243,46,209,42,210,36,244,41"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#ac5f54dee9e4c4d772df2263940482837" title=" " alt="" coords="5,69,209,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="244,74,210,78,209,73,243,69"/>
 </map>

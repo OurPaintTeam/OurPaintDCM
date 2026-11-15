@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Utils::RequirementDescriptor::circleDiameter" name="OurPaintDCM::Utils::RequirementDescriptor::circleDiameter">
+<area shape="rect" id="Node000001" title="The original diameter is stored; its residual is measured in radius units." alt="" coords="219,5,400,60"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a26e77bff03890c5c550edb0ca83caa7c" title=" " alt="" coords="5,5,171,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,35,171,35,171,30,205,30"/>
+</map>

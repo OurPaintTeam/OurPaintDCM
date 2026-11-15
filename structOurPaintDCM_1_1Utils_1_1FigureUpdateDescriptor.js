@@ -5,6 +5,7 @@ var structOurPaintDCM_1_1Utils_1_1FigureUpdateDescriptor =
     [ "circle", "structOurPaintDCM_1_1Utils_1_1FigureUpdateDescriptor.html#aa2f44c5209b480683350a6b5f59078de", null ],
     [ "circleCenter", "structOurPaintDCM_1_1Utils_1_1FigureUpdateDescriptor.html#a009f10b0b7f6d5587081abeae4046c1b", null ],
     [ "circleRadius", "structOurPaintDCM_1_1Utils_1_1FigureUpdateDescriptor.html#a0b256b06145fd85d0a1af1e93e5f4914", null ],
+    [ "curve", "structOurPaintDCM_1_1Utils_1_1FigureUpdateDescriptor.html#a87b6f78954622662394c14eb1a9f1d3e", null ],
     [ "line", "structOurPaintDCM_1_1Utils_1_1FigureUpdateDescriptor.html#af129409b9996461082788c0129428053", null ],
     [ "point", "structOurPaintDCM_1_1Utils_1_1FigureUpdateDescriptor.html#a1920fa903ee603d3f9be0b0e725db020", null ],
     [ "coords", "structOurPaintDCM_1_1Utils_1_1FigureUpdateDescriptor.html#a1fee4c663d70ac589a5236019f00decf", null ],

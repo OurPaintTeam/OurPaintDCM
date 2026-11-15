@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Utils::RequirementDescriptor::pointArcDist" name="OurPaintDCM::Utils::RequirementDescriptor::pointArcDist">
+<area shape="rect" id="Node000001" title="Signed gap to the supporting circle; the arc&#39;s angular sector is not restricted." alt="" coords="219,5,400,60"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#abdec8ba9cfb8eb7a2b086fbefcc6e852" title=" " alt="" coords="5,5,171,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,35,171,35,171,30,205,30"/>
+</map>

@@ -5,6 +5,8 @@ var searchData=
   ['debugpointpoolsize_2',['debugPointPoolSize',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac1b5b11799a232b5f652be6ff3d0a239',1,'OurPaintDCM::Figures::GeometryStorage']]],
   ['deleteelement_3',['deleteElement',['../classOurPaintDCM_1_1Requirements_1_1Components.html#a2ef7cf4a32a3b67d1ba2d6096b19ce08',1,'OurPaintDCM::Requirements::Components']]],
   ['dependentsofpoint_4',['dependentsOfPoint',['../classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a7745196f4951811fef1e7e4c6b1e8bc1',1,'OurPaintDCM::Figures::GeometryDependencyIndex']]],
-  ['diagnose_5',['diagnose',['../classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a9c472d3adb21533117334ff5e2257ab9',1,'OurPaintDCM::System::RequirementFunctionSystem']]],
-  ['dimension_6',['dimension',['../structOurPaintDCM_1_1Figures_1_1PointBase.html#aee9effa43c902ead55ccbf7a12707032',1,'OurPaintDCM::Figures::PointBase']]]
+  ['diagnose_5',['diagnose',['../classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a8f96c81bb276723a0af91a99aa62806e',1,'OurPaintDCM::System::RequirementFunctionSystem']]],
+  ['diagnosedetailed_6',['diagnosedetailed',['../classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#ad290244ff6adac1d6c6edf89998fdd2d',1,'OurPaintDCM::System::RequirementFunctionSystem::diagnoseDetailed()'],['../classOurPaintDCM_1_1System_1_1RequirementSystem.html#a3394f69b42c0235746c809f937c20994',1,'OurPaintDCM::System::RequirementSystem::diagnoseDetailed()']]],
+  ['diagnosewithvariables_7',['diagnoseWithVariables',['../classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#af41864537cc4cee1e025bfa176cc4d5d',1,'OurPaintDCM::System::RequirementFunctionSystem']]],
+  ['dimension_8',['dimension',['../structOurPaintDCM_1_1Figures_1_1PointBase.html#aee9effa43c902ead55ccbf7a12707032',1,'OurPaintDCM::Figures::PointBase']]]
 ];

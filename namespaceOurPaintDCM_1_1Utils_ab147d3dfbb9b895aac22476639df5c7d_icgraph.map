@@ -1,0 +1,27 @@
+<map id="OurPaintDCM::Utils::requireFiniteValues" name="OurPaintDCM::Utils::requireFiniteValues">
+<area shape="rect" id="Node000001" title=" " alt="" coords="793,312,948,352"/>
+<area shape="rect" id="Node000002" href="$structOurPaintDCM_1_1Figures_1_1PointBase.html#a963a2cf6200ecc6b8c7b82e8e1772fa7" title=" " alt="" coords="575,133,737,173"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="833,305,680,176,683,172,837,301"/>
+<area shape="rect" id="Node000008" href="$structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#af1a43faa50e20ca3ebe7a3c75ceee954" title="Validate descriptor fields for the given figure type." alt="" coords="330,377,477,431"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="786,358,746,367,603,388,477,401,477,396,602,383,745,361,785,353"/>
+<area shape="rect" id="Node000010" href="$structOurPaintDCM_1_1Figures_1_1Curve2D.html#aa71c132ba3c4d05a9dc82a5ddd4d5d9d" title=" " alt="" coords="567,312,745,352"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="779,335,746,335,746,329,779,329"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac5445f4f2f67cd4973d9d78f8455ae5c" title="Creates an arc through two points with a center point." alt="" coords="296,69,511,109"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="562,132,482,112,483,107,564,127"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1db8de13e90373f4a63d04cf04c97455" title="Creates a circle with given center and radius." alt="" coords="288,197,519,237"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="564,179,483,200,482,195,562,174"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1553e7abc4def94e41466a6aae0e410c" title="Creates a line through two existing points." alt="" coords="293,5,514,45"/>
+<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="619,126,572,92,517,60,488,48,490,43,520,55,575,87,622,122"/>
+<area shape="rect" id="Node000007" href="$structOurPaintDCM_1_1Figures_1_1PointBase.html#acbba67373d49a3207d6e8b450abfd7d7" title="Constructor with initialization values." alt="" coords="319,133,487,173"/>
+<area shape="poly" id="edge8_Node000002_Node000007" title=" " alt="" coords="561,156,487,156,487,151,561,151"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Creates a figure from aggregated FigureData (may create nested points)." alt="" coords="5,133,240,173"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="302,115,211,136,210,131,301,110"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="301,197,210,176,211,171,302,192"/>
+<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="309,52,289,60,215,98,154,136,152,131,212,93,287,55,307,47"/>
+<area shape="rect" id="Node000009" href="$classOurPaintDCM_1_1DCMManager.html#aac0ea08abe5a8da7d345aa2852e04515" title="Add a new geometric figure using descriptor." alt="" coords="21,384,225,424"/>
+<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="316,407,225,407,225,401,316,401"/>
+<area shape="poly" id="edge12_Node000010_Node000004" title=" " alt="" coords="556,311,518,303,453,290,401,283,350,273,287,252,212,215,151,176,154,171,214,210,289,247,352,268,402,278,454,285,519,297,557,306"/>
+<area shape="poly" id="edge14_Node000010_Node000008" title=" " alt="" coords="573,358,478,386,476,381,571,353"/>
+<area shape="rect" id="Node000011" href="$structOurPaintDCM_1_1Figures_1_1Curve2D.html#ad3b97782ca1c6ced27f5d00fad3cb159" title=" " alt="" coords="322,312,485,352"/>
+<area shape="poly" id="edge13_Node000010_Node000011" title=" " alt="" coords="553,335,485,335,485,329,553,329"/>
+</map>

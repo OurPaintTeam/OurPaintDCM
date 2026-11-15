@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['kempty_0',['kEmpty',['../classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a0cf4afd6afeca57159e05f0b37cf5cb6',1,'OurPaintDCM::Figures::GeometryDependencyIndex']]]
+  ['hasfreevariables_0',['hasFreeVariables',['../structOurPaintDCM_1_1DCMManager_1_1SolveCache_1_1Entry.html#ac85067d24c4571d06bf40e11d76f16a0',1,'OurPaintDCM::DCMManager::SolveCache::Entry']]],
+  ['hasfunctions_1',['hasFunctions',['../structOurPaintDCM_1_1DCMManager_1_1SolveCache_1_1Entry.html#a421a5bea4088fbd7650cd8b52ed3577f',1,'OurPaintDCM::DCMManager::SolveCache::Entry']]]
 ];

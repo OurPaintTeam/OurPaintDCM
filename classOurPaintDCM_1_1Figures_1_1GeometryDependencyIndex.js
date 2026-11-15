@@ -7,6 +7,7 @@ var classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex =
     [ "hasDependents", "classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a2f91a2990898c7303f1bfee504eb6196", null ],
     [ "linkArc", "classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a094eeac5da337ca900de5da72df8b4e6", null ],
     [ "linkCircle", "classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a056f7ef3c683c92268fdb7a3c8b7f505", null ],
+    [ "linkCurve", "classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a84dcabe2248efe35442791b0282829f9", null ],
     [ "linkLine", "classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#aa76a3d7d0cc59f28df08587706ac1fc0", null ],
     [ "pointsForFigure", "classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a01ff193f0ac013d2e0e0356c14d4f026", null ],
     [ "pushUnique", "classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a718506d0d6f415a83efc2ac02ef688d0", null ],

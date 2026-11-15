@@ -5,6 +5,5 @@ var searchData=
   ['figureentry_2',['FigureEntry',['../structOurPaintDCM_1_1Figures_1_1FigureEntry.html',1,'OurPaintDCM::Figures']]],
   ['figureref_3',['FigureRef',['../structOurPaintDCM_1_1Figures_1_1FigureRef.html',1,'OurPaintDCM::Figures']]],
   ['figureupdatedescriptor_4',['FigureUpdateDescriptor',['../structOurPaintDCM_1_1Utils_1_1FigureUpdateDescriptor.html',1,'OurPaintDCM::Utils']]],
-  ['fixcoordinatefunction_5',['FixCoordinateFunction',['../classOurPaintDCM_1_1Function_1_1FixCoordinateFunction.html',1,'OurPaintDCM::Function']]],
-  ['fixedgeometry_6',['FixedGeometry',['../structOurPaintDCM_1_1DCMManager_1_1FixedGeometry.html',1,'OurPaintDCM::DCMManager']]]
+  ['fixedgeometry_5',['FixedGeometry',['../structOurPaintDCM_1_1DCMManager_1_1FixedGeometry.html',1,'OurPaintDCM::DCMManager']]]
 ];

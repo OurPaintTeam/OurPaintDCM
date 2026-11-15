@@ -1,0 +1,15 @@
+<map id="OurPaintDCM::Figures::PointBase::validate" name="OurPaintDCM::Figures::PointBase::validate">
+<area shape="rect" id="Node000001" title=" " alt="" coords="567,101,729,141"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac5445f4f2f67cd4973d9d78f8455ae5c" title="Creates an arc through two points with a center point." alt="" coords="296,5,511,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="598,97,518,60,483,48,485,43,520,55,600,93"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1db8de13e90373f4a63d04cf04c97455" title="Creates a circle with given center and radius." alt="" coords="288,69,519,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="553,112,518,107,519,102,553,106"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1553e7abc4def94e41466a6aae0e410c" title="Creates a line through two existing points." alt="" coords="293,133,514,173"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="553,136,514,142,514,136,552,131"/>
+<area shape="rect" id="Node000006" href="$structOurPaintDCM_1_1Figures_1_1PointBase.html#acbba67373d49a3207d6e8b450abfd7d7" title="Constructor with initialization values." alt="" coords="319,197,487,237"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="600,150,520,188,485,200,483,195,518,183,598,145"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Creates a figure from aggregated FigureData (may create nested points)." alt="" coords="5,69,240,109"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="302,51,211,72,210,67,301,46"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="274,92,240,92,240,87,274,87"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="301,133,210,112,211,107,302,128"/>
+</map>

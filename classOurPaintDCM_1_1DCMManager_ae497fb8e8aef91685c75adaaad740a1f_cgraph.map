@@ -1,9 +1,19 @@
 <map id="OurPaintDCM::DCMManager::addRequirement" name="OurPaintDCM::DCMManager::addRequirement">
-<area shape="rect" id="Node000001" title="Add a new requirement using descriptor." alt="" coords="5,85,209,125"/>
-<area shape="rect" id="Node000002" href="$structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html#a99f0e928eebfacb51d696d0f76941b6e" title="Validate that descriptor has correct number of objects for its type." alt="" coords="257,5,439,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="174,82,243,61,245,66,176,87"/>
-<area shape="rect" id="Node000003" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a783b0f201624031dd0cd387bb6c52bf9" title="Get X coordinate." alt="" coords="267,85,429,125"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="210,102,253,102,253,107,210,107"/>
-<area shape="rect" id="Node000004" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a7c02a5b6825f0d56942b49b68a6fd33c" title="Get Y coordinate." alt="" coords="267,149,429,189"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="184,122,260,143,258,148,183,127"/>
+<area shape="rect" id="Node000001" title="Add a new requirement using descriptor." alt="" coords="5,96,209,136"/>
+<area shape="rect" id="Node000002" href="$structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html#a99f0e928eebfacb51d696d0f76941b6e" title="Validate that descriptor has correct number of objects for its type." alt="" coords="257,17,439,71"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="174,94,243,73,245,78,176,99"/>
+<area shape="rect" id="Node000007" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a783b0f201624031dd0cd387bb6c52bf9" title="Get X coordinate." alt="" coords="267,96,429,136"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="210,113,253,113,253,119,210,119"/>
+<area shape="rect" id="Node000008" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a7c02a5b6825f0d56942b49b68a6fd33c" title="Get Y coordinate." alt="" coords="267,160,429,200"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="184,134,260,154,258,159,183,139"/>
+<area shape="rect" id="Node000003" href="$namespaceOurPaintDCM_1_1Utils.html#a64c2112258e35049b903035ee8a57995" title=" " alt="" coords="487,24,721,64"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="439,41,473,41,473,47,439,47"/>
+<area shape="rect" id="Node000004" href="$namespaceOurPaintDCM_1_1Utils.html#a43757230430230c98e28b886fa685c32" title=" " alt="" coords="989,24,1136,64"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="691,21,769,9,855,3,942,9,986,18,985,23,941,15,855,8,770,15,692,27"/>
+<area shape="rect" id="Node000005" href="$namespaceOurPaintDCM_1_1Utils.html#a7d6582360f3f1a566385ae9ad42c45ea" title=" " alt="" coords="775,24,936,64"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="722,41,761,41,761,47,722,47"/>
+<area shape="rect" id="Node000006" href="$namespaceOurPaintDCM_1_1Utils.html#a8d48225b0556798ea39a309eaf5af05b" title=" " alt="" coords="769,88,941,128"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="684,62,764,82,763,87,683,67"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="936,41,976,41,976,47,936,47"/>
+<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="920,86,984,66,985,71,922,91"/>
 </map>

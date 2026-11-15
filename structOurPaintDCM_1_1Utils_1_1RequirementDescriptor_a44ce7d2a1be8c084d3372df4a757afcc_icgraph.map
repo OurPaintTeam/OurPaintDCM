@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Utils::RequirementDescriptor::lineLineMidpoint" name="OurPaintDCM::Utils::RequirementDescriptor::lineLineMidpoint">
+<area shape="rect" id="Node000001" title="The two line midpoints coincide; collapsed lines are allowed." alt="" coords="219,5,400,60"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#af6a679a9af232e3fb475b5aa4afa5adb" title=" " alt="" coords="5,5,171,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,35,171,35,171,30,205,30"/>
+</map>

@@ -1,5 +1,7 @@
 <map id="OurPaintDCM::DCMManager::validateCircleUpdate" name="OurPaintDCM::DCMManager::validateCircleUpdate">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,13,209,53"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,53,209,93"/>
 <area shape="rect" id="Node000002" href="$structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor.html#a4cf1b51469fad62229152cb70eb550c7" title=" " alt="" coords="257,5,439,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,30,244,30,244,35,210,35"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,53,244,47,244,53,210,58"/>
+<area shape="rect" id="Node000003" href="$structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor.html#ab63bd0bce021f419241c6c2578e021c9" title=" " alt="" coords="257,84,439,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="210,86,244,92,244,97,209,92"/>
 </map>

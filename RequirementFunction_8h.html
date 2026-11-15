@@ -99,41 +99,41 @@ $(document).ready(function(){initNavTree('RequirementFunction_8h.html',''); init
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle"><div class="title">RequirementFunction.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;Eigen/Dense&gt;</code><br />
-<code>#include &lt;Eigen/Sparse&gt;</code><br />
-<code>#include &lt;vector&gt;</code><br />
+<div class="textblock"><code>#include &quot;core/ErrorFunction.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="Enums_8h_source.html">Enums.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="ID_8h_source.html">ID.h</a>&quot;</code><br />
+<code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;optional&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for RequirementFunction.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="RequirementFunction_8h__incl.png" border="0" usemap="#aheaders_2functions_2RequirementFunction_8h" alt=""/></div>
 <map name="aheaders_2functions_2RequirementFunction_8h" id="aheaders_2functions_2RequirementFunction_8h">
-<area shape="rect" title=" " alt="" coords="182,5,409,45"/>
-<area shape="rect" title=" " alt="" coords="5,93,108,119"/>
-<area shape="poly" title=" " alt="" coords="239,48,105,92,104,87,237,43"/>
-<area shape="rect" title=" " alt="" coords="133,93,239,119"/>
-<area shape="poly" title=" " alt="" coords="270,48,215,87,212,83,267,43"/>
-<area shape="rect" title=" " alt="" coords="264,93,327,119"/>
-<area shape="poly" title=" " alt="" coords="298,46,298,79,293,79,293,46"/>
-<area shape="rect" href="Enums_8h.html" title=" " alt="" coords="351,93,429,119"/>
-<area shape="poly" title=" " alt="" coords="320,43,367,82,363,86,317,48"/>
-<area shape="rect" href="ID_8h.html" title=" " alt="" coords="526,93,574,119"/>
-<area shape="poly" title=" " alt="" coords="357,43,513,91,512,96,356,48"/>
-<area shape="rect" title=" " alt="" coords="250,167,317,192"/>
-<area shape="poly" title=" " alt="" coords="374,121,314,161,311,157,371,116"/>
-<area shape="rect" title=" " alt="" coords="341,167,439,192"/>
-<area shape="poly" title=" " alt="" coords="393,119,393,153,387,153,387,119"/>
-<area shape="rect" title=" " alt="" coords="463,167,533,192"/>
-<area shape="poly" title=" " alt="" coords="544,121,517,157,512,154,539,117"/>
-<area shape="rect" title=" " alt="" coords="557,167,644,192"/>
-<area shape="poly" title=" " alt="" coords="561,117,587,154,582,157,556,121"/>
-<area shape="rect" title=" " alt="" coords="669,167,749,192"/>
-<area shape="poly" title=" " alt="" coords="575,116,671,158,669,163,573,121"/>
+<area shape="rect" title=" " alt="" coords="207,5,433,45"/>
+<area shape="rect" title=" " alt="" coords="5,93,157,119"/>
+<area shape="poly" title=" " alt="" coords="264,48,130,92,128,87,262,43"/>
+<area shape="rect" href="Enums_8h.html" title=" " alt="" coords="182,93,261,119"/>
+<area shape="poly" title=" " alt="" coords="298,48,248,87,245,82,294,43"/>
+<area shape="rect" href="ID_8h.html" title=" " alt="" coords="296,93,344,119"/>
+<area shape="poly" title=" " alt="" coords="323,46,323,79,317,79,317,46"/>
+<area shape="rect" title=" " alt="" coords="368,93,445,119"/>
+<area shape="poly" title=" " alt="" coords="343,44,385,82,382,86,339,48"/>
+<area shape="rect" title=" " alt="" coords="469,93,544,119"/>
+<area shape="poly" title=" " alt="" coords="366,43,468,85,466,90,364,48"/>
+<area shape="rect" title=" " alt="" coords="72,167,139,192"/>
+<area shape="poly" title=" " alt="" coords="204,121,137,162,135,157,201,116"/>
+<area shape="rect" title=" " alt="" coords="163,167,261,192"/>
+<area shape="poly" title=" " alt="" coords="222,119,218,154,213,153,217,119"/>
+<area shape="rect" title=" " alt="" coords="285,167,355,192"/>
+<area shape="poly" title=" " alt="" coords="323,119,323,153,317,153,317,119"/>
+<area shape="rect" title=" " alt="" coords="379,167,466,192"/>
+<area shape="poly" title=" " alt="" coords="338,116,396,156,393,161,335,121"/>
+<area shape="rect" title=" " alt="" coords="491,167,571,192"/>
+<area shape="poly" title=" " alt="" coords="345,113,485,160,483,165,343,118"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -141,13 +141,11 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="RequirementFunction_8h__dep__incl.png" border="0" usemap="#aheaders_2functions_2RequirementFunction_8hdep" alt=""/></div>
 <map name="aheaders_2functions_2RequirementFunction_8hdep" id="aheaders_2functions_2RequirementFunction_8hdep">
-<area shape="rect" title=" " alt="" coords="347,5,574,45"/>
+<area shape="rect" title=" " alt="" coords="225,5,451,45"/>
 <area shape="rect" href="RequirementFunctionFactory_8h.html" title=" " alt="" coords="102,93,329,133"/>
-<area shape="poly" title=" " alt="" coords="395,52,270,96,268,91,393,47"/>
+<area shape="poly" title=" " alt="" coords="301,55,244,95,241,91,298,51"/>
 <area shape="rect" href="RequirementFunctionSystem_8h.html" title=" " alt="" coords="353,93,568,133"/>
-<area shape="poly" title=" " alt="" coords="463,59,463,93,458,93,458,59"/>
-<area shape="rect" href="RequirementFunction_8cpp.html" title=" " alt="" coords="592,93,785,133"/>
-<area shape="poly" title=" " alt="" coords="525,48,640,91,638,96,523,53"/>
+<area shape="poly" title=" " alt="" coords="378,51,435,91,432,95,375,55"/>
 <area shape="rect" href="RequirementSystem_8h.html" title=" " alt="" coords="223,181,437,221"/>
 <area shape="poly" title=" " alt="" coords="253,140,306,179,303,183,250,144"/>
 <area shape="rect" href="RequirementFunctionFactory_8cpp.html" title=" " alt="" coords="5,181,199,221"/>
@@ -169,46 +167,6 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html">OurPaintDCM::Function::RequirementFunction</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract base class for all geometric constraint functions.  <a href="classOurPaintDCM_1_1Function_1_1RequirementFunction.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1PointLineDistanceFunction.html">OurPaintDCM::Function::PointLineDistanceFunction</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fixed distance between a point and a line segment.  <a href="classOurPaintDCM_1_1Function_1_1PointLineDistanceFunction.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1PointOnLineFunction.html">OurPaintDCM::Function::PointOnLineFunction</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Point must lie exactly on a line segment (distance == 0).  <a href="classOurPaintDCM_1_1Function_1_1PointOnLineFunction.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1PointPointDistanceFunction.html">OurPaintDCM::Function::PointPointDistanceFunction</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fixed distance between two points.  <a href="classOurPaintDCM_1_1Function_1_1PointPointDistanceFunction.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1PointOnPointFunction.html">OurPaintDCM::Function::PointOnPointFunction</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Two points must coincide (distance == 0).  <a href="classOurPaintDCM_1_1Function_1_1PointOnPointFunction.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1LineCircleDistanceFunction.html">OurPaintDCM::Function::LineCircleDistanceFunction</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fixed distance between a line segment and a circle.  <a href="classOurPaintDCM_1_1Function_1_1LineCircleDistanceFunction.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1LineOnCircleFunction.html">OurPaintDCM::Function::LineOnCircleFunction</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Both endpoints of a line must lie on a circle.  <a href="classOurPaintDCM_1_1Function_1_1LineOnCircleFunction.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1LineLineParallelFunction.html">OurPaintDCM::Function::LineLineParallelFunction</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Two line segments must be parallel.  <a href="classOurPaintDCM_1_1Function_1_1LineLineParallelFunction.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1LineLinePerpendicularFunction.html">OurPaintDCM::Function::LineLinePerpendicularFunction</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Two line segments must be perpendicular.  <a href="classOurPaintDCM_1_1Function_1_1LineLinePerpendicularFunction.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1LineLineAngleFunction.html">OurPaintDCM::Function::LineLineAngleFunction</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fixed angle between two line segments.  <a href="classOurPaintDCM_1_1Function_1_1LineLineAngleFunction.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1VerticalFunction.html">OurPaintDCM::Function::VerticalFunction</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Line must be vertical (aligned with the Y-axis).  <a href="classOurPaintDCM_1_1Function_1_1VerticalFunction.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1HorizontalFunction.html">OurPaintDCM::Function::HorizontalFunction</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Line must be horizontal (aligned with the X-axis).  <a href="classOurPaintDCM_1_1Function_1_1HorizontalFunction.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1ArcCenterOnPerpendicularFunction.html">OurPaintDCM::Function::ArcCenterOnPerpendicularFunction</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constraint used for arcs: the arc center lies on a perpendicular bisector.  <a href="classOurPaintDCM_1_1Function_1_1ArcCenterOnPerpendicularFunction.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOurPaintDCM_1_1Function_1_1FixCoordinateFunction.html">OurPaintDCM::Function::FixCoordinateFunction</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fixes a single coordinate at a target value.  <a href="classOurPaintDCM_1_1Function_1_1FixCoordinateFunction.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -218,20 +176,20 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespaceOurPaintDCM_1_1Function" id="r_namespaceOurPaintDCM_1_1Function"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOurPaintDCM_1_1Function.html">OurPaintDCM::Function</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:abca8dfa78652bc61165262af4fade766" id="r_abca8dfa78652bc61165262af4fade766"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="RequirementFunction_8h.html#abca8dfa78652bc61165262af4fade766">VAR</a>&#160;&#160;&#160;double*</td></tr>
-<tr class="separator:abca8dfa78652bc61165262af4fade766"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ae61d1f6bb7d742deea219e333d97ef70" id="r_ae61d1f6bb7d742deea219e333d97ef70"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="RequirementFunction_8h.html#ae61d1f6bb7d742deea219e333d97ef70">VAR</a> = double *</td></tr>
+<tr class="separator:ae61d1f6bb7d742deea219e333d97ef70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="abca8dfa78652bc61165262af4fade766" name="abca8dfa78652bc61165262af4fade766"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abca8dfa78652bc61165262af4fade766">&#9670;&#160;</a></span>VAR</h2>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="ae61d1f6bb7d742deea219e333d97ef70" name="ae61d1f6bb7d742deea219e333d97ef70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae61d1f6bb7d742deea219e333d97ef70">&#9670;&#160;</a></span>VAR</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VAR&#160;&#160;&#160;double*</td>
+          <td class="memname">using <a class="el" href="RequirementFunction_8h.html#ae61d1f6bb7d742deea219e333d97ef70">VAR</a> =  double*</td>
         </tr>
       </table>
 </div><div class="memdoc">

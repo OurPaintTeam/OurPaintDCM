@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Utils::RequirementDescriptor::pointPointVertical" name="OurPaintDCM::Utils::RequirementDescriptor::pointPointVertical">
+<area shape="rect" id="Node000001" title="Vertical alignment of two points: x1 == x2; coincident points are allowed." alt="" coords="223,5,404,60"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a9376a659ff4ced079f7e7d90f43f9b9f" title=" " alt="" coords="5,5,175,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,35,175,35,175,30,209,30"/>
+</map>
