@@ -37,7 +37,7 @@ struct RequirementDescriptor {
     std::optional<ID> id;              ///< ID of the requirement (set after creation)
     RequirementType type;              ///< Type of the requirement
     std::vector<ID> objectIds;         ///< IDs of objects involved
-    std::optional<double> param;       ///< Optional parameter (distance, angle, etc.)
+    std::optional<double> param;       ///< Optional parameter (distance, angle in degrees, etc.)
     double weight = 1.0;               ///< Finite non-negative residual multiplier; objective uses (weight * residual)^2.
                                        ///< Fixed and point-coincidence requirements use 1 (active) or 0 (disabled).
 
@@ -130,7 +130,9 @@ struct RequirementDescriptor {
     }
 
     /// @brief Create angle between lines descriptor
-    /// @param angle Angle in radians.
+    /// Shared endpoints (including pointOnPoint aliases) define the vertex; rays point away from it.
+    /// Without a shared endpoint, directions follow each line's p1 -> p2 order.
+    /// @param angle Angle in degrees, in [0, 180].
     static RequirementDescriptor lineLineAngle(ID l1Id, ID l2Id, double angle) {
         return {RequirementType::ET_LINELINEANGLE, {l1Id, l2Id}, angle};
     }
@@ -196,7 +198,7 @@ struct RequirementDescriptor {
         return {RequirementType::ET_ARCRADIUS, {arcId}, radius};
     }
 
-    /// Counterclockwise sweep from the first endpoint to the second, in (0, 2*pi) radians.
+    /// Counterclockwise sweep from the first endpoint to the second, in (0, 360) degrees.
     static RequirementDescriptor arcAngle(ID arcId, double angle) {
         return {RequirementType::ET_ARCANGLE, {arcId}, angle};
     }

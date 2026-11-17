@@ -120,7 +120,7 @@ TEST_F(RequirementFunctionFactoryTest, CreateLineLinePerpendicular) {
 }
 
 TEST_F(RequirementFunctionFactoryTest, CreateLineLineAngle) {
-    auto func = RequirementFunctionFactory::createLineLineAngle(line1, line2, 1.57);
+    auto func = RequirementFunctionFactory::createLineLineAngle(line1, line2, 90.0);
     ASSERT_NE(func, nullptr);
     EXPECT_EQ(func->getVarCount(), 8);
 }

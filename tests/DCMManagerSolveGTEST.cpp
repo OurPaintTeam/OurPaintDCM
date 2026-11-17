@@ -63,7 +63,8 @@ TEST(DCMManagerStationarySolveTest, AnglesSolveFromExactlyParallelAndAntiparalle
     const double pi = std::acos(-1.0);
     for (const auto mode : {SolveMode::GLOBAL, SolveMode::LOCAL, SolveMode::DRAG}) {
         for (const double initialSign : {-1.0, 1.0}) {
-            for (const double target : {0.0, 1.0, pi / 2, pi}) {
+            for (const double targetDegrees : {0.0, 45.0, 90.0, 135.0, 180.0}) {
+                const double target = targetDegrees * pi / 180.0;
                 for (const bool sharedEndpoint : {false, true}) {
                     SCOPED_TRACE(static_cast<int>(mode));
                     SCOPED_TRACE(initialSign);
@@ -77,7 +78,7 @@ TEST(DCMManagerStationarySolveTest, AnglesSolveFromExactlyParallelAndAntiparalle
                     const auto fixed = manager.addFigure(FigureDescriptor::line(origin, a));
                     const auto free = manager.addFigure(FigureDescriptor::line(otherOrigin, b));
                     manager.addRequirement(RequirementDescriptor::fixLine(fixed));
-                    manager.addRequirement(RequirementDescriptor::lineLineAngle(fixed, free, target));
+                    manager.addRequirement(RequirementDescriptor::lineLineAngle(fixed, free, targetDegrees));
                     manager.setSolveMode(mode);
                     const auto component = manager.getComponentForFigure(free);
                     ASSERT_TRUE(component);
@@ -809,7 +810,7 @@ TEST(DCMManagerSharedPointSolveTest, LineConstraintsSolveWithOneSharedEndpoint) 
                     manager.addRequirement(RequirementDescriptor::lineLinePerpendicular(first, second));
                     break;
                 case Constraint::Angle:
-                    manager.addRequirement(RequirementDescriptor::lineLineAngle(first, second, targetAngle));
+                    manager.addRequirement(RequirementDescriptor::lineLineAngle(first, second, 60.0));
                     break;
             }
 
@@ -836,7 +837,7 @@ TEST(DCMManagerSharedPointSolveTest, LineConstraintsSolveWithOneSharedEndpoint) 
             } else if (constraint == Constraint::Perpendicular) {
                 EXPECT_NEAR(dx, 0.0, 1e-6);
             } else {
-                EXPECT_NEAR(std::acos(dx / std::hypot(dx, dy)), targetAngle, 1e-6);
+                EXPECT_NEAR(std::acos(-dx / std::hypot(dx, dy)), targetAngle, 1e-6);
             }
         }
     }
@@ -861,7 +862,7 @@ TEST(DCMManagerSharedPointSolveTest, SeveralLinesCanSatisfyDifferentConstraintsA
     }
     manager.addRequirement(RequirementDescriptor::lineLineParallel(base, parallel));
     manager.addRequirement(RequirementDescriptor::lineLinePerpendicular(base, perpendicular));
-    manager.addRequirement(RequirementDescriptor::lineLineAngle(base, angle, targetAngle));
+    manager.addRequirement(RequirementDescriptor::lineLineAngle(base, angle, 60.0));
 
     ASSERT_TRUE(manager.solve());
     const auto origin = manager.getFigure(shared);
@@ -878,7 +879,7 @@ TEST(DCMManagerSharedPointSolveTest, SeveralLinesCanSatisfyDifferentConstraintsA
     const auto [rx, ry] = delta(r);
     EXPECT_NEAR(py, 0.0, 1e-6);
     EXPECT_NEAR(qx, 0.0, 1e-6);
-    EXPECT_NEAR(std::acos(rx / std::hypot(rx, ry)), targetAngle, 1e-6);
+    EXPECT_NEAR(std::acos(-rx / std::hypot(rx, ry)), targetAngle, 1e-6);
     for (const auto [dx, dy] : {std::pair{px, py}, std::pair{qx, qy}, std::pair{rx, ry}}) {
         EXPECT_NEAR(std::hypot(dx, dy), 5.0, 1e-6);
     }
@@ -895,7 +896,7 @@ TEST(DCMManagerSharedPointSolveTest, JacobianIncludesEveryUseOfSharedCoordinates
     const auto second = manager.addFigure(FigureDescriptor::line(shared, c));
     manager.addRequirement(RequirementDescriptor::lineLineParallel(first, second));
     manager.addRequirement(RequirementDescriptor::lineLinePerpendicular(first, second));
-    manager.addRequirement(RequirementDescriptor::lineLineAngle(first, second, 0.75));
+    manager.addRequirement(RequirementDescriptor::lineLineAngle(first, second, 45.0));
 
     const auto& system = manager.getRequirementSystem();
     const auto vars = system.getAllVars();

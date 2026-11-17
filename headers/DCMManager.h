@@ -258,7 +258,7 @@ public:
     /**
      * @brief Update requirement parameter value.
      * @param reqId ID of the requirement.
-     * @param newParam New parameter value.
+     * @param newParam New parameter value; angles are in degrees.
      * @throws std::runtime_error if requirement not found or has no parameter.
      */
     void updateRequirementParam(Utils::ID reqId, double newParam);

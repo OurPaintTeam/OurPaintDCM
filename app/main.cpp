@@ -97,7 +97,7 @@ Requirements:
   req lc_on <l> <c>                   - line on circle
   req parallel <l1> <l2>              - parallel lines
   req perp <l1> <l2>                  - perpendicular lines
-  req angle <l1> <l2> <angle>         - angle between lines
+  req angle <l1> <l2> <angle>         - angle between lines in degrees [0, 180]
   req vertical <l>                    - vertical line
   req horizontal <l>                  - horizontal line
   req fixP <p> [x y]                  - fix point (optionally set coords first)

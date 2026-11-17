@@ -2,11 +2,13 @@
 #define OURPAINTDCM_FUNCTION_REQUIREMENTFUNCTIONFACTORY_H
 
 #include "RequirementFunction.h"
+#include "NumericValidation.h"
 #include "Point2D.h"
 #include "Line.h"
 #include "Circle.h"
 #include "Arc.h"
 #include <memory>
+#include <numbers>
 #include <vector>
 
 namespace OurPaintDCM::Function {
@@ -17,6 +19,7 @@ namespace OurPaintDCM::Function {
  * Extracts double* pointers from figures and constructs the appropriate
  * constraint functions. All created functions reference the original
  * data in GeometryStorage, so changes are reflected automatically.
+ * Angle targets are in degrees; mathematical functions use radians.
  */
 class RequirementFunctionFactory {
 public:
@@ -47,6 +50,10 @@ public:
     static std::shared_ptr<RequirementFunction> bind(
         Utils::RequirementType type,
         const std::vector<VAR>& variables, double target = 0.0) {
+        if (type == Utils::RequirementType::ET_LINELINEANGLE || type == Utils::RequirementType::ET_ARCANGLE) {
+            Utils::validateRequirementParameter(type, target);
+            target *= std::numbers::pi / 180.0;
+        }
         return std::make_shared<RequirementFunction>(type,
             std::make_shared<MathFunction>(variables,target));
     }

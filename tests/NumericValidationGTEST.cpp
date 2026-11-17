@@ -143,10 +143,10 @@ TEST(NumericValidationTest, ConstraintParametersAreCheckedOnAddAndUpdate) {
                              descriptor.type == RequirementType::ET_POINTPOINTDIST ? 5.0 : 1.0);
         }
     }
-    EXPECT_THROW(manager.addRequirement(RequirementDescriptor::lineLineAngle(line, otherLine, std::numbers::pi + 0.01)),
+    EXPECT_THROW(manager.addRequirement(RequirementDescriptor::lineLineAngle(line, otherLine, 180.01)),
                  std::invalid_argument);
     const auto angleId = manager.addRequirement(RequirementDescriptor::lineLineAngle(line, otherLine, 1.0));
-    EXPECT_THROW(manager.updateRequirementParam(angleId, std::numbers::pi + 0.01), std::invalid_argument);
+    EXPECT_THROW(manager.updateRequirementParam(angleId, 180.01), std::invalid_argument);
     EXPECT_DOUBLE_EQ(*manager.getRequirement(angleId)->param, 1.0);
     const auto distanceId = manager.addRequirement(RequirementDescriptor::pointPointDist(point, second, 5.0));
     for (double weight : {invalidNumbers[0], invalidNumbers[1], invalidNumbers[2], -1.0}) {
@@ -156,7 +156,7 @@ TEST(NumericValidationTest, ConstraintParametersAreCheckedOnAddAndUpdate) {
     auto unexpected = RequirementDescriptor::horizontal(line);
     unexpected.param = 1;
     EXPECT_THROW(manager.addRequirement(unexpected), std::invalid_argument);
-    for (double angle : {0.0, std::numbers::pi}) {
+    for (double angle : {0.0, 45.0, 135.0, 180.0}) {
         EXPECT_TRUE(RequirementDescriptor::lineLineAngle(line, otherLine, angle).validate());
     }
     for (double distance : {0.0, 1.0}) {

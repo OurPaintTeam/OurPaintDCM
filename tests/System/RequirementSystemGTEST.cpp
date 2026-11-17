@@ -178,7 +178,7 @@ TEST_F(RequirementSystemTest, AddLineLinePerpendicular) {
 
 TEST_F(RequirementSystemTest, AddLineLineAngle) {
     RequirementSystem system(&storage);
-    system.addLineLineAngle(line1Id, line2Id, 1.57);
+    system.addLineLineAngle(line1Id, line2Id, 90.0);
     
     EXPECT_EQ(system.getAllVars().size(), 6);
 }

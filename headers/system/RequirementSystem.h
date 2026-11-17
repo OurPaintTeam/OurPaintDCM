@@ -41,7 +41,7 @@ class RequirementSystem : public RequirementFunctionSystem {
         Utils::ID id;                            ///< Unique ID of this requirement
         Utils::RequirementType type;             ///< Type of the requirement
         std::vector<Utils::ID> objectIds;        ///< IDs of objects involved
-        std::optional<double> param;             ///< Optional parameter (distance, angle)
+        std::optional<double> param;             ///< Optional parameter (distance, angle in degrees)
         std::vector<double> fixedTargets;
         double weight = 1.0;                     ///< Residual multiplier
     };
@@ -189,6 +189,7 @@ public:
     void addPointCircleDist(Utils::ID pointId, Utils::ID circleId, double distance);
     void addCircleRadius(Utils::ID circleId, double radius);
     void addArcRadius(Utils::ID arcId, double radius);
+    /// Counterclockwise arc sweep in degrees, in (0, 360).
     void addArcAngle(Utils::ID arcId, double angle);
     void addCircleDiameter(Utils::ID circleId, double diameter);
     void addEqualLength(Utils::ID line1Id, Utils::ID line2Id);
@@ -209,7 +210,7 @@ public:
     /// @brief Add perpendicular-lines constraint by IDs.
     void addLineLinePerpendicular(Utils::ID l1Id, Utils::ID l2Id);
 
-    /// @brief Add angle-between-lines constraint by IDs.
+    /// @brief Add angle-between-lines constraint by IDs; angle is in degrees, in [0, 180].
     void addLineLineAngle(Utils::ID l1Id, Utils::ID l2Id, double angle);
 
     /// @brief Add vertical-line constraint by ID.
