@@ -1,18 +1,12 @@
 <map id="OurPaintDCM::Figures::GeometryStorage::createCurve" name="OurPaintDCM::Figures::GeometryStorage::createCurve">
-<area shape="rect" id="Node000001" title="Creates a NURBS referencing existing points; nullopt if a control ID is invalid." alt="" coords="5,197,237,237"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#acf3a3d6689ddfeff0c60d91941454860" title="Uses a requested ID or allocates the next automatic one." alt="" coords="285,133,500,173"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="206,195,293,174,295,179,208,200"/>
-<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Maps C++ figure type to FigureType enum." alt="" coords="548,197,781,237"/>
-<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="238,215,534,215,534,220,238,220"/>
-<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a84dcabe2248efe35442791b0282829f9" title="Registers the ordered control point IDs of a curve (repeated IDs allowed)." alt="" coords="287,258,499,313"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="202,235,274,253,273,258,201,240"/>
-<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a27dc8a968cc1fc86744675b55bee62c8" title="Get current ID without increment." alt="" coords="583,5,746,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="420,131,477,93,547,55,569,46,571,51,549,60,479,97,423,135"/>
-<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a10d4994ee732333e277d12a1fa2d16cc" title="Generate and return the next unique ID." alt="" coords="585,69,745,109"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="478,131,571,109,572,114,479,136"/>
-<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a18b2be9c90bf302faaff026cb4fad937" title="Set the generator state to a given ID." alt="" coords="591,133,738,173"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="500,151,578,151,578,156,500,156"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="479,171,567,192,566,197,478,176"/>
-<area shape="rect" id="Node000008" href="$classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a718506d0d6f415a83efc2ac02ef688d0" title="Appends id to vec if not already present (linear scan)." alt="" coords="559,262,771,317"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="499,284,545,285,545,290,499,290"/>
+<area shape="rect" id="Node000001" title="Creates a NURBS referencing existing points; nullopt if a control ID is invalid." alt="" coords="5,40,237,85"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#acf3a3d6689ddfeff0c60d91941454860" title="Uses a requested ID or allocates the next automatic one." alt="" coords="285,5,499,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="237,45,272,43,267,44,238,50"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a62a4b5b4374ad2df26dc8611111690a0" title="Mutable access to a figure by ID and expected type." alt="" coords="305,75,478,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="237,75,292,84,287,84,237,80"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Maps C++ figure type to FigureType enum." alt="" coords="547,75,779,119"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="479,94,534,97,529,97,479,100"/>
+<area shape="poly" id="edge5_Node000004_Node000004" title=" " alt="" coords="612,73,610,64,619,56,637,50,663,48,692,50,711,60,706,59,691,56,663,53,638,55,622,60,615,66,617,76"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#adfc608a6cdf13e3011d8a2a3d6a51512" title="Constructs an empty storage; IDs start from the generator default." alt="" coords="827,66,1045,128"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="780,94,815,97,809,97,780,100"/>
 </map>

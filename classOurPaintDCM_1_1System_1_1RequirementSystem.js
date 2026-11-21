@@ -53,6 +53,7 @@ var classOurPaintDCM_1_1System_1_1RequirementSystem =
     [ "coincidencesSatisfied", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#a7c7f4de0d0de08409db74d6e48fe2915", null ],
     [ "diagnoseDetailed", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#a3394f69b42c0235746c809f937c20994", null ],
     [ "getCoincidentPoints", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#a58dfea1e1805cb3e8d22c01bad9511e4", null ],
+    [ "getFigureVariables", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#a23cd63f4ebbfddd735bf3557d1bdbf1c", null ],
     [ "getRequirement", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#a8ef15f562e73826a5fa2a9c43ab5b8c6", null ],
     [ "getRequirementCount", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#a1b65d8e06c3fa903dcb9f40bc86ed269", null ],
     [ "getRequirementObjectIds", "classOurPaintDCM_1_1System_1_1RequirementSystem.html#a3ec4ad61b78e480b0b7c14ad232b7108", null ],

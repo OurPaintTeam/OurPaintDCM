@@ -1,0 +1,7 @@
+<map id="OurPaintDCM::DCMManager::syncRequirementSystemIfNeeded" name="OurPaintDCM::DCMManager::syncRequirementSystemIfNeeded">
+<area shape="rect" id="Node000001" title="If records and _reqSystem differ, perform rebuildRequirementSystem()." alt="" coords="5,29,257,74"/>
+<area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="79,28,77,19,86,10,104,5,131,3,160,5,180,14,175,14,159,10,131,8,105,10,89,15,82,21,84,30"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#afefa4a921a184f413f916e105b2e8a4d" title="Rebuild _reqSystem from _requirementRecords and mark it in sync." alt="" coords="305,29,512,74"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="257,49,292,52,286,52,257,54"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="356,27,354,19,363,10,381,5,408,3,438,5,457,14,452,14,437,10,408,8,382,10,366,15,359,21,361,30"/>
+</map>

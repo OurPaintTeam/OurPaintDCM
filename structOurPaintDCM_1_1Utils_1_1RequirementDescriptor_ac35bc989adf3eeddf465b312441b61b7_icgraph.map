@@ -1,5 +1,8 @@
 <map id="OurPaintDCM::Utils::RequirementDescriptor::pointAtArcMidpoint" name="OurPaintDCM::Utils::RequirementDescriptor::pointAtArcMidpoint">
-<area shape="rect" id="Node000001" title="Halfway along the counterclockwise arc from its first endpoint to its second." alt="" coords="232,5,413,60"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a03f35ae2d8a6a0fd64a6c94c70617355" title=" " alt="" coords="5,5,184,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="218,35,184,35,184,30,218,30"/>
+<area shape="rect" id="Node000001" title="Halfway along the counterclockwise arc from its first endpoint to its second." alt="" coords="444,29,624,91"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a03f35ae2d8a6a0fd64a6c94c70617355" title=" " alt="" coords="218,29,396,91"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="425,60,397,63,396,58,431,60"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a1a0cc2370e25d558644ceeba4df39a36" title=" " alt="" coords="5,29,170,91"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="200,60,170,63,170,58,205,60"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="121,15,109,11,87,8,69,10,56,15,50,21,49,30,44,28,45,19,53,10,67,5,88,3,111,5,126,15"/>
 </map>

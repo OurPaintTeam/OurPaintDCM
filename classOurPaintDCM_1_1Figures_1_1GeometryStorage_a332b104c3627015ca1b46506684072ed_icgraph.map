@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::clear" name="OurPaintDCM::Figures::GeometryStorage::clear">
+<area shape="rect" id="Node000001" title="Removes every object, resets ID generator, clears all indices and free lists." alt="" coords="272,5,456,50"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ae0250e836e9d53173d35ebcea5784378" title="Move&#45;assigns; source is left in a valid empty state." alt="" coords="5,5,224,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="253,28,224,30,224,25,258,28"/>
+</map>

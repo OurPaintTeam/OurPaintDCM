@@ -1,5 +1,7 @@
 <map id="OurPaintDCM::Function::RequirementFunctionFactory::createCircleRadius" name="OurPaintDCM::Function::RequirementFunctionFactory::createCircleRadius">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,221,60"/>
-<area shape="rect" id="Node000002" href="$structOurPaintDCM_1_1Figures_1_1Circle.html#afeaf4ede849ebf501c7b13247e66a70b" title=" " alt="" coords="269,13,432,53"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="221,30,256,30,256,35,221,35"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,32,221,93"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#ae2d9495b2b3fcc711a8c0b3d0c044448" title=" " alt="" coords="269,5,519,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="221,46,256,44,251,46,222,52"/>
+<area shape="rect" id="Node000003" href="$structOurPaintDCM_1_1Figures_1_1Circle.html#afeaf4ede849ebf501c7b13247e66a70b" title=" " alt="" coords="313,75,475,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="221,73,300,85,295,85,221,78"/>
 </map>

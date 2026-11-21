@@ -1,0 +1,10 @@
+<map id="OurPaintDCM::DCMManager::updateCircles" name="OurPaintDCM::DCMManager::updateCircles">
+<area shape="rect" id="Node000001" title="Update multiple circles in one batch." alt="" coords="508,29,711,74"/>
+<area shape="poly" id="edge5_Node000001_Node000001" title=" " alt="" coords="649,14,636,10,610,8,586,10,571,15,566,21,567,30,562,27,560,19,569,10,585,5,610,3,637,5,655,14"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a8630b7c30625dd4668be0fba4c853eb0" title=" " alt="" coords="5,29,209,74"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="490,37,460,37,358,33,257,37,210,41,209,36,257,32,358,28,460,32,495,37"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#a599c3ced30dd7aeffc7e2c51b9c58f41" title="Update circle center and/or radius." alt="" coords="257,71,460,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="495,71,461,79,460,74,490,71"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="239,74,209,71,209,66,244,74"/>
+<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="398,55,384,52,358,49,335,51,320,56,314,62,315,72,311,69,309,61,317,52,334,46,358,44,385,47,403,56"/>
+</map>

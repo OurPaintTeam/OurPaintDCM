@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::GeometryStorage" name="OurPaintDCM::Figures::GeometryStorage::GeometryStorage">
+<area shape="rect" id="Node000001" title="Move&#45;constructs; source is left in a valid empty state." alt="" coords="5,5,223,67"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#adfc608a6cdf13e3011d8a2a3d6a51512" title="Constructs an empty storage; IDs start from the generator default." alt="" coords="271,5,488,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="223,34,257,36,252,36,223,39"/>
+</map>

@@ -1,19 +1,26 @@
 <map id="OurPaintDCM::Figures::GeometryStorage::acquireID" name="OurPaintDCM::Figures::GeometryStorage::acquireID">
-<area shape="rect" id="Node000001" title="Uses a requested ID or allocates the next automatic one." alt="" coords="568,133,783,173"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac5445f4f2f67cd4973d9d78f8455ae5c" title="Creates an arc through two points with a center point." alt="" coords="297,5,511,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="634,127,581,93,519,60,487,48,489,43,521,55,584,88,637,123"/>
-<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1db8de13e90373f4a63d04cf04c97455" title="Creates a circle with given center and radius." alt="" coords="289,69,519,109"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="576,133,489,112,490,107,577,127"/>
-<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a15e18a8197cb45f31a486a3106e160dd" title="Creates a NURBS referencing existing points; nullopt if a control ID is invalid." alt="" coords="288,133,520,173"/>
-<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="554,156,520,156,520,151,554,151"/>
-<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1553e7abc4def94e41466a6aae0e410c" title="Creates a line through two existing points." alt="" coords="293,197,515,237"/>
-<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="577,179,490,200,489,195,576,174"/>
-<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af8c35571d12a7a86d789d4e35ee8cf9f" title="Creates a point at (x, y)." alt="" coords="291,261,517,301"/>
-<area shape="poly" id="edge9_Node000001_Node000007" title=" " alt="" coords="637,184,584,219,521,252,489,264,487,259,519,247,581,214,634,179"/>
-<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Creates a figure from aggregated FigureData (may create nested points)." alt="" coords="5,133,240,173"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="308,52,289,60,215,98,154,135,152,131,212,93,287,55,307,47"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="303,115,212,136,211,131,302,110"/>
-<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="274,156,240,156,240,151,274,151"/>
-<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="302,197,211,176,212,171,303,192"/>
-<area shape="poly" id="edge10_Node000007_Node000003" title=" " alt="" coords="307,259,287,252,212,214,152,176,154,171,215,209,289,247,308,254"/>
+<area shape="rect" id="Node000001" title="Uses a requested ID or allocates the next automatic one." alt="" coords="832,144,1047,189"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac5445f4f2f67cd4973d9d78f8455ae5c" title="Creates an arc through two points with a center point." alt="" coords="562,5,776,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="896,134,844,99,783,65,756,53,756,48,786,60,847,95,901,135"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1db8de13e90373f4a63d04cf04c97455" title="Creates a circle with given center and radius." alt="" coords="554,75,784,119"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="832,140,759,123,759,117,837,139"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a15e18a8197cb45f31a486a3106e160dd" title="Creates a NURBS referencing existing points; nullopt if a control ID is invalid." alt="" coords="553,144,784,189"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="814,167,785,169,784,164,819,166"/>
+<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1553e7abc4def94e41466a6aae0e410c" title="Creates a line through two existing points." alt="" coords="558,213,779,258"/>
+<area shape="poly" id="edge11_Node000001_Node000007" title=" " alt="" coords="837,193,759,215,758,210,832,194"/>
+<area shape="rect" id="Node000008" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af8c35571d12a7a86d789d4e35ee8cf9f" title="Creates a point at (x, y)." alt="" coords="556,283,782,327"/>
+<area shape="poly" id="edge14_Node000001_Node000008" title=" " alt="" coords="901,197,847,238,786,273,757,285,755,279,783,268,844,233,896,199"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Creates a figure from aggregated FigureData (may create nested points)." alt="" coords="272,117,505,162"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="570,56,554,65,435,119,432,114,552,60,574,54"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ae0250e836e9d53173d35ebcea5784378" title="Move&#45;assigns; source is left in a valid empty state." alt="" coords="5,148,224,193"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="543,31,412,46,341,60,273,80,237,94,203,113,147,150,143,146,200,108,235,89,271,74,340,55,412,41,548,29"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="254,156,225,161,223,156,258,153"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="536,118,506,124,505,119,541,116"/>
+<area shape="poly" id="edge7_Node000005_Node000004" title=" " alt="" coords="535,88,408,91,339,97,272,108,212,126,160,150,157,145,210,121,271,102,339,91,408,86,540,87"/>
+<area shape="poly" id="edge9_Node000006_Node000003" title=" " alt="" coords="535,154,506,153,505,148,540,153"/>
+<area shape="poly" id="edge10_Node000006_Node000004" title=" " alt="" coords="535,174,505,177,272,177,225,176,223,171,272,172,505,172,540,173"/>
+<area shape="poly" id="edge12_Node000007_Node000003" title=" " alt="" coords="572,208,552,204,448,165,448,160,554,198,578,208"/>
+<area shape="poly" id="edge13_Node000007_Node000004" title=" " alt="" coords="542,223,224,186,224,180,545,219"/>
+<area shape="poly" id="edge15_Node000008_Node000003" title=" " alt="" coords="563,276,552,273,510,247,471,218,411,165,413,160,474,214,513,243,554,268,568,277"/>
+<area shape="poly" id="edge16_Node000008_Node000004" title=" " alt="" coords="538,283,410,258,271,225,179,196,179,191,272,220,411,253,543,282"/>
 </map>

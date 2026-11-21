@@ -1,7 +1,10 @@
 <map id="OurPaintDCM::Figures::GeometryStorage::registerCircleCache" name="OurPaintDCM::Figures::GeometryStorage::registerCircleCache">
-<area shape="rect" id="Node000001" title=" " alt="" coords="567,5,769,60"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1db8de13e90373f4a63d04cf04c97455" title="Creates a circle with given center and radius." alt="" coords="288,13,519,53"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="553,35,519,35,519,30,553,30"/>
-<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Creates a figure from aggregated FigureData (may create nested points)." alt="" coords="5,13,240,53"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="274,35,240,35,240,30,274,30"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="831,28,1034,89"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1db8de13e90373f4a63d04cf04c97455" title="Creates a circle with given center and radius." alt="" coords="553,36,783,81"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="813,58,784,61,784,56,818,58"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Creates a figure from aggregated FigureData (may create nested points)." alt="" coords="272,5,505,50"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="535,44,505,43,506,38,540,44"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ae0250e836e9d53173d35ebcea5784378" title="Move&#45;assigns; source is left in a valid empty state." alt="" coords="5,36,224,81"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="534,62,505,65,272,65,224,64,224,59,272,60,505,60,540,62"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="253,43,224,49,224,43,259,42"/>
 </map>

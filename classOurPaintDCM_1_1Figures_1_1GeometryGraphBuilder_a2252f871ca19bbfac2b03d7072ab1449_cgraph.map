@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Figures::GeometryGraphBuilder::buildObjectGraph" name="OurPaintDCM::Figures::GeometryGraphBuilder::buildObjectGraph">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,185,67"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#aac18a1071e923751a1ef2b8ea057a627" title="Returns the stored FigureType for an ID, if present." alt="" coords="233,14,436,58"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,34,220,36,214,36,185,39"/>
+</map>

@@ -1,5 +1,5 @@
 <map id="OurPaintDCM::System::RequirementSystem::applyDirectAssignments" name="OurPaintDCM::System::RequirementSystem::applyDirectAssignments">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,195,60"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a6aaf48d77b39798deb8df3eb3e948e23" title=" " alt="" coords="243,5,461,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,30,229,30,229,35,195,35"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,194,67"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a6aaf48d77b39798deb8df3eb3e948e23" title=" " alt="" coords="242,5,459,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="194,34,229,36,223,36,194,39"/>
 </map>

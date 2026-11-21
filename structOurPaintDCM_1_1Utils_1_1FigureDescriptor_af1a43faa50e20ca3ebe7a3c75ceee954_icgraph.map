@@ -1,5 +1,12 @@
 <map id="OurPaintDCM::Utils::FigureDescriptor::validate" name="OurPaintDCM::Utils::FigureDescriptor::validate">
-<area shape="rect" id="Node000001" title="Validate descriptor fields for the given figure type." alt="" coords="257,5,404,60"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#aac0ea08abe5a8da7d345aa2852e04515" title="Add a new geometric figure using descriptor." alt="" coords="5,13,209,53"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="244,35,210,35,210,30,244,30"/>
+<area shape="rect" id="Node000001" title="Validate descriptor fields for the given figure type." alt="" coords="759,21,905,82"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#aac0ea08abe5a8da7d345aa2852e04515" title="Add a new geometric figure using descriptor." alt="" coords="508,29,711,74"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="741,52,712,54,712,49,746,52"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="644,14,632,10,610,8,589,10,576,15,571,21,572,30,568,27,566,19,573,10,588,5,610,3,634,5,650,14"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#a8630b7c30625dd4668be0fba4c853eb0" title=" " alt="" coords="5,29,209,74"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="490,37,460,37,358,33,257,37,210,41,209,36,257,32,358,28,460,32,495,37"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1DCMManager.html#ab927b304894f43b72b120bcf7db9e0ca" title="Replace the current DCM state with a previously captured snapshot." alt="" coords="257,71,460,115"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="495,71,461,79,460,74,490,71"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="239,74,209,71,209,66,244,74"/>
+<area shape="poly" id="edge6_Node000004_Node000004" title=" " alt="" coords="398,55,384,52,358,49,335,51,320,56,314,62,315,72,311,69,309,61,317,52,334,46,358,44,385,47,403,56"/>
 </map>

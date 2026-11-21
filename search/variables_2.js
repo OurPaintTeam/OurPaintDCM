@@ -1,9 +1,4 @@
 var searchData=
 [
-  ['center_0',['center',['../structOurPaintDCM_1_1Figures_1_1Circle.html#a0f8a88431e8c474561ba33fb578a3e70',1,'OurPaintDCM::Figures::Circle::center'],['../structOurPaintDCM_1_1Figures_1_1FigureData.html#a5f2e99515df7ce22ed4948a96bb484c2',1,'OurPaintDCM::Figures::FigureData::center']]],
-  ['circleid_1',['circleId',['../structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor.html#a7b8393dd61456c937d9ea09283e70162',1,'OurPaintDCM::Utils::CircleUpdateDescriptor']]],
-  ['circleids_2',['circleIds',['../structOurPaintDCM_1_1DCMManager_1_1FixedGeometry.html#ac9e92709dc35950364e58a96bdf35460',1,'OurPaintDCM::DCMManager::FixedGeometry']]],
-  ['constraintcount_3',['constraintCount',['../structOurPaintDCM_1_1System_1_1RequirementFunctionSystem_1_1Diagnosis.html#a26fff9ae5f9c0e06c6e27169d745839d',1,'OurPaintDCM::System::RequirementFunctionSystem::Diagnosis']]],
-  ['converged_4',['converged',['../structOurPaintDCM_1_1TargetSolveResult.html#a58cd3c933545bc1ccd0ef01f45e74e02',1,'OurPaintDCM::TargetSolveResult']]],
-  ['coords_5',['coords',['../structOurPaintDCM_1_1Figures_1_1PointBase.html#a840f39824aacf49d36766ee634958325',1,'OurPaintDCM::Figures::PointBase::coords'],['../structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#ac73faa0614a5b39fd0b155951bf96367',1,'OurPaintDCM::Utils::FigureDescriptor::coords'],['../structOurPaintDCM_1_1Utils_1_1FigureUpdateDescriptor.html#a1fee4c663d70ac589a5236019f00decf',1,'OurPaintDCM::Utils::FigureUpdateDescriptor::coords']]]
+  ['blocks_0',['blocks',['../structOurPaintDCM_1_1System_1_1ArticulationDecomposition.html#a81c6b76f3864c49f89cd645ec13b9ce3',1,'OurPaintDCM::System::ArticulationDecomposition::blocks'],['../structOurPaintDCM_1_1System_1_1ConstraintDecomposition.html#ac4c8b37386aba6497380a7b0bfa67c4d',1,'OurPaintDCM::System::ConstraintDecomposition::blocks']]]
 ];

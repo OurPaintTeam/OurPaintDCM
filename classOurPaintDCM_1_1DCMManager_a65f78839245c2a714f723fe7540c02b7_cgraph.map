@@ -1,0 +1,12 @@
+<map id="OurPaintDCM::DCMManager::getRequirementSystem" name="OurPaintDCM::DCMManager::getRequirementSystem">
+<area shape="rect" id="Node000001" title="Get read&#45;only access to RequirementSystem." alt="" coords="5,52,209,97"/>
+<area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="55,51,53,42,62,33,80,27,107,25,136,28,156,36,150,37,135,33,107,31,81,33,65,37,58,43,60,52"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#aa22d5bb27718720e1e0a8f2977914eae" title="Default constructor." alt="" coords="281,5,484,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="208,55,268,47,263,48,210,60"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#ab32b2e3d3e3d0b9ba4dedbf0b2df7012" title="If records and _reqSystem differ, perform rebuildRequirementSystem()." alt="" coords="257,99,508,143"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="209,89,244,97,239,97,209,94"/>
+<area shape="poly" id="edge6_Node000003_Node000003" title=" " alt="" coords="331,97,329,88,338,79,355,74,382,72,412,74,431,83,426,83,410,80,382,77,356,79,340,84,334,90,335,100"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1DCMManager.html#afefa4a921a184f413f916e105b2e8a4d" title="Rebuild _reqSystem from _requirementRecords and mark it in sync." alt="" coords="556,99,763,143"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="508,118,543,121,538,121,509,124"/>
+<area shape="poly" id="edge5_Node000004_Node000004" title=" " alt="" coords="608,97,606,88,615,79,633,74,660,72,689,74,709,84,703,83,688,80,660,77,634,79,617,84,611,90,612,100"/>
+</map>

@@ -1,5 +1,5 @@
 <map id="OurPaintDCM::Utils::RequirementDescriptor::arcAngle" name="OurPaintDCM::Utils::RequirementDescriptor::arcAngle">
-<area shape="rect" id="Node000001" title="Counterclockwise sweep from the first endpoint to the second, in (0, 2*pi) radians." alt="" coords="219,5,400,60"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a1eb6992b2b5c75e34e5c4d084303c0e9" title=" " alt="" coords="5,5,171,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,35,171,35,171,30,205,30"/>
+<area shape="rect" id="Node000001" title="Counterclockwise sweep from the first endpoint to the second, in (0, 2*pi) radians." alt="" coords="218,5,398,67"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a1eb6992b2b5c75e34e5c4d084303c0e9" title=" " alt="" coords="5,5,170,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="200,36,170,39,170,34,205,36"/>
 </map>

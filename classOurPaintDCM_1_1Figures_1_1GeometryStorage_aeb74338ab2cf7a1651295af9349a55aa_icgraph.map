@@ -1,5 +1,7 @@
 <map id="OurPaintDCM::Figures::GeometryStorage::contains" name="OurPaintDCM::Figures::GeometryStorage::contains">
-<area shape="rect" id="Node000001" title="True if id is currently a live object in this storage." alt="" coords="260,5,468,45"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ad46e286ecbbd4094a480f68e4dee525c" title="Validates index, caches, slot occupancy, and dependency arity in debug builds." alt="" coords="5,5,212,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="247,28,212,28,212,23,247,23"/>
+<area shape="rect" id="Node000001" title="True if id is currently a live object in this storage." alt="" coords="272,40,479,85"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ae0250e836e9d53173d35ebcea5784378" title="Move&#45;assigns; source is left in a valid empty state." alt="" coords="5,5,224,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="254,47,224,45,224,40,259,46"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ad46e286ecbbd4094a480f68e4dee525c" title="Validates index, caches, slot occupancy, and dependency arity in debug builds." alt="" coords="12,75,217,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="254,79,218,86,217,81,259,78"/>
 </map>

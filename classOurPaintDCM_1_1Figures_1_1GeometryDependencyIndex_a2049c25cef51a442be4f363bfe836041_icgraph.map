@@ -1,5 +1,0 @@
-<map id="OurPaintDCM::Figures::GeometryDependencyIndex::clear" name="OurPaintDCM::Figures::GeometryDependencyIndex::clear">
-<area shape="rect" id="Node000001" title="Clears both maps." alt="" coords="239,5,451,60"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a332b104c3627015ca1b46506684072ed" title="Removes every object, resets ID generator, clears all indices and free lists." alt="" coords="5,13,191,53"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="225,35,191,35,191,30,225,30"/>
-</map>

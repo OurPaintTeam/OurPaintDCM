@@ -1,7 +1,9 @@
 <map id="OurPaintDCM::Function::RequirementFunctionFactory::createPointPointHorizontalDist" name="OurPaintDCM::Function::RequirementFunctionFactory::createPointPointHorizontalDist">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,30,236,85"/>
-<area shape="rect" id="Node000002" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#ad4e6e2bae59f79ba39b367ca1bc6580f" title=" " alt="" coords="284,5,447,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="236,40,270,35,271,40,237,45"/>
-<area shape="rect" id="Node000003" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#ae10b911d2116732ed615f9fc5d291e0d" title=" " alt="" coords="284,69,447,109"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="237,70,271,74,270,80,236,75"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,66,235,128"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Function_1_1RequirementFunctionFactory.html#ae2d9495b2b3fcc711a8c0b3d0c044448" title=" " alt="" coords="283,5,533,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="234,67,300,53,295,55,236,72"/>
+<area shape="rect" id="Node000003" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#ad4e6e2bae59f79ba39b367ca1bc6580f" title=" " alt="" coords="327,75,489,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="235,94,313,96,308,98,236,100"/>
+<area shape="rect" id="Node000004" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#ae10b911d2116732ed615f9fc5d291e0d" title=" " alt="" coords="327,144,489,189"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="235,122,314,143,309,144,235,127"/>
 </map>

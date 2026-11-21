@@ -1,5 +1,10 @@
 var searchData=
 [
-  ['degree_0',['degree',['../structOurPaintDCM_1_1Figures_1_1Curve2D.html#a521490eedbdfcd269c63ee8a91a83941',1,'OurPaintDCM::Figures::Curve2D::degree'],['../structOurPaintDCM_1_1Figures_1_1FigureData.html#a7f47485ef0247160f167e1bcc9e9e28c',1,'OurPaintDCM::Figures::FigureData::degree'],['../structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#adf0016086013b2f2d77469829e21ce21',1,'OurPaintDCM::Utils::FigureDescriptor::degree']]],
-  ['degreesoffreedom_1',['degreesOfFreedom',['../structOurPaintDCM_1_1System_1_1RequirementFunctionSystem_1_1Diagnosis.html#a72bb194034e5a959c0142babb61de518',1,'OurPaintDCM::System::RequirementFunctionSystem::Diagnosis']]]
+  ['center_0',['center',['../structOurPaintDCM_1_1Figures_1_1Circle.html#a0f8a88431e8c474561ba33fb578a3e70',1,'OurPaintDCM::Figures::Circle::center'],['../structOurPaintDCM_1_1Figures_1_1FigureData.html#a5f2e99515df7ce22ed4948a96bb484c2',1,'OurPaintDCM::Figures::FigureData::center']]],
+  ['circleid_1',['circleId',['../structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor.html#a7b8393dd61456c937d9ea09283e70162',1,'OurPaintDCM::Utils::CircleUpdateDescriptor']]],
+  ['circleids_2',['circleIds',['../structOurPaintDCM_1_1DCMManager_1_1FixedGeometry.html#ac9e92709dc35950364e58a96bdf35460',1,'OurPaintDCM::DCMManager::FixedGeometry']]],
+  ['components_3',['components',['../structOurPaintDCM_1_1DCMManager_1_1SolveCache.html#ac32016af682d9d6d07d5288b7da0971e',1,'OurPaintDCM::DCMManager::SolveCache']]],
+  ['constraintcount_4',['constraintCount',['../structOurPaintDCM_1_1System_1_1RequirementFunctionSystem_1_1Diagnosis.html#a26fff9ae5f9c0e06c6e27169d745839d',1,'OurPaintDCM::System::RequirementFunctionSystem::Diagnosis']]],
+  ['converged_5',['converged',['../structOurPaintDCM_1_1TargetSolveResult.html#a58cd3c933545bc1ccd0ef01f45e74e02',1,'OurPaintDCM::TargetSolveResult']]],
+  ['coords_6',['coords',['../structOurPaintDCM_1_1Figures_1_1PointBase.html#a840f39824aacf49d36766ee634958325',1,'OurPaintDCM::Figures::PointBase::coords'],['../structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#ac73faa0614a5b39fd0b155951bf96367',1,'OurPaintDCM::Utils::FigureDescriptor::coords'],['../structOurPaintDCM_1_1Utils_1_1FigureUpdateDescriptor.html#a1fee4c663d70ac589a5236019f00decf',1,'OurPaintDCM::Utils::FigureUpdateDescriptor::coords']]]
 ];

@@ -1,5 +1,9 @@
 <map id="OurPaintDCM::DCMManager::getAllFigures" name="OurPaintDCM::DCMManager::getAllFigures">
-<area shape="rect" id="Node000001" title="Get all figure descriptors." alt="" coords="257,5,461,45"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#ad5e73d84b7e35c0af0dc4d02c52083aa" title="Capture all persistent DCM state for an externally managed edit transaction." alt="" coords="5,5,209,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="244,28,210,28,210,23,244,23"/>
+<area shape="rect" id="Node000001" title="Get all figure descriptors." alt="" coords="508,29,711,74"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="649,14,636,10,610,8,586,10,571,15,566,21,567,30,562,27,560,19,569,10,585,5,610,3,637,5,655,14"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a8630b7c30625dd4668be0fba4c853eb0" title=" " alt="" coords="5,29,209,74"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="489,47,460,49,257,49,210,50,209,45,257,44,460,44,495,47"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#ad5e73d84b7e35c0af0dc4d02c52083aa" title="Capture all persistent DCM state for an externally managed edit transaction." alt="" coords="257,59,460,103"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="495,65,461,72,460,66,490,66"/>
+<area shape="poly" id="edge4_Node000003_Node000002" title=" " alt="" coords="239,68,209,66,209,61,244,67"/>
 </map>

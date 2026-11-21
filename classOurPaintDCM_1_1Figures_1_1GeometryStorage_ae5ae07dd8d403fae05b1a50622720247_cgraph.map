@@ -1,0 +1,4 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::pointsWithIds" name="OurPaintDCM::Figures::GeometryStorage::pointsWithIds">
+<area shape="rect" id="Node000001" title="Read&#45;only cache of all points for fast iteration (IDs + const pointers)." alt="" coords="5,29,247,74"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="80,28,79,19,86,10,102,5,126,3,152,5,169,14,164,14,151,10,126,8,103,10,89,15,84,21,85,30"/>
+</map>

@@ -1,0 +1,13 @@
+<map id="OurPaintDCM::DCMManager::pruneRequirementsWithMissingObjects" name="OurPaintDCM::DCMManager::pruneRequirementsWithMissingObjects">
+<area shape="rect" id="Node000001" title=" " alt="" coords="759,29,997,91"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="919,15,905,11,878,8,855,10,839,15,832,21,830,31,826,27,827,19,837,10,854,5,878,3,906,5,925,15"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a23b84a47aebf73808f0ee42c79b6288b" title=" " alt="" coords="508,38,711,82"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="741,60,712,63,712,58,747,60"/>
+<area shape="poly" id="edge7_Node000002_Node000002" title=" " alt="" coords="649,22,636,19,610,16,586,18,571,23,566,29,567,39,562,36,560,28,569,19,585,13,610,11,637,14,655,23"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#a8630b7c30625dd4668be0fba4c853eb0" title=" " alt="" coords="5,38,209,82"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="490,45,460,45,358,42,257,45,210,49,209,44,257,40,358,36,460,40,495,45"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1DCMManager.html#ac2f4c1cac07c5bc28426b2ceb50ad736" title="Remove a figure by ID." alt="" coords="257,79,460,124"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="495,79,461,87,460,82,490,80"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="239,82,209,80,209,74,244,82"/>
+<area shape="poly" id="edge6_Node000004_Node000004" title=" " alt="" coords="398,64,384,60,358,58,335,60,320,65,314,71,315,80,311,77,309,69,317,60,334,54,358,53,385,55,403,64"/>
+</map>

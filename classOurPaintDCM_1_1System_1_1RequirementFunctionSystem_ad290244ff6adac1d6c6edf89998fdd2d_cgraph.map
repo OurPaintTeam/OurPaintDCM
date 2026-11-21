@@ -1,6 +1,6 @@
 <map id="OurPaintDCM::System::RequirementFunctionSystem::diagnoseDetailed" name="OurPaintDCM::System::RequirementFunctionSystem::diagnoseDetailed">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,224,84"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="60,29,60,19,70,10,88,5,115,3,146,6,164,14,162,18,145,11,115,8,89,10,73,15,65,21,65,29"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a2becf1170cec0e64314677eba4d12122" title=" " alt="" coords="272,37,527,77"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="224,54,258,54,258,59,224,59"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,223,91"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="59,28,60,19,71,10,88,5,114,3,144,6,164,15,159,16,143,11,114,8,89,10,73,15,65,21,64,30"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#a2becf1170cec0e64314677eba4d12122" title=" " alt="" coords="271,38,524,82"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="223,58,258,60,252,60,223,63"/>
 </map>

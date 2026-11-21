@@ -19,6 +19,6 @@ var searchData=
   ['updateradius_16',['updateRadius',['../structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor.html#ac4db8426464959954f9e8f9113704305',1,'OurPaintDCM::Utils::CircleUpdateDescriptor']]],
   ['updaterequirementparam_17',['updateRequirementParam',['../classOurPaintDCM_1_1DCMManager.html#af1c24a150cabb5301977c41681901f6c',1,'OurPaintDCM::DCMManager']]],
   ['updaterequirementweight_18',['updateRequirementWeight',['../classOurPaintDCM_1_1DCMManager.html#a3890aadf43ffcb05d4134ff902b621b0',1,'OurPaintDCM::DCMManager']]],
-  ['usage_20example_19',['usage example',['../classOurPaintDCM_1_1System_1_1RequirementSystem.html#autotoc_md0',1,'Usage Example'],['../structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html#autotoc_md2',1,'Usage Example']]],
+  ['usage_20example_19',['Usage Example',['../classOurPaintDCM_1_1System_1_1RequirementSystem.html#autotoc_md0',1,'Usage Example'],['../structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html#autotoc_md2',1,'Usage Example']]],
   ['usedfallback_20',['usedFallback',['../structOurPaintDCM_1_1TargetSolveResult.html#a98e8ab980f6f749a8d1b79bbb03a1372',1,'OurPaintDCM::TargetSolveResult']]]
 ];

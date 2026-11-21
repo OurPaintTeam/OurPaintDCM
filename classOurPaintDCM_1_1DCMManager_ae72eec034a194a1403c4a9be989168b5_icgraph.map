@@ -1,0 +1,18 @@
+<map id="OurPaintDCM::DCMManager::clear" name="OurPaintDCM::DCMManager::clear">
+<area shape="rect" id="Node000001" title="Clear all figures, requirements, and components." alt="" coords="759,44,963,88"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="901,28,887,25,861,22,837,24,823,29,817,35,818,45,814,42,812,34,820,25,836,19,861,17,888,20,906,29"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a8630b7c30625dd4668be0fba4c853eb0" title=" " alt="" coords="5,28,209,72"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="798,37,757,23,711,10,627,8,474,9,257,14,183,30,181,25,256,9,474,4,627,3,712,5,759,18,804,37"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#a23b84a47aebf73808f0ee42c79b6288b" title=" " alt="" coords="508,44,711,88"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="741,66,712,69,712,64,747,66"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1DCMManager.html#ab927b304894f43b72b120bcf7db9e0ca" title="Replace the current DCM state with a previously captured snapshot." alt="" coords="257,162,460,207"/>
+<area shape="poly" id="edge9_Node000001_Node000005" title=" " alt="" coords="751,92,457,165,456,159,746,93"/>
+<area shape="poly" id="edge4_Node000003_Node000002" title=" " alt="" coords="504,40,460,35,395,31,329,31,210,39,208,34,329,26,395,26,460,30,509,40"/>
+<area shape="poly" id="edge8_Node000003_Node000003" title=" " alt="" coords="649,29,636,25,610,22,586,24,571,29,566,35,567,45,562,42,560,34,569,25,585,19,610,17,637,20,655,29"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1DCMManager.html#ac2f4c1cac07c5bc28426b2ceb50ad736" title="Remove a figure by ID." alt="" coords="257,69,460,114"/>
+<area shape="poly" id="edge5_Node000003_Node000004" title=" " alt="" coords="490,78,461,84,460,79,495,77"/>
+<area shape="poly" id="edge6_Node000004_Node000002" title=" " alt="" coords="239,73,210,70,209,64,244,72"/>
+<area shape="poly" id="edge7_Node000004_Node000004" title=" " alt="" coords="398,54,384,50,358,48,335,50,320,55,314,61,316,70,311,67,309,59,317,50,334,44,358,42,385,45,403,54"/>
+<area shape="poly" id="edge10_Node000005_Node000002" title=" " alt="" coords="300,156,150,76,151,71,304,154"/>
+<area shape="poly" id="edge11_Node000005_Node000005" title=" " alt="" coords="398,147,384,144,358,141,335,143,320,148,314,154,315,163,311,160,309,152,317,143,334,138,358,136,385,138,403,148"/>
+</map>

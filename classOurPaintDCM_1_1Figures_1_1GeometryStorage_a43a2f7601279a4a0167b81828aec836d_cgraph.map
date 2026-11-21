@@ -1,0 +1,21 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::remove" name="OurPaintDCM::Figures::GeometryStorage::remove">
+<area shape="rect" id="Node000001" title="Removes an object by ID without throwing." alt="" coords="5,91,208,136"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ada552a6eb20cceef9734e961d996aa19" title="Swaps out of dense cache by ID (swap&#45;with&#45;last)." alt="" coords="281,5,502,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="191,88,268,69,264,72,193,93"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ab7c88caf09f7fdea4299c51236e7d78b" title="Destroys point in slot and pushes slot index onto the point free list." alt="" coords="286,91,498,136"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="207,111,273,112,268,115,209,116"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af0cdab99210478c27f80536c7dca275b" title="Removes a line, circle, or arc by ID; does not delete points." alt="" coords="256,160,528,205"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="201,134,285,155,280,157,202,139"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ab44ad4e9fe35111a718aef2a907dc8c0" title="Removes one entry from cache and keeps posMap consistent." alt="" coords="849,132,1115,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="502,39,646,53,725,65,802,82,863,101,921,126,916,126,861,106,801,87,724,70,646,58,503,44"/>
+<area shape="poly" id="edge7_Node000005_Node000003" title=" " alt="" coords="498,157,527,146,540,137,550,127,560,118,575,110,617,99,661,93,749,94,832,107,905,127,899,128,831,112,749,100,661,98,618,104,577,115,563,122,553,131,544,141,529,151,500,162"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a59ceff399cf802e817e877860c18366a" title=" " alt="" coords="584,124,793,186"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="528,167,571,166,566,167,529,173"/>
+<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#aa3a3279b16885ade58a7dc51d1617765" title=" " alt="" coords="576,209,801,271"/>
+<area shape="poly" id="edge8_Node000005_Node000007" title=" " alt="" coords="511,203,563,215,558,216,511,208"/>
+<area shape="rect" id="Node000008" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ade2f1a8b63498936a2a1c9a16651df23" title=" " alt="" coords="581,295,796,356"/>
+<area shape="poly" id="edge10_Node000005_Node000008" title=" " alt="" coords="432,203,499,241,577,280,591,289,585,288,575,285,497,246,431,208"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="793,152,836,154,831,155,794,157"/>
+<area shape="poly" id="edge9_Node000007_Node000003" title=" " alt="" coords="796,206,886,183,891,181,798,211"/>
+<area shape="poly" id="edge11_Node000008_Node000003" title=" " alt="" coords="778,291,800,281,876,233,939,188,944,186,879,237,803,285,779,297"/>
+</map>

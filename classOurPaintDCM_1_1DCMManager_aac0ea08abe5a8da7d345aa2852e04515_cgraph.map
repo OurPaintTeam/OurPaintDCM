@@ -1,17 +1,30 @@
 <map id="OurPaintDCM::DCMManager::addFigure" name="OurPaintDCM::DCMManager::addFigure">
-<area shape="rect" id="Node000001" title="Add a new geometric figure using descriptor." alt="" coords="5,61,209,101"/>
-<area shape="rect" id="Node000002" href="$structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#af1a43faa50e20ca3ebe7a3c75ceee954" title="Validate descriptor fields for the given figure type." alt="" coords="257,54,404,109"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,79,243,79,243,84,210,84"/>
-<area shape="rect" id="Node000003" href="$namespaceOurPaintDCM_1_1Utils.html#a43757230430230c98e28b886fa685c32" title=" " alt="" coords="899,61,1045,101"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="404,54,494,30,606,10,667,5,729,3,791,7,851,18,893,32,931,52,928,57,891,37,850,23,790,12,729,8,667,10,607,16,495,36,405,60"/>
-<area shape="rect" id="Node000004" href="$namespaceOurPaintDCM_1_1Utils.html#ab147d3dfbb9b895aac22476639df5c7d" title=" " alt="" coords="687,32,842,72"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="404,74,674,56,674,61,404,79"/>
-<area shape="rect" id="Node000005" href="$namespaceOurPaintDCM_1_1Utils.html#a8d48225b0556798ea39a309eaf5af05b" title=" " alt="" coords="679,147,851,187"/>
-<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="378,106,414,124,453,139,506,151,562,159,665,166,665,171,561,164,505,156,451,144,412,129,375,111"/>
-<area shape="rect" id="Node000006" href="$structOurPaintDCM_1_1Figures_1_1Curve2D.html#aa71c132ba3c4d05a9dc82a5ddd4d5d9d" title=" " alt="" coords="452,89,631,129"/>
-<area shape="poly" id="edge7_Node000002_Node000006" title=" " alt="" coords="405,89,439,93,438,98,404,94"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="843,60,885,67,885,72,842,66"/>
-<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="813,144,909,104,911,109,815,149"/>
-<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="631,101,885,84,885,90,631,106"/>
-<area shape="poly" id="edge9_Node000006_Node000004" title=" " alt="" coords="619,87,674,73,675,78,621,92"/>
+<area shape="rect" id="Node000001" title="Add a new geometric figure using descriptor." alt="" coords="5,216,209,261"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="59,215,58,206,66,197,82,191,107,189,134,192,152,200,147,202,133,197,107,195,83,197,69,201,63,207,64,215"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a8e564fbb0e6984c893dd8bb08c0e016e" title=" " alt="" coords="257,29,460,74"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="123,214,177,150,214,115,255,84,267,79,264,83,258,89,218,119,181,154,127,217"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#a0246829d84bf9ba1ffba2553d04502c6" title=" " alt="" coords="257,123,460,167"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="163,213,256,177,277,171,273,175,258,182,166,218"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1DCMManager.html#a6967dc9a4f330d3aa420ae17a3488bf6" title=" " alt="" coords="257,216,460,261"/>
+<area shape="poly" id="edge6_Node000001_Node000004" title=" " alt="" coords="208,236,243,237,239,240,210,241"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1DCMManager.html#aafb28b69b6934cdc5ac4404adebea02a" title=" " alt="" coords="257,309,460,354"/>
+<area shape="poly" id="edge8_Node000001_Node000005" title=" " alt="" coords="169,258,284,302,280,305,169,264"/>
+<area shape="rect" id="Node000006" href="$structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#af1a43faa50e20ca3ebe7a3c75ceee954" title="Validate descriptor fields for the given figure type." alt="" coords="286,378,431,440"/>
+<area shape="poly" id="edge10_Node000001_Node000006" title=" " alt="" coords="130,258,187,311,258,364,275,375,269,375,255,369,184,315,130,264"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="313,28,312,19,319,10,335,5,358,3,384,5,401,13,396,15,383,10,358,8,336,10,322,15,317,21,318,29"/>
+<area shape="poly" id="edge5_Node000003_Node000003" title=" " alt="" coords="313,121,312,113,319,104,335,98,358,96,384,99,401,107,396,108,383,104,358,101,336,103,322,108,317,114,318,123"/>
+<area shape="poly" id="edge7_Node000004_Node000004" title=" " alt="" coords="313,215,312,206,319,197,335,191,358,189,384,192,401,200,396,201,383,197,358,195,336,197,322,201,317,207,318,216"/>
+<area shape="poly" id="edge9_Node000005_Node000005" title=" " alt="" coords="313,308,312,299,319,290,335,285,358,283,384,285,401,294,396,294,383,290,358,288,336,290,322,295,317,301,318,310"/>
+<area shape="rect" id="Node000007" href="$namespaceOurPaintDCM_1_1Utils.html#a43757230430230c98e28b886fa685c32" title=" " alt="" coords="953,387,1098,431"/>
+<area shape="poly" id="edge11_Node000006_Node000007" title=" " alt="" coords="431,381,526,355,645,333,709,326,775,325,841,329,905,341,945,356,983,379,978,378,943,361,904,346,841,334,775,330,710,332,646,338,527,360,432,386"/>
+<area shape="rect" id="Node000008" href="$namespaceOurPaintDCM_1_1Utils.html#ab147d3dfbb9b895aac22476639df5c7d" title=" " alt="" coords="742,356,896,401"/>
+<area shape="poly" id="edge12_Node000006_Node000008" title=" " alt="" coords="431,402,729,384,724,385,432,407"/>
+<area shape="rect" id="Node000009" href="$namespaceOurPaintDCM_1_1Utils.html#a8d48225b0556798ea39a309eaf5af05b" title=" " alt="" coords="733,476,905,521"/>
+<area shape="poly" id="edge14_Node000006_Node000009" title=" " alt="" coords="421,438,464,456,509,470,562,481,616,489,720,498,715,498,615,494,561,487,507,476,462,461,420,443"/>
+<area shape="rect" id="Node000010" href="$structOurPaintDCM_1_1Figures_1_1Curve2D.html#aa71c132ba3c4d05a9dc82a5ddd4d5d9d" title=" " alt="" coords="508,416,685,461"/>
+<area shape="poly" id="edge16_Node000006_Node000010" title=" " alt="" coords="432,415,495,425,490,426,432,421"/>
+<area shape="poly" id="edge13_Node000008_Node000007" title=" " alt="" coords="897,387,940,396,935,396,897,393"/>
+<area shape="poly" id="edge15_Node000009_Node000007" title=" " alt="" coords="872,473,956,438,961,437,873,478"/>
+<area shape="poly" id="edge17_Node000010_Node000007" title=" " alt="" coords="686,430,940,415,934,415,686,435"/>
+<area shape="poly" id="edge18_Node000010_Node000008" title=" " alt="" coords="681,413,724,404,729,403,682,418"/>
 </map>

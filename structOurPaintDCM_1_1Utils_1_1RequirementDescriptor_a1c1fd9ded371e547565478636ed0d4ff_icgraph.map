@@ -1,5 +1,5 @@
 <map id="OurPaintDCM::Utils::RequirementDescriptor::pointCircleDist" name="OurPaintDCM::Utils::RequirementDescriptor::pointCircleDist">
-<area shape="rect" id="Node000001" title="Signed gap: positive outside, negative inside, zero on the circle." alt="" coords="219,5,400,60"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a92dd83622c0f7193f30f5110983321e3" title=" " alt="" coords="5,5,171,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,35,171,35,171,30,205,30"/>
+<area shape="rect" id="Node000001" title="Signed gap: positive outside, negative inside, zero on the circle." alt="" coords="218,5,398,67"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a92dd83622c0f7193f30f5110983321e3" title=" " alt="" coords="5,5,170,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="200,36,170,39,170,34,205,36"/>
 </map>

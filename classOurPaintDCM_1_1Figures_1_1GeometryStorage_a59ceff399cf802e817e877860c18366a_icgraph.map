@@ -1,0 +1,9 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::eraseArcCache" name="OurPaintDCM::Figures::GeometryStorage::eraseArcCache">
+<area shape="rect" id="Node000001" title=" " alt="" coords="842,5,1052,67"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af0cdab99210478c27f80536c7dca275b" title="Removes a line, circle, or arc by ID; does not delete points." alt="" coords="522,14,794,58"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="824,36,795,39,795,34,829,36"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a43a2f7601279a4a0167b81828aec836d" title="Removes an object by ID without throwing." alt="" coords="272,14,474,58"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="504,36,475,39,474,34,509,36"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ae0250e836e9d53173d35ebcea5784378" title="Move&#45;assigns; source is left in a valid empty state." alt="" coords="5,14,224,58"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="253,36,224,39,224,34,259,36"/>
+</map>

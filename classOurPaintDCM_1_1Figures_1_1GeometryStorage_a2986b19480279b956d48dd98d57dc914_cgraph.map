@@ -1,7 +1,12 @@
 <map id="OurPaintDCM::Figures::GeometryStorage::evaluateCurve" name="OurPaintDCM::Figures::GeometryStorage::evaluateCurve">
-<area shape="rect" id="Node000001" title="Evaluate C(u) using rational de Boor. Periodic parameters wrap into one period." alt="" coords="5,30,216,85"/>
-<area shape="rect" id="Node000002" href="$namespaceOurPaintDCM_1_1Utils.html#a43757230430230c98e28b886fa685c32" title=" " alt="" coords="307,5,454,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="216,42,294,33,294,38,216,48"/>
-<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Maps C++ figure type to FigureType enum." alt="" coords="264,69,497,109"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="216,67,251,71,250,77,216,72"/>
+<area shape="rect" id="Node000001" title="Evaluate C(u) using rational de Boor. Periodic parameters wrap into one period." alt="" coords="5,56,215,117"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a62a4b5b4374ad2df26dc8611111690a0" title="Mutable access to a figure by ID and expected type." alt="" coords="263,29,436,74"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="215,69,250,66,245,67,216,74"/>
+<area shape="rect" id="Node000005" href="$namespaceOurPaintDCM_1_1Utils.html#a43757230430230c98e28b886fa685c32" title=" " alt="" coords="277,99,422,143"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="215,99,264,108,259,109,215,104"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Maps C++ figure type to FigureType enum." alt="" coords="484,29,716,74"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="436,49,471,51,466,52,437,54"/>
+<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="553,27,551,19,559,10,576,5,600,3,627,5,645,14,640,14,626,10,600,8,577,10,562,15,556,21,557,30"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#adfc608a6cdf13e3011d8a2a3d6a51512" title="Constructs an empty storage; IDs start from the generator default." alt="" coords="764,21,982,82"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="717,49,752,51,746,52,717,54"/>
 </map>

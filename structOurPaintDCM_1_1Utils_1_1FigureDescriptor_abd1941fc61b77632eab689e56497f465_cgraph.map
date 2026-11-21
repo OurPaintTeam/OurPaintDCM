@@ -1,5 +1,8 @@
 <map id="OurPaintDCM::Utils::FigureDescriptor::curve" name="OurPaintDCM::Utils::FigureDescriptor::curve">
-<area shape="rect" id="Node000001" title="Create a NURBS with owned controls as x,y coordinate pairs." alt="" coords="5,5,187,45"/>
-<area shape="rect" id="Node000002" href="$structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#a685d7f7f31173423c57cceb106f8fe03" title="Create a NURBS using existing control point IDs." alt="" coords="235,5,416,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,23,221,23,221,28,187,28"/>
+<area shape="rect" id="Node000001" title="Create a NURBS with owned controls as x,y coordinate pairs." alt="" coords="5,36,186,81"/>
+<area shape="rect" id="Node000002" href="$structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#a685d7f7f31173423c57cceb106f8fe03" title="Create a NURBS using existing control point IDs." alt="" coords="234,5,414,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="186,44,221,41,216,42,186,49"/>
+<area shape="rect" id="Node000003" href="$structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#ae8c93c96c9e6912dcc3bed9d5a004f36" title=" " alt="" coords="462,28,607,89"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="186,59,234,60,414,60,449,61,444,62,414,65,234,65,186,64"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="415,38,449,46,444,46,415,44"/>
 </map>

@@ -1,0 +1,16 @@
+<map id="OurPaintDCM::DCMManager::splitComponentsAfterRemoval" name="OurPaintDCM::DCMManager::splitComponentsAfterRemoval">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,123,234,167"/>
+<area shape="poly" id="edge9_Node000001_Node000001" title=" " alt="" coords="69,122,68,112,76,104,94,98,120,96,148,98,166,107,161,108,147,104,119,101,95,103,79,108,73,114,75,122"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a3cf8b2822f324e99bffd86e21bb6184d" title=" " alt="" coords="282,123,485,167"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="234,142,268,144,263,146,235,148"/>
+<area shape="poly" id="edge8_Node000002_Node000002" title=" " alt="" coords="336,121,334,113,342,104,359,98,383,96,410,99,428,107,423,108,409,104,383,101,360,103,345,108,339,114,341,123"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#a8e564fbb0e6984c893dd8bb08c0e016e" title=" " alt="" coords="533,29,736,74"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="440,120,532,84,549,81,554,79,534,89,442,125"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1DCMManager.html#a0246829d84bf9ba1ffba2553d04502c6" title=" " alt="" coords="533,123,736,167"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="485,142,520,145,515,145,486,148"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1DCMManager.html#aafb28b69b6934cdc5ac4404adebea02a" title=" " alt="" coords="533,216,736,261"/>
+<area shape="poly" id="edge6_Node000002_Node000005" title=" " alt="" coords="446,165,561,210,556,210,445,170"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="587,28,585,19,594,10,610,5,635,3,662,5,680,14,674,14,661,10,635,8,611,10,596,15,591,21,592,30"/>
+<area shape="poly" id="edge5_Node000004_Node000004" title=" " alt="" coords="587,121,585,113,594,104,610,98,635,96,662,99,680,108,674,107,661,104,635,101,611,103,596,108,591,114,592,124"/>
+<area shape="poly" id="edge7_Node000005_Node000005" title=" " alt="" coords="587,214,585,206,594,197,610,191,635,189,662,192,680,201,674,200,661,197,635,195,611,197,596,201,591,207,592,217"/>
+</map>

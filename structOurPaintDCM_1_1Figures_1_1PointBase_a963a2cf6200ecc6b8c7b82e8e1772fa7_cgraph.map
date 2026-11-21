@@ -1,7 +1,7 @@
 <map id="OurPaintDCM::Figures::PointBase::validate" name="OurPaintDCM::Figures::PointBase::validate">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,168,45"/>
-<area shape="rect" id="Node000002" href="$namespaceOurPaintDCM_1_1Utils.html#ab147d3dfbb9b895aac22476639df5c7d" title=" " alt="" coords="216,5,371,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="168,23,202,23,202,28,168,28"/>
-<area shape="rect" id="Node000003" href="$namespaceOurPaintDCM_1_1Utils.html#a43757230430230c98e28b886fa685c32" title=" " alt="" coords="419,5,565,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="371,23,405,23,405,28,371,28"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,168,50"/>
+<area shape="rect" id="Node000002" href="$namespaceOurPaintDCM_1_1Utils.html#ab147d3dfbb9b895aac22476639df5c7d" title=" " alt="" coords="216,5,370,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="168,25,203,27,198,28,168,30"/>
+<area shape="rect" id="Node000003" href="$namespaceOurPaintDCM_1_1Utils.html#a43757230430230c98e28b886fa685c32" title=" " alt="" coords="418,5,563,50"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="370,25,405,28,400,28,370,30"/>
 </map>

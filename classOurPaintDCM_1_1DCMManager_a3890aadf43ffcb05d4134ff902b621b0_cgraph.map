@@ -1,0 +1,13 @@
+<map id="OurPaintDCM::DCMManager::updateRequirementWeight" name="OurPaintDCM::DCMManager::updateRequirementWeight">
+<area shape="rect" id="Node000001" title="Update a requirement&#39;s residual weight and invalidate cached solve state." alt="" coords="5,76,209,121"/>
+<area shape="poly" id="edge7_Node000001_Node000001" title=" " alt="" coords="55,75,53,66,62,57,80,51,107,49,136,52,156,60,151,61,135,57,107,55,81,57,65,61,58,67,60,76"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a4997785ceee400c68d0374022aab90dd" title=" " alt="" coords="257,76,511,121"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,96,244,98,238,99,210,101"/>
+<area shape="poly" id="edge4_Node000002_Node000002" title=" " alt="" coords="332,74,330,66,339,57,357,51,384,49,413,52,433,61,427,61,412,57,384,55,358,57,342,61,335,67,336,77"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#acf4e4dd5c06c2c51957f961988f929fd" title="Get component ID for a given figure." alt="" coords="559,29,762,74"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="511,74,546,71,541,72,512,79"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1DCMManager.html#a6967dc9a4f330d3aa420ae17a3488bf6" title=" " alt="" coords="559,123,762,167"/>
+<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="512,117,546,125,541,125,511,122"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="609,27,607,19,616,10,634,5,661,3,690,5,709,14,704,14,689,10,661,8,635,10,618,15,612,21,613,30"/>
+<area shape="poly" id="edge6_Node000004_Node000004" title=" " alt="" coords="609,121,607,112,616,103,634,98,661,96,690,98,709,108,704,107,689,104,661,101,635,103,618,108,612,114,613,124"/>
+</map>

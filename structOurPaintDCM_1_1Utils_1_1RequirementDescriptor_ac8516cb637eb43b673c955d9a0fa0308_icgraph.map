@@ -1,5 +1,5 @@
 <map id="OurPaintDCM::Utils::RequirementDescriptor::symmetricAboutLine" name="OurPaintDCM::Utils::RequirementDescriptor::symmetricAboutLine">
-<area shape="rect" id="Node000001" title=" " alt="" coords="244,5,425,60"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab15ce6c2b9a48e0696bc5a3f4750160e" title=" " alt="" coords="5,5,196,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="230,35,196,35,196,30,230,30"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="243,5,423,67"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#ab15ce6c2b9a48e0696bc5a3f4750160e" title=" " alt="" coords="5,5,195,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="225,36,195,39,195,34,230,36"/>
 </map>

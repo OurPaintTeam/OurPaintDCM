@@ -1,9 +1,12 @@
 <map id="OurPaintDCM::Figures::GeometryStorage::tryPointId" name="OurPaintDCM::Figures::GeometryStorage::tryPointId">
-<area shape="rect" id="Node000001" title="Returns id if it names a point; otherwise std::nullopt." alt="" coords="808,13,1024,53"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a73045b332c8507d45542e23cfdfb3436" title="Figures incident on a point (lines/circles/arcs that use this point)." alt="" coords="508,13,760,53"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="794,35,760,35,760,30,794,30"/>
-<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryGraphBuilder.html#a7f6d373db3dda20f0d99a7d9af872995" title="Local neighbourhood around id: vertex id, adjacent figures/points, and edges among them." alt="" coords="280,5,460,60"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="494,35,460,35,460,30,494,30"/>
-<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a06b553516b5a4ef350fdbf2c266893ce" title="Local subgraph around id: the object, its neighbours, and edges among them." alt="" coords="5,5,232,60"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="266,35,232,35,232,30,266,30"/>
+<area shape="rect" id="Node000001" title="Returns id if it names a point; otherwise std::nullopt." alt="" coords="1073,48,1288,93"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a73045b332c8507d45542e23cfdfb3436" title="Figures incident on a point (lines/circles/arcs that use this point)." alt="" coords="773,48,1025,93"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1054,71,1025,73,1025,68,1059,71"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryGraphBuilder.html#a7f6d373db3dda20f0d99a7d9af872995" title="Local neighbourhood around id: vertex id, adjacent figures/points, and edges among them." alt="" coords="546,5,725,67"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="755,52,726,51,726,45,760,52"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ae0250e836e9d53173d35ebcea5784378" title="Move&#45;assigns; source is left in a valid empty state." alt="" coords="5,48,224,93"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="761,78,725,81,498,85,272,81,224,80,224,74,272,76,498,80,725,76,755,78"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a06b553516b5a4ef350fdbf2c266893ce" title="Local subgraph around id: the object, its neighbours, and edges among them." alt="" coords="272,5,498,67"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="528,36,498,39,498,34,533,36"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="253,53,224,59,224,54,259,52"/>
 </map>

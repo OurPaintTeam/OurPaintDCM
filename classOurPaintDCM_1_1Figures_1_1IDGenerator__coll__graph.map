@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Figures::IDGenerator" name="OurPaintDCM::Figures::IDGenerator">
+<area shape="rect" id="Node000001" title="Monotonic unique ID generator." alt="" coords="8,106,170,151"/>
+<area shape="rect" id="Node000002" href="$structOurPaintDCM_1_1Utils_1_1ID.html" title="Strongly typed wrapper for an unsigned long long identifier." alt="" coords="5,5,173,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,47,92,106,86,105,87,50"/>
+</map>

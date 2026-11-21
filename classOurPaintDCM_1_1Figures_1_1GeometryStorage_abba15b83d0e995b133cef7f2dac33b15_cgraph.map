@@ -1,0 +1,6 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::typeToEnum" name="OurPaintDCM::Figures::GeometryStorage::typeToEnum">
+<area shape="rect" id="Node000001" title="Maps C++ figure type to FigureType enum." alt="" coords="5,29,238,74"/>
+<area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="70,28,68,19,77,10,95,5,122,3,151,5,170,14,164,14,149,10,121,8,96,10,80,15,73,21,75,30"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#adfc608a6cdf13e3011d8a2a3d6a51512" title="Constructs an empty storage; IDs start from the generator default." alt="" coords="286,21,503,82"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="238,49,273,51,268,52,238,54"/>
+</map>

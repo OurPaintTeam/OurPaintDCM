@@ -1,0 +1,21 @@
+<map id="headers/system/ArticulationDecomposition.h" name="headers/system/ArticulationDecomposition.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="155,5,360,50"/>
+<area shape="rect" id="Node000002" href="$GeometryGraphBuilder_8h.html" title=" " alt="" coords="93,98,275,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="240,49,208,88,204,84,236,52"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="300,98,362,126"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="277,48,311,86,306,86,276,53"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="21,174,94,201"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="160,128,94,168,91,164,163,124"/>
+<area shape="rect" id="Node000004" href="$ID_8h.html" title=" " alt="" coords="118,174,165,201"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="178,124,159,162,154,159,175,128"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="190,174,264,201"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="193,124,214,161,209,160,191,129"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="288,174,341,201"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="208,124,281,165,276,166,207,129"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,249,75,277"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="126,201,72,242,69,238,121,203"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="98,249,184,277"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="143,200,144,235,139,232,140,204"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="208,249,288,277"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="161,199,219,240,214,241,160,204"/>
+</map>

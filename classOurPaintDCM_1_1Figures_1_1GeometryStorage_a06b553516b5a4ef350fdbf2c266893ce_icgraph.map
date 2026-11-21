@@ -1,0 +1,5 @@
+<map id="OurPaintDCM::Figures::GeometryStorage::buildObjectSubgraph" name="OurPaintDCM::Figures::GeometryStorage::buildObjectSubgraph">
+<area shape="rect" id="Node000001" title="Local subgraph around id: the object, its neighbours, and edges among them." alt="" coords="272,5,498,67"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ae0250e836e9d53173d35ebcea5784378" title="Move&#45;assigns; source is left in a valid empty state." alt="" coords="5,14,224,58"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="253,36,224,39,224,34,259,36"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="OurPaintDCM::DCMManager::updateCircleCircleTangencyKind" name="OurPaintDCM::DCMManager::updateCircleCircleTangencyKind">
+<area shape="rect" id="Node000001" title="Switch containment/external contact for any circle/arc pair." alt="" coords="257,29,495,74"/>
+<area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="418,14,404,10,376,8,351,10,335,15,328,21,330,30,325,27,323,19,332,10,350,5,376,3,405,5,424,14"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a8630b7c30625dd4668be0fba4c853eb0" title=" " alt="" coords="5,29,209,74"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="238,52,209,54,209,49,244,51"/>
+</map>

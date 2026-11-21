@@ -1,5 +1,13 @@
 <map id="OurPaintDCM::DCMManager::snapshot" name="OurPaintDCM::DCMManager::snapshot">
-<area shape="rect" id="Node000001" title="Capture all persistent DCM state for an externally managed edit transaction." alt="" coords="5,5,209,45"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a39ce5a27157222eff9433dab3342606f" title="Get all figure descriptors." alt="" coords="257,5,461,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,23,244,23,244,28,209,28"/>
+<area shape="rect" id="Node000001" title="Capture all persistent DCM state for an externally managed edit transaction." alt="" coords="5,40,209,85"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a39ce5a27157222eff9433dab3342606f" title="Get all figure descriptors." alt="" coords="257,40,460,85"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,60,244,62,238,63,209,65"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="311,38,309,30,317,21,334,15,358,13,385,16,403,25,398,25,384,21,358,19,335,21,320,25,314,31,315,41"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#a608ba72e0ffe84e68c473439495e1cca" title="Get figure descriptor with current state." alt="" coords="508,40,711,85"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="460,60,495,62,490,63,461,65"/>
+<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="566,38,564,30,572,21,587,15,610,13,635,16,651,25,646,24,633,21,610,19,588,21,575,25,569,31,570,41"/>
+<area shape="rect" id="Node000004" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a783b0f201624031dd0cd387bb6c52bf9" title="Get X coordinate." alt="" coords="759,5,922,50"/>
+<area shape="poly" id="edge5_Node000003_Node000004" title=" " alt="" coords="711,44,741,42,747,42,712,50"/>
+<area shape="rect" id="Node000005" href="$structOurPaintDCM_1_1Figures_1_1Point2D.html#a7c02a5b6825f0d56942b49b68a6fd33c" title="Get Y coordinate." alt="" coords="759,75,922,119"/>
+<area shape="poly" id="edge6_Node000003_Node000005" title=" " alt="" coords="712,75,747,83,741,82,712,80"/>
 </map>

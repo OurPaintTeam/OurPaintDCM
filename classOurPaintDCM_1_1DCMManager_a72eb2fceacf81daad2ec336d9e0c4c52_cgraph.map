@@ -1,0 +1,73 @@
+<map id="OurPaintDCM::DCMManager::applyFigureUpdateNoSolve" name="OurPaintDCM::DCMManager::applyFigureUpdateNoSolve">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,403,212,448"/>
+<area shape="poly" id="edge34_Node000001_Node000001" title=" " alt="" coords="60,403,59,393,67,384,84,378,109,377,136,379,153,387,149,389,135,384,108,382,85,384,70,389,64,395,66,403"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a8831c139d8c28c3bbc9013df65608f40" title=" " alt="" coords="260,496,463,541"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="171,446,287,489,282,492,171,451"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#adea87c9621d83c6f1ae6927e0635fa3a" title=" " alt="" coords="511,382,714,426"/>
+<area shape="poly" id="edge41_Node000001_Node000003" title=" " alt="" coords="153,401,204,380,259,364,316,356,361,354,463,364,523,377,518,378,463,369,361,359,317,361,260,369,205,385,157,405"/>
+<area shape="rect" id="Node000011" href="$classOurPaintDCM_1_1DCMManager.html#a7121e326733ecb077bf826735d65cf1f" title=" " alt="" coords="260,228,463,273"/>
+<area shape="poly" id="edge19_Node000001_Node000011" title=" " alt="" coords="141,401,316,280,314,285,144,405"/>
+<area shape="rect" id="Node000017" href="$classOurPaintDCM_1_1DCMManager.html#aa7a1bb5abb711077f6ac260664265089" title=" " alt="" coords="260,403,463,448"/>
+<area shape="poly" id="edge35_Node000001_Node000017" title=" " alt="" coords="211,423,247,424,242,427,214,428"/>
+<area shape="rect" id="Node000019" href="$classOurPaintDCM_1_1DCMManager.html#a2844669aaa96262f04def7e8738d4105" title=" " alt="" coords="260,590,463,634"/>
+<area shape="poly" id="edge42_Node000001_Node000019" title=" " alt="" coords="133,446,191,496,261,551,306,581,301,582,258,556,188,500,134,451"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="314,495,312,486,320,477,337,472,361,470,388,472,406,481,401,482,387,478,361,475,338,477,323,482,317,488,319,497"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="399,494,451,465,510,436,529,431,524,434,512,441,454,470,402,498"/>
+<area shape="rect" id="Node000010" href="$classOurPaintDCM_1_1DCMManager.html#a91261c9d4a35170d7acfb7e6226043b1" title=" " alt="" coords="511,674,714,718"/>
+<area shape="poly" id="edge16_Node000002_Node000010" title=" " alt="" coords="440,539,464,551,500,576,533,605,586,662,581,661,529,609,496,580,462,556,440,544"/>
+<area shape="poly" id="edge10_Node000003_Node000003" title=" " alt="" coords="565,380,563,372,572,363,588,357,613,355,640,358,658,366,652,367,639,363,613,360,589,362,574,367,569,373,570,382"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1DCMManager.html#a2d8003eed071e8fa9433d4a50b8b04c5" title=" " alt="" coords="767,200,970,245"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="659,379,687,361,712,340,727,318,735,297,743,276,761,256,770,252,766,255,764,259,747,279,740,299,732,320,716,343,690,366,662,384"/>
+<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1DCMManager.html#a5e5db862fc0bc9518158bc47fc69aaef" title=" " alt="" coords="762,414,975,458"/>
+<area shape="poly" id="edge11_Node000003_Node000007" title=" " alt="" coords="714,414,749,420,744,422,715,420"/>
+<area shape="rect" id="Node000008" href="$classOurPaintDCM_1_1DCMManager.html#a2ccdb87b1c341a121d142cbe7d5dc15e" title=" " alt="" coords="767,627,970,672"/>
+<area shape="poly" id="edge13_Node000003_Node000008" title=" " alt="" coords="700,424,716,437,731,456,739,476,743,513,746,551,752,569,764,589,798,620,793,619,760,593,747,572,740,552,737,513,734,477,726,459,712,441,699,430"/>
+<area shape="poly" id="edge5_Node000004_Node000004" title=" " alt="" coords="820,199,818,190,827,181,843,176,869,174,896,176,914,185,909,186,895,182,868,179,845,181,830,186,824,192,825,201"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1DCMManager.html#acf4e4dd5c06c2c51957f961988f929fd" title="Get component ID for a given figure." alt="" coords="1023,247,1226,292"/>
+<area shape="poly" id="edge6_Node000004_Node000005" title=" " alt="" coords="970,239,1010,248,1005,249,971,244"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1DCMManager.html#a7a1a3a3f0652493ed98e66ad5dce72b2" title="Get all figure IDs in a component." alt="" coords="1023,154,1226,198"/>
+<area shape="poly" id="edge8_Node000004_Node000006" title=" " alt="" coords="970,202,1010,196,1005,199,972,207"/>
+<area shape="poly" id="edge7_Node000005_Node000005" title=" " alt="" coords="1076,245,1074,237,1083,228,1099,222,1124,221,1152,223,1170,232,1165,232,1151,228,1124,226,1100,228,1085,233,1079,239,1081,248"/>
+<area shape="poly" id="edge9_Node000006_Node000006" title=" " alt="" coords="1076,152,1074,144,1083,135,1099,129,1124,127,1152,130,1170,138,1165,139,1151,135,1124,132,1100,134,1085,139,1079,145,1081,154"/>
+<area shape="poly" id="edge12_Node000007_Node000007" title=" " alt="" coords="820,412,818,404,827,395,843,389,869,387,896,390,914,399,909,399,895,395,868,392,845,394,830,399,824,405,825,414"/>
+<area shape="poly" id="edge15_Node000008_Node000008" title=" " alt="" coords="820,625,818,617,827,608,843,602,869,601,896,603,914,612,909,612,895,608,868,606,845,608,830,613,824,619,825,628"/>
+<area shape="rect" id="Node000009" href="$namespaceOurPaintDCM_1_1Utils.html#a43757230430230c98e28b886fa685c32" title=" " alt="" coords="1052,580,1197,625"/>
+<area shape="poly" id="edge14_Node000008_Node000009" title=" " alt="" coords="970,628,1039,618,1033,619,971,634"/>
+<area shape="poly" id="edge17_Node000010_Node000009" title=" " alt="" coords="715,703,840,702,908,695,974,682,1029,660,1077,635,1082,633,1032,664,975,687,909,700,840,707,715,708"/>
+<area shape="poly" id="edge18_Node000010_Node000010" title=" " alt="" coords="565,672,563,664,572,655,588,649,613,647,640,650,658,659,652,659,639,655,613,652,589,654,574,659,569,665,570,675"/>
+<area shape="poly" id="edge22_Node000011_Node000003" title=" " alt="" coords="400,271,564,373,559,374,400,276"/>
+<area shape="poly" id="edge20_Node000011_Node000004" title=" " alt="" coords="463,243,753,228,749,231,464,248"/>
+<area shape="poly" id="edge21_Node000011_Node000011" title=" " alt="" coords="314,228,312,218,320,209,337,204,361,202,388,204,406,212,401,214,387,210,361,207,338,209,323,214,317,220,319,228"/>
+<area shape="rect" id="Node000012" href="$structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor.html#a4cf1b51469fad62229152cb70eb550c7" title=" " alt="" coords="778,91,959,152"/>
+<area shape="poly" id="edge23_Node000011_Node000012" title=" " alt="" coords="451,225,765,146,762,150,453,230"/>
+<area shape="rect" id="Node000013" href="$structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor.html#ab63bd0bce021f419241c6c2578e021c9" title=" " alt="" coords="778,5,959,67"/>
+<area shape="poly" id="edge24_Node000011_Node000013" title=" " alt="" coords="399,226,510,167,640,113,766,69,761,72,642,118,512,172,403,230"/>
+<area shape="rect" id="Node000014" href="$classOurPaintDCM_1_1DCMManager.html#ac5f54dee9e4c4d772df2263940482837" title=" " alt="" coords="511,284,714,329"/>
+<area shape="poly" id="edge25_Node000011_Node000014" title=" " alt="" coords="463,271,498,280,493,282,464,276"/>
+<area shape="poly" id="edge28_Node000014_Node000009" title=" " alt="" coords="714,320,874,348,940,362,976,375,1001,395,1024,418,1063,469,1092,520,1112,567,1107,565,1087,523,1058,472,1020,421,998,399,973,380,938,368,873,353,715,325"/>
+<area shape="poly" id="edge26_Node000014_Node000012" title=" " alt="" coords="631,282,685,224,722,191,761,162,771,158,767,162,764,166,725,195,689,228,634,286"/>
+<area shape="poly" id="edge27_Node000014_Node000013" title=" " alt="" coords="621,283,641,240,671,185,711,128,761,77,768,74,764,78,764,81,715,131,676,188,645,243,625,286"/>
+<area shape="poly" id="edge33_Node000014_Node000014" title=" " alt="" coords="565,283,563,274,572,265,588,260,613,258,640,260,657,269,652,270,639,266,613,263,589,265,574,270,569,276,570,285"/>
+<area shape="rect" id="Node000015" href="$namespaceOurPaintDCM_1_1Utils.html#a7d6582360f3f1a566385ae9ad42c45ea" title=" " alt="" coords="788,270,949,314"/>
+<area shape="poly" id="edge29_Node000014_Node000015" title=" " alt="" coords="714,298,775,297,770,299,716,304"/>
+<area shape="rect" id="Node000016" href="$namespaceOurPaintDCM_1_1Utils.html#a8d48225b0556798ea39a309eaf5af05b" title=" " alt="" coords="783,534,954,578"/>
+<area shape="poly" id="edge31_Node000014_Node000016" title=" " alt="" coords="693,327,716,344,729,360,737,375,744,405,749,436,765,469,790,498,821,525,815,524,787,502,760,472,743,438,738,406,732,377,725,362,712,347,693,332"/>
+<area shape="poly" id="edge30_Node000015_Node000009" title=" " alt="" coords="946,312,976,331,1003,358,1027,387,1066,451,1095,513,1114,567,1109,564,1090,515,1061,453,1022,390,999,361,973,336,946,318"/>
+<area shape="poly" id="edge32_Node000016_Node000009" title=" " alt="" coords="954,569,1039,587,1034,587,955,574"/>
+<area shape="poly" id="edge37_Node000017_Node000003" title=" " alt="" coords="462,414,498,413,493,415,464,419"/>
+<area shape="poly" id="edge36_Node000017_Node000017" title=" " alt="" coords="314,402,312,393,320,384,337,378,361,377,388,379,406,387,401,389,387,384,361,382,338,384,323,389,317,395,319,403"/>
+<area shape="rect" id="Node000018" href="$classOurPaintDCM_1_1DCMManager.html#acfebdf11de7c62aa872dc9d9adae68b8" title=" " alt="" coords="511,475,714,520"/>
+<area shape="poly" id="edge38_Node000017_Node000018" title=" " alt="" coords="442,446,520,470,515,471,442,451"/>
+<area shape="poly" id="edge39_Node000018_Node000009" title=" " alt="" coords="714,490,841,495,909,504,975,519,1031,542,1081,572,1076,571,1029,546,974,524,908,509,840,500,715,495"/>
+<area shape="poly" id="edge40_Node000018_Node000018" title=" " alt="" coords="565,474,563,465,572,456,588,450,613,449,640,451,658,460,652,460,639,456,613,454,589,456,574,461,569,467,570,476"/>
+<area shape="poly" id="edge51_Node000019_Node000008" title=" " alt="" coords="463,617,715,635,754,640,749,641,714,640,464,622"/>
+<area shape="poly" id="edge43_Node000019_Node000009" title=" " alt="" coords="383,632,438,685,473,710,512,728,580,750,639,764,692,771,743,771,794,765,847,752,974,710,1006,695,1037,675,1087,637,1092,635,1040,680,1009,699,976,715,849,757,795,770,743,777,692,776,638,769,578,755,510,733,470,714,434,689,381,638"/>
+<area shape="poly" id="edge47_Node000019_Node000010" title=" " alt="" coords="431,632,532,668,526,669,430,638"/>
+<area shape="poly" id="edge48_Node000019_Node000014" title=" " alt="" coords="418,587,442,572,461,552,476,525,483,499,482,448,481,423,483,397,491,371,509,344,516,340,520,337,513,347,496,373,488,398,486,423,487,448,488,499,481,527,465,555,445,576,421,591"/>
+<area shape="poly" id="edge46_Node000019_Node000016" title=" " alt="" coords="463,598,770,566,765,569,464,604"/>
+<area shape="poly" id="edge50_Node000019_Node000018" title=" " alt="" coords="407,587,510,538,544,525,540,528,512,543,410,592"/>
+<area shape="poly" id="edge49_Node000019_Node000019" title=" " alt="" coords="314,588,312,580,320,571,337,565,361,563,388,566,406,574,401,575,387,571,361,568,338,570,323,575,317,581,319,590"/>
+<area shape="rect" id="Node000020" href="$namespaceOurPaintDCM_1_1Utils.html#ab147d3dfbb9b895aac22476639df5c7d" title=" " alt="" coords="536,798,690,842"/>
+<area shape="poly" id="edge44_Node000019_Node000020" title=" " alt="" coords="379,633,434,703,471,742,513,777,533,791,528,790,509,781,467,746,430,707,377,638"/>
+<area shape="poly" id="edge45_Node000020_Node000009" title=" " alt="" coords="690,825,754,825,827,820,903,804,939,792,973,777,1015,747,1051,710,1080,672,1102,640,1106,637,1084,675,1055,714,1018,751,976,781,941,797,904,810,828,825,755,831,690,830"/>
+</map>

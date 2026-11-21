@@ -1,26 +1,5 @@
 var searchData=
 [
-  ['m_5farcfree_0',['m_arcFree',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a6952a7ae053ccef167302a8b40108bac',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5farcslots_1',['m_arcSlots',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a42bd68a0e544d9e3ccaaa9ab242e4b06',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5farcswithids_2',['m_arcsWithIds',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a1ff7693308d502892664f72f039a52b1',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5farcwithidpos_3',['m_arcWithIdPos',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ab8eb34d381e9404241c940f33a5000a2',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5fcirclefree_4',['m_circleFree',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a36063a30f930e835b2c493e85f9038df',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5fcircleslots_5',['m_circleSlots',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a03f7916d3ef4f5cc6bb19934ed9d62c7',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5fcircleswithids_6',['m_circlesWithIds',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ab5680c2446bbfd00574bdc5ecf3d5409',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5fcirclewithidpos_7',['m_circleWithIdPos',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a7d7835948f9c208696d8fc90afe2df69',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5fcurvefree_8',['m_curveFree',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a65411af659cb8bdc7f068b715eca83b0',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5fcurveslots_9',['m_curveSlots',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a87668a9de2b7b3bed6ba59bb5e967409',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5fcurveswithids_10',['m_curvesWithIds',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ab2ed873954b31b6a81964163e7f134c5',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5fcurvewithidpos_11',['m_curveWithIdPos',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#aa362b0488fdd60c6b4d6df7a117f646b',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5fdeps_12',['m_deps',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a15f3a13569a9199970dd4ed29ad6ab9a',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5fidgen_13',['m_idGen',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac8b7dad07e7e65854a9e7f2dc3e38199',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5findex_14',['m_index',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a69b399ef2997d9362bff635f5619adc9',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5flinefree_15',['m_lineFree',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ac654ae6b998e87fb6504a216295a137d',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5flineslots_16',['m_lineSlots',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af25e80299a27b38135b8d2ce78e80091',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5flineswithids_17',['m_linesWithIds',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a9a5ae7f788d1504b316d33032917162d',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5flinewithidpos_18',['m_lineWithIdPos',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a3e4ad03e6c55059c46f38725e6f45fd6',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5fpointfree_19',['m_pointFree',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a9ae4bb8d24e6da684567046f0780e66e',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5fpointslots_20',['m_pointSlots',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a2379ce26f834ae64537c0a8daecea6b9',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5fpointswithids_21',['m_pointsWithIds',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a8ebe1df413edc09b6c52b859a1d2a2e8',1,'OurPaintDCM::Figures::GeometryStorage']]],
-  ['m_5fpointwithidpos_22',['m_pointWithIdPos',['../classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a60f1e6490cb61ccb49f877441ad8aafc',1,'OurPaintDCM::Figures::GeometryStorage']]]
+  ['lineid_0',['lineId',['../structOurPaintDCM_1_1Utils_1_1LineUpdateDescriptor.html#a52394525da178efa159d8013b546fa8a',1,'OurPaintDCM::Utils::LineUpdateDescriptor']]],
+  ['lockedvarsbycomponent_1',['lockedVarsByComponent',['../structOurPaintDCM_1_1DCMManager_1_1BatchUpdateContext.html#a7f6108f80e1aa74f124bc105ff6af98d',1,'OurPaintDCM::DCMManager::BatchUpdateContext']]]
 ];

@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['weight_0',['weight',['../structOurPaintDCM_1_1System_1_1RequirementSystem_1_1RequirementEntry.html#a5f8220836041c581c109e0693e46998e',1,'OurPaintDCM::System::RequirementSystem::RequirementEntry::weight'],['../structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html#a8158f41089ebac0d6584bf3344a73b02',1,'OurPaintDCM::Utils::RequirementDescriptor::weight']]],
-  ['weights_1',['weights',['../structOurPaintDCM_1_1Figures_1_1Curve2D.html#ad6566e176a2e25934737d5bc77ba9dab',1,'OurPaintDCM::Figures::Curve2D::weights'],['../structOurPaintDCM_1_1Figures_1_1FigureData.html#a7ef8feb3e42e60147f8a9cbfe9cbb7a9',1,'OurPaintDCM::Figures::FigureData::weights'],['../structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#a8049d9fb68828acef683f5a2425186c0',1,'OurPaintDCM::Utils::FigureDescriptor::weights']]]
+  ['variablecount_0',['variableCount',['../structOurPaintDCM_1_1System_1_1RequirementFunctionSystem_1_1Diagnosis.html#a9530e1e271b79e73e2275c04a5dc49a1',1,'OurPaintDCM::System::RequirementFunctionSystem::Diagnosis']]],
+  ['variableowners_1',['variableOwners',['../structOurPaintDCM_1_1System_1_1SolvePipeline.html#aaf8ca0a376adfb1276daf4af80f5f407',1,'OurPaintDCM::System::SolvePipeline::variableOwners'],['../structOurPaintDCM_1_1DCMManager_1_1SolveCache_1_1Entry.html#a86fcaac048fb581bbede653592208b47',1,'OurPaintDCM::DCMManager::SolveCache::Entry::variableOwners']]],
+  ['version_2',['version',['../structOurPaintDCM_1_1DCMManager_1_1SolveCache_1_1Entry.html#afdef23b3b0a810ee68538cd487532193',1,'OurPaintDCM::DCMManager::SolveCache::Entry::version'],['../structOurPaintDCM_1_1DCMManager_1_1SolveCache.html#a3e802c3fe192b8cbbe31b77deb724901',1,'OurPaintDCM::DCMManager::SolveCache::version']]]
 ];

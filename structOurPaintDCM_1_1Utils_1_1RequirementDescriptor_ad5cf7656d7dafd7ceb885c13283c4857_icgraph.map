@@ -1,5 +1,8 @@
 <map id="OurPaintDCM::Utils::RequirementDescriptor::lineArcDist" name="OurPaintDCM::Utils::RequirementDescriptor::lineArcDist">
-<area shape="rect" id="Node000001" title="Non&#45;negative clearance to the supporting circle, as for lineCircleDist." alt="" coords="219,5,400,60"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#acd956357db48bd2b5f0d0ef36c2c6259" title=" " alt="" coords="5,5,171,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,35,171,35,171,30,205,30"/>
+<area shape="rect" id="Node000001" title="Non&#45;negative clearance to the supporting circle, as for lineCircleDist." alt="" coords="430,29,610,91"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#acd956357db48bd2b5f0d0ef36c2c6259" title=" " alt="" coords="218,29,382,91"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="412,60,383,63,382,58,417,60"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1System_1_1RequirementSystem.html#a1a0cc2370e25d558644ceeba4df39a36" title=" " alt="" coords="5,29,170,91"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="200,60,170,63,170,58,205,60"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="120,15,108,11,87,8,69,10,57,15,51,21,51,30,45,28,47,19,54,10,68,5,88,3,110,5,125,15"/>
 </map>

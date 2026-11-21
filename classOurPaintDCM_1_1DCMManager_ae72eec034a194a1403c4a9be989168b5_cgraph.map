@@ -1,0 +1,7 @@
+<map id="OurPaintDCM::DCMManager::clear" name="OurPaintDCM::DCMManager::clear">
+<area shape="rect" id="Node000001" title="Clear all figures, requirements, and components." alt="" coords="5,29,209,74"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="59,28,58,19,66,10,82,5,107,3,134,5,152,14,147,14,133,10,107,8,83,10,69,15,63,21,64,29"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a6967dc9a4f330d3aa420ae17a3488bf6" title=" " alt="" coords="257,29,460,74"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="209,49,244,51,238,52,209,54"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="311,27,309,19,317,10,334,5,358,3,385,5,403,14,398,14,384,10,358,8,335,10,320,15,314,21,315,30"/>
+</map>

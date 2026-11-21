@@ -59,13 +59,14 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Arc_8h.html",
-"classOurPaintDCM_1_1DCMManager.html#a8831c139d8c28c3bbc9013df65608f40",
-"classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ab2ed873954b31b6a81964163e7f134c5",
-"classOurPaintDCM_1_1System_1_1RequirementFunctionSystem.html#aecf2c9fa7cd06edf3b6c169cf75bb6f0",
-"namespaceOurPaintDCM.html#ad151bf1d7804f784ece03d94afeaf435afed8597cb02dc50d094035240fdad0b0",
-"structOurPaintDCM_1_1Figures_1_1Point2D.html#ad4e6e2bae59f79ba39b367ca1bc6580f",
-"structOurPaintDCM_1_1Utils_1_1RequirementDescriptor.html#a135b683e85e55b270fabb0a1b7630f12"
+"classOurPaintDCM_1_1DCMManager.html#ae6a9d597b8fab7df762474f9c00d5490",
+"classOurPaintDCM_1_1Figures_1_1IDGenerator.html#a10d4994ee732333e277d12a1fa2d16cc",
+"classOurPaintDCM_1_1System_1_1RequirementSystem.html#a36a15818b9622a1f33e27170eb8443a7",
+"namespaceOurPaintDCM_1_1Utils.html#a640e0a0fd14fb2852b0080e87304d5b9a3c96a370f036327872c86ad7d4ff7660",
+"structOurPaintDCM_1_1Figures_1_1Point2D.html#a783b0f201624031dd0cd387bb6c52bf9",
+"structOurPaintDCM_1_1Utils_1_1FigureUpdateDescriptor.html#aa2f44c5209b480683350a6b5f59078de"
 ];
 
-var SYNCONMSG = 'click to disable panel synchronisation';
-var SYNCOFFMSG = 'click to enable panel synchronisation';
+var SYNCONMSG = 'click to disable panel synchronization';
+var SYNCOFFMSG = 'click to enable panel synchronization';
+var LISTOFALLMEMBERS = 'List of all members';

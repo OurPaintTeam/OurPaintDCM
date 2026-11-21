@@ -1,0 +1,4 @@
+<map id="OurPaintDCM::System::RequirementSystem::getRequirements" name="OurPaintDCM::System::RequirementSystem::getRequirements">
+<area shape="rect" id="Node000001" title="Get all stored requirement entries (read&#45;only)." alt="" coords="5,29,170,91"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="111,15,103,10,87,8,74,10,65,14,60,21,59,30,54,28,55,19,61,10,72,5,88,3,105,5,117,14"/>
+</map>

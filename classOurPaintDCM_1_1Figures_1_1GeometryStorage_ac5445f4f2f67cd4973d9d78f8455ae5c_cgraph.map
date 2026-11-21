@@ -1,33 +1,22 @@
 <map id="OurPaintDCM::Figures::GeometryStorage::createArc" name="OurPaintDCM::Figures::GeometryStorage::createArc">
-<area shape="rect" id="Node000001" title="Creates an arc through two points with a center point." alt="" coords="5,285,220,325"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#acf3a3d6689ddfeff0c60d91941454860" title="Uses a requested ID or allocates the next automatic one." alt="" coords="268,83,483,123"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="126,284,182,214,222,174,267,139,291,126,293,130,269,144,225,178,186,218,130,287"/>
-<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Maps C++ figure type to FigureType enum." alt="" coords="531,197,764,237"/>
-<area shape="poly" id="edge14_Node000001_Node000006" title=" " alt="" coords="130,283,186,230,225,203,267,183,326,168,374,168,483,183,547,192,546,197,482,188,373,173,327,174,269,188,227,208,190,234,133,287"/>
-<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#acbbdc2d17542bec4b49c8ca92517e44b" title="Allocates or reuses an arc slot." alt="" coords="273,197,478,237"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="166,283,267,247,292,239,293,244,269,252,168,288"/>
-<area shape="rect" id="Node000008" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a62a4b5b4374ad2df26dc8611111690a0" title="Mutable access to a figure by ID and expected type." alt="" coords="288,285,463,325"/>
-<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="220,303,274,303,274,308,220,308"/>
-<area shape="rect" id="Node000009" href="$classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a094eeac5da337ca900de5da72df8b4e6" title="Registers an arc through p1, p2 with center center." alt="" coords="269,350,481,405"/>
-<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="187,323,263,344,262,349,186,328"/>
-<area shape="rect" id="Node000011" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af3c0cdb59c649fcf7849aad698528381" title=" " alt="" coords="274,429,477,483"/>
-<area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="139,323,197,368,269,414,283,420,281,425,267,418,194,372,136,328"/>
-<area shape="rect" id="Node000012" href="$structOurPaintDCM_1_1Figures_1_1PointBase.html#a963a2cf6200ecc6b8c7b82e8e1772fa7" title=" " alt="" coords="294,508,457,548"/>
-<area shape="poly" id="edge15_Node000001_Node000012" title=" " alt="" coords="127,324,149,360,181,406,222,453,270,494,282,501,280,506,266,498,218,457,177,410,144,363,122,327"/>
-<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a27dc8a968cc1fc86744675b55bee62c8" title="Get current ID without increment." alt="" coords="566,5,729,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="443,80,530,55,559,47,560,52,531,60,445,85"/>
-<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a10d4994ee732333e277d12a1fa2d16cc" title="Generate and return the next unique ID." alt="" coords="567,69,727,109"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="483,95,553,91,553,97,483,100"/>
-<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Utils_1_1IDGenerator.html#a18b2be9c90bf302faaff026cb4fad937" title="Set the generator state to a given ID." alt="" coords="574,133,721,173"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="483,120,561,135,560,140,482,125"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="445,120,484,139,499,151,508,162,518,173,532,183,545,190,543,194,529,188,514,177,504,165,495,154,481,144,443,125"/>
-<area shape="poly" id="edge7_Node000007_Node000006" title=" " alt="" coords="478,215,517,215,517,220,478,220"/>
-<area shape="poly" id="edge10_Node000008_Node000006" title=" " alt="" coords="437,283,571,239,572,244,439,288"/>
-<area shape="poly" id="edge9_Node000008_Node000008" title=" " alt="" coords="327,286,324,276,332,266,349,261,375,259,406,262,422,269,420,274,404,267,375,264,350,266,335,271,329,277,332,284"/>
-<area shape="rect" id="Node000010" href="$classOurPaintDCM_1_1Figures_1_1GeometryDependencyIndex.html#a718506d0d6f415a83efc2ac02ef688d0" title="Appends id to vec if not already present (linear scan)." alt="" coords="541,350,753,405"/>
-<area shape="poly" id="edge12_Node000009_Node000010" title=" " alt="" coords="482,375,528,375,528,380,482,380"/>
-<area shape="rect" id="Node000013" href="$namespaceOurPaintDCM_1_1Utils.html#ab147d3dfbb9b895aac22476639df5c7d" title=" " alt="" coords="570,508,725,548"/>
-<area shape="poly" id="edge16_Node000012_Node000013" title=" " alt="" coords="457,525,556,525,556,531,457,531"/>
-<area shape="rect" id="Node000014" href="$namespaceOurPaintDCM_1_1Utils.html#a43757230430230c98e28b886fa685c32" title=" " alt="" coords="812,508,959,548"/>
-<area shape="poly" id="edge17_Node000013_Node000014" title=" " alt="" coords="725,525,798,525,798,531,725,531"/>
+<area shape="rect" id="Node000001" title="Creates an arc through two points with a center point." alt="" coords="5,144,220,189"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#acf3a3d6689ddfeff0c60d91941454860" title="Uses a requested ID or allocates the next automatic one." alt="" coords="268,5,482,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="141,141,197,101,266,60,283,55,279,58,269,65,200,105,144,145"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#acbbdc2d17542bec4b49c8ca92517e44b" title="Allocates or reuses an arc slot." alt="" coords="273,75,477,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="199,141,275,122,271,125,201,146"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a62a4b5b4374ad2df26dc8611111690a0" title="Mutable access to a figure by ID and expected type." alt="" coords="288,144,462,189"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="220,164,275,165,270,167,221,169"/>
+<area shape="rect" id="Node000007" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af3c0cdb59c649fcf7849aad698528381" title=" " alt="" coords="274,213,476,274"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="191,187,262,209,257,211,191,192"/>
+<area shape="rect" id="Node000008" href="$structOurPaintDCM_1_1Figures_1_1PointBase.html#a963a2cf6200ecc6b8c7b82e8e1772fa7" title=" " alt="" coords="294,299,456,343"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="138,187,196,236,232,261,269,284,282,292,277,292,266,289,229,266,193,240,137,192"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#abba15b83d0e995b133cef7f2dac33b15" title="Maps C++ figure type to FigureType enum." alt="" coords="530,144,762,189"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="462,164,517,166,512,167,462,169"/>
+<area shape="poly" id="edge6_Node000005_Node000005" title=" " alt="" coords="595,142,593,134,602,125,620,119,646,117,675,120,694,129,689,129,674,125,646,123,621,125,605,129,598,135,600,145"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#adfc608a6cdf13e3011d8a2a3d6a51512" title="Constructs an empty storage; IDs start from the generator default." alt="" coords="810,136,1028,197"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="763,164,798,166,792,167,763,169"/>
+<area shape="rect" id="Node000009" href="$namespaceOurPaintDCM_1_1Utils.html#ab147d3dfbb9b895aac22476639df5c7d" title=" " alt="" coords="569,299,723,343"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="456,318,556,321,551,321,456,324"/>
+<area shape="rect" id="Node000010" href="$namespaceOurPaintDCM_1_1Utils.html#a43757230430230c98e28b886fa685c32" title=" " alt="" coords="846,299,992,343"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="724,318,833,321,828,321,724,324"/>
 </map>

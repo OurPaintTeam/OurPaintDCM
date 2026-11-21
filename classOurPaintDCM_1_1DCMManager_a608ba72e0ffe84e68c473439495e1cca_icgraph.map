@@ -1,0 +1,17 @@
+<map id="OurPaintDCM::DCMManager::getFigure" name="OurPaintDCM::DCMManager::getFigure">
+<area shape="rect" id="Node000001" title="Get figure descriptor with current state." alt="" coords="759,89,963,134"/>
+<area shape="poly" id="edge9_Node000001_Node000001" title=" " alt="" coords="901,74,887,70,861,68,837,70,823,75,817,81,818,90,814,87,812,79,820,70,836,65,861,63,888,65,906,74"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a80c62cd21aad395a50bf1e294abedb8e" title="Get all NURBS curve descriptors, including current control coordinates." alt="" coords="257,29,460,74"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="741,97,711,96,461,66,460,61,712,90,746,97"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#a8630b7c30625dd4668be0fba4c853eb0" title=" " alt="" coords="5,115,209,159"/>
+<area shape="poly" id="edge10_Node000001_Node000003" title=" " alt="" coords="743,118,209,136,209,131,744,113"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1DCMManager.html#a39ce5a27157222eff9433dab3342606f" title="Get all figure descriptors." alt="" coords="508,173,711,218"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="780,139,680,175,678,170,775,140"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="398,14,384,10,358,8,335,10,320,15,314,21,316,30,311,28,309,19,317,10,334,5,358,3,385,5,403,14"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="274,81,176,117,174,112,278,78"/>
+<area shape="poly" id="edge6_Node000004_Node000003" title=" " alt="" coords="491,184,209,151,209,146,494,180"/>
+<area shape="poly" id="edge5_Node000004_Node000004" title=" " alt="" coords="649,158,636,154,610,152,586,154,571,159,566,165,567,174,562,171,560,163,569,154,585,149,610,147,637,149,655,158"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1DCMManager.html#ad5e73d84b7e35c0af0dc4d02c52083aa" title="Capture all persistent DCM state for an externally managed edit transaction." alt="" coords="257,200,460,245"/>
+<area shape="poly" id="edge7_Node000004_Node000005" title=" " alt="" coords="495,208,461,214,460,209,490,208"/>
+<area shape="poly" id="edge8_Node000005_Node000003" title=" " alt="" coords="274,196,175,163,176,157,279,194"/>
+</map>

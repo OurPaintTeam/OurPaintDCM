@@ -1,0 +1,10 @@
+<map id="OurPaintDCM::DCMManager::invalidateRequirementSolveCache" name="OurPaintDCM::DCMManager::invalidateRequirementSolveCache">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,76,260,121"/>
+<area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="80,75,79,66,87,57,105,51,133,49,162,52,181,60,176,61,161,57,132,55,106,57,90,61,84,67,85,76"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#acf4e4dd5c06c2c51957f961988f929fd" title="Get component ID for a given figure." alt="" coords="308,29,511,74"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="259,74,295,71,290,72,261,79"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#a6967dc9a4f330d3aa420ae17a3488bf6" title=" " alt="" coords="308,123,511,167"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="260,117,295,125,290,125,260,122"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="357,28,355,19,364,10,382,5,409,3,439,5,458,14,453,14,438,10,409,8,383,10,367,15,360,21,362,30"/>
+<area shape="poly" id="edge5_Node000003_Node000003" title=" " alt="" coords="357,121,355,112,364,103,382,98,409,96,439,98,458,107,453,107,438,104,409,101,383,103,367,108,360,114,362,124"/>
+</map>

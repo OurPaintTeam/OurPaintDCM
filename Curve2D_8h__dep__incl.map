@@ -1,21 +1,27 @@
 <map id="headers/figures/Curve2D.h" name="headers/figures/Curve2D.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="595,5,790,31"/>
-<area shape="rect" id="Node000002" href="$GeometryStorage_8h.html" title=" " alt="" coords="481,79,672,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="665,41,606,81,603,76,662,36"/>
-<area shape="rect" id="Node000009" href="$FigureDescriptor_8h.html" title=" " alt="" coords="696,86,924,111"/>
-<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="723,36,794,84,791,88,720,41"/>
-<area shape="rect" id="Node000003" href="$DCMManager_8h.html" title=" " alt="" coords="671,255,848,280"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="673,121,707,140,736,165,750,187,757,212,762,254,757,254,752,213,745,189,732,168,704,144,670,126"/>
-<area shape="rect" id="Node000005" href="$RequirementSystem_8h.html" title=" " alt="" coords="27,167,241,207"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="468,124,231,169,230,164,467,118"/>
-<area shape="rect" id="Node000007" href="$GeometryGraphBuilder_8cpp.html" title=" " alt="" coords="266,167,463,207"/>
-<area shape="poly" id="edge7_Node000002_Node000007" title=" " alt="" coords="519,126,412,169,410,164,517,121"/>
-<area shape="rect" id="Node000008" href="$GeometryStorage_8cpp.html" title=" " alt="" coords="487,174,722,199"/>
-<area shape="poly" id="edge8_Node000002_Node000008" title=" " alt="" coords="590,131,603,173,598,174,585,132"/>
-<area shape="rect" id="Node000004" href="$DCMManager_8cpp.html" title=" " alt="" coords="680,328,839,353"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="762,294,762,328,757,328,757,294"/>
-<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="256,204,671,254,670,259,255,209"/>
-<area shape="rect" id="Node000006" href="$RequirementSystem_8cpp.html" title=" " alt="" coords="5,255,263,280"/>
-<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="137,220,137,254,131,254,131,220"/>
-<area shape="poly" id="edge10_Node000009_Node000003" title=" " alt="" coords="805,126,781,207,766,255,760,254,775,206,800,124"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="1066,5,1260,33"/>
+<area shape="rect" id="Node000002" href="$GeometryStorage_8h.html" title=" " alt="" coords="952,81,1142,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1134,41,1079,83,1076,78,1129,43"/>
+<area shape="rect" id="Node000012" href="$FigureDescriptor_8h.html" title=" " alt="" coords="1166,90,1394,117"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="1195,40,1264,89,1259,89,1194,45"/>
+<area shape="rect" id="Node000003" href="$DCMManager_8h.html" title=" " alt="" coords="1141,275,1318,302"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="1148,130,1180,148,1206,172,1221,198,1229,226,1232,276,1228,273,1224,227,1216,200,1202,175,1177,152,1147,135"/>
+<area shape="rect" id="Node000005" href="$RequirementSystem_8h.html" title=" " alt="" coords="499,174,712,218"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="934,128,712,176,711,170,939,127"/>
+<area shape="rect" id="Node000010" href="$GeometryGraphBuilder_8cpp.html" title=" " alt="" coords="737,174,933,218"/>
+<area shape="poly" id="edge10_Node000002_Node000010" title=" " alt="" coords="985,131,886,176,885,171,980,133"/>
+<area shape="rect" id="Node000011" href="$GeometryStorage_8cpp.html" title=" " alt="" coords="958,182,1192,210"/>
+<area shape="poly" id="edge11_Node000002_Node000011" title=" " alt="" coords="1059,138,1073,183,1068,180,1057,143"/>
+<area shape="rect" id="Node000004" href="$DCMManager_8cpp.html" title=" " alt="" coords="1150,359,1309,387"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="1231,316,1231,361,1228,357,1228,320"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="727,216,1144,275,1139,276,727,221"/>
+<area shape="rect" id="Node000006" href="$ConstraintDecomposition_8cpp.html" title=" " alt="" coords="5,275,294,302"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="483,224,217,277,216,272,485,219"/>
+<area shape="rect" id="Node000007" href="$ConstraintSolveOrder_8cpp.html" title=" " alt="" coords="318,266,517,311"/>
+<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="549,225,463,268,461,263,544,226"/>
+<area shape="rect" id="Node000008" href="$RequirementSystem_8cpp.html" title=" " alt="" coords="541,275,798,302"/>
+<area shape="poly" id="edge8_Node000005_Node000008" title=" " alt="" coords="630,228,663,275,658,273,628,233"/>
+<area shape="rect" id="Node000009" href="$SequentialConstraintSolve_8cpp.html" title=" " alt="" coords="821,266,1054,311"/>
+<area shape="poly" id="edge9_Node000005_Node000009" title=" " alt="" coords="700,220,861,266,855,266,699,225"/>
+<area shape="poly" id="edge13_Node000012_Node000003" title=" " alt="" coords="1275,131,1235,276,1231,272,1270,134"/>
 </map>

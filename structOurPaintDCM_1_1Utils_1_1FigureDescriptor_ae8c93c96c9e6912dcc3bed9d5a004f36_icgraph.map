@@ -1,0 +1,22 @@
+<map id="OurPaintDCM::Utils::FigureDescriptor::FigureDescriptor" name="OurPaintDCM::Utils::FigureDescriptor::FigureDescriptor">
+<area shape="rect" id="Node000001" title=" " alt="" coords="462,297,607,358"/>
+<area shape="rect" id="Node000002" href="$structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#a13247f10afd8486f856a840e66d88e31" title="Create descriptor for an arc by coordinates." alt="" coords="242,5,406,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="521,281,507,232,485,174,454,115,434,88,412,64,399,53,398,48,416,60,438,85,458,112,490,172,512,230,526,282"/>
+<area shape="rect" id="Node000003" href="$structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#aa54015e574592cc045366b03399a8e8c" title="Create descriptor for an arc." alt="" coords="242,75,406,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="513,282,474,207,446,168,412,134,397,122,396,117,416,130,450,165,478,205,519,283"/>
+<area shape="rect" id="Node000004" href="$structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#ac11d2ebe9e47cbab9ded1ec9823de9aa" title="Create descriptor for a circle by center coordinates." alt="" coords="251,144,396,205"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="492,286,455,253,412,219,396,208,395,203,416,215,458,248,497,286"/>
+<area shape="rect" id="Node000005" href="$structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#adc6a70772bfdc414024e43d6b1e1d776" title="Create descriptor for a circle." alt="" coords="251,229,396,290"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="445,300,397,286,397,280,450,299"/>
+<area shape="rect" id="Node000006" href="$structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#abd1941fc61b77632eab689e56497f465" title="Create a NURBS with owned controls as x,y coordinate pairs." alt="" coords="5,336,186,381"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="445,336,187,355,186,349,448,332"/>
+<area shape="rect" id="Node000007" href="$structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#a685d7f7f31173423c57cceb106f8fe03" title="Create a NURBS using existing control point IDs." alt="" coords="234,365,414,410"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="445,354,406,367,404,362,450,351"/>
+<area shape="rect" id="Node000008" href="$structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#ae92b9ff24e25e5f5c77d79e6ece75229" title="Create descriptor for a line by coordinates." alt="" coords="240,435,408,479"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="491,367,455,399,415,425,392,436,390,432,413,420,451,394,486,370"/>
+<area shape="rect" id="Node000009" href="$structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#af73b30a1e52c255045c45677612d6776" title="Create descriptor for a line." alt="" coords="240,504,408,549"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="512,371,472,435,446,466,416,494,396,506,394,501,412,490,442,463,468,432,508,374"/>
+<area shape="rect" id="Node000010" href="$structOurPaintDCM_1_1Utils_1_1FigureDescriptor.html#ac2b1f253189ac414431a5ca699d6a758" title="Create descriptor for a 2D point." alt="" coords="235,573,412,618"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="523,371,508,418,485,469,454,519,416,563,399,575,397,570,412,559,450,516,480,466,503,416,519,375"/>
+<area shape="poly" id="edge7_Node000007_Node000006" title=" " alt="" coords="216,375,187,372,185,367,221,373"/>
+</map>

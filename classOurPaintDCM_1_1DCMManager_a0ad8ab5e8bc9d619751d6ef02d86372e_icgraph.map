@@ -1,0 +1,13 @@
+<map id="OurPaintDCM::DCMManager::splitComponentsAfterRemoval" name="OurPaintDCM::DCMManager::splitComponentsAfterRemoval">
+<area shape="rect" id="Node000001" title=" " alt="" coords="759,29,988,74"/>
+<area shape="poly" id="edge7_Node000001_Node000001" title=" " alt="" coords="915,14,901,10,873,8,849,10,833,15,827,21,828,30,824,27,822,19,830,10,848,5,874,3,902,5,920,14"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#a23b84a47aebf73808f0ee42c79b6288b" title=" " alt="" coords="508,29,711,74"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="741,52,712,54,712,49,746,52"/>
+<area shape="poly" id="edge6_Node000002_Node000002" title=" " alt="" coords="649,14,636,10,610,8,586,10,571,15,566,21,567,30,562,27,560,19,569,10,585,5,610,3,637,5,655,14"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#a8630b7c30625dd4668be0fba4c853eb0" title=" " alt="" coords="5,29,209,74"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="490,37,460,37,358,33,257,37,210,41,209,36,257,32,358,28,460,32,495,37"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1DCMManager.html#ac2f4c1cac07c5bc28426b2ceb50ad736" title="Remove a figure by ID." alt="" coords="257,71,460,115"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="495,71,461,79,460,74,490,71"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="239,74,209,71,209,66,244,74"/>
+<area shape="poly" id="edge5_Node000004_Node000004" title=" " alt="" coords="398,55,384,52,358,49,335,51,320,56,314,62,315,72,311,69,309,61,317,52,334,46,358,44,385,47,403,56"/>
+</map>

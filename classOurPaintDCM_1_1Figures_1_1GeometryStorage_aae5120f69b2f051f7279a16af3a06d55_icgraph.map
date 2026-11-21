@@ -1,7 +1,10 @@
 <map id="OurPaintDCM::Figures::GeometryStorage::registerPointCache" name="OurPaintDCM::Figures::GeometryStorage::registerPointCache">
-<area shape="rect" id="Node000001" title="Appends to per&#45;type iteration cache and position map." alt="" coords="563,5,765,60"/>
-<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af8c35571d12a7a86d789d4e35ee8cf9f" title="Creates a point at (x, y)." alt="" coords="288,13,515,53"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="549,35,515,35,515,30,549,30"/>
-<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Creates a figure from aggregated FigureData (may create nested points)." alt="" coords="5,13,240,53"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="274,35,240,35,240,30,274,30"/>
+<area shape="rect" id="Node000001" title="Appends to per&#45;type iteration cache and position map." alt="" coords="827,28,1030,89"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#af8c35571d12a7a86d789d4e35ee8cf9f" title="Creates a point at (x, y)." alt="" coords="553,36,779,81"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="809,58,780,61,780,56,814,58"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#a437365f2eb6fd5e1bd6fe4ecc081b240" title="Creates a figure from aggregated FigureData (may create nested points)." alt="" coords="272,5,505,50"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="535,44,506,43,506,38,540,44"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1Figures_1_1GeometryStorage.html#ae0250e836e9d53173d35ebcea5784378" title="Move&#45;assigns; source is left in a valid empty state." alt="" coords="5,36,224,81"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="535,62,505,65,272,65,224,64,224,59,272,60,505,60,540,62"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="253,43,224,49,224,43,259,42"/>
 </map>

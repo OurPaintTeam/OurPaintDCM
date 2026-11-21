@@ -1,0 +1,21 @@
+<map id="OurPaintDCM::DCMManager::invalidateRequirementSolveCache" name="OurPaintDCM::DCMManager::invalidateRequirementSolveCache">
+<area shape="rect" id="Node000001" title=" " alt="" coords="794,141,1049,185"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="965,125,950,122,921,119,895,121,879,126,873,132,874,142,870,139,868,131,876,122,894,116,922,114,951,116,970,126"/>
+<area shape="rect" id="Node000002" href="$classOurPaintDCM_1_1DCMManager.html#af1c24a150cabb5301977c41681901f6c" title="Update requirement parameter value." alt="" coords="543,79,746,124"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="800,137,747,127,747,122,806,137"/>
+<area shape="rect" id="Node000006" href="$classOurPaintDCM_1_1DCMManager.html#a3890aadf43ffcb05d4134ff902b621b0" title="Update a requirement&#39;s residual weight and invalidate cached solve state." alt="" coords="543,187,746,232"/>
+<area shape="poly" id="edge11_Node000001_Node000006" title=" " alt="" coords="782,187,747,195,747,190,776,187"/>
+<area shape="poly" id="edge10_Node000002_Node000002" title=" " alt="" coords="687,64,672,60,645,58,619,60,604,65,597,71,599,80,594,77,592,69,601,60,618,55,645,53,674,55,692,64"/>
+<area shape="rect" id="Node000003" href="$classOurPaintDCM_1_1DCMManager.html#a8630b7c30625dd4668be0fba4c853eb0" title=" " alt="" coords="5,110,209,155"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="594,71,548,49,494,30,428,15,375,8,322,13,258,30,221,46,186,67,132,112,129,108,183,63,218,41,256,25,322,7,375,3,429,10,496,25,550,44,599,71"/>
+<area shape="rect" id="Node000004" href="$classOurPaintDCM_1_1DCMManager.html#a24e1b74775daef3900cf8fbbceca0e6b" title="Switch containment/external contact for any circle/arc pair." alt="" coords="257,63,495,108"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="525,95,496,95,495,90,530,94"/>
+<area shape="rect" id="Node000005" href="$classOurPaintDCM_1_1DCMManager.html#aafb2bb556c369c8397aa4c0d69dc33c7" title="Explicitly switch the saved side of a line/circle or arc/line tangency." alt="" coords="262,157,490,201"/>
+<area shape="poly" id="edge7_Node000002_Node000005" title=" " alt="" coords="552,128,457,159,455,154,547,130"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="239,110,210,117,208,112,244,108"/>
+<area shape="poly" id="edge6_Node000004_Node000004" title=" " alt="" coords="418,48,404,44,376,42,351,44,335,49,328,55,330,64,325,62,323,53,332,44,350,39,376,37,405,39,424,48"/>
+<area shape="poly" id="edge8_Node000005_Node000003" title=" " alt="" coords="244,157,209,153,209,147,249,156"/>
+<area shape="poly" id="edge9_Node000005_Node000005" title=" " alt="" coords="418,141,404,138,376,135,351,137,335,142,328,148,330,158,325,155,323,147,332,138,350,132,376,130,405,133,424,142"/>
+<area shape="poly" id="edge12_Node000006_Node000003" title=" " alt="" coords="530,226,465,233,396,234,325,229,256,216,223,205,191,190,138,158,139,153,193,185,225,200,257,211,326,224,396,229,465,228,525,226"/>
+<area shape="poly" id="edge13_Node000006_Node000006" title=" " alt="" coords="687,172,672,168,645,166,619,168,604,173,597,179,598,188,594,185,592,177,601,168,618,163,645,161,674,163,692,173"/>
+</map>
