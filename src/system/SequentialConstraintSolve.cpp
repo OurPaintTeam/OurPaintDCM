@@ -23,6 +23,17 @@ public:
 bool solveSequentialConstraints(const RequirementSystem& system, const ConstraintDecomposition& plan,
     std::span<const std::size_t> order, const std::unordered_set<VAR>& locked,
     Utils::SolverType solver, double tolerance, const std::function<void(TaskMatrix&)>& optimize) {
+    return solveSequentialConstraints(system, plan, order, locked, tolerance,
+        [&](std::size_t, RequirementBindings bindings, const FixedAssignments& fixed,
+            const std::unordered_set<VAR>& determined) {
+            auto pipeline = buildSolvePipeline(bindings, fixed, determined, solver);
+            if (pipeline.task) optimize(*pipeline.task);
+        });
+}
+
+bool solveSequentialConstraints(const RequirementSystem& system, const ConstraintDecomposition& plan,
+    std::span<const std::size_t> order, const std::unordered_set<VAR>& locked,
+    double tolerance, const ConstraintBlockSolver& solveBlock) {
     ParameterState original(system);
     const auto fixed = collectFixedAssignments(system.getFunctions());
     auto determined = locked;
@@ -36,8 +47,7 @@ bool solveSequentialConstraints(const RequirementSystem& system, const Constrain
             bindings.push_back(system.getFunctions().at(function));
         for (const auto& binding : bindings)
             if (!std::isfinite(binding->mathematical()->weightedValue())) return false;
-        auto pipeline = buildSolvePipeline(bindings, fixed, determined, solver);
-        if (pipeline.task) optimize(*pipeline.task);
+        solveBlock(index, bindings, fixed, determined);
         for (const auto& binding : bindings) {
             if (!binding->mathematical()->satisfied(tolerance)) return false;
             if (binding->getWeight() == 0) continue;

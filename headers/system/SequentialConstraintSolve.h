@@ -7,6 +7,13 @@
 
 namespace OurPaintDCM::System {
 
+using ConstraintBlockSolver = std::function<void(std::size_t, RequirementBindings,
+    const FixedAssignments&, const std::unordered_set<VAR>&)>;
+
+bool solveSequentialConstraints(const RequirementSystem& system, const ConstraintDecomposition& plan,
+    std::span<const std::size_t> order, const std::unordered_set<VAR>& locked,
+    double tolerance, const ConstraintBlockSolver& solveBlock);
+
 // Restores all touched parameters on failure or exception. Success still needs the caller's
 // model validation and coincidence synchronization. Only variables used by solved functions freeze.
 bool solveSequentialConstraints(const RequirementSystem& system, const ConstraintDecomposition& plan,

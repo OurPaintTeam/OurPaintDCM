@@ -3,6 +3,14 @@
 #include "SparseSystemTask.h"
 
 namespace OurPaintDCM::System {
+namespace {
+bool isSolverFunction(const Function::RequirementFunction& binding) {
+    const auto type = binding.getType();
+    return binding.getWeight() != 0 && type != Utils::RequirementType::ET_FIXPOINT &&
+        type != Utils::RequirementType::ET_FIXARC && type != Utils::RequirementType::ET_FIXLINE &&
+        type != Utils::RequirementType::ET_FIXCIRCLE;
+}
+}
 
 FixedAssignments collectFixedAssignments(RequirementBindings functions) {
     FixedAssignments assignments;
@@ -14,22 +22,28 @@ FixedAssignments collectFixedAssignments(RequirementBindings functions) {
     return assignments;
 }
 
+std::vector<VAR> collectSolveVariables(RequirementBindings functions, const FixedAssignments& fixed,
+    const std::unordered_set<VAR>& locked) {
+    std::vector<VAR> variables;
+    std::unordered_set<VAR> seen;
+    for (const auto& binding : functions) {
+        if (!isSolverFunction(*binding)) continue;
+        for (auto* variable : binding->getVars()) {
+            if (!locked.contains(variable) && !fixed.contains(variable) && seen.insert(variable).second)
+                variables.push_back(variable);
+        }
+    }
+    return variables;
+}
+
 SolvePipeline buildSolvePipeline(RequirementBindings functions, const FixedAssignments& fixed,
     const std::unordered_set<VAR>& locked, Utils::SolverType solver) {
     SolvePipeline pipeline;
+    for (auto* variable : collectSolveVariables(functions, fixed, locked))
+        pipeline.variableOwners.push_back(std::make_unique<Variable>(variable));
     std::vector<std::unique_ptr<::Function>> owners;
-    std::unordered_set<VAR> seen;
-    for (const auto& binding : functions) {
-        if (binding->getWeight() == 0) continue;
-        const auto type = binding->getType();
-        if (type == Utils::RequirementType::ET_FIXPOINT || type == Utils::RequirementType::ET_FIXARC ||
-            type == Utils::RequirementType::ET_FIXLINE || type == Utils::RequirementType::ET_FIXCIRCLE) continue;
-        for (auto* variable : binding->getVars()) {
-            if (!locked.contains(variable) && !fixed.contains(variable) && seen.insert(variable).second)
-                pipeline.variableOwners.push_back(std::make_unique<Variable>(variable));
-        }
-        owners.emplace_back(binding->mathematical()->weightedFunction());
-    }
+    for (const auto& binding : functions)
+        if (isSolverFunction(*binding)) owners.emplace_back(binding->mathematical()->weightedFunction());
     pipeline.hasFunctions = !owners.empty();
     pipeline.hasFreeVariables = !pipeline.variableOwners.empty();
     if (!pipeline.hasFunctions || !pipeline.hasFreeVariables) return pipeline;

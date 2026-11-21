@@ -20,6 +20,8 @@ struct SolvePipeline {
 };
 
 FixedAssignments collectFixedAssignments(RequirementBindings functions);
+std::vector<VAR> collectSolveVariables(RequirementBindings functions, const FixedAssignments& fixed,
+    const std::unordered_set<VAR>& locked);
 
 // Fixed and locked coordinates remain live inputs, excluded from the optimization variables.
 // Preparation does not assign coordinates; callers apply fixed targets before constructing tasks.

@@ -123,8 +123,15 @@ struct OurPaintDCM::DCMManager::SolveCache {
     };
 
     struct Component {
+        struct Block {
+            System::SolvePipeline pipeline;
+            std::unique_ptr<MatrixOptimizer> solver;
+            double tolerance = -1.0;
+            bool prepared = false;
+        };
         std::shared_ptr<System::RequirementSystem> system;
         std::optional<System::ConstraintDecomposition> decomposition;
+        std::vector<Block> blocks;
         bool needsRebuild = false;
     };
     std::unordered_map<ComponentID, Component> components;
@@ -1369,7 +1376,10 @@ void DCMManager::setSolver(Utils::SolverType solver) noexcept {
         return;
     }
     _solverType = solver;
-    if (_solveCache) _solveCache->entries.clear();
+    if (_solveCache) {
+        _solveCache->entries.clear();
+        for (auto& [id, component] : _solveCache->components) component.blocks.clear();
+    }
 }
 
 bool DCMManager::solve(std::optional<ComponentID> componentId, double residualTolerance) {
@@ -1622,22 +1632,37 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
         }
     }
 
-    const auto optimizeTask = [&](TaskMatrix& task) {
-        auto optimizer = createSolver(_solverType, residualTolerance);
-        optimizer->setTask(&task);
-        optimizer->optimize();
-    };
     bool attemptedDecomposition = false;
     const auto solveComponentBlocks = [&](ComponentID id) {
         auto& component = componentData(id);
+        component.blocks.resize(component.decomposition ? component.decomposition->blocks.size() : 1);
+        const auto solveBlock = [&](std::size_t index, System::RequirementBindings bindings,
+            const System::FixedAssignments& fixed, const std::unordered_set<VAR>& locked) {
+            auto& block = component.blocks.at(index);
+            const auto variables = System::collectSolveVariables(bindings, fixed, locked);
+            if (!block.prepared || !std::equal(variables.begin(), variables.end(),
+                    block.pipeline.variableOwners.begin(), block.pipeline.variableOwners.end(),
+                    [](VAR value, const auto& owner) { return value == owner->value; })) {
+                auto pipeline = System::buildSolvePipeline(bindings, fixed, locked, _solverType);
+                block.solver.reset();
+                block.pipeline = std::move(pipeline);
+                block.prepared = true;
+            }
+            if (!block.pipeline.task) return;
+            if (!block.solver || block.tolerance != residualTolerance) {
+                block.solver = createSolver(_solverType, residualTolerance);
+                block.tolerance = residualTolerance;
+            }
+            block.solver->setTask(block.pipeline.task.get());
+            block.solver->optimize();
+        };
         attemptedDecomposition = true;
         if (!component.decomposition) {
             const auto fixed = System::collectFixedAssignments(component.system->getFunctions());
             for (const auto& [variable, target] : fixed) *variable = target;
             for (const auto& binding : component.system->getFunctions())
                 if (!std::isfinite(binding->mathematical()->weightedValue())) return false;
-            auto pipeline = System::buildSolvePipeline(component.system->getFunctions(), fixed, lockedVars, _solverType);
-            if (pipeline.task) optimizeTask(*pipeline.task);
+            solveBlock(0, component.system->getFunctions(), fixed, lockedVars);
             component.system->synchronizeCoincidentPoints();
             for (const auto& binding : component.system->getFunctions())
                 if (!binding->mathematical()->satisfied(residualTolerance)) return false;
@@ -1645,7 +1670,7 @@ bool DCMManager::solveWithLockedVars(std::optional<ComponentID> componentId,
         }
         const auto order = System::chooseConstraintSolveOrder(*component.system, *component.decomposition, editedFigures);
         const bool solved = System::solveSequentialConstraints(*component.system, *component.decomposition,
-            order, lockedVars, _solverType, residualTolerance, optimizeTask);
+            order, lockedVars, residualTolerance, solveBlock);
         if (solved) component.system->synchronizeCoincidentPoints();
         return solved;
     };
