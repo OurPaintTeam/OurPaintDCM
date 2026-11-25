@@ -39,6 +39,7 @@ std::vector<BlockInfo> describeBlocks(const RequirementSystem& system,
 
     std::vector<BlockInfo> result(plan.blocks.size());
     for (std::size_t i = 0; i < plan.blocks.size(); ++i) {
+        if (plan.blocks[i].functionIndices.empty()) continue;
         auto& info = result[i];
         std::unordered_set<VAR> seen;
         for (auto figure : plan.blocks[i].figures) {
