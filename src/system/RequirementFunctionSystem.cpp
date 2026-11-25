@@ -1,5 +1,6 @@
 #include "RequirementFunctionSystem.h"
 #include <algorithm>
+#include <cmath>
 
 using namespace OurPaintDCM::System;
 
@@ -28,6 +29,31 @@ const SparseLSMTask& RequirementFunctionSystem::task() const {
         _task = std::make_unique<SparseLSMTask>(std::move(functions),std::move(variables));
     }
     return *_task;
+}
+
+ConstraintLinearization RequirementFunctionSystem::linearizeConstraints() const {
+    ConstraintLinearization result;
+    result.variables = _allVars;
+    result.equations.reserve(_functions.size());
+    for (std::size_t i = 0; i < _functions.size(); ++i) {
+        const auto& binding = _functions[i];
+        result.equations.push_back({i, binding->requirementId(), binding->getWeight()});
+    }
+    try {
+        const auto [residuals, jacobian] = task().linearizationView();
+        result.jacobian = jacobian.get();
+        result.residuals = residuals.get();
+    } catch (const FunctionDomainError&) {
+        return result;
+    } catch (const std::domain_error&) {
+        return result;
+    }
+    for (std::size_t row = 0; row < result.residuals.rows_size(); ++row)
+        if (!std::isfinite(result.residuals(row, 0))) return result;
+    for (double value : result.jacobian.valueData())
+        if (!std::isfinite(value)) return result;
+    result.defined = true;
+    return result;
 }
 
 namespace {

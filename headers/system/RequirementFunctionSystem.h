@@ -1,5 +1,8 @@
-#pragma once
+#ifndef OURPAINTDCM_HEADERS_SYSTEM_REQUIREMENTFUNCTIONSYSTEM_H
+#define OURPAINTDCM_HEADERS_SYSTEM_REQUIREMENTFUNCTIONSYSTEM_H
+
 #include "RequirementFunction.h"
+#include "ConstraintLinearization.h"
 #include "tasks/matrix/SparseLSMTask.h"
 #include <vector>
 
@@ -28,6 +31,9 @@ public:
     Eigen::SparseMatrix<double> J() const { return task().J(); }
     Eigen::SparseMatrix<double> JTJ() const { return task().JTJ(); }
     Eigen::VectorXd residuals() const { return task().residualVector(); }
+    // Native weighted J/F and equation origins from the existing cache; never solves or assigns geometry.
+    // Includes bound coordinates rather than unused geometry in a RequirementSystem scope.
+    ConstraintLinearization linearizeConstraints() const;
     std::vector<VAR> getAllVars() const { return _allVars; }
     Utils::SystemStatus diagnose() const { return diagnoseDetailed().status; }
     virtual Diagnosis diagnoseDetailed() const;
@@ -37,3 +43,5 @@ protected:
     Diagnosis diagnoseWithVariables(const std::vector<VAR>& coordinates) const;
 };
 }
+
+#endif
