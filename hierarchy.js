@@ -4,6 +4,7 @@ var hierarchy =
     [ "OurPaintDCM::Utils::ArcUpdateDescriptor", "structOurPaintDCM_1_1Utils_1_1ArcUpdateDescriptor.html", null ],
     [ "OurPaintDCM::System::ArticulationDecomposition", "structOurPaintDCM_1_1System_1_1ArticulationDecomposition.html", null ],
     [ "OurPaintDCM::DCMManager::BatchUpdateContext", "structOurPaintDCM_1_1DCMManager_1_1BatchUpdateContext.html", null ],
+    [ "OurPaintDCM::DCMManager::SolveCache::Component::Block", "structOurPaintDCM_1_1DCMManager_1_1SolveCache_1_1Component_1_1Block.html", null ],
     [ "OurPaintDCM::Figures::Circle&lt; PointT &gt;", "structOurPaintDCM_1_1Figures_1_1Circle.html", null ],
     [ "OurPaintDCM::Utils::CircleUpdateDescriptor", "structOurPaintDCM_1_1Utils_1_1CircleUpdateDescriptor.html", null ],
     [ "OurPaintDCM::DCMManager::SolveCache::Component", "structOurPaintDCM_1_1DCMManager_1_1SolveCache_1_1Component.html", null ],
