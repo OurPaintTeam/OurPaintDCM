@@ -1,4 +1,6 @@
-#pragma once
+#ifndef OURPAINTDCM_HEADERS_FUNCTIONS_REQUIREMENTFUNCTION_H
+#define OURPAINTDCM_HEADERS_FUNCTIONS_REQUIREMENTFUNCTION_H
+
 #include "core/ErrorFunction.h"
 #include "Enums.h"
 #include "ID.h"
@@ -32,3 +34,5 @@ public:
     std::optional<Utils::ID> requirementId() const { return _requirementId; }
 };
 }
+
+#endif
