@@ -420,8 +420,11 @@ private:
 
     bool solveWithLockedVars(std::optional<ComponentID> componentId,
                              const std::unordered_set<double*>& lockedVars,
-                             double residualTolerance = 1e-6);
+                             double residualTolerance = 1e-6,
+                             std::span<const Utils::ID> editedFigures = {});
     void invalidateSolveCache() noexcept;
+    void invalidateRequirementSolveCache(Utils::ID requirementId);
+    void forgetEditedFigures(std::optional<ComponentID> componentId);
 
     Figures::GeometryStorage _storage;
     System::RequirementSystem _reqSystem;
@@ -437,6 +440,7 @@ private:
     Utils::SolveMode _solveMode = Utils::SolveMode::GLOBAL;
     Utils::SolverType _solverType = Utils::SolverType::LEVENBERG_MARQUARDT;
     std::unique_ptr<SolveCache> _solveCache;
+    std::unordered_set<Utils::ID> _pendingEditedFigures;
 
     std::unique_ptr<System::RequirementSystem> buildSubsystem(ComponentID componentId) const;
 
@@ -446,7 +450,8 @@ private:
         const std::unordered_set<Utils::ID>& fixedPointIds) const;
     void addDragLocks(Utils::ID figureId,
                       std::initializer_list<double*> vars,
-                      BatchUpdateContext& context);
+                      BatchUpdateContext& context,
+                      bool edited = false);
     bool solveDragUpdates(BatchUpdateContext& context);
     void applyPointUpdateNoSolve(const Utils::PointUpdateDescriptor& descriptor,
                                  const FixedGeometry& fixedGeometry,

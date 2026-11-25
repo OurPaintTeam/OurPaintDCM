@@ -1,4 +1,5 @@
 #include "RequirementSystem.h"
+#include "GeometryGraphBuilder.h"
 
 #include <algorithm>
 #include <functional>
@@ -917,7 +918,10 @@ void RequirementSystem::synchronizeCoincidentPoints() const noexcept {
 }
 
 Figures::ObjectGraph RequirementSystem::buildDependencyGraph() const {
-    auto graph = _storage->buildObjectGraph();
+    if (!_storage) return {};
+    auto graph = _figureScope
+        ? Figures::GeometryGraphBuilder::buildObjectGraph(*_storage, *_figureScope)
+        : _storage->buildObjectGraph();
     for (const auto& req : _requirements) {
         for (std::size_t i = 0; i < req.objectIds.size(); ++i) {
             for (std::size_t j = i + 1; j < req.objectIds.size(); ++j) {
@@ -927,6 +931,27 @@ Figures::ObjectGraph RequirementSystem::buildDependencyGraph() const {
     }
 
     return graph;
+}
+
+std::vector<VAR> RequirementSystem::getFigureVariables(Utils::ID figureId) const {
+    if (!_storage) return {};
+    const auto type = _storage->getType(figureId);
+    if (!type) return {};
+    if (*type == Utils::FigureType::ET_POINT2D) return makePointVars(resolvePoint(figureId));
+
+    std::vector<VAR> variables;
+    std::unordered_set<Utils::ID> seenPoints;
+    const auto addPoint = [&](Utils::ID id) {
+        const auto representative = resolvePointRepresentative(id);
+        if (!seenPoints.insert(representative).second) return;
+        auto* point = resolvePoint(representative);
+        variables.push_back(point->ptrX());
+        variables.push_back(point->ptrY());
+    };
+    for (const auto id : _storage->getDependencies(figureId)) addPoint(id);
+    if (*type == Utils::FigureType::ET_CIRCLE)
+        variables.push_back(_storage->get<Figures::Circle2D>(figureId)->ptrRadius());
+    return variables;
 }
 
 } // namespace OurPaintDCM::System

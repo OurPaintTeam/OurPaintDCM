@@ -5,6 +5,7 @@
 #include "ID.h"
 
 #include <optional>
+#include <span>
 
 // Forward declaration avoids heavy include cycle
 namespace OurPaintDCM::Figures {
@@ -26,6 +27,10 @@ public:
      * @brief Full object graph: every live ID as vertex; edges join each figure to its point IDs.
      */
     [[nodiscard]] static ObjectGraph buildObjectGraph(const GeometryStorage& storage);
+
+    /** Selected live figures and their defining points, without visiting incident figures outside the scope. */
+    [[nodiscard]] static ObjectGraph buildObjectGraph(const GeometryStorage& storage,
+                                                     std::span<const Utils::ID> figureIds);
 
     /**
      * @brief Local neighbourhood around @p id: vertex @p id, adjacent figures/points, and edges among them.
